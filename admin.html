@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Painel administrativo da ASSGA">
+    <title>Painel administrativo | ASSGA</title>
+    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #003366;
+            --blue: #004aad;
+            --gold: #ffd700;
+            --ink: #172235;
+            --muted: #667085;
+            --line: #d9e1eb;
+            --surface: #ffffff;
+            --background: #eef3f8;
+            --danger: #b42318;
+            --success: #08752b;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; color: var(--ink); background: radial-gradient(circle at top right, #dbe9f8, var(--background) 48%); font-family: "Segoe UI", Tahoma, sans-serif; }
+        button, input { font: inherit; }
+        .login { width: min(410px, calc(100% - 32px)); margin: 12vh auto 0; padding: 34px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 50px rgba(0, 51, 102, .14); }
+        .login img { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; }
+        .login h1 { margin: 18px 0 8px; color: var(--navy); font-size: 1.7rem; }
+        .login p { margin: 0 0 24px; color: var(--muted); }
+        .field { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 7px; }
+        .primary, .logout, .action { border: 0; border-radius: 7px; cursor: pointer; font-weight: 700; }
+        .primary { width: 100%; margin-top: 12px; padding: 13px; color: white; background: var(--navy); }
+        .primary:hover { background: var(--blue); }
+        .error { display: none; margin-top: 14px; color: var(--danger); font-weight: 600; }
+        .panel { display: none; width: min(1280px, calc(100% - 32px)); margin: 28px auto; }
+        .panel-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 26px; color: white; background: linear-gradient(120deg, var(--navy), var(--blue)); border-radius: 12px; }
+        .panel-header h1 { margin: 0; font-size: clamp(1.35rem, 3vw, 2rem); }
+        .logout { padding: 10px 15px; color: var(--navy); background: var(--gold); }
+        .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+        .summary-card, .toolbar, .table-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+        .summary-card { padding: 18px; }
+        .summary-card span { display: block; color: var(--muted); font-size: .9rem; }
+        .summary-card strong { display: block; margin-top: 5px; color: var(--navy); font-size: 1.8rem; }
+        .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding: 14px; }
+        .toolbar .field { max-width: 340px; }
+        .action { padding: 10px 13px; color: white; background: var(--blue); }
+        .action.danger { background: var(--danger); }
+        .message { min-height: 24px; margin: 8px 0; font-weight: 600; }
+        .message.success { color: var(--success); }
+        .message.error { color: var(--danger); }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; min-width: 880px; border-collapse: collapse; }
+        th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+        th { color: var(--navy); background: #f5f8fc; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
+        tr:last-child td { border-bottom: 0; }
+        .status { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: .78rem; font-weight: 700; }
+        .status.paid { color: var(--success); background: #d9fbe5; }
+        .status.pending { color: #9a3412; background: #ffedd5; }
+        .table-action { padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; color: var(--navy); background: white; cursor: pointer; }
+        .table-action.delete { color: var(--danger); }
+        .empty { padding: 28px; color: var(--muted); text-align: center; }
+        .management { margin-top: 24px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+        .management h2 { margin: 0 0 18px; color: var(--navy); font-size: 1.35rem; }
+        .management form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .management textarea { min-height: 90px; resize: vertical; }
+        .management .full { grid-column: 1 / -1; }
+        .member-list { display: grid; gap: 10px; margin-top: 20px; }
+        .member-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid var(--blue); background: #f7f9fc; }
+        .member-row strong { color: var(--navy); }
+        .member-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+        .content-editor { margin-top: 24px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+        .content-editor h2 { margin: 0 0 18px; color: var(--navy); font-size: 1.35rem; }
+        .content-editor form { display: grid; gap: 12px; }
+        .content-editor textarea { min-height: 130px; resize: vertical; }
+        @media (max-width: 700px) { .management form { grid-template-columns: 1fr; } .management .full { grid-column: auto; } .member-row { align-items: stretch; flex-direction: column; } }
+        @media (max-width: 700px) { .summary { grid-template-columns: 1fr; } .toolbar { align-items: stretch; flex-direction: column; } .toolbar .field { max-width: none; } .panel { width: min(100% - 20px, 1280px); margin-top: 10px; } }
+    </style>
+</head>
+<body>
+    <main class="login" id="loginView">
+        <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA">
+        <h1><i class="fas fa-lock" aria-hidden="true"></i> Área administrativa</h1>
+        <p>Entre para gerenciar as inscrições.</p>
+        <form id="loginForm">
+            <input class="field" id="password" type="password" placeholder="Senha administrativa" autocomplete="current-password" required>
+            <button class="primary" type="submit">Entrar</button>
+        </form>
+        <div class="error" id="loginError" role="alert">Senha incorreta.</div>
+    </main>
+
+    <main class="panel" id="panelView">
+        <header class="panel-header">
+            <h1><i class="fas fa-shield-halved" aria-hidden="true"></i> Gerenciamento ASSGA</h1>
+            <button class="logout" id="logoutButton" type="button"><i class="fas fa-right-from-bracket" aria-hidden="true"></i> Sair</button>
+        </header>
+        <section class="summary" aria-label="Resumo das inscrições">
+            <div class="summary-card"><span>Inscrições</span><strong id="totalCount">0</strong></div>
+            <div class="summary-card"><span>Pagamentos confirmados</span><strong id="paidCount">0</strong></div>
+            <div class="summary-card"><span>Vagas disponíveis</span><strong id="availableCount">100</strong></div>
+        </section>
+        <section class="content-editor" aria-labelledby="contentTitle">
+            <h2 id="contentTitle"><i class="fas fa-pen-to-square" aria-hidden="true"></i> Gerenciar páginas institucionais</h2>
+            <form id="contentForm">
+                <select class="field" id="contentPage" aria-label="Página para editar">
+                    <option value="index">Página inicial</option>
+                    <option value="historia">História</option>
+                    <option value="estatuto">Estatuto</option>
+                    <option value="esportiva">Esportiva</option>
+                </select>
+                <input class="field" id="contentHeading" placeholder="Título da página" required>
+                <input class="field" id="contentSubtitle" placeholder="Subtítulo ou chamada">
+                <textarea class="field" id="contentBody" placeholder="Texto complementar"></textarea>
+                <button class="action" type="submit"><i class="fas fa-save" aria-hidden="true"></i> Salvar conteúdo</button>
+            </form>
+        </section>
+        <div class="toolbar">
+            <input class="field" id="search" type="search" placeholder="Buscar por nome, CPF ou vaga" aria-label="Buscar inscrições">
+            <button class="action" id="refreshButton" type="button"><i class="fas fa-rotate" aria-hidden="true"></i> Atualizar</button>
+            <button class="action danger" id="resetButton" type="button"><i class="fas fa-trash" aria-hidden="true"></i> Apagar todas</button>
+        </div>
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Vaga</th><th>Nome</th><th>CPF</th><th>WhatsApp</th><th>Pagamento</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead>
+                <tbody id="registrationList"></tbody>
+            </table>
+            <div class="empty" id="emptyState" hidden>Nenhuma inscrição encontrada.</div>
+        </div>
+        <section class="management" aria-labelledby="directorsTitle">
+            <h2 id="directorsTitle"><i class="fas fa-users" aria-hidden="true"></i> Gerenciar diretoria</h2>
+            <form id="directorForm">
+                <input type="hidden" id="directorId">
+                <input class="field" id="directorName" placeholder="Nome" required>
+                <input class="field" id="directorRole" placeholder="Cargo" required>
+                <input class="field" id="directorEmail" type="email" placeholder="E-mail">
+                <input class="field" id="directorPhone" placeholder="Telefone">
+                <textarea class="field full" id="directorDescription" placeholder="Descrição"></textarea>
+                <div class="full"><button class="action" type="submit"><i class="fas fa-save" aria-hidden="true"></i> Salvar membro</button> <button class="table-action" id="cancelDirector" type="button">Cancelar edição</button></div>
+            </form>
+            <div class="member-list" id="memberList"></div>
+        </section>
+    </main>
+
+    <script>
+        const ADMIN_PASSWORD = "ASSGA2026";
+        const STORAGE_KEY = "assga_inscricoes";
+        const DIRECTORS_KEY = "assga_diretoria";
+        const CONTENT_KEY = "assga_conteudos";
+        const DEFAULT_DIRECTORS = [
+            { nome: "Nome do Presidente", cargo: "Presidente", descricao: "Responsável pela gestão geral da associação e representação institucional.", email: "presidente@assga.com", telefone: "+5584996981248" },
+            { nome: "Nome do Vice-Presidente", cargo: "Vice-Presidente", descricao: "Auxilia o presidente na gestão e coordena as atividades administrativas.", email: "vice@assga.com", telefone: "+5584996981248" },
+            { nome: "Nome do Secretário", cargo: "Secretário", descricao: "Responsável pela documentação, atas e comunicação oficial da associação.", email: "secretario@assga.com", telefone: "+5584996981248" },
+            { nome: "Nome do Tesoureiro", cargo: "Tesoureiro", descricao: "Gerencia as finanças, contas e prestação de contas da ASSGA.", email: "tesoureiro@assga.com", telefone: "+5584996981248" },
+            { nome: "Nome do Diretor de Esportes", cargo: "Diretor de Esportes", descricao: "Coordena as modalidades esportivas, treinos e campeonatos da associação.", email: "esportes@assga.com", telefone: "+5584996981248" },
+            { nome: "Nome do Conselheiro Fiscal", cargo: "Conselho Fiscal", descricao: "Acompanha e fiscaliza as atividades financeiras e administrativas da ASSGA.", email: "fiscal@assga.com", telefone: "+5584996981248" }
+        ];
+        const AUTH_KEY = "assga_admin";
+        const MAX_SLOTS = 100;
+        const loginView = document.getElementById("loginView");
+        const panelView = document.getElementById("panelView");
+        const registrationList = document.getElementById("registrationList");
+        const emptyState = document.getElementById("emptyState");
+        const message = document.getElementById("message");
+
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
+        }
+
+        function getRegistrations() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+            catch { return []; }
+        }
+
+        function saveRegistrations(registrations) { localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations)); }
+
+        function getDirectors() {
+            try {
+                const storedDirectors = localStorage.getItem(DIRECTORS_KEY);
+                if (storedDirectors === null) { saveDirectors(DEFAULT_DIRECTORS); return DEFAULT_DIRECTORS; }
+                return JSON.parse(storedDirectors);
+            }
+            catch { return []; }
+        }
+
+        function saveDirectors(directors) { localStorage.setItem(DIRECTORS_KEY, JSON.stringify(directors)); }
+
+        function getContents() {
+            try { return JSON.parse(localStorage.getItem(CONTENT_KEY) || "{}"); }
+            catch { return {}; }
+        }
+
+        function loadContentForm() {
+            const content = getContents()[document.getElementById("contentPage").value] || {};
+            document.getElementById("contentHeading").value = content.titulo || "";
+            document.getElementById("contentSubtitle").value = content.subtitulo || "";
+            document.getElementById("contentBody").value = content.texto || "";
+        }
+
+        function showMessage(text, type) { message.textContent = text; message.className = `message ${type}`; }
+
+        function render() {
+            const registrations = getRegistrations();
+            const searchTerm = document.getElementById("search").value.trim().toLowerCase();
+            const filtered = registrations.filter(registration => [registration.nome, registration.cpf, registration.vaga].some(value => String(value ?? "").toLowerCase().includes(searchTerm)));
+            const paid = registrations.filter(registration => String(registration.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO").length;
+            document.getElementById("totalCount").textContent = registrations.length;
+            document.getElementById("paidCount").textContent = paid;
+            document.getElementById("availableCount").textContent = Math.max(0, MAX_SLOTS - registrations.length);
+            registrationList.innerHTML = filtered.map(registration => {
+                const isPaid = String(registration.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO";
+                return `<tr><td><strong>${escapeHtml(registration.vaga)}</strong></td><td>${escapeHtml(registration.nome)}</td><td>${escapeHtml(registration.cpf)}</td><td>${escapeHtml(registration.telefone)}</td><td>${escapeHtml(registration.pagamento)}</td><td><span class="status ${isPaid ? "paid" : "pending"}">${isPaid ? "PAGO" : "NAO PAGO"}</span></td><td>R$ ${Number(registration.valor || 0).toFixed(2)}</td><td><button class="table-action" data-action="payment" data-vaga="${escapeHtml(registration.vaga)}">${isPaid ? "Marcar não pago" : "Marcar pago"}</button> <button class="table-action delete" data-action="delete" data-vaga="${escapeHtml(registration.vaga)}" aria-label="Excluir inscrição de ${escapeHtml(registration.nome)}"><i class="fas fa-trash" aria-hidden="true"></i></button></td></tr>`;
+            }).join("");
+            emptyState.hidden = filtered.length !== 0;
+            renderDirectors();
+        }
+
+        function renderDirectors() {
+            const directors = getDirectors();
+            document.getElementById("memberList").innerHTML = directors.length ? directors.map((director, index) => `<div class="member-row"><div><strong>${escapeHtml(director.nome)}</strong><br><span>${escapeHtml(director.cargo)}</span></div><div class="member-actions"><button class="table-action" data-director-action="edit" data-director-id="${index}">Editar</button><button class="table-action delete" data-director-action="delete" data-director-id="${index}">Excluir</button></div></div>`).join("") : '<div class="empty">Nenhum membro cadastrado.</div>';
+        }
+
+        function clearDirectorForm() { ["directorId", "directorName", "directorRole", "directorEmail", "directorPhone", "directorDescription"].forEach(id => { document.getElementById(id).value = ""; }); }
+
+        function showPanel() { loginView.style.display = "none"; panelView.style.display = "block"; render(); }
+        function showLogin() { loginView.style.display = "block"; panelView.style.display = "none"; }
+
+        document.getElementById("loginForm").addEventListener("submit", event => {
+            event.preventDefault();
+            if (document.getElementById("password").value === ADMIN_PASSWORD) { sessionStorage.setItem(AUTH_KEY, "true"); showPanel(); }
+            else document.getElementById("loginError").style.display = "block";
+        });
+        document.getElementById("logoutButton").addEventListener("click", () => { sessionStorage.removeItem(AUTH_KEY); showLogin(); });
+        document.getElementById("refreshButton").addEventListener("click", render);
+        document.getElementById("search").addEventListener("input", render);
+        document.getElementById("resetButton").addEventListener("click", () => { if (getRegistrations().length && confirm("Apagar todas as inscrições?")) { saveRegistrations([]); render(); showMessage("Todas as inscrições foram apagadas.", "success"); } });
+        document.getElementById("directorForm").addEventListener("submit", event => {
+            event.preventDefault();
+            const directors = getDirectors();
+            const director = { nome: document.getElementById("directorName").value.trim(), cargo: document.getElementById("directorRole").value.trim(), email: document.getElementById("directorEmail").value.trim(), telefone: document.getElementById("directorPhone").value.trim(), descricao: document.getElementById("directorDescription").value.trim() };
+            const directorId = document.getElementById("directorId").value;
+            if (directorId === "") directors.push(director); else directors[Number(directorId)] = director;
+            saveDirectors(directors); clearDirectorForm(); renderDirectors(); showMessage("Membro da diretoria salvo.", "success");
+        });
+        document.getElementById("cancelDirector").addEventListener("click", clearDirectorForm);
+        document.getElementById("contentPage").addEventListener("change", loadContentForm);
+        document.getElementById("contentForm").addEventListener("submit", event => {
+            event.preventDefault();
+            const contents = getContents();
+            contents[document.getElementById("contentPage").value] = { titulo: document.getElementById("contentHeading").value.trim(), subtitulo: document.getElementById("contentSubtitle").value.trim(), texto: document.getElementById("contentBody").value.trim() };
+            localStorage.setItem(CONTENT_KEY, JSON.stringify(contents));
+            showMessage("Conteúdo da página salvo.", "success");
+        });
+        document.getElementById("memberList").addEventListener("click", event => {
+            const button = event.target.closest("button[data-director-action]");
+            if (!button) return;
+            const directorId = Number(button.dataset.directorId);
+            const directors = getDirectors();
+            if (button.dataset.directorAction === "delete" && confirm("Excluir este membro?")) { directors.splice(directorId, 1); saveDirectors(directors); renderDirectors(); return; }
+            if (button.dataset.directorAction === "edit" && directors[directorId]) { const director = directors[directorId]; document.getElementById("directorId").value = directorId; document.getElementById("directorName").value = director.nome || ""; document.getElementById("directorRole").value = director.cargo || ""; document.getElementById("directorEmail").value = director.email || ""; document.getElementById("directorPhone").value = director.telefone || ""; document.getElementById("directorDescription").value = director.descricao || ""; }
+        });
+        registrationList.addEventListener("click", event => {
+            const button = event.target.closest("button[data-action]");
+            if (!button) return;
+            const registrations = getRegistrations();
+            const slot = String(button.dataset.vaga);
+            const registrationIndex = registrations.findIndex(registration => String(registration.vaga) === slot);
+            if (registrationIndex < 0) return;
+            if (button.dataset.action === "payment") registrations[registrationIndex].statusPagamento = String(registrations[registrationIndex].statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "NAO PAGO" : "PAGO";
+            if (button.dataset.action === "delete" && confirm("Excluir esta inscrição?")) registrations.splice(registrationIndex, 1);
+            saveRegistrations(registrations); render();
+        });
+        if (sessionStorage.getItem(AUTH_KEY) === "true") showPanel();
+        loadContentForm();
+    </script>
+</body>
+</html>

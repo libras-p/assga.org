@@ -868,6 +868,15 @@
         });
     </script>
 
+    <script>
+        const sportsContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").esportiva;
+        if (sportsContent) {
+            const banner = document.querySelector(".page-banner");
+            if (banner && sportsContent.titulo) banner.querySelector("h1").lastChild.textContent = ` ${sportsContent.titulo}`;
+            if (banner && sportsContent.subtitulo) banner.querySelector("p").textContent = sportsContent.subtitulo;
+            if (sportsContent.texto) { const note = document.createElement("p"); note.textContent = sportsContent.texto; note.className = "conteudo-admin"; document.querySelector("main.modalidades-container")?.prepend(note); }
+        }
+    </script>
 </body>
 
 </html>

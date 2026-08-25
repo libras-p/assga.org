@@ -828,6 +828,22 @@
         });
     </script>
 
+    <script>
+        const savedDirectors = localStorage.getItem("assga_diretoria");
+        if (savedDirectors) {
+            try {
+                const directors = JSON.parse(savedDirectors);
+                const directorGrid = document.querySelector(".diretoria-grid");
+                const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
+                if (directorGrid && Array.isArray(directors)) {
+                    directorGrid.innerHTML = directors.map(director => `<div class="membro-card"><div class="avatar"><i class="fas fa-user"></i></div><h3>${escapeHtml(director.nome)}</h3><span class="cargo"><i class="fas fa-star"></i> ${escapeHtml(director.cargo)}</span><p>${escapeHtml(director.descricao)}</p><div class="contato">${director.email ? `<a href="mailto:${escapeHtml(director.email)}" aria-label="Enviar email"><i class="fas fa-envelope"></i></a>` : ""}${director.telefone ? `<a href="tel:${escapeHtml(director.telefone)}" aria-label="Ligar"><i class="fas fa-phone"></i></a>` : ""}</div></div>`).join("");
+                }
+            } catch (error) {
+                console.error("Não foi possível carregar a diretoria.", error);
+            }
+        }
+    </script>
+
 </body>
 
 </html>

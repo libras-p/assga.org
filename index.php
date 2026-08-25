@@ -552,7 +552,7 @@ if (isset($_GET['api'])) {
             <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados
             <br><i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60
             <br><i class="fas fa-futbol"></i> Associação Desportiva
-            <br><a onclick="navegarPara('admin')" class="link-admin"><i class="fas fa-lock"></i> Área Restrita</a>
+            <br><a href="admin.html" class="link-admin"><i class="fas fa-lock"></i> Área Restrita</a>
         </div>
         <div class="footer-redes">
             <a href="https://www.instagram.com/assga_2019/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -726,7 +726,7 @@ async function carregarPublico() {
             <i class="fas fa-copyright"></i> 2026 ${c.nome_associacao || 'ASSGA'} - Todos os direitos reservados
             <br><i class="fas fa-building"></i> CNPJ: ${c.cnpj || '57.242.499/0001-60'}
             <br><i class="fas fa-futbol"></i> ${c.nome_associacao || 'Associação Desportiva'}
-            <br><a onclick="navegarPara('admin')" class="link-admin"><i class="fas fa-lock"></i> Área Restrita</a>
+            <br><a href="admin.html" class="link-admin"><i class="fas fa-lock"></i> Área Restrita</a>
         `;
         // Contatos
         document.getElementById('contatosPublicos').innerHTML = `
@@ -1176,6 +1176,10 @@ window.salvarConfig = async function(e) {
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
     carregarPublico();
+    if (window.location.hash === '#admin') {
+        navegarPara('admin');
+        return;
+    }
     // Verifica se o admin já está logado
     if (sessionStorage.getItem('assga_admin_logado') === 'true' && document.getElementById('secao-admin').style.display !== 'none') {
         document.getElementById('adminLogin').style.display = 'none';

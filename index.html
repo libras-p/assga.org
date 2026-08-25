@@ -1127,6 +1127,19 @@
         });
     </script>
 
+    <script>
+        const homeContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").index;
+        if (homeContent) {
+            const sliderInfo = document.getElementById("sliderInfo");
+            if (sliderInfo && homeContent.titulo) sliderInfo.lastChild.textContent = ` ${homeContent.titulo}`;
+            if (homeContent.texto) {
+                const contentNote = document.createElement("p");
+                contentNote.textContent = homeContent.texto;
+                contentNote.style.cssText = "max-width:900px;margin:24px auto;text-align:center;font-size:1.1rem;line-height:1.7";
+                document.querySelector("main.noticias")?.prepend(contentNote);
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -797,6 +797,15 @@
         });
     </script>
 
+    <script>
+        const statuteContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").estatuto;
+        if (statuteContent) {
+            const banner = document.querySelector(".page-banner");
+            if (banner && statuteContent.titulo) banner.querySelector("h1").lastChild.textContent = ` ${statuteContent.titulo}`;
+            if (banner && statuteContent.subtitulo) banner.querySelector("p").textContent = statuteContent.subtitulo;
+            if (statuteContent.texto) { const note = document.createElement("p"); note.textContent = statuteContent.texto; note.className = "conteudo-admin"; document.querySelector("main.estatuto-container")?.prepend(note); }
+        }
+    </script>
 </body>
 
 </html>

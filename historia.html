@@ -930,6 +930,15 @@
         });
     </script>
 
+    <script>
+        const historyContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").historia;
+        if (historyContent) {
+            const banner = document.querySelector(".page-banner");
+            if (banner && historyContent.titulo) banner.querySelector("h1").lastChild.textContent = ` ${historyContent.titulo}`;
+            if (banner && historyContent.subtitulo) banner.querySelector("p").textContent = historyContent.subtitulo;
+            if (historyContent.texto) { const note = document.createElement("p"); note.textContent = historyContent.texto; note.className = "conteudo-admin"; document.querySelector("main.historia-container")?.prepend(note); }
+        }
+    </script>
 </body>
 
 </html>
