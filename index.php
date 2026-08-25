@@ -2,10 +2,10 @@
 // ============================================================
 // CONFIGURAÇÃO DO BANCO DE DADOS
 // ============================================================
-$host = 'localhost';
-$db   = 'assga_db';
-$user = 'root';
-$pass = '';
+$host = getenv('ASSGA_DB_HOST') ?: '127.0.0.1';
+$db   = getenv('ASSGA_DB_NAME') ?: 'assga_db';
+$user = getenv('ASSGA_DB_USER') ?: 'assga_app';
+$pass = getenv('ASSGA_DB_PASSWORD') ?: 'assga_app_2026';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
