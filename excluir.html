@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin - Vagas ASSGA</title>
+
+<link
+    rel="icon"
+    href="src/imagens/Assga_foto.jpg"
+>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    padding:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f7fa,
+            #d9e2ec
+        );
+}
+
+/* LOGIN */
+
+.login{
+
+    max-width:400px;
+
+    margin:100px auto;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.18);
+
+    text-align:center;
+}
+
+.login img{
+
+    width:75px;
+
+    height:75px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
+}
+
+.login h1{
+
+    color:#003366;
+
+    margin-bottom:25px;
+}
+
+.login input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:16px;
+}
+
+.login button{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:15px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:#003366;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.login button:hover{
+
+    background:#004aad;
+}
+
+.erro{
+
+    margin-top:15px;
+
+    color:#b00000;
+
+    display:none;
+}
+
+
+/* PAINEL */
+
+#painel{
+
+    display:none;
+
+    max-width:1200px;
+
+    margin:auto;
+}
+
+header{
+
+    background:
+        linear-gradient(
+            135deg,
+            #003366,
+            #004aad
+        );
+
+    color:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+header h1{
+
+    margin:0;
+}
+
+.btn-sair{
+
+    background:#d00000;
+
+    color:white;
+
+    border:0;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+
+/* RESUMO */
+
+.resumo{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:15px;
+
+    margin:20px 0;
+}
+
+.card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.08);
+}
+
+.card strong{
+
+    display:block;
+
+    font-size:30px;
+
+    color:#003366;
+
+    margin-top:8px;
+}
+
+
+/* AÇÕES */
+
+.acoes{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+}
+
+.acoes button{
+
+    border:0;
+
+    padding:12px 18px;
+
+    border-radius:8px;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin:5px;
+}
+
+.btn-atualizar{
+
+    background:#004aad;
+}
+
+.btn-reset{
+
+    background:#d00000;
+}
+
+
+/* TABELA */
+
+.tabela{
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:auto;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.08);
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:800px;
+}
+
+th{
+
+    background:#003366;
+
+    color:white;
+
+    padding:14px;
+
+    text-align:left;
+}
+
+td{
+
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+}
+
+.btn-excluir{
+
+    background:#d00000;
+
+    color:white;
+
+    border:0;
+
+    padding:8px 12px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.btn-excluir:hover{
+
+    background:#a00000;
+}
+
+.status-pago{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#d9fbe5;
+    color:#08752b;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.status-nao-pago{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#ffe1e1;
+    color:#b00000;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.btn-pagamento{
+    background:#08752b;
+    color:white;
+    border:0;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.btn-pagamento.nao-pago{
+    background:#d97706;
+}
+
+.vaga-disponivel{
+
+    color:#08752b;
+
+    font-weight:bold;
+}
+
+.vaga-ocupada{
+
+    color:#003366;
+
+    font-weight:bold;
+}
+
+
+/* MENSAGEM */
+
+#mensagem{
+
+    display:none;
+
+    margin:15px 0;
+
+    padding:15px;
+
+    border-radius:8px;
+
+    background:#d9fbe5;
+
+    color:#08752b;
+
+    font-weight:bold;
+}
+
+
+/* CELULAR */
+
+@media(max-width:700px){
+
+    .resumo{
+
+        grid-template-columns:1fr;
+    }
+
+    header{
+
+        text-align:center;
+
+        justify-content:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ======================================
+     LOGIN PRIVADO
+====================================== -->
+
+<div
+    class="login"
+    id="login"
+>
+
+<img
+    src="src/imagens/Assga_foto.jpg"
+    alt="ASSGA"
+>
+
+<h1>
+🔐 Admin ASSGA
+</h1>
+
+<p>
+Área privada de gerenciamento de vagas
+</p>
+
+<input
+    type="password"
+    id="senha"
+    placeholder="Digite a senha"
+>
+
+<button
+    onclick="entrar()"
+>
+Entrar no painel
+</button>
+
+<div
+    class="erro"
+    id="erro"
+>
+❌ Senha incorreta.
+</div>
+
+</div>
+
+
+<!-- ======================================
+     PAINEL PRIVADO
+====================================== -->
+
+<div
+    id="painel"
+>
+
+
+<header>
+
+<h1>
+🎃 Painel de Vagas ASSGA
+</h1>
+
+<button
+    class="btn-sair"
+    onclick="sair()"
+>
+🚪 Sair
+</button>
+
+</header>
+
+
+<!-- RESUMO -->
+
+<div class="resumo">
+
+<div class="card">
+
+Vagas ocupadas
+
+<strong id="ocupadas">
+0
+</strong>
+
+</div>
+
+
+<div class="card">
+
+Vagas disponíveis
+
+<strong id="disponiveis">
+100
+</strong>
+
+</div>
+
+
+<div class="card">
+
+Total de vagas
+
+<strong>
+100
+</strong>
+
+</div>
+
+</div>
+
+
+<!-- AÇÕES -->
+
+<div class="acoes">
+
+<h2>
+⚙️ Administração
+</h2>
+
+<button
+    class="btn-atualizar"
+    onclick="carregarVagas()"
+>
+🔄 Atualizar
+</button>
+
+<button
+    class="btn-reset"
+    onclick="resetarVagas()"
+>
+🗑️ Apagar todas / Resetar 100/100
+</button>
+
+</div>
+
+
+<div id="mensagem"></div>
+
+
+<!-- TABELA -->
+
+<div class="tabela">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Vaga
+</th>
+
+<th>
+Nome
+</th>
+
+<th>
+CPF
+</th>
+
+<th>
+WhatsApp
+</th>
+
+<th>
+Pagamento
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Valor
+</th>
+
+<th>
+Data
+</th>
+
+<th>
+Ação
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="listaVagas">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   CONFIGURAÇÃO
+========================================== */
+
+const SENHA_ADMIN = "ASSGA2026";
+
+const LIMITE = 100;
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+function entrar(){
+
+    const senha =
+        document
+        .getElementById("senha")
+        .value;
+
+
+    if(
+        senha ===
+        SENHA_ADMIN
+    ){
+
+        sessionStorage.setItem(
+            "assga_admin",
+            "true"
+        );
+
+
+        document
+        .getElementById("login")
+        .style.display =
+            "none";
+
+
+        document
+        .getElementById("painel")
+        .style.display =
+            "block";
+
+
+        carregarVagas();
+
+    }
+
+    else{
+
+        document
+        .getElementById("erro")
+        .style.display =
+            "block";
+
+    }
+
+}
+
+
+/* ==========================================
+   VERIFICAR LOGIN
+========================================== */
+
+function verificarLogin(){
+
+    const logado =
+        sessionStorage.getItem(
+            "assga_admin"
+        );
+
+
+    if(logado === "true"){
+
+        document
+        .getElementById("login")
+        .style.display =
+            "none";
+
+
+        document
+        .getElementById("painel")
+        .style.display =
+            "block";
+
+
+        carregarVagas();
+
+    }
+
+}
+
+
+/* ==========================================
+   SAIR
+========================================== */
+
+function sair(){
+
+    sessionStorage.removeItem(
+        "assga_admin"
+    );
+
+    location.reload();
+
+}
+
+
+/* ==========================================
+   BANCO LOCAL
+========================================== */
+
+function obterInscricoes(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "assga_inscricoes"
+        )
+    ) || [];
+
+}
+
+
+function salvarInscricoes(lista){
+
+    localStorage.setItem(
+        "assga_inscricoes",
+        JSON.stringify(lista)
+    );
+
+}
+
+
+/* ==========================================
+   CARREGAR VAGAS
+========================================== */
+
+function carregarVagas(){
+
+    const lista =
+        obterInscricoes();
+
+
+    const tabela =
+        document.getElementById(
+            "listaVagas"
+        );
+
+
+    tabela.innerHTML = "";
+
+
+    for(
+        let numero = 1;
+        numero <= LIMITE;
+        numero++
+    ){
+
+        const inscricao =
+            lista.find(
+                item =>
+                    item.vaga === numero
+            );
+
+
+        const tr =
+            document.createElement(
+                "tr"
+            );
+
+
+        if(inscricao){
+
+            tr.innerHTML = `
+
+<td>
+<strong>
+Vaga ${numero}/100
+</strong>
+</td>
+
+<td>
+${escapar(inscricao.nome)}
+</td>
+
+<td>
+${escapar(inscricao.cpf)}
+</td>
+
+<td>
+${escapar(inscricao.telefone)}
+</td>
+
+<td>
+${escapar(inscricao.pagamento)}
+</td>
+
+<td>
+<span class="${String(inscricao.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "status-pago" : "status-nao-pago"}">
+${String(inscricao.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "🟢 PAGO" : "🔴 NÃO PAGO"}
+</span>
+</td>
+
+<td>
+R$ ${Number(inscricao.valor).toFixed(2)}
+</td>
+
+<td>
+${escapar(inscricao.data)}
+</td>
+
+<td>
+
+<button
+    class="btn-pagamento ${String(inscricao.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "nao-pago" : ""}"
+    onclick="alternarPagamento(${numero})"
+>
+${String(inscricao.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "🔴 Marcar não pago" : "🟢 Marcar como pago"}
+</button>
+<br>
+<button
+    class="btn-excluir"
+    onclick="excluirVaga(${numero})"
+>
+🗑️ Excluir
+</button>
+
+</td>
+
+`;
+
+        }
+
+        else{
+
+            tr.innerHTML = `
+
+<td>
+<strong class="vaga-disponivel">
+Vaga ${numero}/100
+</strong>
+</td>
+
+<td colspan="7"
+    class="vaga-disponivel">
+
+✅ Disponível
+
+</td>
+
+`;
+
+        }
+
+
+        tabela.appendChild(tr);
+
+    }
+
+
+    atualizarResumo();
+
+}
+
+
+/* ==========================================
+   SEGURANÇA DO TEXTO
+========================================== */
+
+function escapar(texto){
+
+    if(!texto){
+
+        return "";
+
+    }
+
+    return String(texto)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* ==========================================
+   RESUMO
+========================================== */
+
+function atualizarResumo(){
+
+    const lista =
+        obterInscricoes();
+
+
+    const ocupadas =
+        lista.length;
+
+
+    const disponiveis =
+        LIMITE - ocupadas;
+
+
+    document
+    .getElementById(
+        "ocupadas"
+    )
+    .textContent =
+        ocupadas;
+
+
+    document
+    .getElementById(
+        "disponiveis"
+    )
+    .textContent =
+        disponiveis;
+
+}
+
+
+/* ==========================================
+   ALTERAR STATUS DO PAGAMENTO
+========================================== */
+
+function alternarPagamento(numero){
+
+    const lista = obterInscricoes();
+    const inscricao = lista.find(item => Number(item.vaga) === Number(numero));
+
+    if(!inscricao){
+        mostrarMensagem("❌ Inscrição não encontrada.");
+        return;
+    }
+
+    const atual = String(inscricao.statusPagamento || "NAO PAGO").toUpperCase();
+    const novoStatus = atual === "PAGO" ? "NAO PAGO" : "PAGO";
+
+    const confirmar = confirm(
+        novoStatus === "PAGO"
+            ? "🟢 Confirmar pagamento\n\nVaga: " + numero + "/100\n\nMarcar este cliente como PAGO?"
+            : "🔴 Alterar pagamento\n\nVaga: " + numero + "/100\n\nMarcar este cliente como NÃO PAGO?"
+    );
+
+    if(!confirmar) return;
+
+    inscricao.statusPagamento = novoStatus;
+    salvarInscricoes(lista);
+    carregarVagas();
+
+    mostrarMensagem(
+        novoStatus === "PAGO"
+            ? "🟢 Pagamento da vaga " + numero + "/100 confirmado como PAGO."
+            : "🔴 Pagamento da vaga " + numero + "/100 alterado para NÃO PAGO."
+    );
+}
+
+
+/* ==========================================
+   EXCLUIR UMA VAGA
+========================================== */
+
+function excluirVaga(numero){
+
+    const confirmar =
+        confirm(
+            "🗑️ EXCLUIR VAGA\n\n" +
+
+            "Vaga: " +
+            numero +
+            "/100\n\n" +
+
+            "Esta inscrição será removida.\n\n" +
+
+            "Deseja continuar?"
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    let lista =
+        obterInscricoes();
+
+
+    const antes =
+        lista.length;
+
+
+    lista =
+        lista.filter(
+            item =>
+                item.vaga !== numero
+        );
+
+
+    salvarInscricoes(
+        lista
+    );
+
+
+    if(
+        lista.length <
+        antes
+    ){
+
+        mostrarMensagem(
+            "🗑️ Vaga " +
+            numero +
+            "/100 excluída com sucesso."
+        );
+
+    }
+
+
+    carregarVagas();
+
+}
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+function resetarVagas(){
+
+    const confirmar =
+        confirm(
+
+            "⚠️ ATENÇÃO!\n\n" +
+
+            "Isso vai APAGAR TODAS as " +
+            "inscrições deste navegador.\n\n" +
+
+            "O contador voltará para:\n" +
+
+            "100/100\n\n" +
+
+            "Deseja realmente continuar?"
+
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "assga_inscricoes"
+    );
+
+
+    mostrarMensagem(
+        "🔄 Todas as vagas foram apagadas. Agora: 100/100 disponíveis."
+    );
+
+
+    carregarVagas();
+
+}
+
+
+/* ==========================================
+   MENSAGEM
+========================================== */
+
+function mostrarMensagem(texto){
+
+    const elemento =
+        document.getElementById(
+            "mensagem"
+        );
+
+
+    elemento.textContent =
+        texto;
+
+
+    elemento.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            elemento.style.display =
+                "none";
+
+        },
+        4000
+    );
+
+}
+
+
+/* ==========================================
+   ENTER NO LOGIN
+========================================== */
+
+document
+.getElementById("senha")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            entrar();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
+verificarLogin();
+
+</script>
+
+</body>
+
+</html>
