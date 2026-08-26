@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ASSGA - Associação Desportiva. Conheça nossa diretoria e equipe.">
     <meta name="theme-color" content="#003366">
     <title>Diretoria - ASSGA</title>
-
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-    <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
-        /* ===== ESTILO COMPLETO ===== */
+        /* ===== MESMO ESTILO DO ORIGINAL (resumido) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -27,7 +23,7 @@
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
 
-        /* HEADER (mesmo) */
+        /* HEADER e MENU = mesmo do index (omitido) */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -45,7 +41,6 @@
         .logo-area a { display: flex; text-decoration: none; }
         .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
         .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
         .menu {
             list-style: none;
             display: inline-grid;
@@ -155,7 +150,7 @@
         }
         .membro-card .contato a:hover { background: #ffd700; color: #003366; transform: scale(1.15); }
 
-        /* FALE CONOSCO e FOOTER (mesmo) */
+        /* FALE CONOSCO e FOOTER = mesmo do index (omitido) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -294,9 +289,6 @@
             .footer-container { flex-direction: column; text-align: center; }
             .footer-redes { margin-top: 15px; }
         }
-        @media (max-width: 480px) {
-            .diretoria-grid { grid-template-columns: 1fr; }
-        }
         @media (min-width: 768px) and (max-width: 1023px) {
             header { padding: 15px; }
             .logo { font-size: 20px; }
@@ -311,9 +303,7 @@
         }
     </style>
 </head>
-
 <body>
-
     <!-- ===== HEADER ===== -->
     <header>
         <div class="logo-area">
@@ -345,13 +335,13 @@
         <p>Conheça a equipe que faz a ASSGA acontecer.</p>
     </section>
 
-    <!-- ===== DIRETORIA DINÂMICA ===== -->
+    <!-- ===== DIRETORIA (dinâmica) ===== -->
     <main class="diretoria-container">
         <h2><i class="fas fa-user-tie"></i> Membros da Diretoria</h2>
         <div class="diretoria-grid" id="listaDiretoriaPagina"></div>
     </main>
 
-    <!-- ===== FALE CONOSCO ===== -->
+    <!-- ===== FALE CONOSCO e FOOTER ===== -->
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
@@ -390,7 +380,6 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-container">
             <div class="footer-copy">
@@ -415,9 +404,8 @@
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script>
-        // Menu mobile
+        // Menu mobile (mesmo do index)
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
@@ -463,6 +451,7 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
+        // ESCAPE HTML
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -475,6 +464,7 @@
             });
         }
 
+        // CARREGAR DIRETORIA
         function carregarDiretoria() {
             const container = document.getElementById('listaDiretoriaPagina');
             const directors = JSON.parse(localStorage.getItem('assga_diretoria') || '[]');

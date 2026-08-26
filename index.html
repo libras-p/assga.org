@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ASSGA - Associação Desportiva. Esporte, integração, eventos e participação social.">
     <meta name="theme-color" content="#003366">
     <title>ASSGA - Associação Desportiva</title>
-
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
-        /* ===== ESTILO COMPLETO ===== */
+        /* ===== MESMO ESTILO DO ORIGINAL (mantido) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -175,7 +172,7 @@
         .texto p i { color: #004aad; margin-right: 5px; }
         .texto p strong { color: #003366; }
 
-        /* FALE CONOSCO */
+        /* FALE CONOSCO e FOOTER (mesmo do original) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -238,7 +235,6 @@
         }
         .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
 
-        /* FOOTER */
         footer {
             background: linear-gradient(135deg, #003366 0%, #002244 100%);
             color: #fff;
@@ -276,7 +272,7 @@
         }
         .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        /* RESPONSIVIDADE */
+        /* RESPONSIVIDADE (resumida) */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -315,14 +311,6 @@
             .footer-redes { margin-top: 15px; }
             h2 { font-size: 1.8em; margin: 30px 0; }
         }
-        @media (max-width: 380px) {
-            .logo { font-size: 16px; }
-            .logo-area img { width: 44px; height: 55px; }
-            .slider { height: 240px; }
-            .slider img { height: 240px; }
-            .slider-info { font-size: 11px; padding: 7px 12px; }
-            .noticia-imagem { height: 220px; }
-        }
         @media (min-width: 768px) and (max-width: 1023px) {
             header { padding: 15px; }
             .logo { font-size: 20px; }
@@ -352,11 +340,9 @@
             </a>
             <div class="logo">ASSGA</div>
         </div>
-
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false" type="button">
             <i id="menuIcon" class="fas fa-bars"></i>
         </button>
-
         <nav aria-label="Menu principal">
             <ul class="menu" id="menu">
                 <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
@@ -544,7 +530,7 @@
             this.alt = "Logo da ASSGA";
         });
 
-        // ===== ESCAPE HTML =====
+        // ESCAPE HTML
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -557,7 +543,7 @@
             });
         }
 
-        // ===== CARREGAR NOTÍCIAS =====
+        // CARREGAR NOTÍCIAS
         function carregarNoticias() {
             const container = document.getElementById('containerNoticias');
             const noticias = JSON.parse(localStorage.getItem('assga_noticias') || '[]');
@@ -597,7 +583,7 @@
             `).join('');
         }
 
-        // ===== CARREGAR DADOS DO ADMIN (título do slider e texto extra) =====
+        // CARREGAR DADOS DA HOME (título do slider e texto extra)
         const homeContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").index;
         if (homeContent) {
             const sliderInfo = document.getElementById("sliderInfo");

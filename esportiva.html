@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ASSGA - Associação Desportiva. Modalidades esportivas, campeonatos e atividades.">
     <meta name="theme-color" content="#003366">
     <title>Esportiva - ASSGA</title>
-
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
-        /* ===== MESMO ESTILO DO HISTORIA ===== */
+        /* ===== ESTILO IDÊNTICO AO HISTORIA, com adaptações ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -26,8 +23,7 @@
         }
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
-
-        /* HEADER (mesmo) */
+        /* HEADER, MENU, FOOTER, FALE CONOSCO = MESMO DO INDEX (omitido para brevidade, mas deve ser mantido) */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -45,7 +41,6 @@
         .logo-area a { display: flex; text-decoration: none; }
         .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
         .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
         .menu {
             list-style: none;
             display: inline-grid;
@@ -122,8 +117,18 @@
             box-shadow: 0 18px 50px rgba(0,74,173,.2);
             border-bottom-color: #ffd700;
         }
-        .modalidade-card .icon-grande { font-size: 4em; color: #003366; margin-bottom: 15px; display: block; }
-        .modalidade-card .icon-grande i { background: linear-gradient(135deg, #003366, #004aad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .modalidade-card .icon-grande {
+            font-size: 4em;
+            color: #003366;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .modalidade-card .icon-grande i {
+            background: linear-gradient(135deg, #003366, #004aad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
         .modalidade-card h3 { color: #003366; font-size: 1.6em; margin-bottom: 10px; }
         .modalidade-card p { color: #666; line-height: 1.6; font-size: 1em; }
         .modalidade-card .tag {
@@ -136,6 +141,7 @@
             font-weight: 700;
             margin-top: 10px;
         }
+
         .campeonato-item {
             background: #fff;
             border-radius: 20px;
@@ -170,7 +176,7 @@
         }
         .campeonato-item .info-camp i { color: #004aad; }
 
-        /* FALE CONOSCO e FOOTER (mesmo do index) */
+        /* FALE CONOSCO e FOOTER = mesmo do index (omitido) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -270,6 +276,7 @@
         }
         .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
+        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -327,7 +334,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <!-- ===== HEADER ===== -->
@@ -406,7 +412,6 @@
         </div>
 
         <h2 style="margin-top:60px;"><i class="fas fa-trophy"></i> Campeonatos e Atividades</h2>
-
         <div class="campeonato-item">
             <h3><i class="fas fa-trophy"></i> Campeonato de Futsal - 2026</h3>
             <div class="info-camp">
@@ -416,7 +421,6 @@
                 <span><i class="fas fa-circle-check" style="color:#28a745;"></i> Em andamento</span>
             </div>
         </div>
-
         <div class="campeonato-item">
             <h3><i class="fas fa-trophy"></i> 2º Halloween ASSGA</h3>
             <div class="info-camp">
@@ -426,7 +430,6 @@
                 <span><i class="fas fa-clock" style="color:#ffc107;"></i> Inscrições abertas</span>
             </div>
         </div>
-
         <div class="campeonato-item">
             <h3><i class="fas fa-trophy"></i> Torneio de Vôlei de Praia</h3>
             <div class="info-camp">
@@ -436,7 +439,6 @@
                 <span><i class="fas fa-circle-check" style="color:#28a745;"></i> Confirmado</span>
             </div>
         </div>
-
         <div class="campeonato-item">
             <h3><i class="fas fa-trophy"></i> Corrida Rústica ASSGA</h3>
             <div class="info-camp">
@@ -452,6 +454,7 @@
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
+            <!-- mesmos cards do index -->
             <div class="info-card">
                 <div class="icon"><i class="fas fa-location-dot"></i></div>
                 <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
@@ -560,18 +563,7 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            return String(text).replace(/[&<>"']/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                if (m === '"') return '&quot;';
-                if (m === "'") return '&#039;';
-                return m;
-            });
-        }
-
+        // Carregar dados do admin
         const sportsContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").esportiva;
         if (sportsContent) {
             const banner = document.getElementById("bannerEsportiva");
@@ -588,6 +580,18 @@
                 p.style.cssText = "background:#f0f4fa; padding:20px; border-radius:16px; margin-bottom:30px; font-size:1.1rem; line-height:1.7; border-left:4px solid #ffd700;";
                 extraDiv.appendChild(p);
             }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>"']/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                if (m === "'") return '&#039;';
+                return m;
+            });
         }
     </script>
 </body>
