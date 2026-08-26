@@ -10,22 +10,12 @@
 
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* Mesmo estilo do original, mantido intacto */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /* ===== MESMO ESTILO DO ORIGINAL (mantido) ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        html { scroll-behavior: smooth; }
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
@@ -34,24 +24,10 @@
             display: flex;
             flex-direction: column;
         }
+        h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
+        h2 i { color: #004aad; margin-right: 10px; }
 
-        h2 {
-            text-align: center;
-            margin: 45px 0 35px;
-            color: #003366;
-            font-size: 2.5em;
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, .1);
-        }
-
-        h2 i {
-            color: #004aad;
-            margin-right: 10px;
-        }
-
-        /* ====================================================
-           HEADER
-        ==================================================== */
+        /* HEADER */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -62,48 +38,14 @@
             position: sticky;
             top: 0;
             z-index: 9999;
-            box-shadow: 0 8px 32px rgba(0, 51, 102, .3);
+            box-shadow: 0 8px 32px rgba(0,51,102,.3);
         }
+        .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform .3s ease; }
+        .logo-area:hover { transform: scale(1.05); }
+        .logo-area a { display: flex; text-decoration: none; }
+        .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: transform .3s ease;
-        }
-
-        .logo-area:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-area a {
-            display: flex;
-            text-decoration: none;
-        }
-
-        .logo-area img {
-            width: 56px;
-            height: 68px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ====================================================
-           MENU
-        ==================================================== */
         .menu {
             list-style: none;
             display: inline-grid;
@@ -112,11 +54,7 @@
             margin-left: auto;
             align-items: center;
         }
-
-        .menu li {
-            position: relative;
-        }
-
+        .menu li { position: relative; }
         .menu a {
             display: block;
             color: #fff;
@@ -127,24 +65,14 @@
             border-radius: 25px;
             transition: all .4s ease;
         }
-
-        .menu a i {
-            margin-right: 7px;
-            color: #fff;
-            transition: .3s;
-        }
-
+        .menu a i { margin-right: 7px; color: #fff; transition: .3s; }
         .menu a:hover {
             color: #003366;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
-            box-shadow: 0 8px 24px rgba(255, 215, 0, .4);
+            box-shadow: 0 8px 24px rgba(255,215,0,.4);
             transform: translateY(-3px);
         }
-
-        .menu a:hover i {
-            color: #fff;
-        }
-
+        .menu a:hover i { color: #fff; }
         .menu-toggle {
             display: none;
             width: 45px;
@@ -160,36 +88,25 @@
             background: transparent;
             transition: .3s;
         }
+        .menu-toggle:hover { background: rgba(255,255,255,.12); }
+        .menu-toggle i { pointer-events: none; color: #fff; }
 
-        .menu-toggle:hover {
-            background: rgba(255, 255, 255, .12);
-        }
-
-        .menu-toggle i {
-            pointer-events: none;
-            color: #fff;
-        }
-
-        /* ====================================================
-           SLIDER
-        ==================================================== */
+        /* SLIDER */
         .slider {
             width: 100%;
             height: 560px;
             overflow: hidden;
             position: relative;
             background: #003366;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, .25);
+            box-shadow: 0 10px 35px rgba(0,0,0,.25);
         }
-
         .slider::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, .05), rgba(0, 0, 0, .30));
+            background: linear-gradient(to bottom, rgba(0,0,0,.05), rgba(0,0,0,.30));
             pointer-events: none;
         }
-
         .slider img {
             width: 100%;
             height: 100%;
@@ -198,13 +115,12 @@
             display: block;
             transition: opacity .5s ease;
         }
-
         .slider-info {
             position: absolute;
             bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, .60);
+            background: rgba(0,0,0,.60);
             backdrop-filter: blur(8px);
             color: #fff;
             padding: 12px 24px;
@@ -215,24 +131,12 @@
             z-index: 5;
             text-align: center;
             white-space: nowrap;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, .25);
+            box-shadow: 0 5px 20px rgba(0,0,0,.25);
         }
+        .slider-info i { color: #ffd700; margin-right: 6px; }
 
-        .slider-info i {
-            color: #ffd700;
-            margin-right: 6px;
-        }
-
-        /* ====================================================
-           NOTÍCIAS
-        ==================================================== */
-        .noticias {
-            max-width: 1250px;
-            margin: auto;
-            padding: 45px 20px;
-            flex: 1;
-        }
-
+        /* NOTÍCIAS */
+        .noticias { max-width: 1250px; margin: auto; padding: 45px 20px; flex: 1; }
         .noticia-item {
             background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
             display: flex;
@@ -241,92 +145,41 @@
             margin-bottom: 35px;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, .12);
+            box-shadow: 0 10px 35px rgba(0,0,0,.12);
             transition: all .4s ease;
             border-left: 6px solid #004aad;
             overflow: hidden;
         }
-
         .noticia-item:hover {
             transform: translateY(-8px);
-            box-shadow: 0 18px 50px rgba(0, 74, 173, .22);
+            box-shadow: 0 18px 50px rgba(0,74,173,.22);
             border-left-color: #ffd700;
         }
-
         .noticia-imagem {
             flex-shrink: 0;
             width: 390px;
             height: 280px;
             overflow: hidden;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+            box-shadow: 0 10px 30px rgba(0,0,0,.2);
             display: block;
         }
-
-        .noticia-imagem img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform .5s ease;
-        }
-
-        .noticia-imagem:hover img {
-            transform: scale(1.08);
-        }
-
-        .texto {
-            flex: 1;
-        }
-
-        .texto h3 {
-            color: #003366;
-            margin-bottom: 12px;
-            font-size: 2em;
-            font-weight: 900;
-        }
-
-        .texto h3 i {
-            color: #004aad;
-            margin-right: 8px;
-        }
-
-        .texto data {
-            display: block;
-            color: #004aad;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-
-        .texto data i {
-            color: #003366;
-            margin-right: 5px;
-        }
-
-        .texto p {
-            line-height: 1.7;
-            color: #555;
-            margin: 10px 0;
-            font-size: 15px;
-        }
-
-        .texto p i {
-            color: #004aad;
-            margin-right: 5px;
-        }
-
-        .texto p strong {
-            color: #003366;
-        }
-
+        .noticia-imagem img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+        .noticia-imagem:hover img { transform: scale(1.08); }
+        .texto { flex: 1; }
+        .texto h3 { color: #003366; margin-bottom: 12px; font-size: 2em; font-weight: 900; }
+        .texto h3 i { color: #004aad; margin-right: 8px; }
+        .texto data { display: block; color: #004aad; font-size: 14px; font-weight: 700; margin-bottom: 18px; }
+        .texto data i { color: #003366; margin-right: 5px; }
+        .texto p { line-height: 1.7; color: #555; margin: 10px 0; font-size: 15px; }
+        .texto p i { color: #004aad; margin-right: 5px; }
+        .texto p strong { color: #003366; }
         .evento-info {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 20px;
         }
-
         .evento-info-item {
             padding: 14px 15px;
             background: linear-gradient(135deg, #eef5ff, #f7faff);
@@ -337,23 +190,13 @@
             line-height: 1.5;
             transition: all .3s ease;
         }
-
         .evento-info-item:hover {
             transform: translateY(-3px);
             border-left-color: #ffd700;
-            box-shadow: 0 5px 15px rgba(0, 74, 173, .12);
+            box-shadow: 0 5px 15px rgba(0,74,173,.12);
         }
-
-        .evento-info-item i {
-            color: #004aad;
-            width: 20px;
-            margin-right: 5px;
-        }
-
-        .evento-info-item strong {
-            color: #003366;
-        }
-
+        .evento-info-item i { color: #004aad; width: 20px; margin-right: 5px; }
+        .evento-info-item strong { color: #003366; }
         .preco-evento {
             display: inline-block;
             margin-top: 18px;
@@ -364,13 +207,9 @@
             color: #6b5200;
             font-size: 19px;
             font-weight: 900;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, .2);
+            box-shadow: 0 5px 15px rgba(255,215,0,.2);
         }
-
-        .preco-evento i {
-            margin-right: 7px;
-        }
-
+        .preco-evento i { margin-right: 7px; }
         .aviso-vagas {
             margin-top: 15px;
             padding: 13px 16px;
@@ -381,11 +220,7 @@
             font-size: 14px;
             font-weight: 700;
         }
-
-        .aviso-vagas i {
-            margin-right: 6px;
-        }
-
+        .aviso-vagas i { margin-right: 6px; }
         .botao-inscricao {
             display: inline-flex;
             align-items: center;
@@ -399,28 +234,21 @@
             font-size: 16px;
             font-weight: 800;
             border: 2px solid #ffd700;
-            box-shadow: 0 8px 20px rgba(0, 51, 102, .30);
+            box-shadow: 0 8px 20px rgba(0,51,102,.30);
             transition: all .3s ease;
         }
-
         .botao-inscricao:hover {
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 30px rgba(0, 74, 173, .4);
+            box-shadow: 0 12px 30px rgba(0,74,173,.4);
         }
+        .botao-inscricao i { color: #ffd700; }
 
-        .botao-inscricao i {
-            color: #ffd700;
-        }
-
-        /* ====================================================
-           FALE CONOSCO
-        ==================================================== */
+        /* FALE CONOSCO */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
             margin-top: 40px;
         }
-
         .info-container {
             display: flex;
             justify-content: center;
@@ -429,24 +257,21 @@
             max-width: 1200px;
             margin: auto;
         }
-
         .info-card {
             width: 250px;
             background: linear-gradient(135deg, #fff, #f8f9fa);
             padding: 28px 22px;
             border-radius: 16px;
             text-align: center;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+            box-shadow: 0 8px 24px rgba(0,0,0,.1);
             transition: all .4s ease;
             border-top: 4px solid #004aad;
         }
-
         .info-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(0, 74, 173, .2);
+            box-shadow: 0 16px 48px rgba(0,74,173,.2);
             border-top-color: #ffd700;
         }
-
         .info-card .icon {
             width: 65px;
             height: 65px;
@@ -458,31 +283,13 @@
             background: linear-gradient(135deg, #003366, #004aad);
             color: #ffd700;
             font-size: 28px;
-            box-shadow: 0 8px 20px rgba(0, 51, 102, .25);
+            box-shadow: 0 8px 20px rgba(0,51,102,.25);
             transition: .4s;
         }
-
-        .info-card:hover .icon {
-            transform: scale(1.15) rotate(8deg);
-        }
-
-        .info-card h3 {
-            color: #003366;
-            margin: 12px 0;
-            font-size: 1.3em;
-        }
-
-        .info-card h3 i {
-            color: #004aad;
-            margin-right: 6px;
-        }
-
-        .info-card p {
-            color: #666;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-
+        .info-card:hover .icon { transform: scale(1.15) rotate(8deg); }
+        .info-card h3 { color: #003366; margin: 12px 0; font-size: 1.3em; }
+        .info-card h3 i { color: #004aad; margin-right: 6px; }
+        .info-card p { color: #666; line-height: 1.5; word-break: break-word; }
         .info-card a {
             display: inline-flex;
             align-items: center;
@@ -497,23 +304,15 @@
             text-decoration: none;
             transition: all .3s ease;
         }
+        .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
 
-        .info-card a:hover {
-            color: #003366;
-            background: #ffd700;
-            transform: scale(1.15);
-        }
-
-        /* ====================================================
-           FOOTER
-        ==================================================== */
+        /* FOOTER */
         footer {
             background: linear-gradient(135deg, #003366 0%, #002244 100%);
             color: #fff;
             padding: 35px 20px;
             margin-top: 50px;
         }
-
         .footer-container {
             display: flex;
             justify-content: space-between;
@@ -523,24 +322,13 @@
             max-width: 1200px;
             margin: auto;
         }
-
-        .footer-copy {
-            font-size: 13px;
-            line-height: 1.8;
-            opacity: .9;
-        }
-
-        .footer-copy i {
-            color: #ffd700;
-            margin-right: 5px;
-        }
-
+        .footer-copy { font-size: 13px; line-height: 1.8; opacity: .9; }
+        .footer-copy i { color: #ffd700; margin-right: 5px; }
         .footer-redes {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .footer-redes a {
             width: 45px;
             height: 45px;
@@ -550,42 +338,19 @@
             color: #fff;
             font-size: 21px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, .10);
+            background: rgba(255,255,255,.10);
             text-decoration: none;
             transition: all .3s ease;
         }
+        .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        .footer-redes a:hover {
-            color: #003366;
-            background: #ffd700;
-            transform: translateY(-5px) scale(1.1);
-        }
-
-        /* ====================================================
-           RESPONSIVIDADE
-        ==================================================== */
+        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
-            header {
-                padding: 12px 15px;
-            }
-
-            .logo-area {
-                gap: 10px;
-            }
-
-            .logo-area img {
-                width: 48px;
-                height: 60px;
-            }
-
-            .logo {
-                font-size: 18px;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
+            header { padding: 12px 15px; }
+            .logo-area { gap: 10px; }
+            .logo-area img { width: 48px; height: 60px; }
+            .logo { font-size: 18px; }
+            .menu-toggle { display: flex; }
             .menu {
                 display: none;
                 position: absolute;
@@ -597,220 +362,61 @@
                 gap: 4px;
                 margin: 0;
                 padding: 15px;
-                background: linear-gradient(135deg, rgba(0, 51, 102, .98), rgba(0, 74, 173, .98));
+                background: linear-gradient(135deg, rgba(0,51,102,.98), rgba(0,74,173,.98));
                 border-radius: 15px;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, .30);
+                box-shadow: 0 15px 35px rgba(0,0,0,.30);
             }
-
-            .menu.active {
-                display: grid;
-            }
-
-            .menu li {
-                width: 100%;
-                padding: 2px 0;
-            }
-
-            .menu a {
-                width: 100%;
-                text-align: left;
-                padding: 13px 15px;
-            }
-
-            .menu a i {
-                width: 25px;
-                text-align: center;
-                color: #fff;
-            }
-
-            .menu a:hover i {
-                color: #fff;
-            }
-
-            .slider {
-                height: 280px;
-            }
-
-            .slider img {
-                width: 100%;
-                height: 280px;
-                object-fit: cover;
-                object-position: center;
-            }
-
-            .slider-info {
-                bottom: 15px;
-                font-size: 12px;
-                padding: 8px 15px;
-                max-width: 90%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-            .noticias {
-                padding: 25px 12px;
-            }
-
-            .noticia-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 18px;
-                padding: 18px;
-            }
-
-            .noticia-imagem {
-                width: 100%;
-                height: 250px;
-            }
-
-            .texto {
-                text-align: center;
-            }
-
-            .texto h3 {
-                font-size: 1.45em;
-            }
-
-            .evento-info {
-                grid-template-columns: 1fr;
-                text-align: left;
-            }
-
-            .botao-inscricao {
-                width: 100%;
-                padding: 15px 20px;
-                justify-content: center;
-            }
-
-            .preco-evento {
-                width: 100%;
-                text-align: center;
-            }
-
-            .info-card {
-                width: 100%;
-            }
-
-            .footer-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-redes {
-                margin-top: 15px;
-            }
-
-            h2 {
-                font-size: 1.8em;
-                margin: 30px 0;
-            }
+            .menu.active { display: grid; }
+            .menu li { width: 100%; padding: 2px 0; }
+            .menu a { width: 100%; text-align: left; padding: 13px 15px; }
+            .menu a i { width: 25px; text-align: center; color: #fff; }
+            .slider { height: 280px; }
+            .slider img { width: 100%; height: 280px; object-fit: cover; object-position: center; }
+            .slider-info { bottom: 15px; font-size: 12px; padding: 8px 15px; max-width: 90%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .noticias { padding: 25px 12px; }
+            .noticia-item { flex-direction: column; text-align: center; gap: 18px; padding: 18px; }
+            .noticia-imagem { width: 100%; height: 250px; }
+            .texto { text-align: center; }
+            .texto h3 { font-size: 1.45em; }
+            .evento-info { grid-template-columns: 1fr; text-align: left; }
+            .botao-inscricao { width: 100%; padding: 15px 20px; justify-content: center; }
+            .preco-evento { width: 100%; text-align: center; }
+            .info-card { width: 100%; }
+            .footer-container { flex-direction: column; text-align: center; }
+            .footer-redes { margin-top: 15px; }
+            h2 { font-size: 1.8em; margin: 30px 0; }
         }
-
         @media (max-width: 380px) {
-            .logo {
-                font-size: 16px;
-            }
-
-            .logo-area img {
-                width: 44px;
-                height: 55px;
-            }
-
-            .slider {
-                height: 240px;
-            }
-
-            .slider img {
-                height: 240px;
-            }
-
-            .slider-info {
-                font-size: 11px;
-                padding: 7px 12px;
-            }
-
-            .noticia-imagem {
-                height: 220px;
-            }
+            .logo { font-size: 16px; }
+            .logo-area img { width: 44px; height: 55px; }
+            .slider { height: 240px; }
+            .slider img { height: 240px; }
+            .slider-info { font-size: 11px; padding: 7px 12px; }
+            .noticia-imagem { height: 220px; }
         }
-
         @media (min-width: 768px) and (max-width: 1023px) {
-            header {
-                padding: 15px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .menu {
-                gap: 4px;
-            }
-
-            .menu a {
-                font-size: 12px;
-                padding: 10px 9px;
-            }
-
-            .menu a i {
-                margin-right: 4px;
-            }
-
-            .slider {
-                height: 400px;
-            }
-
-            .slider img {
-                width: 100%;
-                height: 400px;
-                object-fit: cover;
-                object-position: center;
-            }
-
-            .noticia-item {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .noticia-imagem {
-                width: 100%;
-                height: 350px;
-            }
-
-            .evento-info {
-                text-align: left;
-            }
-
-            .info-card {
-                width: 45%;
-            }
+            header { padding: 15px; }
+            .logo { font-size: 20px; }
+            .menu { gap: 4px; }
+            .menu a { font-size: 12px; padding: 10px 9px; }
+            .menu a i { margin-right: 4px; }
+            .slider { height: 400px; }
+            .slider img { width: 100%; height: 400px; object-fit: cover; object-position: center; }
+            .noticia-item { flex-direction: column; text-align: center; }
+            .noticia-imagem { width: 100%; height: 350px; }
+            .evento-info { text-align: left; }
+            .info-card { width: 45%; }
         }
-
-        /* ====================================================
-           ACESSIBILIDADE
-        ==================================================== */
-        a:focus,
-        button:focus {
-            outline: 3px solid #ffd700;
-            outline-offset: 3px;
-        }
-
+        a:focus, button:focus { outline: 3px solid #ffd700; outline-offset: 3px; }
         @media (prefers-reduced-motion: reduce) {
-            * {
-                scroll-behavior: auto !important;
-                transition: none !important;
-                animation: none !important;
-            }
+            * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ====================================================
-    HEADER
-    ==================================================== -->
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="logo-area">
             <a href="index.html" aria-label="Página inicial ASSGA">
@@ -831,13 +437,13 @@
                 <li><a href="evento.html"><i class="fas fa-calendar-days"></i> Eventos</a></li>
                 <li><a href="estatuto.html"><i class="fas fa-file-contract"></i> Estatuto</a></li>
                 <li><a href="diretoria.html"><i class="fas fa-users"></i> Diretoria</a></li>
+                <li><a href="login.html"><i class="fas fa-id-card"></i> Área do Sócio</a></li>
+                <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- ====================================================
-    SLIDER
-    ==================================================== -->
+    <!-- ===== SLIDER ===== -->
     <section class="slider" aria-label="Galeria de imagens da ASSGA">
         <img id="slide" src="src/imagens/foto1.jpg" alt="ASSGA - Associação Desportiva">
         <div class="slider-info" id="sliderInfo">
@@ -846,9 +452,7 @@
         </div>
     </section>
 
-    <!-- ====================================================
-    NOTÍCIAS
-    ==================================================== -->
+    <!-- ===== NOTÍCIAS ===== -->
     <main class="noticias">
         <h2><i class="fas fa-newspaper"></i> Notícias</h2>
 
@@ -867,48 +471,18 @@
                 <p><i class="fas fa-star"></i> Prepare-se para um evento especial com muita diversão, esporte, integração e confraternização.</p>
 
                 <div class="evento-info">
-                    <div class="evento-info-item">
-                        <i class="fas fa-calendar-days"></i>
-                        <strong>Data</strong><br>28 e 29 de novembro de 2026
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-location-dot"></i>
-                        <strong>Local</strong><br>Em breve
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-ticket"></i>
-                        <strong>Vagas</strong><br>100 participantes
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-calendar-check"></i>
-                        <strong>Inscrições</strong><br>11/08 até 15/09/2026
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-credit-card"></i>
-                        <strong>Pagamento</strong><br>PIX / Crédito em até 2x / Dinheiro
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-gift"></i>
-                        <strong>Evento</strong><br>Diversão, esporte e integração
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-users"></i>
-                        <strong>Público</strong><br>Participantes inscritos
-                    </div>
-                    <div class="evento-info-item">
-                        <i class="fas fa-circle-info"></i>
-                        <strong>Informações</strong><br>Entre em contato com a ASSGA
-                    </div>
+                    <div class="evento-info-item"><i class="fas fa-calendar-days"></i><strong>Data</strong><br>28 e 29 de novembro de 2026</div>
+                    <div class="evento-info-item"><i class="fas fa-location-dot"></i><strong>Local</strong><br>Em breve</div>
+                    <div class="evento-info-item"><i class="fas fa-ticket"></i><strong>Vagas</strong><br>100 participantes</div>
+                    <div class="evento-info-item"><i class="fas fa-calendar-check"></i><strong>Inscrições</strong><br>11/08 até 15/09/2026</div>
+                    <div class="evento-info-item"><i class="fas fa-credit-card"></i><strong>Pagamento</strong><br>PIX / Crédito em até 2x / Dinheiro</div>
+                    <div class="evento-info-item"><i class="fas fa-gift"></i><strong>Evento</strong><br>Diversão, esporte e integração</div>
+                    <div class="evento-info-item"><i class="fas fa-users"></i><strong>Público</strong><br>Participantes inscritos</div>
+                    <div class="evento-info-item"><i class="fas fa-circle-info"></i><strong>Informações</strong><br>Entre em contato com a ASSGA</div>
                 </div>
 
-                <div class="preco-evento">
-                    <i class="fas fa-money-bill-wave"></i> Inscrição: R$ 100,00
-                </div>
-
-                <div class="aviso-vagas">
-                    <i class="fas fa-triangle-exclamation"></i> Atenção: inscrições limitadas às primeiras 100 pessoas.
-                </div>
-
+                <div class="preco-evento"><i class="fas fa-money-bill-wave"></i> Inscrição: R$ 100,00</div>
+                <div class="aviso-vagas"><i class="fas fa-triangle-exclamation"></i> Atenção: inscrições limitadas às primeiras 100 pessoas.</div>
                 <div style="margin-top:20px;">
                     <a href="pagamento.html" class="botao-inscricao" aria-label="Fazer inscrição no Halloween ASSGA">
                         <i class="fas fa-ticket"></i> Fazer inscrição <i class="fas fa-arrow-right"></i>
@@ -918,9 +492,7 @@
         </article>
     </main>
 
-    <!-- ====================================================
-    FALE CONOSCO
-    ==================================================== -->
+    <!-- ===== FALE CONOSCO ===== -->
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
@@ -932,7 +504,6 @@
                     <i class="fas fa-map-location-dot"></i>
                 </a>
             </div>
-
             <div class="info-card">
                 <div class="icon"><i class="fas fa-envelope"></i></div>
                 <h3><i class="fas fa-at"></i> Email</h3>
@@ -941,7 +512,6 @@
                     <i class="fas fa-paper-plane"></i>
                 </a>
             </div>
-
             <div class="info-card">
                 <div class="icon"><i class="fas fa-phone"></i></div>
                 <h3><i class="fas fa-phone"></i> Telefone</h3>
@@ -950,7 +520,6 @@
                     <i class="fas fa-phone-volume"></i>
                 </a>
             </div>
-
             <div class="info-card">
                 <div class="icon"><i class="fas fa-building"></i></div>
                 <h3><i class="fas fa-id-card"></i> CNPJ</h3>
@@ -962,16 +531,12 @@
         </div>
     </section>
 
-    <!-- ====================================================
-    FOOTER
-    ==================================================== -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-container">
             <div class="footer-copy">
-                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados
-                <br>
-                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60
-                <br>
+                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados<br>
+                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60<br>
                 <i class="fas fa-futbol"></i> Associação Desportiva
             </div>
             <div class="footer-redes" aria-label="Redes sociais da ASSGA">
@@ -991,21 +556,17 @@
         </div>
     </footer>
 
-    <!-- ====================================================
-    JAVASCRIPT
-    ==================================================== -->
+    <!-- ===== SCRIPTS ===== -->
     <script>
+        // Menu mobile
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
             const icon = document.getElementById("menuIcon");
-
             menu.classList.toggle("active");
             const aberto = menu.classList.contains("active");
-
             toggle.setAttribute("aria-expanded", aberto);
             toggle.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
-
             if (aberto) {
                 icon.classList.remove("fa-bars");
                 icon.classList.add("fa-xmark");
@@ -1014,71 +575,55 @@
                 icon.classList.add("fa-bars");
             }
         }
-
         function fecharMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
             const icon = document.getElementById("menuIcon");
-
             menu.classList.remove("active");
             toggle.setAttribute("aria-expanded", "false");
             toggle.setAttribute("aria-label", "Abrir menu");
             icon.classList.remove("fa-xmark");
             icon.classList.add("fa-bars");
         }
-
         document.querySelectorAll(".menu a").forEach(function(link) {
             link.addEventListener("click", function() {
                 if (window.innerWidth <= 767) fecharMenu();
             });
         });
-
         document.addEventListener("keydown", function(event) {
             if (event.key === "Escape") fecharMenu();
         });
-
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
-            if (window.innerWidth <= 767 &&
-                menu.classList.contains("active") &&
-                !menu.contains(event.target) &&
-                !toggle.contains(event.target)) {
+            if (window.innerWidth <= 767 && menu.classList.contains("active") && !menu.contains(event.target) && !toggle.contains(event.target)) {
                 fecharMenu();
             }
         });
-
         window.addEventListener("resize", function() {
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // ====================================================
         // SLIDER
-        // ====================================================
         const imagens = [
             "src/imagens/foto1.jpg",
             "src/imagens/foto2.jpg",
             "src/imagens/foto3.jpg"
         ];
-
         const textosSlider = [
             "ASSGA - Associação Desportiva",
             "Esporte e integração da ASSGA",
             "Futsal e atividades esportivas ASSGA"
         ];
-
         let index = 0;
         let intervaloSlider;
 
         function trocarImagem() {
             index++;
             if (index >= imagens.length) index = 0;
-
             const slide = document.getElementById("slide");
             const sliderInfo = document.getElementById("sliderInfo");
-
             slide.style.opacity = "0";
-
             setTimeout(function() {
                 slide.src = imagens[index];
                 slide.alt = textosSlider[index];
@@ -1091,22 +636,14 @@
             clearInterval(intervaloSlider);
             intervaloSlider = setInterval(trocarImagem, 4000);
         }
-
         const slider = document.querySelector(".slider");
         slider.addEventListener("mouseenter", function() { clearInterval(intervaloSlider); });
         slider.addEventListener("mouseleave", function() { iniciarSlider(); });
-
         document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                clearInterval(intervaloSlider);
-            } else {
-                iniciarSlider();
-            }
+            if (document.hidden) clearInterval(intervaloSlider);
+            else iniciarSlider();
         });
-
         iniciarSlider();
-
-        // Fallback do slider
         document.getElementById("slide").addEventListener("error", function() {
             this.onerror = null;
             this.src = "src/imagens/Assga_foto.jpg";
@@ -1126,9 +663,7 @@
                 }, 150);
             }
         });
-    </script>
 
-    <script>
         // Carregar dados do admin (título do slider e texto extra)
         const homeContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").index;
         if (homeContent) {
@@ -1143,5 +678,4 @@
         }
     </script>
 </body>
-
 </html>
