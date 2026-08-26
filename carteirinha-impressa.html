@@ -9,72 +9,111 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #e9ecef;
+            background: linear-gradient(135deg, #e6f0fa 0%, #d4e4f7 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 30px 20px;
             font-family: 'Segoe UI', Tahoma, sans-serif;
+            min-height: 100vh;
         }
         .container {
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             background: #fff;
-            border-radius: 16px;
+            border-radius: 24px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,.15);
+            box-shadow: 0 20px 60px rgba(0,51,102,.25);
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
         }
         .btn-print {
-            background: #003366;
+            background: linear-gradient(135deg, #003366, #1a4f8b);
             color: #fff;
             border: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 1.2rem;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            margin-bottom: 25px;
             transition: .3s;
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 6px 18px rgba(0,51,102,.3);
         }
-        .btn-print:hover { background: #004aad; transform: scale(1.02); }
+        .btn-print:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(0,51,102,.4);
+            background: linear-gradient(135deg, #004aad, #1a5fa8);
+        }
         .btn-voltar {
-            background: #6c757d;
+            background: linear-gradient(135deg, #b22234, #cc3333);
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
-            margin-left: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 18px rgba(178,34,52,.3);
+            transition: .3s;
         }
-        .btn-voltar:hover { background: #5a6268; }
+        .btn-voltar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(178,34,52,.4);
+            background: linear-gradient(135deg, #cc3333, #dd4444);
+        }
 
         /* ===== CARTEIRINHA ===== */
         .carteira-wrapper {
-            background: #fff;
-            border: 2px solid #003366;
-            border-radius: 16px;
-            padding: 20px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,.08);
+            border-left: 8px solid #003366;
+            border-right: 8px solid #b22234;
+            position: relative;
+            overflow: hidden;
+        }
+        .carteira-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(0,51,102,.04);
+            border-radius: 50%;
         }
         .carteira-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 2px solid #003366;
+            border-bottom: 3px solid #b22234;
             padding-bottom: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .carteira-header img {
+        .carteira-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .carteira-header .logo img {
             height: 60px;
             width: auto;
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
         }
         .carteira-header h1 {
             font-size: 1.8rem;
@@ -82,34 +121,47 @@
             font-weight: 900;
             letter-spacing: 1px;
         }
-        .carteira-header h1 i { color: #ffd700; margin-right: 6px; }
+        .carteira-header h1 i {
+            color: #b22234;
+            margin-right: 6px;
+        }
         .carteira-header .subtitulo {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #555;
             text-align: right;
+            background: #f0f4fa;
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid #d9e1eb;
         }
         .carteira-body {
             display: flex;
             gap: 25px;
             flex-wrap: wrap;
+            align-items: flex-start;
         }
         .foto-area {
-            flex: 0 0 140px;
+            flex: 0 0 150px;
             text-align: center;
         }
         .foto-area img {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
             object-fit: cover;
-            border-radius: 12px;
-            border: 3px solid #003366;
+            border-radius: 16px;
+            border: 4px solid #003366;
             background: #f0f4fa;
+            box-shadow: 0 4px 16px rgba(0,51,102,.2);
         }
         .foto-area .matricula {
-            margin-top: 8px;
+            margin-top: 10px;
             font-weight: 700;
             color: #003366;
             font-size: 0.9rem;
+            background: #e6f0fa;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
         }
         .dados-area {
             flex: 1;
@@ -118,66 +170,108 @@
         .dados-area p {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            padding: 8px 0;
             border-bottom: 1px dashed #d9e1eb;
             font-size: 1rem;
+            align-items: center;
         }
         .dados-area p strong {
             color: #003366;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dados-area p strong i {
+            color: #b22234;
         }
         .dados-area .endereco {
             font-size: 0.9rem;
             color: #555;
             border-bottom: none;
-            padding-top: 6px;
+            padding-top: 8px;
+            background: #f8faff;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 4px;
+        }
+        .dados-area .endereco i {
+            color: #003366;
         }
         .rodape-carteira {
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 2px solid #003366;
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 3px solid #003366;
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #667085;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-        .rodape-carteira .cnpj { font-weight: 600; color: #003366; }
-        .fundacao { font-style: italic; }
+        .rodape-carteira .cnpj {
+            font-weight: 700;
+            color: #003366;
+            background: #e6f0fa;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+        .fundacao {
+            font-style: italic;
+            background: #f0f4fa;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
 
         /* ===== CARTÃO DE MENSALIDADE ===== */
         .mensalidade-wrapper {
-            background: #fff;
-            border: 2px solid #ffd700;
-            border-radius: 16px;
+            background: #ffffff;
+            border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,.08);
+            border-left: 8px solid #b22234;
+            border-right: 8px solid #003366;
         }
         .mensalidade-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #ffd700;
+            border-bottom: 3px solid #b22234;
             padding-bottom: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .mensalidade-header h2 {
             color: #003366;
             font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .mensalidade-header h2 i { color: #ffd700; margin-right: 6px; }
-        .mensalidade-header .ano { font-weight: 700; color: #003366; }
+        .mensalidade-header h2 i {
+            color: #b22234;
+        }
+        .mensalidade-header .ano {
+            font-weight: 700;
+            color: #b22234;
+            background: #fff0f0;
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: 1px solid #b22234;
+        }
         .meses-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
+            gap: 10px;
         }
         .mes-item {
             background: #f8f9fa;
-            border: 1px solid #d9e1eb;
-            border-radius: 8px;
-            padding: 8px 0;
+            border: 2px solid #d9e1eb;
+            border-radius: 12px;
+            padding: 10px 0;
             text-align: center;
-            font-weight: 600;
-            font-size: 0.75rem;
+            font-weight: 700;
+            font-size: 0.8rem;
             color: #555;
             transition: .2s;
             position: relative;
@@ -186,70 +280,81 @@
             background: #d4edda;
             border-color: #28a745;
             color: #155724;
+            box-shadow: 0 2px 8px rgba(40,167,69,.2);
         }
         .mes-item.pago::after {
             content: "✓";
             position: absolute;
-            top: -6px;
-            right: -6px;
+            top: -8px;
+            right: -8px;
             background: #28a745;
             color: #fff;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             font-size: 12px;
-            line-height: 18px;
+            line-height: 20px;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(40,167,69,.3);
         }
         .mes-item .mes-nome {
             display: block;
-            font-weight: 700;
-            font-size: 0.7rem;
+            font-weight: 800;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
         }
         .rodape-mensalidade {
-            margin-top: 14px;
+            margin-top: 16px;
             display: flex;
             justify-content: space-between;
             font-size: 0.8rem;
             color: #667085;
-            border-top: 1px solid #d9e1eb;
-            padding-top: 12px;
+            border-top: 2px solid #d9e1eb;
+            padding-top: 14px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .rodape-mensalidade .secretaria {
             font-weight: 700;
-            color: #003366;
+            color: #b22234;
+            background: #fff0f0;
+            padding: 2px 14px;
+            border-radius: 30px;
         }
 
         /* ===== IMPRESSÃO ===== */
         @media print {
             body { background: #fff; padding: 0; }
-            .container { box-shadow: none; padding: 10px; }
+            .container { box-shadow: none; padding: 10px; border-radius: 0; }
             .btn-print, .btn-voltar { display: none; }
             .carteira-wrapper, .mensalidade-wrapper {
                 box-shadow: none;
-                border: 1px solid #003366;
+                border-left: 4px solid #003366;
+                border-right: 4px solid #b22234;
                 break-inside: avoid;
                 page-break-inside: avoid;
             }
             .carteira-wrapper { margin-bottom: 20px; }
             .foto-area img { width: 120px; height: 120px; }
+            .mes-item { padding: 6px 0; font-size: 0.7rem; }
         }
         @media (max-width: 600px) {
             .carteira-body { flex-direction: column; align-items: center; }
-            .dados-area p { flex-direction: column; align-items: center; gap: 2px; }
+            .dados-area p { flex-direction: column; align-items: flex-start; gap: 2px; }
             .meses-grid { grid-template-columns: repeat(3, 1fr); }
-            .carteira-header { flex-wrap: wrap; justify-content: center; gap: 8px; text-align: center; }
+            .carteira-header { flex-direction: column; align-items: center; text-align: center; }
+            .carteira-header .subtitulo { text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+        <div class="btn-group">
             <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> Imprimir / PDF</button>
             <a href="admin.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
         </div>
 
-        <!-- ===== DADOS DO SÓCIO (via URL ou sessionStorage) ===== -->
         <div id="carteiraContainer">
             <!-- renderizado via JS -->
         </div>
@@ -257,7 +362,7 @@
 
     <script>
         // ==========================================================
-        // Obtém dados do sócio: da URL (parâmetro ?socio=index) ou do sessionStorage
+        // Obtém dados do sócio: da URL (?socio=index) ou sessionStorage
         // ==========================================================
         function getSocio() {
             const params = new URLSearchParams(window.location.search);
@@ -266,7 +371,6 @@
                 const socios = JSON.parse(localStorage.getItem('assga_socios') || '[]');
                 return socios[parseInt(index)] || null;
             }
-            // Fallback: sócio logado
             const socioStr = sessionStorage.getItem('socioLogado');
             if (socioStr) return JSON.parse(socioStr);
             return null;
@@ -275,10 +379,11 @@
         const socio = getSocio();
         if (!socio) {
             document.getElementById('carteiraContainer').innerHTML = `
-                <div style="text-align:center; padding:40px; color:#b42318;">
-                    <i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>
-                    <p style="margin-top:10px;">Nenhum sócio selecionado. Volte ao painel e escolha um sócio para imprimir.</p>
-                    <a href="admin.html" class="btn-voltar" style="margin-top:15px;">Voltar</a>
+                <div style="text-align:center; padding:50px; color:#b22234; background:#fff5f5; border-radius:20px;">
+                    <i class="fas fa-exclamation-triangle" style="font-size:3rem; margin-bottom:15px;"></i>
+                    <p style="font-size:1.2rem;">Nenhum sócio selecionado.</p>
+                    <p style="color:#555;">Volte ao painel e escolha um sócio para imprimir.</p>
+                    <a href="admin.html" class="btn-voltar" style="margin-top:20px; display:inline-block;">Voltar</a>
                 </div>
             `;
             throw new Error('Sócio não encontrado');
@@ -300,19 +405,17 @@
         function renderCarteirinha(socio) {
             const container = document.getElementById('carteiraContainer');
             const foto = socio.foto || 'src/imagens/avatar-padrao.jpg';
-
-            // Mapeamento de meses (pagos ou não)
             const meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
-            const mesesPagos = socio.mesesPagos || []; // array de índices (0-11)
+            const mesesPagos = socio.mesesPagos || [];
 
             let html = `
                 <!-- CARTEIRINHA PRINCIPAL -->
                 <div class="carteira-wrapper">
                     <div class="carteira-header">
-                        <div>
+                        <div class="logo">
                             <img src="src/imagens/Assga_foto.jpg" alt="Logo ASSGA" onerror="this.style.display='none'">
+                            <h1><i class="fas fa-id-card"></i> SÓCIO ASSGA</h1>
                         </div>
-                        <h1><i class="fas fa-id-card"></i> SÓCIO ASSGA</h1>
                         <div class="subtitulo">
                             <div>${ASSGA.nome}</div>
                             <div>${ASSGA.fundacao}</div>
@@ -321,18 +424,18 @@
                     <div class="carteira-body">
                         <div class="foto-area">
                             <img src="${foto}" alt="Foto do sócio" onerror="this.src='src/imagens/avatar-padrao.jpg'">
-                            <div class="matricula">Matrícula: ${socio.matricula || socio.numeroSocio || '______'}</div>
+                            <div class="matricula"><i class="fas fa-hashtag"></i> ${socio.matricula || socio.numeroSocio || '______'}</div>
                         </div>
                         <div class="dados-area">
-                            <p><strong>Nome:</strong> ${socio.nome || '__________________'}</p>
-                            <p><strong>CPF:</strong> ${socio.cpf || '______'}</p>
-                            <p><strong>Data de nascimento:</strong> ${socio.nascimento || '__/__/____'}</p>
-                            <p class="endereco"><i class="fas fa-map-pin"></i> ${ASSGA.endereco}</p>
+                            <p><strong><i class="fas fa-user"></i> Nome:</strong> ${socio.nome || '__________________'}</p>
+                            <p><strong><i class="fas fa-id-card"></i> CPF:</strong> ${socio.cpf || '______'}</p>
+                            <p><strong><i class="fas fa-calendar-alt"></i> Nascimento:</strong> ${socio.nascimento || '__/__/____'}</p>
+                            <div class="endereco"><i class="fas fa-map-pin"></i> ${ASSGA.endereco}</div>
                         </div>
                     </div>
                     <div class="rodape-carteira">
-                        <span class="cnpj">${ASSGA.cnpj}</span>
-                        <span class="fundacao">${ASSGA.fundacao}</span>
+                        <span class="cnpj"><i class="fas fa-building"></i> ${ASSGA.cnpj}</span>
+                        <span class="fundacao"><i class="fas fa-clock"></i> ${ASSGA.fundacao}</span>
                     </div>
                 </div>
 
@@ -351,8 +454,8 @@
                         }).join('')}
                     </div>
                     <div class="rodape-mensalidade">
-                        <span>${ASSGA.nome}</span>
-                        <span class="secretaria">${socio.secretaria || 'SECRETARIA'}</span>
+                        <span><i class="fas fa-users"></i> ${ASSGA.nome}</span>
+                        <span class="secretaria"><i class="fas fa-user-tie"></i> ${socio.secretaria || 'SECRETARIA'}</span>
                     </div>
                 </div>
             `;

@@ -897,12 +897,6 @@
     // ============================================================
     // GERENCIAMENTO DE SÓCIOS (com suporte à carteirinha)
     // ============================================================
-    function getSocios() {
-        try { return JSON.parse(localStorage.getItem(SOCIOS_KEY) || '[]'); }
-        catch { return []; }
-    }
-    function saveSocios(lista) { localStorage.setItem(SOCIOS_KEY, JSON.stringify(lista)); }
-
     function renderSocios() {
         const lista = getSocios();
         const container = document.getElementById('listaSocios');
@@ -945,7 +939,6 @@
             const renda = prompt('Investimento/Renda:', s.renda) || s.renda;
             const email = prompt('E-mail:', s.email) || s.email;
             const foto = prompt('URL da foto 3x4 (ou deixe vazio):', s.foto) || s.foto;
-            // Campos extras para carteirinha
             const matricula = prompt('Número de matrícula:', s.matricula || '') || s.matricula;
             const nascimento = prompt('Data de nascimento (DD/MM/AAAA):', s.nascimento || '') || s.nascimento;
             const secretaria = prompt('Secretaria responsável:', s.secretaria || 'SECRETARIA') || 'SECRETARIA';
@@ -967,7 +960,6 @@
             const email = prompt('E-mail:') || '';
             const foto = prompt('URL da foto 3x4 (opcional):') || '';
             const senha = prompt('Senha de acesso (mínimo 4 caracteres):') || '1234';
-            // Campos extras
             const matricula = prompt('Número de matrícula:') || '';
             const nascimento = prompt('Data de nascimento (DD/MM/AAAA):') || '';
             const secretaria = prompt('Secretaria responsável:') || 'SECRETARIA';
