@@ -8,7 +8,7 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== MESMO ESTILO DO SEU PAINEL (mantido) ===== */
+        /* ===== MESMO ESTILO DO SEU PAINEL ===== */
         :root {
             --navy: #003366;
             --blue: #004aad;
@@ -444,7 +444,7 @@
         </div>
     </div>
 
-    <!-- ===== HISTÓRIA (NOVA VERSÃO COM CAMPOS COMPLETOS) ===== -->
+    <!-- HISTÓRIA -->
     <div id="tab-historia" class="tab-content">
         <div class="content-editor">
             <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
@@ -457,34 +457,28 @@
                     <label>Subtítulo</label>
                     <input class="field" id="histSubtitulo" placeholder="Ex: Conheça nossa trajetória" />
                 </div>
-
                 <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
                     <label><i class="fas fa-flag-checkered"></i> Fundação</label>
                     <textarea class="field" id="histFundacao" placeholder="Texto sobre a fundação..." rows="3"></textarea>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-bullseye"></i> Missão</label>
                     <textarea class="field" id="histMissao" placeholder="Texto da missão..." rows="3"></textarea>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-gem"></i> Valores (separados por vírgula)</label>
                     <input class="field" id="histValores" placeholder="Ex: Respeito, Inclusão, Excelência, Paixão" />
                 </div>
-
                 <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
                     <label><i class="fas fa-timeline"></i> Linha do Tempo (cada linha: ANO|DESCRIÇÃO)</label>
                     <textarea class="field" id="histTimeline" placeholder="Ex: 2019|Fundação da ASSGA...&#10;2020|Primeiras atividades..." rows="8"></textarea>
                     <small>Cada linha deve conter o ano e a descrição separados por uma barra vertical (|).</small>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-chart-simple"></i> Números (cada linha: NÚMERO|RÓTULO)</label>
                     <textarea class="field" id="histNumeros" placeholder="Ex: 7+|Anos de história&#10;500+|Participantes" rows="4"></textarea>
                     <small>Cada linha deve conter o número e o rótulo separados por uma barra vertical (|).</small>
                 </div>
-
                 <button class="action" type="submit"><i class="fas fa-save"></i> Salvar História</button>
             </form>
             <p style="margin-top:10px; color:var(--success);" id="msgHist"></p>
@@ -502,11 +496,17 @@
                 </div>
                 <div class="form-group full">
                     <label>Subtítulo</label>
-                    <input class="field" id="espSubtitulo" placeholder="Ex: Modalidades e campeonatos" />
+                    <input class="field" id="espSubtitulo" placeholder="Ex: Conheça as modalidades..." />
                 </div>
-                <div class="form-group full">
-                    <label>Texto adicional</label>
-                    <textarea class="field" id="espTexto" placeholder="Texto extra..."></textarea>
+                <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
+                    <label><i class="fas fa-list"></i> Modalidades (cada linha: ÍCONE|NOME|DESCRIÇÃO|TAG)</label>
+                    <textarea class="field" id="espModalidades" placeholder="Ex: fa-futbol|Futsal|Modalidade principal...|Mais popular" rows="6"></textarea>
+                    <small>Ícones disponíveis: fa-futbol, fa-volleyball, fa-basketball, fa-running, fa-swimmer, fa-dumbbell, etc.</small>
+                </div>
+                <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
+                    <label><i class="fas fa-trophy"></i> Campeonatos (cada linha: TÍTULO|DATA|PARTICIPANTES|LOCAL|STATUS)</label>
+                    <textarea class="field" id="espCampeonatos" placeholder="Ex: Campeonato de Futsal - 2026|15/03 a 15/12/2026|8 equipes|Ginásio ASSGA|Em andamento" rows="6"></textarea>
+                    <small>Status sugeridos: Em andamento, Inscrições abertas, Confirmado, Realizado.</small>
                 </div>
                 <button class="action" type="submit"><i class="fas fa-save"></i> Salvar Esportiva</button>
             </form>
@@ -514,7 +514,7 @@
         </div>
     </div>
 
-    <!-- ESTATUTO -->
+    <!-- ===== ESTATUTO (COMPLETO) ===== -->
     <div id="tab-estatuto" class="tab-content">
         <div class="content-editor">
             <h2><i class="fas fa-file-contract"></i> Conteúdo do Estatuto</h2>
@@ -525,12 +525,35 @@
                 </div>
                 <div class="form-group full">
                     <label>Subtítulo</label>
-                    <input class="field" id="estSubtitulo" placeholder="Ex: Documentos oficiais" />
+                    <input class="field" id="estSubtitulo" placeholder="Ex: Documentos oficiais e normas da ASSGA." />
                 </div>
+
+                <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
+                    <label><i class="fas fa-building"></i> Dados da Associação (cada linha: NOME|VALOR)</label>
+                    <textarea class="field" id="estDados" placeholder="Ex: Nome|ASSGA - Associação Desportiva&#10;Data de Fundação|2019&#10;Sede|São Gonçalo do Amarante - RN&#10;CNPJ|57.242.499/0001-60&#10;Atividades|Esporte, integração, eventos e participação social." rows="6"></textarea>
+                    <small>Use o formato CHAVE|VALOR, uma linha para cada dado.</small>
+                </div>
+
                 <div class="form-group full">
-                    <label>Texto adicional</label>
-                    <textarea class="field" id="estTexto" placeholder="Texto extra..."></textarea>
+                    <label><i class="fas fa-bullseye"></i> Objetivos (cada linha um objetivo)</label>
+                    <textarea class="field" id="estObjetivos" placeholder="Ex: Promover a prática de atividades esportivas...&#10;Fomentar a integração social..." rows="6"></textarea>
                 </div>
+
+                <div class="form-group full">
+                    <label><i class="fas fa-users"></i> Diretoria (cada linha um cargo)</label>
+                    <textarea class="field" id="estDiretoria" placeholder="Ex: Presidente&#10;Vice-Presidente&#10;Secretário..." rows="6"></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label><i class="fas fa-gavel"></i> Disposições Gerais</label>
+                    <textarea class="field" id="estDisposicoes" placeholder="Texto das disposições gerais..." rows="4"></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label><i class="fas fa-file-pdf"></i> Link para download do PDF (opcional)</label>
+                    <input class="field" id="estPdf" type="url" placeholder="https://exemplo.com/estatuto.pdf" />
+                </div>
+
                 <button class="action" type="submit"><i class="fas fa-save"></i> Salvar Estatuto</button>
             </form>
             <p style="margin-top:10px; color:var(--success);" id="msgEst"></p>
@@ -589,7 +612,7 @@
         </div>
     </div>
 
-    <!-- ===== SOCIOS ===== -->
+    <!-- SOCIOS -->
     <div id="tab-socios" class="tab-content">
         <div class="management">
             <h2><i class="fas fa-id-card"></i> Gerenciar Sócios</h2>
@@ -599,7 +622,7 @@
         </div>
     </div>
 
-    <!-- ===== NOTÍCIAS ===== -->
+    <!-- NOTÍCIAS -->
     <div id="tab-noticias" class="tab-content">
         <div class="management">
             <h2><i class="fas fa-newspaper"></i> Gerenciar Notícias da Home</h2>
@@ -1060,7 +1083,7 @@
     }
 
     // ============================================================
-    // GERENCIAMENTO DA HISTÓRIA (substitui a função genérica)
+    // GERENCIAMENTO DA HISTÓRIA
     // ============================================================
     function carregarHistoria() {
         const data = getContents().historia || {};
@@ -1102,6 +1125,92 @@
         };
         saveContents(conteudos);
         showMessage('✅ História salva com sucesso!', 'success', 'msgHist');
+    }
+
+    // ============================================================
+    // GERENCIAMENTO DA ESPORTIVA
+    // ============================================================
+    function carregarEsportiva() {
+        const data = getContents().esportiva || {};
+        document.getElementById('espTitulo').value = data.titulo || '';
+        document.getElementById('espSubtitulo').value = data.subtitulo || '';
+        document.getElementById('espModalidades').value = (data.modalidades || []).map(m => `${m.icone}|${m.nome}|${m.descricao}|${m.tag}`).join('\n');
+        document.getElementById('espCampeonatos').value = (data.campeonatos || []).map(c => `${c.titulo}|${c.data}|${c.participantes}|${c.local}|${c.status}`).join('\n');
+    }
+
+    function salvarEsportiva() {
+        const conteudos = getContents();
+        const modalidades = document.getElementById('espModalidades').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { icone: parts[0] || 'fa-futbol', nome: parts[1] || '', descricao: parts[2] || '', tag: parts[3] || '' };
+            });
+        const campeonatos = document.getElementById('espCampeonatos').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { titulo: parts[0] || '', data: parts[1] || '', participantes: parts[2] || '', local: parts[3] || '', status: parts[4] || '' };
+            });
+
+        conteudos.esportiva = {
+            titulo: document.getElementById('espTitulo').value.trim(),
+            subtitulo: document.getElementById('espSubtitulo').value.trim(),
+            modalidades: modalidades,
+            campeonatos: campeonatos
+        };
+        saveContents(conteudos);
+        showMessage('✅ Esportiva salva com sucesso!', 'success', 'msgEsp');
+    }
+
+    // ============================================================
+    // GERENCIAMENTO DO ESTATUTO
+    // ============================================================
+    function carregarEstatuto() {
+        const data = getContents().estatuto || {};
+        document.getElementById('estTitulo').value = data.titulo || '';
+        document.getElementById('estSubtitulo').value = data.subtitulo || '';
+
+        // Dados da Associação (objeto -> linhas CHAVE|VALOR)
+        const dados = data.dados || {};
+        const dadosStr = Object.entries(dados).map(([chave, valor]) => `${chave}|${valor}`).join('\n');
+        document.getElementById('estDados').value = dadosStr;
+
+        document.getElementById('estObjetivos').value = (data.objetivos || []).join('\n');
+        document.getElementById('estDiretoria').value = (data.diretoria || []).join('\n');
+        document.getElementById('estDisposicoes').value = data.disposicoes || '';
+        document.getElementById('estPdf').value = data.pdf || '';
+    }
+
+    function salvarEstatuto() {
+        const conteudos = getContents();
+
+        // Processar Dados da Associação
+        const dadosLinhas = document.getElementById('estDados').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { chave: parts[0] || '', valor: parts[1] || '' };
+            });
+        const dados = {};
+        dadosLinhas.forEach(item => { if (item.chave) dados[item.chave] = item.valor; });
+
+        const objetivos = document.getElementById('estObjetivos').value.split('\n')
+            .filter(line => line.trim() !== '');
+        const diretoria = document.getElementById('estDiretoria').value.split('\n')
+            .filter(line => line.trim() !== '');
+
+        conteudos.estatuto = {
+            titulo: document.getElementById('estTitulo').value.trim(),
+            subtitulo: document.getElementById('estSubtitulo').value.trim(),
+            dados: dados,
+            objetivos: objetivos,
+            diretoria: diretoria,
+            disposicoes: document.getElementById('estDisposicoes').value.trim(),
+            pdf: document.getElementById('estPdf').value.trim()
+        };
+        saveContents(conteudos);
+        showMessage('✅ Estatuto salvo com sucesso!', 'success', 'msgEst');
     }
 
     // ============================================================
@@ -1293,9 +1402,9 @@
             renderSocios();
             renderNoticias();
             carregarConteudo('index');
-            carregarHistoria();      // <-- substituído
-            carregarConteudo('esportiva');
-            carregarConteudo('estatuto');
+            carregarHistoria();
+            carregarEsportiva();
+            carregarEstatuto();
         } else {
             document.getElementById("loginError").style.display = "block";
         }
@@ -1320,9 +1429,9 @@
         renderSocios();
         renderNoticias();
         carregarConteudo('index');
-        carregarHistoria();          // <-- substituído
-        carregarConteudo('esportiva');
-        carregarConteudo('estatuto');
+        carregarHistoria();
+        carregarEsportiva();
+        carregarEstatuto();
     }
 
     // ============================================================
@@ -1333,7 +1442,6 @@
         salvarConteudo('index', 'homeForm', 'msgHome');
     });
 
-    // Substitui o evento genérico pelo específico da História
     document.getElementById("historiaForm").addEventListener("submit", function(e) {
         e.preventDefault();
         salvarHistoria();
@@ -1341,11 +1449,12 @@
 
     document.getElementById("esportivaForm").addEventListener("submit", function(e) {
         e.preventDefault();
-        salvarConteudo('esportiva', 'esportivaForm', 'msgEsp');
+        salvarEsportiva();
     });
+
     document.getElementById("estatutoForm").addEventListener("submit", function(e) {
         e.preventDefault();
-        salvarConteudo('estatuto', 'estatutoForm', 'msgEst');
+        salvarEstatuto();
     });
 
     // ============================================================

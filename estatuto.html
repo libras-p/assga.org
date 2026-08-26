@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== MESMO ESTILO DO HISTORIA, com adaptações ===== */
+        /* ===== MESMO ESTILO DO ORIGINAL ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -26,7 +26,7 @@
         h3 { color: #003366; font-size: 1.5em; margin: 25px 0 15px; }
         h3 i { color: #004aad; margin-right: 8px; }
 
-        /* HEADER e MENU = mesmo do index (omitido para brevidade) */
+        /* HEADER e MENU = mesmo do index */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -172,7 +172,7 @@
         }
         .btn-download i { color: #ffd700; font-size: 1.2em; }
 
-        /* FALE CONOSCO e FOOTER = mesmo do index (omitido) */
+        /* FALE CONOSCO e FOOTER = mesmo do index */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -324,6 +324,7 @@
     </style>
 </head>
 <body>
+
     <!-- ===== HEADER ===== -->
     <header>
         <div class="logo-area">
@@ -349,64 +350,18 @@
         </nav>
     </header>
 
-    <!-- ===== BANNER ===== -->
+    <!-- ===== BANNER (dinâmico) ===== -->
     <section class="page-banner" id="bannerEstatuto">
         <h1 id="estTituloBanner"><i class="fas fa-file-contract"></i> Estatuto</h1>
         <p id="estSubtituloBanner">Documentos oficiais e normas da ASSGA.</p>
     </section>
 
-    <!-- ===== CONTEÚDO ===== -->
-    <main class="estatuto-container">
-        <div id="estatutoExtra"></div>
-
-        <div class="estatuto-card">
-            <h3><i class="fas fa-building"></i> Dados da Associação</h3>
-            <p><i class="fas fa-id-card"></i> <strong>Nome:</strong> ASSGA - Associação Desportiva</p>
-            <p><i class="fas fa-calendar"></i> <strong>Data de Fundação:</strong> 2019</p>
-            <p><i class="fas fa-map-pin"></i> <strong>Sede:</strong> São Gonçalo do Amarante - RN</p>
-            <p><i class="fas fa-file-invoice"></i> <strong>CNPJ:</strong> 57.242.499/0001-60</p>
-            <p><i class="fas fa-futbol"></i> <strong>Atividades:</strong> Esporte, integração, eventos e participação social.</p>
-        </div>
-
-        <div class="estatuto-card">
-            <h3><i class="fas fa-bullseye"></i> Objetivos</h3>
-            <ul>
-                <li><i class="fas fa-check-circle"></i> Promover a prática de atividades esportivas e recreativas</li>
-                <li><i class="fas fa-check-circle"></i> Fomentar a integração social e comunitária</li>
-                <li><i class="fas fa-check-circle"></i> Organizar eventos esportivos e culturais</li>
-                <li><i class="fas fa-check-circle"></i> Estimular a participação de jovens e adultos em atividades saudáveis</li>
-                <li><i class="fas fa-check-circle"></i> Estabelecer parcerias com outras entidades e órgãos públicos</li>
-            </ul>
-        </div>
-
-        <div class="estatuto-card">
-            <h3><i class="fas fa-users"></i> Diretoria</h3>
-            <ul>
-                <li><i class="fas fa-user-tie"></i> Presidente</li>
-                <li><i class="fas fa-user-tie"></i> Vice-Presidente</li>
-                <li><i class="fas fa-user-tie"></i> Secretário</li>
-                <li><i class="fas fa-user-tie"></i> Tesoureiro</li>
-                <li><i class="fas fa-user-tie"></i> Diretor de Esportes</li>
-                <li><i class="fas fa-user-tie"></i> Conselho Fiscal</li>
-            </ul>
-        </div>
-
-        <div class="estatuto-card">
-            <h3><i class="fas fa-gavel"></i> Disposições Gerais</h3>
-            <p><i class="fas fa-circle"></i> A ASSGA é uma associação sem fins lucrativos.</p>
-            <p><i class="fas fa-circle"></i> A administração é exercida pela Diretoria, eleita pelos associados.</p>
-            <p><i class="fas fa-circle"></i> O exercício social coincide com o ano civil.</p>
-            <p><i class="fas fa-circle"></i> A ASSGA rege-se por este estatuto e pelas leis vigentes.</p>
-        </div>
-
-        <div style="text-align:center; margin-top:20px;">
-            <a href="#" class="btn-download" onclick="alert('Download do estatuto em PDF.')">
-                <i class="fas fa-file-pdf"></i> Baixar Estatuto Completo (PDF)
-            </a>
-        </div>
+    <!-- ===== CONTEÚDO PRINCIPAL (dinâmico) ===== -->
+    <main class="estatuto-container" id="estatutoContainer">
+        <!-- Renderizado via JavaScript -->
     </main>
 
-    <!-- ===== FALE CONOSCO e FOOTER ===== -->
+    <!-- ===== FALE CONOSCO ===== -->
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
@@ -445,6 +400,7 @@
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-container">
             <div class="footer-copy">
@@ -516,25 +472,7 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // Carregar dados do admin
-        const statuteContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").estatuto;
-        if (statuteContent) {
-            const banner = document.getElementById("bannerEstatuto");
-            if (banner && statuteContent.titulo) {
-                document.getElementById("estTituloBanner").innerHTML = `<i class="fas fa-file-contract"></i> ${escapeHtml(statuteContent.titulo)}`;
-            }
-            if (banner && statuteContent.subtitulo) {
-                document.getElementById("estSubtituloBanner").textContent = statuteContent.subtitulo;
-            }
-            if (statuteContent.texto) {
-                const extraDiv = document.getElementById("estatutoExtra");
-                const p = document.createElement("p");
-                p.textContent = statuteContent.texto;
-                p.style.cssText = "background:#f0f4fa; padding:20px; border-radius:16px; margin-bottom:30px; font-size:1.1rem; line-height:1.7; border-left:4px solid #ffd700;";
-                extraDiv.appendChild(p);
-            }
-        }
-
+        // Função para escapar HTML
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -546,6 +484,121 @@
                 return m;
             });
         }
+
+        // Dados padrão (fallback)
+        const defaultEstatuto = {
+            titulo: "Estatuto",
+            subtitulo: "Documentos oficiais e normas da ASSGA.",
+            dados: {
+                "Nome": "ASSGA - Associação Desportiva",
+                "Data de Fundação": "2019",
+                "Sede": "São Gonçalo do Amarante - RN",
+                "CNPJ": "57.242.499/0001-60",
+                "Atividades": "Esporte, integração, eventos e participação social."
+            },
+            objetivos: [
+                "Promover a prática de atividades esportivas e recreativas",
+                "Fomentar a integração social e comunitária",
+                "Organizar eventos esportivos e culturais",
+                "Estimular a participação de jovens e adultos em atividades saudáveis",
+                "Estabelecer parcerias com outras entidades e órgãos públicos"
+            ],
+            diretoria: [
+                "Presidente",
+                "Vice-Presidente",
+                "Secretário",
+                "Tesoureiro",
+                "Diretor de Esportes",
+                "Conselho Fiscal"
+            ],
+            disposicoes: "A ASSGA é uma associação sem fins lucrativos.\nA administração é exercida pela Diretoria, eleita pelos associados.\nO exercício social coincide com o ano civil.\nA ASSGA rege-se por este estatuto e pelas leis vigentes.",
+            pdf: ""
+        };
+
+        // Carregar dados do admin ou usar padrão
+        const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
+        const data = stored.estatuto || defaultEstatuto;
+
+        // Preencher banner
+        document.getElementById("estTituloBanner").innerHTML = `<i class="fas fa-file-contract"></i> ${escapeHtml(data.titulo)}`;
+        document.getElementById("estSubtituloBanner").textContent = data.subtitulo;
+
+        // Construir conteúdo principal
+        const container = document.getElementById("estatutoContainer");
+        let html = '';
+
+        // Dados da Associação
+        if (data.dados && Object.keys(data.dados).length > 0) {
+            html += `
+                <div class="estatuto-card">
+                    <h3><i class="fas fa-building"></i> Dados da Associação</h3>
+                    ${Object.entries(data.dados).map(([chave, valor]) => {
+                        let icon = 'fa-id-card';
+                        if (chave.toLowerCase().includes('data')) icon = 'fa-calendar';
+                        else if (chave.toLowerCase().includes('sede')) icon = 'fa-map-pin';
+                        else if (chave.toLowerCase().includes('cnpj')) icon = 'fa-file-invoice';
+                        else if (chave.toLowerCase().includes('atividade')) icon = 'fa-futbol';
+                        return `<p><i class="fas ${icon}"></i> <strong>${escapeHtml(chave)}:</strong> ${escapeHtml(valor)}</p>`;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // Objetivos
+        if (data.objetivos && data.objetivos.length > 0) {
+            html += `
+                <div class="estatuto-card">
+                    <h3><i class="fas fa-bullseye"></i> Objetivos</h3>
+                    <ul>
+                        ${data.objetivos.map(obj => `<li><i class="fas fa-check-circle"></i> ${escapeHtml(obj)}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Diretoria
+        if (data.diretoria && data.diretoria.length > 0) {
+            html += `
+                <div class="estatuto-card">
+                    <h3><i class="fas fa-users"></i> Diretoria</h3>
+                    <ul>
+                        ${data.diretoria.map(cargo => `<li><i class="fas fa-user-tie"></i> ${escapeHtml(cargo)}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Disposições Gerais
+        if (data.disposicoes) {
+            html += `
+                <div class="estatuto-card">
+                    <h3><i class="fas fa-gavel"></i> Disposições Gerais</h3>
+                    ${data.disposicoes.split('\n').map(p => `<p><i class="fas fa-circle"></i> ${escapeHtml(p)}</p>`).join('')}
+                </div>
+            `;
+        }
+
+        // Botão de download do PDF (se houver link)
+        if (data.pdf) {
+            html += `
+                <div style="text-align:center; margin-top:20px;">
+                    <a href="${escapeHtml(data.pdf)}" class="btn-download" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-file-pdf"></i> Baixar Estatuto Completo (PDF)
+                    </a>
+                </div>
+            `;
+        } else {
+            // Fallback: botão com alerta
+            html += `
+                <div style="text-align:center; margin-top:20px;">
+                    <a href="#" class="btn-download" onclick="alert('Download do estatuto em PDF.')">
+                        <i class="fas fa-file-pdf"></i> Baixar Estatuto Completo (PDF)
+                    </a>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
     </script>
 </body>
 </html>

@@ -23,7 +23,8 @@
         }
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
-        /* HEADER, MENU, FOOTER, FALE CONOSCO = MESMO DO INDEX (omitido para brevidade, mas deve ser mantido) */
+
+        /* HEADER (mesmo do index) */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -41,6 +42,7 @@
         .logo-area a { display: flex; text-decoration: none; }
         .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
         .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
         .menu {
             list-style: none;
             display: inline-grid;
@@ -176,7 +178,7 @@
         }
         .campeonato-item .info-camp i { color: #004aad; }
 
-        /* FALE CONOSCO e FOOTER = mesmo do index (omitido) */
+        /* FALE CONOSCO e FOOTER = mesmo do index */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -361,100 +363,21 @@
         </nav>
     </header>
 
-    <!-- ===== BANNER ===== -->
+    <!-- ===== BANNER (dinâmico) ===== -->
     <section class="page-banner" id="bannerEsportiva">
         <h1 id="espTituloBanner"><i class="fas fa-futbol"></i> Nossa Área Esportiva</h1>
         <p id="espSubtituloBanner">Conheça as modalidades e campeonatos da ASSGA.</p>
     </section>
 
-    <!-- ===== CONTEÚDO ===== -->
-    <main class="modalidades-container">
-        <div id="esportivaExtra"></div>
-
-        <h2><i class="fas fa-star"></i> Modalidades Oferecidas</h2>
-        <div class="modalidades-grid">
-            <div class="modalidade-card">
-                <span class="icon-grande"><i class="fas fa-futbol"></i></span>
-                <h3>Futsal</h3>
-                <p>Modalidade principal da ASSGA, com campeonatos e treinos para todas as idades.</p>
-                <span class="tag">Mais popular</span>
-            </div>
-            <div class="modalidade-card">
-                <span class="icon-grande"><i class="fas fa-volleyball"></i></span>
-                <h3>Vôlei</h3>
-                <p>Esporte de equipe que promove integração, agilidade e trabalho em grupo.</p>
-                <span class="tag">Em crescimento</span>
-            </div>
-            <div class="modalidade-card">
-                <span class="icon-grande"><i class="fas fa-basketball"></i></span>
-                <h3>Basquete</h3>
-                <p>Modalidade dinâmica que desenvolve coordenação e espírito esportivo.</p>
-                <span class="tag">Novidade</span>
-            </div>
-            <div class="modalidade-card">
-                <span class="icon-grande"><i class="fas fa-running"></i></span>
-                <h3>Atletismo</h3>
-                <p>Corrida e atividades de pista para quem busca condicionamento e superação.</p>
-                <span class="tag">Disponível</span>
-            </div>
-            <div class="modalidade-card">
-                <span class="icon-grande"><i class="fas fa-swimmer"></i></span>
-                <h3>Natação</h3>
-                <p>Atividades aquáticas para todas as idades, com foco em saúde e lazer.</p>
-                <span class="tag">Em breve</span>
-            </div>
-            <div class="modalidade-card">
-                <span class="icon-grande"><i class="fas fa-dumbbell"></i></span>
-                <h3>Fitness</h3>
-                <p>Treinos funcionais e condicionamento físico para manter a saúde em dia.</p>
-                <span class="tag">Disponível</span>
-            </div>
-        </div>
-
-        <h2 style="margin-top:60px;"><i class="fas fa-trophy"></i> Campeonatos e Atividades</h2>
-        <div class="campeonato-item">
-            <h3><i class="fas fa-trophy"></i> Campeonato de Futsal - 2026</h3>
-            <div class="info-camp">
-                <span><i class="fas fa-calendar-days"></i> 15/03 a 15/12/2026</span>
-                <span><i class="fas fa-users"></i> 8 equipes participantes</span>
-                <span><i class="fas fa-location-dot"></i> Ginásio ASSGA</span>
-                <span><i class="fas fa-circle-check" style="color:#28a745;"></i> Em andamento</span>
-            </div>
-        </div>
-        <div class="campeonato-item">
-            <h3><i class="fas fa-trophy"></i> 2º Halloween ASSGA</h3>
-            <div class="info-camp">
-                <span><i class="fas fa-calendar-days"></i> 28 e 29/11/2026</span>
-                <span><i class="fas fa-users"></i> 100 participantes</span>
-                <span><i class="fas fa-location-dot"></i> A definir</span>
-                <span><i class="fas fa-clock" style="color:#ffc107;"></i> Inscrições abertas</span>
-            </div>
-        </div>
-        <div class="campeonato-item">
-            <h3><i class="fas fa-trophy"></i> Torneio de Vôlei de Praia</h3>
-            <div class="info-camp">
-                <span><i class="fas fa-calendar-days"></i> 02 a 04/10/2026</span>
-                <span><i class="fas fa-users"></i> 16 duplas</span>
-                <span><i class="fas fa-location-dot"></i> Praia de Pirangi</span>
-                <span><i class="fas fa-circle-check" style="color:#28a745;"></i> Confirmado</span>
-            </div>
-        </div>
-        <div class="campeonato-item">
-            <h3><i class="fas fa-trophy"></i> Corrida Rústica ASSGA</h3>
-            <div class="info-camp">
-                <span><i class="fas fa-calendar-days"></i> 25/07/2026</span>
-                <span><i class="fas fa-users"></i> 200 inscritos</span>
-                <span><i class="fas fa-location-dot"></i> Centro de São Gonçalo</span>
-                <span><i class="fas fa-circle-check" style="color:#28a745;"></i> Realizado</span>
-            </div>
-        </div>
+    <!-- ===== CONTEÚDO PRINCIPAL (dinâmico) ===== -->
+    <main class="modalidades-container" id="esportivaContainer">
+        <!-- O conteúdo será renderizado via JavaScript -->
     </main>
 
     <!-- ===== FALE CONOSCO ===== -->
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
-            <!-- mesmos cards do index -->
             <div class="info-card">
                 <div class="icon"><i class="fas fa-location-dot"></i></div>
                 <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
@@ -517,7 +440,7 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // Menu mobile (mesmo do index)
+        // Menu mobile
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
@@ -563,25 +486,7 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // Carregar dados do admin
-        const sportsContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").esportiva;
-        if (sportsContent) {
-            const banner = document.getElementById("bannerEsportiva");
-            if (banner && sportsContent.titulo) {
-                document.getElementById("espTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(sportsContent.titulo)}`;
-            }
-            if (banner && sportsContent.subtitulo) {
-                document.getElementById("espSubtituloBanner").textContent = sportsContent.subtitulo;
-            }
-            if (sportsContent.texto) {
-                const extraDiv = document.getElementById("esportivaExtra");
-                const p = document.createElement("p");
-                p.textContent = sportsContent.texto;
-                p.style.cssText = "background:#f0f4fa; padding:20px; border-radius:16px; margin-bottom:30px; font-size:1.1rem; line-height:1.7; border-left:4px solid #ffd700;";
-                extraDiv.appendChild(p);
-            }
-        }
-
+        // Função para escapar HTML
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -593,6 +498,75 @@
                 return m;
             });
         }
+
+        // Dados padrão (fallback) – exatamente o conteúdo atual
+        const defaultEsportiva = {
+            titulo: "Nossa Área Esportiva",
+            subtitulo: "Conheça as modalidades e campeonatos da ASSGA.",
+            modalidades: [
+                { icone: "fa-futbol", nome: "Futsal", descricao: "Modalidade principal da ASSGA, com campeonatos e treinos para todas as idades.", tag: "Mais popular" },
+                { icone: "fa-volleyball", nome: "Vôlei", descricao: "Esporte de equipe que promove integração, agilidade e trabalho em grupo.", tag: "Em crescimento" },
+                { icone: "fa-basketball", nome: "Basquete", descricao: "Modalidade dinâmica que desenvolve coordenação e espírito esportivo.", tag: "Novidade" },
+                { icone: "fa-running", nome: "Atletismo", descricao: "Corrida e atividades de pista para quem busca condicionamento e superação.", tag: "Disponível" },
+                { icone: "fa-swimmer", nome: "Natação", descricao: "Atividades aquáticas para todas as idades, com foco em saúde e lazer.", tag: "Em breve" },
+                { icone: "fa-dumbbell", nome: "Fitness", descricao: "Treinos funcionais e condicionamento físico para manter a saúde em dia.", tag: "Disponível" }
+            ],
+            campeonatos: [
+                { titulo: "Campeonato de Futsal - 2026", data: "15/03 a 15/12/2026", participantes: "8 equipes", local: "Ginásio ASSGA", status: "Em andamento" },
+                { titulo: "2º Halloween ASSGA", data: "28 e 29/11/2026", participantes: "100 participantes", local: "A definir", status: "Inscrições abertas" },
+                { titulo: "Torneio de Vôlei de Praia", data: "02 a 04/10/2026", participantes: "16 duplas", local: "Praia de Pirangi", status: "Confirmado" },
+                { titulo: "Corrida Rústica ASSGA", data: "25/07/2026", participantes: "200 inscritos", local: "Centro de São Gonçalo", status: "Realizado" }
+            ]
+        };
+
+        // Carregar dados do admin ou usar padrão
+        const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
+        const data = stored.esportiva || defaultEsportiva;
+
+        // Preencher banner
+        document.getElementById("espTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(data.titulo)}`;
+        document.getElementById("espSubtituloBanner").textContent = data.subtitulo;
+
+        // Construir conteúdo principal
+        const container = document.getElementById("esportivaContainer");
+        let html = '';
+
+        // Modalidades
+        if (data.modalidades && data.modalidades.length > 0) {
+            html += `<h2><i class="fas fa-star"></i> Modalidades Oferecidas</h2><div class="modalidades-grid">`;
+            data.modalidades.forEach(m => {
+                html += `
+                    <div class="modalidade-card">
+                        <span class="icon-grande"><i class="fas ${escapeHtml(m.icone)}"></i></span>
+                        <h3>${escapeHtml(m.nome)}</h3>
+                        <p>${escapeHtml(m.descricao)}</p>
+                        ${m.tag ? `<span class="tag">${escapeHtml(m.tag)}</span>` : ''}
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // Campeonatos
+        if (data.campeonatos && data.campeonatos.length > 0) {
+            html += `<h2 style="margin-top:60px;"><i class="fas fa-trophy"></i> Campeonatos e Atividades</h2>`;
+            data.campeonatos.forEach(c => {
+                const statusColor = c.status === 'Realizado' ? '#28a745' : c.status === 'Em andamento' ? '#17a2b8' : '#ffc107';
+                html += `
+                    <div class="campeonato-item">
+                        <h3><i class="fas fa-trophy"></i> ${escapeHtml(c.titulo)}</h3>
+                        <div class="info-camp">
+                            ${c.data ? `<span><i class="fas fa-calendar-days"></i> ${escapeHtml(c.data)}</span>` : ''}
+                            ${c.participantes ? `<span><i class="fas fa-users"></i> ${escapeHtml(c.participantes)}</span>` : ''}
+                            ${c.local ? `<span><i class="fas fa-location-dot"></i> ${escapeHtml(c.local)}</span>` : ''}
+                            ${c.status ? `<span><i class="fas fa-circle-check" style="color:${statusColor};"></i> ${escapeHtml(c.status)}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        container.innerHTML = html;
     </script>
 </body>
 </html>
