@@ -72,6 +72,7 @@
         .content-editor h2 { margin: 0 0 18px; color: var(--navy); font-size: 1.35rem; }
         .content-editor form { display: grid; gap: 12px; }
         .content-editor textarea { min-height: 130px; resize: vertical; }
+        .content-editor small { color: var(--muted); }
         @media (max-width: 700px) { .management form { grid-template-columns: 1fr; } .management .full { grid-column: auto; } .member-row { align-items: stretch; flex-direction: column; } }
         @media (max-width: 700px) { .summary { grid-template-columns: 1fr; } .toolbar { align-items: stretch; flex-direction: column; } .toolbar .field { max-width: none; } .panel { width: min(100% - 20px, 1280px); margin-top: 10px; } }
     </style>
@@ -111,7 +112,8 @@
                 </select>
                 <input class="field" id="contentHeading" placeholder="Título da página" required>
                 <input class="field" id="contentSubtitle" placeholder="Subtítulo ou chamada">
-                <textarea class="field" id="contentBody" placeholder="Texto complementar"></textarea>
+                <textarea class="field" id="contentBody" placeholder="Mais informações para exibir na página"></textarea>
+                <small>Use o campo acima para adicionar informações complementares sem alterar os blocos principais.</small>
                 <button class="action" type="submit"><i class="fas fa-save" aria-hidden="true"></i> Salvar conteúdo</button>
             </form>
         </section>
