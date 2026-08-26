@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Painel administrativo da ASSGA">
-    <title>Painel administrativo | ASSGA</title>
+    <title>Painel Administrativo | ASSGA</title>
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        /* ===== VARIÁVEIS E RESET ===== */
         :root {
             --navy: #003366;
             --blue: #004aad;
@@ -20,261 +21,1113 @@
             --danger: #b42318;
             --success: #08752b;
         }
-        * { box-sizing: border-box; }
-        body { margin: 0; min-height: 100vh; color: var(--ink); background: radial-gradient(circle at top right, #dbe9f8, var(--background) 48%); font-family: "Segoe UI", Tahoma, sans-serif; }
-        button, input { font: inherit; }
-        .login { width: min(410px, calc(100% - 32px)); margin: 12vh auto 0; padding: 34px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 50px rgba(0, 51, 102, .14); }
-        .login img { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; }
-        .login h1 { margin: 18px 0 8px; color: var(--navy); font-size: 1.7rem; }
-        .login p { margin: 0 0 24px; color: var(--muted); }
-        .field { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 7px; }
-        .primary, .logout, .action { border: 0; border-radius: 7px; cursor: pointer; font-weight: 700; }
-        .primary { width: 100%; margin-top: 12px; padding: 13px; color: white; background: var(--navy); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, #dbe9f8, var(--background) 48%);
+            color: var(--ink);
+        }
+        button, input, select, textarea { font: inherit; }
+
+        /* ===== LOGIN ===== */
+        .login {
+            width: min(410px, calc(100% - 32px));
+            margin: 12vh auto 0;
+            padding: 34px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: 0 18px 50px rgba(0, 51, 102, .14);
+        }
+        .login img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .login h1 {
+            margin: 18px 0 8px;
+            color: var(--navy);
+            font-size: 1.7rem;
+        }
+        .login p {
+            margin: 0 0 24px;
+            color: var(--muted);
+        }
+        .field {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            background: #fff;
+        }
+        .field:focus {
+            outline: 2px solid var(--blue);
+            border-color: transparent;
+        }
+        .primary, .logout, .action {
+            border: 0;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .primary {
+            width: 100%;
+            margin-top: 12px;
+            padding: 13px;
+            color: white;
+            background: var(--navy);
+        }
         .primary:hover { background: var(--blue); }
-        .error { display: none; margin-top: 14px; color: var(--danger); font-weight: 600; }
-        .panel { display: none; width: min(1280px, calc(100% - 32px)); margin: 28px auto; }
-        .panel-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 26px; color: white; background: linear-gradient(120deg, var(--navy), var(--blue)); border-radius: 12px; }
-        .panel-header h1 { margin: 0; font-size: clamp(1.35rem, 3vw, 2rem); }
-        .logout { padding: 10px 15px; color: var(--navy); background: var(--gold); }
-        .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
-        .summary-card, .toolbar, .table-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-        .summary-card { padding: 18px; }
-        .summary-card span { display: block; color: var(--muted); font-size: .9rem; }
-        .summary-card strong { display: block; margin-top: 5px; color: var(--navy); font-size: 1.8rem; }
-        .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding: 14px; }
+        .error {
+            display: none;
+            margin-top: 14px;
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* ===== PAINEL ===== */
+        .panel {
+            display: none;
+            width: min(1280px, calc(100% - 32px));
+            margin: 28px auto;
+        }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 22px 26px;
+            color: white;
+            background: linear-gradient(120deg, var(--navy), var(--blue));
+            border-radius: 12px;
+        }
+        .panel-header h1 {
+            margin: 0;
+            font-size: clamp(1.35rem, 3vw, 2rem);
+        }
+        .logout {
+            padding: 10px 15px;
+            color: var(--navy);
+            background: var(--gold);
+        }
+        .logout:hover { background: #f0d000; }
+
+        /* ===== RESUMO ===== */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .summary-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .summary-card span {
+            display: block;
+            color: var(--muted);
+            font-size: .9rem;
+        }
+        .summary-card strong {
+            display: block;
+            margin-top: 5px;
+            color: var(--navy);
+            font-size: 1.8rem;
+        }
+
+        /* ===== FERRAMENTAS ===== */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            padding: 14px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
         .toolbar .field { max-width: 340px; }
-        .action { padding: 10px 13px; color: white; background: var(--blue); }
+        .action {
+            padding: 10px 13px;
+            color: white;
+            background: var(--blue);
+        }
         .action.danger { background: var(--danger); }
-        .message { min-height: 24px; margin: 8px 0; font-weight: 600; }
+        .action.danger:hover { background: #9a1f1a; }
+        .action:hover { opacity: .9; }
+
+        /* ===== MENSAGEM ===== */
+        .message {
+            min-height: 24px;
+            margin: 8px 0;
+            font-weight: 600;
+        }
         .message.success { color: var(--success); }
         .message.error { color: var(--danger); }
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; min-width: 880px; border-collapse: collapse; }
-        th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
-        th { color: var(--navy); background: #f5f8fc; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
+
+        /* ===== TABELA ===== */
+        .table-wrap {
+            overflow-x: auto;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            min-width: 880px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 13px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+            vertical-align: middle;
+        }
+        th {
+            color: var(--navy);
+            background: #f5f8fc;
+            font-size: .82rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
         tr:last-child td { border-bottom: 0; }
-        .status { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: .78rem; font-weight: 700; }
-        .status.paid { color: var(--success); background: #d9fbe5; }
-        .status.pending { color: #9a3412; background: #ffedd5; }
-        .table-action { padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; color: var(--navy); background: white; cursor: pointer; }
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: .78rem;
+            font-weight: 700;
+        }
+        .status.paid {
+            color: var(--success);
+            background: #d9fbe5;
+        }
+        .status.pending {
+            color: #9a3412;
+            background: #ffedd5;
+        }
+        .table-action {
+            padding: 7px 9px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            color: var(--navy);
+            background: white;
+            cursor: pointer;
+        }
         .table-action.delete { color: var(--danger); }
-        .empty { padding: 28px; color: var(--muted); text-align: center; }
-        .management { margin-top: 24px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-        .management h2 { margin: 0 0 18px; color: var(--navy); font-size: 1.35rem; }
-        .management form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .management textarea { min-height: 90px; resize: vertical; }
-        .management .full { grid-column: 1 / -1; }
-        .member-list { display: grid; gap: 10px; margin-top: 20px; }
-        .member-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid var(--blue); background: #f7f9fc; }
-        .member-row strong { color: var(--navy); }
-        .member-actions { display: flex; gap: 7px; flex-wrap: wrap; }
-        .content-editor { margin-top: 24px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-        .content-editor h2 { margin: 0 0 18px; color: var(--navy); font-size: 1.35rem; }
-        .content-editor form { display: grid; gap: 12px; }
-        .content-editor textarea { min-height: 130px; resize: vertical; }
+        .table-action:hover { background: #f0f4fa; }
+        .empty {
+            padding: 28px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        /* ===== ABAS ===== */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 30px 0 16px;
+            border-bottom: 2px solid var(--line);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 700;
+            color: #666;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: .3s;
+            font-size: 1em;
+        }
+        .tab-btn i { margin-right: 6px; }
+        .tab-btn:hover {
+            background: #eef5ff;
+            color: var(--navy);
+        }
+        .tab-btn.active {
+            background: var(--navy);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,51,102,.3);
+        }
+        .tab-content {
+            display: none;
+            animation: fade .4s ease;
+        }
+        .tab-content.active { display: block; }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== GERENCIADORES ===== */
+        .management, .content-editor {
+            margin-top: 24px;
+            padding: 22px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+        .management h2, .content-editor h2 {
+            margin: 0 0 18px;
+            color: var(--navy);
+            font-size: 1.35rem;
+        }
+        .management form, .content-editor form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .management textarea, .content-editor textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .management .full, .content-editor .full { grid-column: 1 / -1; }
         .content-editor small { color: var(--muted); }
-        @media (max-width: 700px) { .management form { grid-template-columns: 1fr; } .management .full { grid-column: auto; } .member-row { align-items: stretch; flex-direction: column; } }
-        @media (max-width: 700px) { .summary { grid-template-columns: 1fr; } .toolbar { align-items: stretch; flex-direction: column; } .toolbar .field { max-width: none; } .panel { width: min(100% - 20px, 1280px); margin-top: 10px; } }
+
+        /* ===== LISTAS ===== */
+        .member-list, .page-list, .event-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .member-row, .page-row, .event-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 13px;
+            border-left: 4px solid var(--blue);
+            background: #f7f9fc;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        .member-row strong, .page-row strong, .event-item strong {
+            color: var(--navy);
+        }
+        .member-actions, .page-actions, .event-actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== MODAIS ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #fff;
+            max-width: 600px;
+            width: 90%;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+            animation: fade .3s ease;
+        }
+        .modal-content h2 {
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+        .modal-content .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 700px) {
+            .summary { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar .field { max-width: none; }
+            .management form, .content-editor form { grid-template-columns: 1fr; }
+            .management .full, .content-editor .full { grid-column: auto; }
+            .member-row, .page-row, .event-item { flex-direction: column; align-items: stretch; }
+            .panel { width: min(100% - 20px, 1280px); margin-top: 10px; }
+        }
+        @media (max-width: 480px) {
+            .panel-header { flex-direction: column; align-items: stretch; text-align: center; }
+        }
     </style>
 </head>
 <body>
-    <main class="login" id="loginView">
-        <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA">
-        <h1><i class="fas fa-lock" aria-hidden="true"></i> Área administrativa</h1>
-        <p>Entre para gerenciar as inscrições.</p>
-        <form id="loginForm">
-            <input class="field" id="password" type="password" placeholder="Senha administrativa" autocomplete="current-password" required>
-            <button class="primary" type="submit">Entrar</button>
-        </form>
-        <div class="error" id="loginError" role="alert">Senha incorreta.</div>
-    </main>
 
-    <main class="panel" id="panelView">
-        <header class="panel-header">
-            <h1><i class="fas fa-shield-halved" aria-hidden="true"></i> Gerenciamento ASSGA</h1>
-            <button class="logout" id="logoutButton" type="button"><i class="fas fa-right-from-bracket" aria-hidden="true"></i> Sair</button>
-        </header>
-        <section class="summary" aria-label="Resumo das inscrições">
-            <div class="summary-card"><span>Inscrições</span><strong id="totalCount">0</strong></div>
-            <div class="summary-card"><span>Pagamentos confirmados</span><strong id="paidCount">0</strong></div>
-            <div class="summary-card"><span>Vagas disponíveis</span><strong id="availableCount">100</strong></div>
-        </section>
-        <section class="content-editor" aria-labelledby="contentTitle">
-            <h2 id="contentTitle"><i class="fas fa-pen-to-square" aria-hidden="true"></i> Gerenciar páginas institucionais</h2>
-            <form id="contentForm">
-                <select class="field" id="contentPage" aria-label="Página para editar">
-                    <option value="index">Página inicial</option>
-                    <option value="historia">História</option>
-                    <option value="evento">Eventos</option>
-                    <option value="estatuto">Estatuto</option>
-                    <option value="esportiva">Esportiva</option>
-                    <option value="diretoria">Diretoria</option>
-                </select>
-                <input class="field" id="contentHeading" placeholder="Título da página" required>
-                <input class="field" id="contentSubtitle" placeholder="Subtítulo ou chamada">
-                <textarea class="field" id="contentBody" placeholder="Mais informações para exibir na página"></textarea>
-                <small>Use o campo acima para adicionar informações complementares sem alterar os blocos principais.</small>
-                <button class="action" type="submit"><i class="fas fa-save" aria-hidden="true"></i> Salvar conteúdo</button>
+<!-- ==================== LOGIN ==================== -->
+<main class="login" id="loginView">
+    <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA">
+    <h1><i class="fas fa-lock" aria-hidden="true"></i> Área administrativa</h1>
+    <p>Entre para gerenciar inscrições e conteúdo.</p>
+    <form id="loginForm">
+        <input class="field" id="password" type="password" placeholder="Senha administrativa" autocomplete="current-password" required>
+        <button class="primary" type="submit">Entrar</button>
+    </form>
+    <div class="error" id="loginError" role="alert">Senha incorreta.</div>
+</main>
+
+<!-- ==================== PAINEL ==================== -->
+<main class="panel" id="panelView">
+
+    <!-- Cabeçalho -->
+    <header class="panel-header">
+        <h1><i class="fas fa-shield-halved" aria-hidden="true"></i> Gerenciamento ASSGA</h1>
+        <button class="logout" id="logoutButton" type="button"><i class="fas fa-right-from-bracket" aria-hidden="true"></i> Sair</button>
+    </header>
+
+    <!-- Resumo -->
+    <section class="summary" aria-label="Resumo das inscrições">
+        <div class="summary-card"><span>Inscrições</span><strong id="totalCount">0</strong></div>
+        <div class="summary-card"><span>Pagamentos confirmados</span><strong id="paidCount">0</strong></div>
+        <div class="summary-card"><span>Vagas disponíveis</span><strong id="availableCount">100</strong></div>
+    </section>
+
+    <!-- Ferramentas e tabela de inscrições -->
+    <div class="toolbar">
+        <input class="field" id="search" type="search" placeholder="Buscar por nome, CPF ou vaga" aria-label="Buscar inscrições">
+        <button class="action" id="refreshButton" type="button"><i class="fas fa-rotate" aria-hidden="true"></i> Atualizar</button>
+        <button class="action danger" id="resetButton" type="button"><i class="fas fa-trash" aria-hidden="true"></i> Apagar todas</button>
+    </div>
+    <div class="message" id="message" role="status" aria-live="polite"></div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Vaga</th><th>Nome</th><th>CPF</th><th>WhatsApp</th><th>Pagamento</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead>
+            <tbody id="registrationList"></tbody>
+        </table>
+        <div class="empty" id="emptyState" hidden>Nenhuma inscrição encontrada.</div>
+    </div>
+
+    <!-- ========== ABAS DE GERENCIAMENTO DE CONTEÚDO ========== -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-home"><i class="fas fa-house"></i> Home</button>
+        <button class="tab-btn" data-tab="tab-historia"><i class="fas fa-book-open"></i> História</button>
+        <button class="tab-btn" data-tab="tab-esportiva"><i class="fas fa-futbol"></i> Esportiva</button>
+        <button class="tab-btn" data-tab="tab-estatuto"><i class="fas fa-file-contract"></i> Estatuto</button>
+        <button class="tab-btn" data-tab="tab-eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
+        <button class="tab-btn" data-tab="tab-diretoria"><i class="fas fa-users"></i> Diretoria</button>
+        <button class="tab-btn" data-tab="tab-paginas"><i class="fas fa-file"></i> Páginas</button>
+    </div>
+
+    <!-- HOME -->
+    <div id="tab-home" class="tab-content active">
+        <div class="content-editor">
+            <h2><i class="fas fa-house"></i> Conteúdo da Home</h2>
+            <form id="homeForm">
+                <div class="form-group full">
+                    <label>Título do Slider</label>
+                    <input class="field" id="homeTitulo" placeholder="Ex: ASSGA - Associação Desportiva" />
+                </div>
+                <div class="form-group full">
+                    <label>Texto adicional (abaixo do slider)</label>
+                    <textarea class="field" id="homeTexto" placeholder="Digite um texto extra para a página inicial..."></textarea>
+                </div>
+                <button class="action" type="submit"><i class="fas fa-save"></i> Salvar Home</button>
             </form>
-        </section>
-        <div class="toolbar">
-            <input class="field" id="search" type="search" placeholder="Buscar por nome, CPF ou vaga" aria-label="Buscar inscrições">
-            <button class="action" id="refreshButton" type="button"><i class="fas fa-rotate" aria-hidden="true"></i> Atualizar</button>
-            <button class="action danger" id="resetButton" type="button"><i class="fas fa-trash" aria-hidden="true"></i> Apagar todas</button>
+            <p style="margin-top:10px; color:var(--success);" id="msgHome"></p>
         </div>
-        <div class="message" id="message" role="status" aria-live="polite"></div>
-        <div class="table-wrap">
-            <table>
-                <thead><tr><th>Vaga</th><th>Nome</th><th>CPF</th><th>WhatsApp</th><th>Pagamento</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead>
-                <tbody id="registrationList"></tbody>
-            </table>
-            <div class="empty" id="emptyState" hidden>Nenhuma inscrição encontrada.</div>
-        </div>
-        <section class="management" aria-labelledby="directorsTitle">
-            <h2 id="directorsTitle"><i class="fas fa-users" aria-hidden="true"></i> Gerenciar diretoria</h2>
-            <form id="directorForm">
-                <input type="hidden" id="directorId">
-                <input class="field" id="directorName" placeholder="Nome" required>
-                <input class="field" id="directorRole" placeholder="Cargo" required>
-                <input class="field" id="directorEmail" type="email" placeholder="E-mail">
-                <input class="field" id="directorPhone" placeholder="Telefone">
-                <textarea class="field full" id="directorDescription" placeholder="Descrição"></textarea>
-                <div class="full"><button class="action" type="submit"><i class="fas fa-save" aria-hidden="true"></i> Salvar membro</button> <button class="table-action" id="cancelDirector" type="button">Cancelar edição</button></div>
+    </div>
+
+    <!-- HISTÓRIA -->
+    <div id="tab-historia" class="tab-content">
+        <div class="content-editor">
+            <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
+            <form id="historiaForm">
+                <div class="form-group full">
+                    <label>Título da página</label>
+                    <input class="field" id="histTitulo" placeholder="Ex: Nossa História" />
+                </div>
+                <div class="form-group full">
+                    <label>Subtítulo</label>
+                    <input class="field" id="histSubtitulo" placeholder="Ex: Conheça nossa trajetória" />
+                </div>
+                <div class="form-group full">
+                    <label>Texto adicional</label>
+                    <textarea class="field" id="histTexto" placeholder="Texto extra que aparecerá no topo da página..."></textarea>
+                </div>
+                <button class="action" type="submit"><i class="fas fa-save"></i> Salvar História</button>
             </form>
-            <div class="member-list" id="memberList"></div>
-        </section>
-    </main>
+            <p style="margin-top:10px; color:var(--success);" id="msgHist"></p>
+        </div>
+    </div>
 
-    <script>
-        const ADMIN_PASSWORD = "ASSGA2026";
-        const STORAGE_KEY = "assga_inscricoes";
-        const DIRECTORS_KEY = "assga_diretoria";
-        const CONTENT_KEY = "assga_conteudos";
-        const DEFAULT_DIRECTORS = [
-            { nome: "Nome do Presidente", cargo: "Presidente", descricao: "Responsável pela gestão geral da associação e representação institucional.", email: "presidente@assga.com", telefone: "+5584996981248" },
-            { nome: "Nome do Vice-Presidente", cargo: "Vice-Presidente", descricao: "Auxilia o presidente na gestão e coordena as atividades administrativas.", email: "vice@assga.com", telefone: "+5584996981248" },
-            { nome: "Nome do Secretário", cargo: "Secretário", descricao: "Responsável pela documentação, atas e comunicação oficial da associação.", email: "secretario@assga.com", telefone: "+5584996981248" },
-            { nome: "Nome do Tesoureiro", cargo: "Tesoureiro", descricao: "Gerencia as finanças, contas e prestação de contas da ASSGA.", email: "tesoureiro@assga.com", telefone: "+5584996981248" },
-            { nome: "Nome do Diretor de Esportes", cargo: "Diretor de Esportes", descricao: "Coordena as modalidades esportivas, treinos e campeonatos da associação.", email: "esportes@assga.com", telefone: "+5584996981248" },
-            { nome: "Nome do Conselheiro Fiscal", cargo: "Conselho Fiscal", descricao: "Acompanha e fiscaliza as atividades financeiras e administrativas da ASSGA.", email: "fiscal@assga.com", telefone: "+5584996981248" }
-        ];
-        const AUTH_KEY = "assga_admin";
-        const MAX_SLOTS = 100;
-        const loginView = document.getElementById("loginView");
-        const panelView = document.getElementById("panelView");
-        const registrationList = document.getElementById("registrationList");
-        const emptyState = document.getElementById("emptyState");
-        const message = document.getElementById("message");
+    <!-- ESPORTIVA -->
+    <div id="tab-esportiva" class="tab-content">
+        <div class="content-editor">
+            <h2><i class="fas fa-futbol"></i> Conteúdo da Esportiva</h2>
+            <form id="esportivaForm">
+                <div class="form-group full">
+                    <label>Título da página</label>
+                    <input class="field" id="espTitulo" placeholder="Ex: Nossa Área Esportiva" />
+                </div>
+                <div class="form-group full">
+                    <label>Subtítulo</label>
+                    <input class="field" id="espSubtitulo" placeholder="Ex: Modalidades e campeonatos" />
+                </div>
+                <div class="form-group full">
+                    <label>Texto adicional</label>
+                    <textarea class="field" id="espTexto" placeholder="Texto extra..."></textarea>
+                </div>
+                <button class="action" type="submit"><i class="fas fa-save"></i> Salvar Esportiva</button>
+            </form>
+            <p style="margin-top:10px; color:var(--success);" id="msgEsp"></p>
+        </div>
+    </div>
 
-        function escapeHtml(value) {
-            return String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
+    <!-- ESTATUTO -->
+    <div id="tab-estatuto" class="tab-content">
+        <div class="content-editor">
+            <h2><i class="fas fa-file-contract"></i> Conteúdo do Estatuto</h2>
+            <form id="estatutoForm">
+                <div class="form-group full">
+                    <label>Título da página</label>
+                    <input class="field" id="estTitulo" placeholder="Ex: Estatuto" />
+                </div>
+                <div class="form-group full">
+                    <label>Subtítulo</label>
+                    <input class="field" id="estSubtitulo" placeholder="Ex: Documentos oficiais" />
+                </div>
+                <div class="form-group full">
+                    <label>Texto adicional</label>
+                    <textarea class="field" id="estTexto" placeholder="Texto extra..."></textarea>
+                </div>
+                <button class="action" type="submit"><i class="fas fa-save"></i> Salvar Estatuto</button>
+            </form>
+            <p style="margin-top:10px; color:var(--success);" id="msgEst"></p>
+        </div>
+    </div>
+
+    <!-- EVENTOS (gerenciar lista de eventos) -->
+    <div id="tab-eventos" class="tab-content">
+        <div class="management">
+            <h2><i class="fas fa-calendar-days"></i> Gerenciar Eventos</h2>
+            <button class="action" onclick="abrirModalEvento()"><i class="fas fa-plus"></i> Adicionar Evento</button>
+            <div id="listaEventos" class="event-list"></div>
+            <p style="margin-top:10px; color:var(--success);" id="msgEvento"></p>
+        </div>
+    </div>
+
+    <!-- DIRETORIA -->
+    <div id="tab-diretoria" class="tab-content">
+        <div class="management">
+            <h2><i class="fas fa-users"></i> Gerenciar Diretoria</h2>
+            <button class="action" onclick="abrirModalDiretor()"><i class="fas fa-plus"></i> Adicionar Membro</button>
+            <div id="listaDiretoria" class="member-list"></div>
+            <p style="margin-top:10px; color:var(--success);" id="msgDir"></p>
+        </div>
+    </div>
+
+    <!-- PÁGINAS PERSONALIZADAS -->
+    <div id="tab-paginas" class="tab-content">
+        <div class="content-editor">
+            <h2><i class="fas fa-file"></i> Páginas personalizadas</h2>
+            <form id="newPageForm">
+                <div class="form-group full">
+                    <label>Nome da página (usado no menu)</label>
+                    <input class="field" id="newPageName" placeholder="Ex: Contato" required />
+                </div>
+                <div class="form-group full">
+                    <label>Título da página</label>
+                    <input class="field" id="newPageTitle" placeholder="Título exibido no cabeçalho" required />
+                </div>
+                <div class="form-group full">
+                    <label>Subtítulo</label>
+                    <input class="field" id="newPageSubtitle" placeholder="Subtítulo ou chamada" />
+                </div>
+                <div class="form-group full">
+                    <label>Texto completo da página</label>
+                    <textarea class="field" id="newPageBody" placeholder="Conteúdo principal..."></textarea>
+                </div>
+                <div class="form-group full">
+                    <label>URL da imagem (opcional)</label>
+                    <input class="field" id="newPageImage" type="url" placeholder="https://exemplo.com/imagem.jpg" />
+                </div>
+                <button class="action" type="submit"><i class="fas fa-plus"></i> Criar página</button>
+            </form>
+            <div class="page-list" id="pageList"></div>
+            <p style="margin-top:10px; color:var(--success);" id="msgPagina"></p>
+        </div>
+    </div>
+
+</main>
+
+<!-- ==================== MODAL DIRETOR ==================== -->
+<div id="modalDiretor" class="modal">
+    <div class="modal-content">
+        <h2 id="modalDirTitulo"><i class="fas fa-user-plus"></i> Adicionar Membro</h2>
+        <input type="hidden" id="dirIndex" value="-1" />
+        <div class="form-group">
+            <label>Nome *</label>
+            <input class="field" id="dirNome" placeholder="Nome completo" />
+        </div>
+        <div class="form-group">
+            <label>Cargo *</label>
+            <input class="field" id="dirCargo" placeholder="Ex: Presidente" />
+        </div>
+        <div class="form-group">
+            <label>Descrição</label>
+            <textarea class="field" id="dirDescricao" placeholder="Breve descrição..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>E-mail</label>
+            <input class="field" id="dirEmail" type="email" placeholder="email@exemplo.com" />
+        </div>
+        <div class="form-group">
+            <label>Telefone</label>
+            <input class="field" id="dirTelefone" placeholder="(84) 99999-9999" />
+        </div>
+        <div class="btn-group">
+            <button class="table-action" onclick="fecharModal('modalDiretor')">Cancelar</button>
+            <button class="action" onclick="salvarDiretor()"><i class="fas fa-save"></i> Salvar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL EVENTO ==================== -->
+<div id="modalEvento" class="modal">
+    <div class="modal-content">
+        <h2 id="modalEventoTitulo"><i class="fas fa-calendar-plus"></i> Adicionar Evento</h2>
+        <input type="hidden" id="eventIndex" value="-1" />
+        <div class="form-group">
+            <label>Título *</label>
+            <input class="field" id="eventTitulo" placeholder="Ex: 2º Halloween ASSGA" />
+        </div>
+        <div class="form-group">
+            <label>Descrição</label>
+            <textarea class="field" id="eventDescricao" placeholder="Descrição do evento..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Data</label>
+            <input class="field" id="eventData" placeholder="Ex: 28 e 29 de novembro de 2026" />
+        </div>
+        <div class="form-group">
+            <label>Local</label>
+            <input class="field" id="eventLocal" placeholder="Local do evento" />
+        </div>
+        <div class="form-group">
+            <label>Preço (R$)</label>
+            <input class="field" id="eventPreco" placeholder="Ex: 100,00" />
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select class="field" id="eventStatus">
+                <option value="aberto">Inscrições Abertas</option>
+                <option value="andamento">Em andamento</option>
+                <option value="fechado">Inscrições Encerradas</option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <button class="table-action" onclick="fecharModal('modalEvento')">Cancelar</button>
+            <button class="action" onclick="salvarEvento()"><i class="fas fa-save"></i> Salvar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+    // ============================================================
+    // CONSTANTES E CHAVES
+    // ============================================================
+    const ADMIN_PASSWORD = "ASSGA2026";
+    const STORAGE_KEY = "assga_inscricoes";
+    const DIRECTORS_KEY = "assga_diretoria";
+    const CONTENT_KEY = "assga_conteudos";
+    const CUSTOM_PAGES_KEY = "assga_paginas";
+    const EVENTOS_KEY = "assga_eventos";
+    const MAX_SLOTS = 100;
+    const AUTH_KEY = "assga_admin";
+
+    const DEFAULT_DIRECTORS = [
+        { nome: "Nome do Presidente", cargo: "Presidente", descricao: "Responsável pela gestão geral da associação e representação institucional.", email: "presidente@assga.com", telefone: "+5584996981248" },
+        { nome: "Nome do Vice-Presidente", cargo: "Vice-Presidente", descricao: "Auxilia o presidente na gestão e coordena as atividades administrativas.", email: "vice@assga.com", telefone: "+5584996981248" },
+        { nome: "Nome do Secretário", cargo: "Secretário", descricao: "Responsável pela documentação, atas e comunicação oficial da associação.", email: "secretario@assga.com", telefone: "+5584996981248" },
+        { nome: "Nome do Tesoureiro", cargo: "Tesoureiro", descricao: "Gerencia as finanças, contas e prestação de contas da ASSGA.", email: "tesoureiro@assga.com", telefone: "+5584996981248" },
+        { nome: "Nome do Diretor de Esportes", cargo: "Diretor de Esportes", descricao: "Coordena as modalidades esportivas, treinos e campeonatos da associação.", email: "esportes@assga.com", telefone: "+5584996981248" },
+        { nome: "Nome do Conselheiro Fiscal", cargo: "Conselho Fiscal", descricao: "Acompanha e fiscaliza as atividades financeiras e administrativas da ASSGA.", email: "fiscal@assga.com", telefone: "+5584996981248" }
+    ];
+
+    // ============================================================
+    // UTILITÁRIOS
+    // ============================================================
+    function escapeHtml(text) {
+        if (!text) return '';
+        return String(text).replace(/[&<>"']/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            if (m === '"') return '&quot;';
+            if (m === "'") return '&#039;';
+            return m;
+        });
+    }
+
+    function getRegistrations() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+        catch { return []; }
+    }
+    function saveRegistrations(lista) { localStorage.setItem(STORAGE_KEY, JSON.stringify(lista)); }
+
+    function getDirectors() {
+        try {
+            const stored = localStorage.getItem(DIRECTORS_KEY);
+            if (stored === null) { saveDirectors(DEFAULT_DIRECTORS); return DEFAULT_DIRECTORS; }
+            return JSON.parse(stored);
+        } catch { return []; }
+    }
+    function saveDirectors(lista) { localStorage.setItem(DIRECTORS_KEY, JSON.stringify(lista)); }
+
+    function getContents() {
+        try { return JSON.parse(localStorage.getItem(CONTENT_KEY) || "{}"); }
+        catch { return {}; }
+    }
+    function saveContents(obj) { localStorage.setItem(CONTENT_KEY, JSON.stringify(obj)); }
+
+    function getEventos() {
+        try { return JSON.parse(localStorage.getItem(EVENTOS_KEY) || "[]"); }
+        catch { return []; }
+    }
+    function saveEventos(lista) { localStorage.setItem(EVENTOS_KEY, JSON.stringify(lista)); }
+
+    function getCustomPages() {
+        try { return JSON.parse(localStorage.getItem(CUSTOM_PAGES_KEY) || "[]"); }
+        catch { return []; }
+    }
+    function saveCustomPages(lista) { localStorage.setItem(CUSTOM_PAGES_KEY, JSON.stringify(lista)); }
+
+    function showMessage(text, type, targetId = "message") {
+        const el = document.getElementById(targetId);
+        if (el) { el.textContent = text; el.className = `message ${type}`; }
+    }
+
+    // ============================================================
+    // FUNÇÕES DE RENDERIZAÇÃO (INSCRIÇÕES, DIRETORIA, EVENTOS, PÁGINAS)
+    // ============================================================
+    function renderInscricoes() {
+        const registrations = getRegistrations();
+        const searchTerm = document.getElementById("search").value.trim().toLowerCase();
+        const filtered = registrations.filter(r =>
+            [r.nome, r.cpf, r.vaga].some(val => String(val ?? "").toLowerCase().includes(searchTerm))
+        );
+        const paid = registrations.filter(r => String(r.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO").length;
+        document.getElementById("totalCount").textContent = registrations.length;
+        document.getElementById("paidCount").textContent = paid;
+        document.getElementById("availableCount").textContent = Math.max(0, MAX_SLOTS - registrations.length);
+
+        const tbody = document.getElementById("registrationList");
+        tbody.innerHTML = filtered.map(r => {
+            const isPaid = String(r.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO";
+            return `<tr>
+                <td><strong>${escapeHtml(r.vaga)}</strong></td>
+                <td>${escapeHtml(r.nome)}</td>
+                <td>${escapeHtml(r.cpf)}</td>
+                <td>${escapeHtml(r.telefone)}</td>
+                <td>${escapeHtml(r.pagamento)}</td>
+                <td><span class="status ${isPaid ? 'paid' : 'pending'}">${isPaid ? 'PAGO' : 'NAO PAGO'}</span></td>
+                <td>R$ ${Number(r.valor || 0).toFixed(2)}</td>
+                <td>
+                    <button class="table-action" data-action="payment" data-vaga="${escapeHtml(r.vaga)}">${isPaid ? 'Marcar não pago' : 'Marcar pago'}</button>
+                    <button class="table-action delete" data-action="delete" data-vaga="${escapeHtml(r.vaga)}"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        }).join("");
+        document.getElementById("emptyState").hidden = filtered.length !== 0;
+    }
+
+    function renderDirectors() {
+        const directors = getDirectors();
+        const container = document.getElementById("listaDiretoria");
+        if (directors.length === 0) {
+            container.innerHTML = '<div class="empty">Nenhum membro cadastrado.</div>';
+            return;
         }
+        container.innerHTML = directors.map((d, i) => `
+            <div class="member-row">
+                <div>
+                    <strong>${escapeHtml(d.nome)}</strong><br>
+                    <span>${escapeHtml(d.cargo)}</span>
+                </div>
+                <div class="member-actions">
+                    <button class="table-action" data-director-action="edit" data-director-id="${i}">Editar</button>
+                    <button class="table-action delete" data-director-action="delete" data-director-id="${i}">Excluir</button>
+                </div>
+            </div>
+        `).join("");
+    }
 
-        function getRegistrations() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
-            catch { return []; }
+    function renderEventos() {
+        const lista = getEventos();
+        const container = document.getElementById("listaEventos");
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty">Nenhum evento cadastrado.</div>';
+            return;
         }
+        const statusMap = { aberto: '🟢 Inscrições Abertas', andamento: '🟡 Em andamento', fechado: '🔴 Encerrado' };
+        container.innerHTML = lista.map((e, i) => `
+            <div class="event-item">
+                <div>
+                    <strong>${escapeHtml(e.titulo)}</strong><br>
+                    <span style="font-size:0.9em; color:#555;">${escapeHtml(e.descricao || '')}</span><br>
+                    <span style="font-size:0.8em; color:var(--muted);">
+                        <i class="fas fa-calendar"></i> ${escapeHtml(e.data || '')} &nbsp;|&nbsp;
+                        <i class="fas fa-map-pin"></i> ${escapeHtml(e.local || '')} &nbsp;|&nbsp;
+                        R$ ${escapeHtml(e.preco || '0,00')}
+                    </span>
+                    <span style="margin-left:8px; font-weight:600; font-size:0.85em;">${statusMap[e.status] || 'Aberto'}</span>
+                </div>
+                <div class="event-actions">
+                    <button class="table-action" onclick="editarEvento(${i})">Editar</button>
+                    <button class="table-action delete" onclick="excluirEvento(${i})">Excluir</button>
+                </div>
+            </div>
+        `).join("");
+    }
 
-        function saveRegistrations(registrations) { localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations)); }
-
-        function getDirectors() {
-            try {
-                const storedDirectors = localStorage.getItem(DIRECTORS_KEY);
-                if (storedDirectors === null) { saveDirectors(DEFAULT_DIRECTORS); return DEFAULT_DIRECTORS; }
-                return JSON.parse(storedDirectors);
-            }
-            catch { return []; }
+    function renderCustomPages() {
+        const pages = getCustomPages();
+        const container = document.getElementById("pageList");
+        if (pages.length === 0) {
+            container.innerHTML = '<div class="empty">Nenhuma página criada.</div>';
+            return;
         }
+        container.innerHTML = pages.map((p, i) => `
+            <div class="page-row">
+                <div>
+                    <strong>${escapeHtml(p.nome)}</strong><br>
+                    <span>${escapeHtml(p.titulo)}</span>
+                </div>
+                <div class="page-actions">
+                    <a class="table-action" href="pagina.html?pagina=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener noreferrer">Abrir</a>
+                    <button class="table-action delete" data-page-action="delete" data-page-id="${i}">Excluir</button>
+                </div>
+            </div>
+        `).join("");
+    }
 
-        function saveDirectors(directors) { localStorage.setItem(DIRECTORS_KEY, JSON.stringify(directors)); }
+    // ============================================================
+    // GERENCIAMENTO DE CONTEÚDO (ABAS)
+    // ============================================================
+    function carregarConteudo(pagina) {
+        const data = getContents()[pagina] || {};
+        const prefix = pagina === 'index' ? 'home' : pagina;
+        document.getElementById(`${prefix}Titulo`).value = data.titulo || '';
+        document.getElementById(`${prefix}Subtitulo`).value = data.subtitulo || '';
+        document.getElementById(`${prefix}Texto`).value = data.texto || '';
+    }
 
-        function getContents() {
-            try { return JSON.parse(localStorage.getItem(CONTENT_KEY) || "{}"); }
-            catch { return {}; }
+    function salvarConteudo(pagina, formId, msgId) {
+        const prefix = pagina === 'index' ? 'home' : pagina;
+        const conteudos = getContents();
+        conteudos[pagina] = {
+            titulo: document.getElementById(`${prefix}Titulo`).value.trim(),
+            subtitulo: document.getElementById(`${prefix}Subtitulo`).value.trim(),
+            texto: document.getElementById(`${prefix}Texto`).value.trim()
+        };
+        saveContents(conteudos);
+        showMessage('✅ Conteúdo salvo com sucesso!', 'success', msgId);
+    }
+
+    // ============================================================
+    // DIRETORIA (CRUD)
+    // ============================================================
+    function abrirModalDiretor(index = -1) {
+        const modal = document.getElementById('modalDiretor');
+        document.getElementById('dirIndex').value = index;
+        if (index >= 0) {
+            const d = getDirectors()[index];
+            document.getElementById('dirNome').value = d.nome || '';
+            document.getElementById('dirCargo').value = d.cargo || '';
+            document.getElementById('dirDescricao').value = d.descricao || '';
+            document.getElementById('dirEmail').value = d.email || '';
+            document.getElementById('dirTelefone').value = d.telefone || '';
+            document.getElementById('modalDirTitulo').innerHTML = '<i class="fas fa-user-edit"></i> Editar Membro';
+        } else {
+            document.getElementById('dirNome').value = '';
+            document.getElementById('dirCargo').value = '';
+            document.getElementById('dirDescricao').value = '';
+            document.getElementById('dirEmail').value = '';
+            document.getElementById('dirTelefone').value = '';
+            document.getElementById('modalDirTitulo').innerHTML = '<i class="fas fa-user-plus"></i> Adicionar Membro';
         }
+        modal.classList.add('active');
+    }
 
-        function loadContentForm() {
-            const content = getContents()[document.getElementById("contentPage").value] || {};
-            document.getElementById("contentHeading").value = content.titulo || "";
-            document.getElementById("contentSubtitle").value = content.subtitulo || "";
-            document.getElementById("contentBody").value = content.texto || "";
+    function fecharModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    function salvarDiretor() {
+        const index = parseInt(document.getElementById('dirIndex').value);
+        const nome = document.getElementById('dirNome').value.trim();
+        const cargo = document.getElementById('dirCargo').value.trim();
+        if (!nome || !cargo) { alert('Nome e Cargo são obrigatórios.'); return; }
+        const lista = getDirectors();
+        const obj = {
+            nome, cargo,
+            descricao: document.getElementById('dirDescricao').value.trim(),
+            email: document.getElementById('dirEmail').value.trim(),
+            telefone: document.getElementById('dirTelefone').value.trim()
+        };
+        if (index >= 0) lista[index] = obj;
+        else lista.push(obj);
+        saveDirectors(lista);
+        renderDirectors();
+        fecharModal('modalDiretor');
+        showMessage('✅ Diretoria atualizada!', 'success', 'msgDir');
+    }
+
+    function excluirDiretor(index) {
+        if (!confirm('Remover este membro?')) return;
+        const lista = getDirectors();
+        lista.splice(index, 1);
+        saveDirectors(lista);
+        renderDirectors();
+        showMessage('✅ Membro removido.', 'success', 'msgDir');
+    }
+
+    // ============================================================
+    // EVENTOS (CRUD)
+    // ============================================================
+    function abrirModalEvento(index = -1) {
+        const modal = document.getElementById('modalEvento');
+        document.getElementById('eventIndex').value = index;
+        if (index >= 0) {
+            const e = getEventos()[index];
+            document.getElementById('eventTitulo').value = e.titulo || '';
+            document.getElementById('eventDescricao').value = e.descricao || '';
+            document.getElementById('eventData').value = e.data || '';
+            document.getElementById('eventLocal').value = e.local || '';
+            document.getElementById('eventPreco').value = e.preco || '';
+            document.getElementById('eventStatus').value = e.status || 'aberto';
+            document.getElementById('modalEventoTitulo').innerHTML = '<i class="fas fa-calendar-edit"></i> Editar Evento';
+        } else {
+            document.getElementById('eventTitulo').value = '';
+            document.getElementById('eventDescricao').value = '';
+            document.getElementById('eventData').value = '';
+            document.getElementById('eventLocal').value = '';
+            document.getElementById('eventPreco').value = '';
+            document.getElementById('eventStatus').value = 'aberto';
+            document.getElementById('modalEventoTitulo').innerHTML = '<i class="fas fa-calendar-plus"></i> Adicionar Evento';
         }
+        modal.classList.add('active');
+    }
 
-        function showMessage(text, type) { message.textContent = text; message.className = `message ${type}`; }
+    function salvarEvento() {
+        const index = parseInt(document.getElementById('eventIndex').value);
+        const titulo = document.getElementById('eventTitulo').value.trim();
+        if (!titulo) { alert('Título é obrigatório.'); return; }
+        const lista = getEventos();
+        const obj = {
+            titulo,
+            descricao: document.getElementById('eventDescricao').value.trim(),
+            data: document.getElementById('eventData').value.trim(),
+            local: document.getElementById('eventLocal').value.trim(),
+            preco: document.getElementById('eventPreco').value.trim() || '0,00',
+            status: document.getElementById('eventStatus').value
+        };
+        if (index >= 0) lista[index] = obj;
+        else lista.push(obj);
+        saveEventos(lista);
+        renderEventos();
+        fecharModal('modalEvento');
+        showMessage('✅ Eventos atualizados!', 'success', 'msgEvento');
+    }
 
-        function render() {
-            const registrations = getRegistrations();
-            const searchTerm = document.getElementById("search").value.trim().toLowerCase();
-            const filtered = registrations.filter(registration => [registration.nome, registration.cpf, registration.vaga].some(value => String(value ?? "").toLowerCase().includes(searchTerm)));
-            const paid = registrations.filter(registration => String(registration.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO").length;
-            document.getElementById("totalCount").textContent = registrations.length;
-            document.getElementById("paidCount").textContent = paid;
-            document.getElementById("availableCount").textContent = Math.max(0, MAX_SLOTS - registrations.length);
-            registrationList.innerHTML = filtered.map(registration => {
-                const isPaid = String(registration.statusPagamento || "NAO PAGO").toUpperCase() === "PAGO";
-                return `<tr><td><strong>${escapeHtml(registration.vaga)}</strong></td><td>${escapeHtml(registration.nome)}</td><td>${escapeHtml(registration.cpf)}</td><td>${escapeHtml(registration.telefone)}</td><td>${escapeHtml(registration.pagamento)}</td><td><span class="status ${isPaid ? "paid" : "pending"}">${isPaid ? "PAGO" : "NAO PAGO"}</span></td><td>R$ ${Number(registration.valor || 0).toFixed(2)}</td><td><button class="table-action" data-action="payment" data-vaga="${escapeHtml(registration.vaga)}">${isPaid ? "Marcar não pago" : "Marcar pago"}</button> <button class="table-action delete" data-action="delete" data-vaga="${escapeHtml(registration.vaga)}" aria-label="Excluir inscrição de ${escapeHtml(registration.nome)}"><i class="fas fa-trash" aria-hidden="true"></i></button></td></tr>`;
-            }).join("");
-            emptyState.hidden = filtered.length !== 0;
+    function editarEvento(index) { abrirModalEvento(index); }
+    function excluirEvento(index) {
+        if (!confirm('Remover este evento?')) return;
+        const lista = getEventos();
+        lista.splice(index, 1);
+        saveEventos(lista);
+        renderEventos();
+        showMessage('✅ Evento removido.', 'success', 'msgEvento');
+    }
+
+    // ============================================================
+    // PÁGINAS PERSONALIZADAS
+    // ============================================================
+    document.getElementById("newPageForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const pages = getCustomPages();
+        const name = document.getElementById("newPageName").value.trim();
+        const slug = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        if (!slug || pages.some(p => p.slug === slug)) {
+            showMessage('Já existe uma página com esse nome.', 'error', 'msgPagina');
+            return;
+        }
+        pages.push({
+            slug,
+            nome: name,
+            titulo: document.getElementById("newPageTitle").value.trim(),
+            subtitulo: document.getElementById("newPageSubtitle").value.trim(),
+            texto: document.getElementById("newPageBody").value.trim(),
+            imagem: document.getElementById("newPageImage").value.trim()
+        });
+        saveCustomPages(pages);
+        this.reset();
+        renderCustomPages();
+        showMessage('✅ Página criada com sucesso!', 'success', 'msgPagina');
+    });
+
+    document.getElementById("pageList").addEventListener("click", function(e) {
+        const btn = e.target.closest("button[data-page-action]");
+        if (!btn) return;
+        if (btn.dataset.pageAction === 'delete' && confirm('Excluir esta página?')) {
+            const pages = getCustomPages();
+            pages.splice(Number(btn.dataset.pageId), 1);
+            saveCustomPages(pages);
+            renderCustomPages();
+            showMessage('✅ Página excluída.', 'success', 'msgPagina');
+        }
+    });
+
+    // ============================================================
+    // EVENTOS DA TABELA DE INSCRIÇÕES (pagamento / exclusão)
+    // ============================================================
+    document.getElementById("registrationList").addEventListener("click", function(e) {
+        const btn = e.target.closest("button[data-action]");
+        if (!btn) return;
+        const registrations = getRegistrations();
+        const slot = String(btn.dataset.vaga);
+        const idx = registrations.findIndex(r => String(r.vaga) === slot);
+        if (idx < 0) return;
+        if (btn.dataset.action === 'payment') {
+            registrations[idx].statusPagamento = String(registrations[idx].statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "NAO PAGO" : "PAGO";
+        } else if (btn.dataset.action === 'delete' && confirm('Excluir esta inscrição?')) {
+            registrations.splice(idx, 1);
+        }
+        saveRegistrations(registrations);
+        renderInscricoes();
+    });
+
+    // ============================================================
+    // LOGIN / LOGOUT
+    // ============================================================
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        if (document.getElementById("password").value === ADMIN_PASSWORD) {
+            sessionStorage.setItem(AUTH_KEY, "true");
+            document.getElementById("loginView").style.display = "none";
+            document.getElementById("panelView").style.display = "block";
+            renderInscricoes();
             renderDirectors();
+            renderEventos();
+            renderCustomPages();
+            carregarConteudo('index');
+            carregarConteudo('historia');
+            carregarConteudo('esportiva');
+            carregarConteudo('estatuto');
+        } else {
+            document.getElementById("loginError").style.display = "block";
         }
+    });
 
-        function renderDirectors() {
-            const directors = getDirectors();
-            document.getElementById("memberList").innerHTML = directors.length ? directors.map((director, index) => `<div class="member-row"><div><strong>${escapeHtml(director.nome)}</strong><br><span>${escapeHtml(director.cargo)}</span></div><div class="member-actions"><button class="table-action" data-director-action="edit" data-director-id="${index}">Editar</button><button class="table-action delete" data-director-action="delete" data-director-id="${index}">Excluir</button></div></div>`).join("") : '<div class="empty">Nenhum membro cadastrado.</div>';
+    document.getElementById("logoutButton").addEventListener("click", function() {
+        sessionStorage.removeItem(AUTH_KEY);
+        document.getElementById("loginView").style.display = "block";
+        document.getElementById("panelView").style.display = "none";
+    });
+
+    // ============================================================
+    // INICIALIZAÇÃO
+    // ============================================================
+    if (sessionStorage.getItem(AUTH_KEY) === "true") {
+        document.getElementById("loginView").style.display = "none";
+        document.getElementById("panelView").style.display = "block";
+        renderInscricoes();
+        renderDirectors();
+        renderEventos();
+        renderCustomPages();
+        carregarConteudo('index');
+        carregarConteudo('historia');
+        carregarConteudo('esportiva');
+        carregarConteudo('estatuto');
+    }
+
+    // ============================================================
+    // EVENTOS DOS FORMULÁRIOS DE CONTEÚDO
+    // ============================================================
+    document.getElementById("homeForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        salvarConteudo('index', 'homeForm', 'msgHome');
+    });
+    document.getElementById("historiaForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        salvarConteudo('historia', 'historiaForm', 'msgHist');
+    });
+    document.getElementById("esportivaForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        salvarConteudo('esportiva', 'esportivaForm', 'msgEsp');
+    });
+    document.getElementById("estatutoForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        salvarConteudo('estatuto', 'estatutoForm', 'msgEst');
+    });
+
+    // ============================================================
+    // TABS
+    // ============================================================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(this.dataset.tab).classList.add('active');
+            // Recarregar listas se necessário
+            if (this.dataset.tab === 'tab-eventos') renderEventos();
+            if (this.dataset.tab === 'tab-diretoria') renderDirectors();
+            if (this.dataset.tab === 'tab-paginas') renderCustomPages();
+        });
+    });
+
+    // ============================================================
+    // BOTÕES DA TOOLBAR
+    // ============================================================
+    document.getElementById("refreshButton").addEventListener("click", renderInscricoes);
+    document.getElementById("search").addEventListener("input", renderInscricoes);
+    document.getElementById("resetButton").addEventListener("click", function() {
+        if (getRegistrations().length && confirm("Apagar todas as inscrições?")) {
+            saveRegistrations([]);
+            renderInscricoes();
+            showMessage("Todas as inscrições foram apagadas.", "success");
         }
+    });
 
-        function clearDirectorForm() { ["directorId", "directorName", "directorRole", "directorEmail", "directorPhone", "directorDescription"].forEach(id => { document.getElementById(id).value = ""; }); }
+    // ============================================================
+    // CLIQUE FORA DOS MODAIS PARA FECHAR
+    // ============================================================
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
+    });
 
-        function showPanel() { loginView.style.display = "none"; panelView.style.display = "block"; render(); }
-        function showLogin() { loginView.style.display = "block"; panelView.style.display = "none"; }
-
-        document.getElementById("loginForm").addEventListener("submit", event => {
-            event.preventDefault();
-            if (document.getElementById("password").value === ADMIN_PASSWORD) { sessionStorage.setItem(AUTH_KEY, "true"); showPanel(); }
-            else document.getElementById("loginError").style.display = "block";
-        });
-        document.getElementById("logoutButton").addEventListener("click", () => { sessionStorage.removeItem(AUTH_KEY); showLogin(); });
-        document.getElementById("refreshButton").addEventListener("click", render);
-        document.getElementById("search").addEventListener("input", render);
-        document.getElementById("resetButton").addEventListener("click", () => { if (getRegistrations().length && confirm("Apagar todas as inscrições?")) { saveRegistrations([]); render(); showMessage("Todas as inscrições foram apagadas.", "success"); } });
-        document.getElementById("directorForm").addEventListener("submit", event => {
-            event.preventDefault();
-            const directors = getDirectors();
-            const director = { nome: document.getElementById("directorName").value.trim(), cargo: document.getElementById("directorRole").value.trim(), email: document.getElementById("directorEmail").value.trim(), telefone: document.getElementById("directorPhone").value.trim(), descricao: document.getElementById("directorDescription").value.trim() };
-            const directorId = document.getElementById("directorId").value;
-            if (directorId === "") directors.push(director); else directors[Number(directorId)] = director;
-            saveDirectors(directors); clearDirectorForm(); renderDirectors(); showMessage("Membro da diretoria salvo.", "success");
-        });
-        document.getElementById("cancelDirector").addEventListener("click", clearDirectorForm);
-        document.getElementById("contentPage").addEventListener("change", loadContentForm);
-        document.getElementById("contentForm").addEventListener("submit", event => {
-            event.preventDefault();
-            const contents = getContents();
-            contents[document.getElementById("contentPage").value] = { titulo: document.getElementById("contentHeading").value.trim(), subtitulo: document.getElementById("contentSubtitle").value.trim(), texto: document.getElementById("contentBody").value.trim() };
-            localStorage.setItem(CONTENT_KEY, JSON.stringify(contents));
-            showMessage("Conteúdo da página salvo.", "success");
-        });
-        document.getElementById("memberList").addEventListener("click", event => {
-            const button = event.target.closest("button[data-director-action]");
-            if (!button) return;
-            const directorId = Number(button.dataset.directorId);
-            const directors = getDirectors();
-            if (button.dataset.directorAction === "delete" && confirm("Excluir este membro?")) { directors.splice(directorId, 1); saveDirectors(directors); renderDirectors(); return; }
-            if (button.dataset.directorAction === "edit" && directors[directorId]) { const director = directors[directorId]; document.getElementById("directorId").value = directorId; document.getElementById("directorName").value = director.nome || ""; document.getElementById("directorRole").value = director.cargo || ""; document.getElementById("directorEmail").value = director.email || ""; document.getElementById("directorPhone").value = director.telefone || ""; document.getElementById("directorDescription").value = director.descricao || ""; }
-        });
-        registrationList.addEventListener("click", event => {
-            const button = event.target.closest("button[data-action]");
-            if (!button) return;
-            const registrations = getRegistrations();
-            const slot = String(button.dataset.vaga);
-            const registrationIndex = registrations.findIndex(registration => String(registration.vaga) === slot);
-            if (registrationIndex < 0) return;
-            if (button.dataset.action === "payment") registrations[registrationIndex].statusPagamento = String(registrations[registrationIndex].statusPagamento || "NAO PAGO").toUpperCase() === "PAGO" ? "NAO PAGO" : "PAGO";
-            if (button.dataset.action === "delete" && confirm("Excluir esta inscrição?")) registrations.splice(registrationIndex, 1);
-            saveRegistrations(registrations); render();
-        });
-        if (sessionStorage.getItem(AUTH_KEY) === "true") showPanel();
-        loadContentForm();
-    </script>
+    // ============================================================
+    // DELEGAÇÃO DE EVENTOS PARA DIRETORIA (editar/excluir)
+    // ============================================================
+    document.getElementById("listaDiretoria").addEventListener("click", function(e) {
+        const btn = e.target.closest("button[data-director-action]");
+        if (!btn) return;
+        const idx = Number(btn.dataset.directorId);
+        if (btn.dataset.directorAction === 'delete') {
+            excluirDiretor(idx);
+        } else if (btn.dataset.directorAction === 'edit') {
+            abrirModalDiretor(idx);
+        }
+    });
+</script>
 </body>
 </html>

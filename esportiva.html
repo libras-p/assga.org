@@ -14,17 +14,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+        /* ===== MESMO ESTILO DO ORIGINAL ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
@@ -33,24 +30,17 @@
             display: flex;
             flex-direction: column;
         }
-
         h2 {
             text-align: center;
             margin: 45px 0 35px;
             color: #003366;
             font-size: 2.5em;
             font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, .1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,.1);
         }
+        h2 i { color: #004aad; margin-right: 10px; }
 
-        h2 i {
-            color: #004aad;
-            margin-right: 10px;
-        }
-
-        /* ====================================================
-           HEADER
-        ==================================================== */
+        /* HEADER (mesmo do historia.html) */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -61,9 +51,8 @@
             position: sticky;
             top: 0;
             z-index: 9999;
-            box-shadow: 0 8px 32px rgba(0, 51, 102, .3);
+            box-shadow: 0 8px 32px rgba(0,51,102,.3);
         }
-
         .logo-area {
             display: flex;
             align-items: center;
@@ -71,25 +60,16 @@
             cursor: pointer;
             transition: transform .3s ease;
         }
-
-        .logo-area:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-area a {
-            display: flex;
-            text-decoration: none;
-        }
-
+        .logo-area:hover { transform: scale(1.05); }
+        .logo-area a { display: flex; text-decoration: none; }
         .logo-area img {
             width: 56px;
             height: 68px;
             object-fit: cover;
             border-radius: 8px;
             background: #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+            box-shadow: 0 4px 12px rgba(0,0,0,.2);
         }
-
         .logo {
             font-size: 28px;
             font-weight: 900;
@@ -108,11 +88,7 @@
             margin-left: auto;
             align-items: center;
         }
-
-        .menu li {
-            position: relative;
-        }
-
+        .menu li { position: relative; }
         .menu a {
             display: block;
             color: #fff;
@@ -123,24 +99,18 @@
             border-radius: 25px;
             transition: all .4s ease;
         }
-
         .menu a i {
             margin-right: 7px;
             color: #fff;
             transition: .3s;
         }
-
         .menu a:hover {
             color: #003366;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
-            box-shadow: 0 8px 24px rgba(255, 215, 0, .4);
+            box-shadow: 0 8px 24px rgba(255,215,0,.4);
             transform: translateY(-3px);
         }
-
-        .menu a:hover i {
-            color: #fff;
-        }
-
+        .menu a:hover i { color: #fff; }
         .menu-toggle {
             display: none;
             width: 45px;
@@ -156,34 +126,22 @@
             background: transparent;
             transition: .3s;
         }
+        .menu-toggle:hover { background: rgba(255,255,255,.12); }
+        .menu-toggle i { pointer-events: none; color: #fff; }
 
-        .menu-toggle:hover {
-            background: rgba(255, 255, 255, .12);
-        }
-
-        .menu-toggle i {
-            pointer-events: none;
-            color: #fff;
-        }
-
+        /* BANNER */
         .page-banner {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             padding: 60px 20px;
             text-align: center;
             color: #fff;
         }
-
         .page-banner h1 {
             font-size: 3em;
             font-weight: 900;
             margin-bottom: 10px;
         }
-
-        .page-banner h1 i {
-            color: #ffd700;
-            margin-right: 15px;
-        }
-
+        .page-banner h1 i { color: #ffd700; margin-right: 15px; }
         .page-banner p {
             font-size: 1.2em;
             opacity: .9;
@@ -191,73 +149,55 @@
             margin: 0 auto;
         }
 
+        /* CONTEÚDO */
         .modalidades-container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
             flex: 1;
         }
-
-            .conteudo-admin {
-                margin: 0 0 30px;
-                padding: 18px 22px;
-                color: #444;
-                background: #fff;
-                border-left: 5px solid #ffd700;
-                border-radius: 10px;
-                line-height: 1.7;
-                white-space: pre-line;
-            }
-
         .modalidades-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 30px;
         }
-
         .modalidade-card {
             background: #fff;
             border-radius: 20px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, .1);
+            box-shadow: 0 10px 35px rgba(0,0,0,.1);
             transition: all .4s ease;
             border-bottom: 5px solid #004aad;
         }
-
         .modalidade-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 18px 50px rgba(0, 74, 173, .2);
+            box-shadow: 0 18px 50px rgba(0,74,173,.2);
             border-bottom-color: #ffd700;
         }
-
         .modalidade-card .icon-grande {
             font-size: 4em;
             color: #003366;
             margin-bottom: 15px;
             display: block;
         }
-
         .modalidade-card .icon-grande i {
             background: linear-gradient(135deg, #003366, #004aad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .modalidade-card h3 {
             color: #003366;
             font-size: 1.6em;
             margin-bottom: 10px;
         }
-
         .modalidade-card p {
             color: #666;
             line-height: 1.6;
             font-size: 1em;
         }
-
         .modalidade-card .tag {
             display: inline-block;
             background: #003366;
@@ -274,27 +214,20 @@
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, .1);
+            box-shadow: 0 10px 35px rgba(0,0,0,.1);
             border-left: 6px solid #004aad;
             transition: all .4s ease;
         }
-
         .campeonato-item:hover {
             transform: translateX(8px);
-            box-shadow: 0 18px 50px rgba(0, 74, 173, .2);
+            box-shadow: 0 18px 50px rgba(0,74,173,.2);
             border-left-color: #ffd700;
         }
-
         .campeonato-item h3 {
             color: #003366;
             font-size: 1.6em;
         }
-
-        .campeonato-item h3 i {
-            color: #004aad;
-            margin-right: 10px;
-        }
-
+        .campeonato-item h3 i { color: #004aad; margin-right: 10px; }
         .campeonato-item .info-camp {
             display: flex;
             flex-wrap: wrap;
@@ -302,7 +235,6 @@
             margin-top: 10px;
             color: #555;
         }
-
         .campeonato-item .info-camp span {
             display: flex;
             align-items: center;
@@ -312,20 +244,14 @@
             border-radius: 20px;
             font-size: 0.9em;
         }
+        .campeonato-item .info-camp i { color: #004aad; }
 
-        .campeonato-item .info-camp i {
-            color: #004aad;
-        }
-
-        /* ====================================================
-           FALE CONOSCO
-        ==================================================== */
+        /* FALE CONOSCO e FOOTER (mesmo do historia.html) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
             margin-top: 40px;
         }
-
         .info-container {
             display: flex;
             justify-content: center;
@@ -334,24 +260,21 @@
             max-width: 1200px;
             margin: auto;
         }
-
         .info-card {
             width: 250px;
             background: linear-gradient(135deg, #fff, #f8f9fa);
             padding: 28px 22px;
             border-radius: 16px;
             text-align: center;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+            box-shadow: 0 8px 24px rgba(0,0,0,.1);
             transition: all .4s ease;
             border-top: 4px solid #004aad;
         }
-
         .info-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(0, 74, 173, .2);
+            box-shadow: 0 16px 48px rgba(0,74,173,.2);
             border-top-color: #ffd700;
         }
-
         .info-card .icon {
             width: 65px;
             height: 65px;
@@ -363,31 +286,17 @@
             background: linear-gradient(135deg, #003366, #004aad);
             color: #ffd700;
             font-size: 28px;
-            box-shadow: 0 8px 20px rgba(0, 51, 102, .25);
+            box-shadow: 0 8px 20px rgba(0,51,102,.25);
             transition: .4s;
         }
-
-        .info-card:hover .icon {
-            transform: scale(1.15) rotate(8deg);
-        }
-
+        .info-card:hover .icon { transform: scale(1.15) rotate(8deg); }
         .info-card h3 {
             color: #003366;
             margin: 12px 0;
             font-size: 1.3em;
         }
-
-        .info-card h3 i {
-            color: #004aad;
-            margin-right: 6px;
-        }
-
-        .info-card p {
-            color: #666;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-
+        .info-card h3 i { color: #004aad; margin-right: 6px; }
+        .info-card p { color: #666; line-height: 1.5; word-break: break-word; }
         .info-card a {
             display: inline-flex;
             align-items: center;
@@ -402,7 +311,6 @@
             text-decoration: none;
             transition: all .3s ease;
         }
-
         .info-card a:hover {
             color: #003366;
             background: #ffd700;
@@ -415,7 +323,6 @@
             padding: 35px 20px;
             margin-top: 50px;
         }
-
         .footer-container {
             display: flex;
             justify-content: space-between;
@@ -425,24 +332,17 @@
             max-width: 1200px;
             margin: auto;
         }
-
         .footer-copy {
             font-size: 13px;
             line-height: 1.8;
             opacity: .9;
         }
-
-        .footer-copy i {
-            color: #ffd700;
-            margin-right: 5px;
-        }
-
+        .footer-copy i { color: #ffd700; margin-right: 5px; }
         .footer-redes {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .footer-redes a {
             width: 45px;
             height: 45px;
@@ -452,39 +352,23 @@
             color: #fff;
             font-size: 21px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, .10);
+            background: rgba(255,255,255,.10);
             text-decoration: none;
             transition: all .3s ease;
         }
-
         .footer-redes a:hover {
             color: #003366;
             background: #ffd700;
             transform: translateY(-5px) scale(1.1);
         }
 
+        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
-            header {
-                padding: 12px 15px;
-            }
-
-            .logo-area {
-                gap: 10px;
-            }
-
-            .logo-area img {
-                width: 48px;
-                height: 60px;
-            }
-
-            .logo {
-                font-size: 18px;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
+            header { padding: 12px 15px; }
+            .logo-area { gap: 10px; }
+            .logo-area img { width: 48px; height: 60px; }
+            .logo { font-size: 18px; }
+            .menu-toggle { display: flex; }
             .menu {
                 display: none;
                 position: absolute;
@@ -496,144 +380,50 @@
                 gap: 4px;
                 margin: 0;
                 padding: 15px;
-                background: linear-gradient(135deg, rgba(0, 51, 102, .98), rgba(0, 74, 173, .98));
+                background: linear-gradient(135deg, rgba(0,51,102,.98), rgba(0,74,173,.98));
                 border-radius: 15px;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, .30);
+                box-shadow: 0 15px 35px rgba(0,0,0,.30);
             }
-
-            .menu.active {
-                display: grid;
-            }
-
-            .menu li {
-                width: 100%;
-                padding: 2px 0;
-            }
-
-            .menu a {
-                width: 100%;
-                text-align: left;
-                padding: 13px 15px;
-            }
-
-            .menu a i {
-                width: 25px;
-                text-align: center;
-                color: #fff;
-            }
-
-            .page-banner {
-                padding: 40px 15px;
-            }
-
-            .page-banner h1 {
-                font-size: 2em;
-            }
-
-            .page-banner p {
-                font-size: 1em;
-            }
-
-            .modalidades-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-            }
-
-            .modalidade-card {
-                padding: 20px;
-            }
-
-            .modalidade-card .icon-grande {
-                font-size: 2.8em;
-            }
-
-            .modalidade-card h3 {
-                font-size: 1.2em;
-            }
-
-            .campeonato-item {
-                padding: 20px;
-            }
-
-            .campeonato-item h3 {
-                font-size: 1.3em;
-            }
-
-            .campeonato-item .info-camp span {
-                font-size: 0.8em;
-                padding: 4px 10px;
-            }
-
-            h2 {
-                font-size: 1.8em;
-                margin: 30px 0;
-            }
-
-            .info-card {
-                width: 100%;
-            }
-
-            .footer-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-redes {
-                margin-top: 15px;
-            }
+            .menu.active { display: grid; }
+            .menu li { width: 100%; padding: 2px 0; }
+            .menu a { width: 100%; text-align: left; padding: 13px 15px; }
+            .menu a i { width: 25px; text-align: center; color: #fff; }
+            .page-banner { padding: 40px 15px; }
+            .page-banner h1 { font-size: 2em; }
+            .page-banner p { font-size: 1em; }
+            .modalidades-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .modalidade-card { padding: 20px; }
+            .modalidade-card .icon-grande { font-size: 2.8em; }
+            .modalidade-card h3 { font-size: 1.2em; }
+            .campeonato-item { padding: 20px; }
+            .campeonato-item h3 { font-size: 1.3em; }
+            .campeonato-item .info-camp span { font-size: 0.8em; padding: 4px 10px; }
+            h2 { font-size: 1.8em; margin: 30px 0; }
+            .info-card { width: 100%; }
+            .footer-container { flex-direction: column; text-align: center; }
+            .footer-redes { margin-top: 15px; }
         }
-
         @media (max-width: 480px) {
-            .modalidades-grid {
-                grid-template-columns: 1fr;
-            }
+            .modalidades-grid { grid-template-columns: 1fr; }
         }
-
         @media (min-width: 768px) and (max-width: 1023px) {
-            header {
-                padding: 15px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .menu {
-                gap: 4px;
-            }
-
-            .menu a {
-                font-size: 12px;
-                padding: 10px 9px;
-            }
-
-            .menu a i {
-                margin-right: 4px;
-            }
-
-            .info-card {
-                width: 45%;
-            }
+            header { padding: 15px; }
+            .logo { font-size: 20px; }
+            .menu { gap: 4px; }
+            .menu a { font-size: 12px; padding: 10px 9px; }
+            .menu a i { margin-right: 4px; }
+            .info-card { width: 45%; }
         }
-
-        a:focus,
-        button:focus {
-            outline: 3px solid #ffd700;
-            outline-offset: 3px;
-        }
-
+        a:focus, button:focus { outline: 3px solid #ffd700; outline-offset: 3px; }
         @media (prefers-reduced-motion: reduce) {
-            * {
-                scroll-behavior: auto !important;
-                transition: none !important;
-                animation: none !important;
-            }
+            * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="logo-area">
             <a href="index.html" aria-label="Página inicial ASSGA">
@@ -641,11 +431,9 @@
             </a>
             <div class="logo">ASSGA</div>
         </div>
-
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false" type="button">
             <i id="menuIcon" class="fas fa-bars"></i>
         </button>
-
         <nav aria-label="Menu principal">
             <ul class="menu" id="menu">
                 <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
@@ -654,17 +442,20 @@
                 <li><a href="evento.html"><i class="fas fa-calendar-days"></i> Eventos</a></li>
                 <li><a href="estatuto.html"><i class="fas fa-file-contract"></i> Estatuto</a></li>
                 <li><a href="diretoria.html"><i class="fas fa-users"></i> Diretoria</a></li>
-                <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="page-banner">
-        <h1><i class="fas fa-futbol"></i> Nossa Área Esportiva</h1>
-        <p>Conheça as modalidades e campeonatos da ASSGA.</p>
+    <!-- ===== BANNER ===== -->
+    <section class="page-banner" id="bannerEsportiva">
+        <h1 id="espTituloBanner"><i class="fas fa-futbol"></i> Nossa Área Esportiva</h1>
+        <p id="espSubtituloBanner">Conheça as modalidades e campeonatos da ASSGA.</p>
     </section>
 
+    <!-- ===== CONTEÚDO ===== -->
     <main class="modalidades-container">
+        <div id="esportivaExtra"></div>
+
         <h2><i class="fas fa-star"></i> Modalidades Oferecidas</h2>
         <div class="modalidades-grid">
             <div class="modalidade-card">
@@ -673,35 +464,30 @@
                 <p>Modalidade principal da ASSGA, com campeonatos e treinos para todas as idades.</p>
                 <span class="tag">Mais popular</span>
             </div>
-
             <div class="modalidade-card">
                 <span class="icon-grande"><i class="fas fa-volleyball"></i></span>
                 <h3>Vôlei</h3>
                 <p>Esporte de equipe que promove integração, agilidade e trabalho em grupo.</p>
                 <span class="tag">Em crescimento</span>
             </div>
-
             <div class="modalidade-card">
                 <span class="icon-grande"><i class="fas fa-basketball"></i></span>
                 <h3>Basquete</h3>
                 <p>Modalidade dinâmica que desenvolve coordenação e espírito esportivo.</p>
                 <span class="tag">Novidade</span>
             </div>
-
             <div class="modalidade-card">
                 <span class="icon-grande"><i class="fas fa-running"></i></span>
                 <h3>Atletismo</h3>
                 <p>Corrida e atividades de pista para quem busca condicionamento e superação.</p>
                 <span class="tag">Disponível</span>
             </div>
-
             <div class="modalidade-card">
                 <span class="icon-grande"><i class="fas fa-swimmer"></i></span>
                 <h3>Natação</h3>
                 <p>Atividades aquáticas para todas as idades, com foco em saúde e lazer.</p>
                 <span class="tag">Em breve</span>
             </div>
-
             <div class="modalidade-card">
                 <span class="icon-grande"><i class="fas fa-dumbbell"></i></span>
                 <h3>Fitness</h3>
@@ -753,6 +539,7 @@
         </div>
     </main>
 
+    <!-- ===== FALE CONOSCO ===== -->
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
@@ -764,7 +551,6 @@
                     <i class="fas fa-map-location-dot"></i>
                 </a>
             </div>
-
             <div class="info-card">
                 <div class="icon"><i class="fas fa-envelope"></i></div>
                 <h3><i class="fas fa-at"></i> Email</h3>
@@ -773,7 +559,6 @@
                     <i class="fas fa-paper-plane"></i>
                 </a>
             </div>
-
             <div class="info-card">
                 <div class="icon"><i class="fas fa-phone"></i></div>
                 <h3><i class="fas fa-phone"></i> Telefone</h3>
@@ -782,7 +567,6 @@
                     <i class="fas fa-phone-volume"></i>
                 </a>
             </div>
-
             <div class="info-card">
                 <div class="icon"><i class="fas fa-building"></i></div>
                 <h3><i class="fas fa-id-card"></i> CNPJ</h3>
@@ -794,13 +578,12 @@
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-container">
             <div class="footer-copy">
-                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados
-                <br>
-                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60
-                <br>
+                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados<br>
+                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60<br>
                 <i class="fas fa-futbol"></i> Associação Desportiva
             </div>
             <div class="footer-redes" aria-label="Redes sociais da ASSGA">
@@ -820,18 +603,17 @@
         </div>
     </footer>
 
+    <!-- ===== SCRIPTS ===== -->
     <script>
+        // Menu mobile (mesmo dos outros)
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
             const icon = document.getElementById("menuIcon");
-
             menu.classList.toggle("active");
             const aberto = menu.classList.contains("active");
-
             toggle.setAttribute("aria-expanded", aberto);
             toggle.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
-
             if (aberto) {
                 icon.classList.remove("fa-bars");
                 icon.classList.add("fa-xmark");
@@ -840,54 +622,65 @@
                 icon.classList.add("fa-bars");
             }
         }
-
         function fecharMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
             const icon = document.getElementById("menuIcon");
-
             menu.classList.remove("active");
             toggle.setAttribute("aria-expanded", "false");
             toggle.setAttribute("aria-label", "Abrir menu");
             icon.classList.remove("fa-xmark");
             icon.classList.add("fa-bars");
         }
-
         document.querySelectorAll(".menu a").forEach(function(link) {
             link.addEventListener("click", function() {
                 if (window.innerWidth <= 767) fecharMenu();
             });
         });
-
         document.addEventListener("keydown", function(event) {
             if (event.key === "Escape") fecharMenu();
         });
-
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
-            if (window.innerWidth <= 767 &&
-                menu.classList.contains("active") &&
-                !menu.contains(event.target) &&
-                !toggle.contains(event.target)) {
+            if (window.innerWidth <= 767 && menu.classList.contains("active") && !menu.contains(event.target) && !toggle.contains(event.target)) {
                 fecharMenu();
             }
         });
-
         window.addEventListener("resize", function() {
             if (window.innerWidth > 767) fecharMenu();
         });
-    </script>
 
-    <script>
+        // Carregar dados do admin
         const sportsContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").esportiva;
         if (sportsContent) {
-            const banner = document.querySelector(".page-banner");
-            if (banner && sportsContent.titulo) banner.querySelector("h1").lastChild.textContent = ` ${sportsContent.titulo}`;
-            if (banner && sportsContent.subtitulo) banner.querySelector("p").textContent = sportsContent.subtitulo;
-            if (sportsContent.texto) { const note = document.createElement("p"); note.textContent = sportsContent.texto; note.className = "conteudo-admin"; document.querySelector("main.modalidades-container")?.prepend(note); }
+            const banner = document.getElementById("bannerEsportiva");
+            if (banner && sportsContent.titulo) {
+                document.getElementById("espTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(sportsContent.titulo)}`;
+            }
+            if (banner && sportsContent.subtitulo) {
+                document.getElementById("espSubtituloBanner").textContent = sportsContent.subtitulo;
+            }
+            if (sportsContent.texto) {
+                const extraDiv = document.getElementById("esportivaExtra");
+                const p = document.createElement("p");
+                p.textContent = sportsContent.texto;
+                p.style.cssText = "background:#f0f4fa; padding:20px; border-radius:16px; margin-bottom:30px; font-size:1.1rem; line-height:1.7; border-left:4px solid #ffd700;";
+                extraDiv.appendChild(p);
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>"']/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                if (m === "'") return '&#039;';
+                return m;
+            });
         }
     </script>
 </body>
-
 </html>

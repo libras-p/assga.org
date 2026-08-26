@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página institucional da ASSGA">
+    <title>ASSGA</title>
+    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --navy: #003366; --blue: #004aad; --gold: #ffd700; --ink: #333; }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; color: var(--ink); background: linear-gradient(135deg, #f5f7fa, #c3cfe2); font-family: "Segoe UI", Tahoma, sans-serif; }
+        header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 30px; color: white; background: linear-gradient(135deg, var(--navy), var(--blue)); box-shadow: 0 8px 32px rgba(0, 51, 102, .3); }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: white; }
+        .logo { color: var(--gold); font-size: 28px; font-weight: 900; letter-spacing: 2px; }
+        nav a { display: inline-block; padding: 11px 15px; color: white; font-weight: 700; text-decoration: none; border-radius: 8px; }
+        nav a:hover { color: var(--navy); background: var(--gold); }
+        main { width: min(1000px, calc(100% - 32px)); margin: 45px auto; }
+        .banner, .content { padding: 35px; background: white; border-radius: 14px; box-shadow: 0 10px 35px rgba(0, 0, 0, .1); }
+        .banner { color: white; background: linear-gradient(135deg, var(--navy), var(--blue)); text-align: center; }
+        .banner img { width: min(100%, 560px); max-height: 300px; object-fit: cover; margin-bottom: 20px; border-radius: 10px; }
+        h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3.5rem); }
+        .banner p { margin: 0; font-size: 1.2rem; opacity: .9; }
+        .content { margin-top: 24px; white-space: pre-line; font-size: 1.08rem; line-height: 1.8; }
+        .not-found { text-align: center; }
+        @media (max-width: 700px) { header { padding: 12px 16px; } .logo-area img { width: 46px; height: 56px; } .logo { font-size: 20px; } nav a { padding: 9px; font-size: .9rem; } main { width: min(100% - 24px, 1000px); margin: 24px auto; } .banner, .content { padding: 24px 20px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="logo-area" href="index.html" aria-label="Página inicial ASSGA">
+            <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA">
+            <span class="logo">ASSGA</span>
+        </a>
+        <nav aria-label="Navegação">
+            <a href="index.html"><i class="fas fa-house"></i> Início</a>
+            <a href="admin.html"><i class="fas fa-lock"></i> Admin</a>
+        </nav>
+    </header>
+    <main id="pageContent"></main>
+    <script>
+        const container = document.getElementById("pageContent");
+        const slug = new URLSearchParams(window.location.search).get("pagina");
+        let pages = [];
+        try { pages = JSON.parse(localStorage.getItem("assga_paginas") || "[]"); } catch { pages = []; }
+        const page = pages.find(item => item.slug === slug);
+        if (!page) {
+            container.innerHTML = '<section class="content not-found"><h1>Página não encontrada</h1><p>O conteúdo solicitado não está disponível.</p><p><a href="index.html">Voltar para o início</a></p></section>';
+        } else {
+            document.title = `${page.titulo || page.nome} | ASSGA`;
+            const image = page.imagem ? `<img src="${escapeHtml(page.imagem)}" alt="${escapeHtml(page.titulo || page.nome)}" onerror="this.remove()">` : "";
+            container.innerHTML = `<section class="banner">${image}<h1>${escapeHtml(page.titulo || page.nome)}</h1>${page.subtitulo ? `<p>${escapeHtml(page.subtitulo)}</p>` : ""}</section>${page.texto ? `<section class="content">${escapeHtml(page.texto)}</section>` : ""}`;
+        }
+        function escapeHtml(value) { return String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]); }
+    </script>
+</body>
+</html>
