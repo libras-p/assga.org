@@ -412,7 +412,7 @@
         <div class="empty" id="emptyState" hidden>Nenhuma inscrição encontrada.</div>
     </div>
 
-    <!-- ========== ABAS DE GERENCIAMENTO DE CONTEÚDO ========== -->
+    <!-- ========== ABAS DE GERENCIAMENTO ========== -->
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-home"><i class="fas fa-house"></i> Home</button>
         <button class="tab-btn" data-tab="tab-historia"><i class="fas fa-book-open"></i> História</button>
@@ -421,6 +421,7 @@
         <button class="tab-btn" data-tab="tab-eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
         <button class="tab-btn" data-tab="tab-diretoria"><i class="fas fa-users"></i> Diretoria</button>
         <button class="tab-btn" data-tab="tab-paginas"><i class="fas fa-file"></i> Páginas</button>
+        <button class="tab-btn" data-tab="tab-socios"><i class="fas fa-id-card"></i> Sócios</button>
     </div>
 
     <!-- HOME -->
@@ -511,7 +512,7 @@
         </div>
     </div>
 
-    <!-- EVENTOS (gerenciar lista de eventos) -->
+    <!-- EVENTOS -->
     <div id="tab-eventos" class="tab-content">
         <div class="management">
             <h2><i class="fas fa-calendar-days"></i> Gerenciar Eventos</h2>
@@ -560,6 +561,16 @@
             </form>
             <div class="page-list" id="pageList"></div>
             <p style="margin-top:10px; color:var(--success);" id="msgPagina"></p>
+        </div>
+    </div>
+
+    <!-- ===== SOCIOS ===== -->
+    <div id="tab-socios" class="tab-content">
+        <div class="management">
+            <h2><i class="fas fa-id-card"></i> Gerenciar Sócios</h2>
+            <button class="action" onclick="abrirModalSocio()"><i class="fas fa-plus"></i> Adicionar Sócio</button>
+            <div id="listaSocios" class="member-list"></div>
+            <p style="margin-top:10px; color:var(--success);" id="msgSocio"></p>
         </div>
     </div>
 
@@ -648,6 +659,7 @@
     const CONTENT_KEY = "assga_conteudos";
     const CUSTOM_PAGES_KEY = "assga_paginas";
     const EVENTOS_KEY = "assga_eventos";
+    const SOCIOS_KEY = "assga_socios";
     const MAX_SLOTS = 100;
     const AUTH_KEY = "assga_admin";
 
@@ -714,7 +726,7 @@
     }
 
     // ============================================================
-    // FUNÇÕES DE RENDERIZAÇÃO (INSCRIÇÕES, DIRETORIA, EVENTOS, PÁGINAS)
+    // FUNÇÕES DE RENDERIZAÇÃO (INSCRIÇÕES, DIRETORIA, EVENTOS, PÁGINAS, SÓCIOS)
     // ============================================================
     function renderInscricoes() {
         const registrations = getRegistrations();
@@ -815,6 +827,110 @@
                 </div>
             </div>
         `).join("");
+    }
+
+    // ============================================================
+    // GERENCIAMENTO DE SÓCIOS
+    // ============================================================
+    function getSocios() {
+        try { return JSON.parse(localStorage.getItem(SOCIOS_KEY) || '[]'); }
+        catch { return []; }
+    }
+    function saveSocios(lista) { localStorage.setItem(SOCIOS_KEY, JSON.stringify(lista)); }
+
+    function renderSocios() {
+        const lista = getSocios();
+        const container = document.getElementById('listaSocios');
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty">Nenhum sócio cadastrado.</div>';
+            return;
+        }
+        container.innerHTML = lista.map((s, i) => `
+            <div class="member-row">
+                <div>
+                    <strong>${escapeHtml(s.nome)}</strong><br>
+                    <span>CPF: ${escapeHtml(s.cpf)} | Sócio nº ${escapeHtml(s.numeroSocio)}</span>
+                </div>
+                <div class="member-actions">
+                    <button class="table-action" onclick="editarSocio(${i})">Editar</button>
+                    <button class="table-action" onclick="gerarSenhaSocio(${i})">Gerar senha</button>
+                    <button class="table-action" onclick="enviarEmailSocio(${i})">Enviar e-mail</button>
+                    <button class="table-action delete" onclick="excluirSocio(${i})">Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function abrirModalSocio(index = -1) {
+        if (index >= 0) {
+            const socios = getSocios();
+            const s = socios[index];
+            const nome = prompt('Nome completo:', s.nome) || s.nome;
+            const cpf = prompt('CPF (apenas números):', s.cpf) || s.cpf;
+            const rg = prompt('RG:', s.rg) || s.rg;
+            const numeroSocio = prompt('Número de sócio:', s.numeroSocio) || s.numeroSocio;
+            const renda = prompt('Investimento/Renda:', s.renda) || s.renda;
+            const email = prompt('E-mail:', s.email) || s.email;
+            const foto = prompt('URL da foto 3x4 (ou deixe vazio):', s.foto) || s.foto;
+            socios[index] = { ...s, nome, cpf, rg, numeroSocio, renda, email, foto };
+            saveSocios(socios);
+            renderSocios();
+            showMessage('Sócio atualizado!', 'success', 'msgSocio');
+        } else {
+            const nome = prompt('Nome completo:');
+            if (!nome) return;
+            const cpf = prompt('CPF (apenas números):');
+            if (!cpf) return;
+            const rg = prompt('RG:') || '';
+            const numeroSocio = prompt('Número de sócio:') || '';
+            const renda = prompt('Investimento/Renda:') || '';
+            const email = prompt('E-mail:') || '';
+            const foto = prompt('URL da foto 3x4 (opcional):') || '';
+            const senha = prompt('Senha de acesso (mínimo 4 caracteres):') || '1234';
+            const socios = getSocios();
+            socios.push({ nome, cpf, rg, numeroSocio, renda, email, foto, senha });
+            saveSocios(socios);
+            renderSocios();
+            showMessage('Sócio adicionado com sucesso!', 'success', 'msgSocio');
+        }
+    }
+
+    function editarSocio(index) {
+        abrirModalSocio(index);
+    }
+
+    function excluirSocio(index) {
+        if (!confirm('Excluir este sócio?')) return;
+        const socios = getSocios();
+        socios.splice(index, 1);
+        saveSocios(socios);
+        renderSocios();
+        showMessage('Sócio removido.', 'success', 'msgSocio');
+    }
+
+    function gerarSenhaSocio(index) {
+        const socios = getSocios();
+        const s = socios[index];
+        const novaSenha = Math.random().toString(36).slice(-6).toUpperCase();
+        s.senha = novaSenha;
+        saveSocios(socios);
+        renderSocios();
+        alert(`Nova senha para ${s.nome}: ${novaSenha}`);
+        showMessage('Senha gerada e atualizada.', 'success', 'msgSocio');
+    }
+
+    function enviarEmailSocio(index) {
+        const socios = getSocios();
+        const s = socios[index];
+        if (!s.email) {
+            alert('Este sócio não possui e-mail cadastrado.');
+            return;
+        }
+        const assunto = 'Suas credenciais de acesso - ASSGA';
+        const corpo = `Olá ${s.nome},\n\nSuas credenciais para acessar a área do sócio são:\nCPF: ${s.cpf}\nSenha: ${s.senha}\n\nAcesse: ${window.location.origin}/login.html\n\nAtenciosamente,\nASSGA`;
+        const mailto = `mailto:${s.email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+        window.open(mailto, '_blank');
+        showMessage(`E-mail enviado para ${s.email} (abra o cliente de e-mail).`, 'success', 'msgSocio');
     }
 
     // ============================================================
@@ -1026,6 +1142,7 @@
             renderDirectors();
             renderEventos();
             renderCustomPages();
+            renderSocios();
             carregarConteudo('index');
             carregarConteudo('historia');
             carregarConteudo('esportiva');
@@ -1051,6 +1168,7 @@
         renderDirectors();
         renderEventos();
         renderCustomPages();
+        renderSocios();
         carregarConteudo('index');
         carregarConteudo('historia');
         carregarConteudo('esportiva');
@@ -1078,7 +1196,7 @@
     });
 
     // ============================================================
-    // TABS
+    // TABS - com chamada para renderSocios na aba socios
     // ============================================================
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -1090,6 +1208,7 @@
             if (this.dataset.tab === 'tab-eventos') renderEventos();
             if (this.dataset.tab === 'tab-diretoria') renderDirectors();
             if (this.dataset.tab === 'tab-paginas') renderCustomPages();
+            if (this.dataset.tab === 'tab-socios') renderSocios();
         });
     });
 

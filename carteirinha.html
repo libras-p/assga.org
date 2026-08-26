@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Carteirinha | ASSGA</title>
+    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card-wrapper {
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 18px 50px rgba(0,51,102,.14);
+            text-align: center;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card-header h1 {
+            color: #003366;
+            font-size: 1.6rem;
+        }
+        .btn-sair {
+            background: transparent;
+            border: 1px solid #d9e1eb;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #667085;
+            cursor: pointer;
+            font-weight: 600;
+            transition: .3s;
+        }
+        .btn-sair:hover { background: #f0f4fa; }
+        .carteirinha {
+            background: linear-gradient(145deg, #f7f9fc, #eef3f8);
+            border-radius: 16px;
+            padding: 25px 20px;
+            border: 2px solid #d9e1eb;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,.02);
+        }
+        .foto-socio {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #003366;
+            background: #ccc;
+            margin: 0 auto 12px;
+            display: block;
+        }
+        .dados {
+            text-align: left;
+            margin-top: 10px;
+        }
+        .dados p {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #d9e1eb;
+            font-size: 0.95rem;
+        }
+        .dados p:last-child { border-bottom: 0; }
+        .dados strong { color: #003366; }
+        .badge-socio {
+            display: inline-block;
+            background: #003366;
+            color: #ffd700;
+            padding: 4px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        .aviso {
+            margin-top: 20px;
+            color: #667085;
+            font-size: 0.85rem;
+        }
+        .aviso i { color: #ffd700; }
+    </style>
+</head>
+<body>
+    <div class="card-wrapper">
+        <div class="card-header">
+            <h1><i class="fas fa-id-card"></i> Carteirinha</h1>
+            <button class="btn-sair" id="sairBtn"><i class="fas fa-right-from-bracket"></i> Sair</button>
+        </div>
+        <div class="carteirinha" id="carteirinhaContent">
+            <!-- preenchido via JS -->
+        </div>
+        <div class="aviso">
+            <i class="fas fa-shield-halved"></i> Apresente este documento para ter acesso aos eventos e benefícios ASSGA.
+        </div>
+    </div>
+
+    <script>
+        const socioStr = sessionStorage.getItem('socioLogado');
+        if (!socioStr) {
+            window.location.href = 'login.html';
+        }
+        const socio = JSON.parse(socioStr);
+
+        document.getElementById('sairBtn').addEventListener('click', function() {
+            sessionStorage.removeItem('socioLogado');
+            window.location.href = 'login.html';
+        });
+
+        function renderCarteirinha(socio) {
+            const container = document.getElementById('carteirinhaContent');
+            const foto = socio.foto || 'src/imagens/avatar-padrao.jpg';
+            container.innerHTML = `
+                <img class="foto-socio" src="${foto}" alt="Foto do sócio" onerror="this.src='src/imagens/avatar-padrao.jpg'">
+                <h2 style="color:#003366;">${socio.nome || 'Sócio'}</h2>
+                <span class="badge-socio"><i class="fas fa-trophy"></i> Sócio nº ${socio.numeroSocio || '---'}</span>
+                <div class="dados">
+                    <p><strong>CPF:</strong> ${socio.cpf || '---'}</p>
+                    <p><strong>RG:</strong> ${socio.rg || '---'}</p>
+                    <p><strong>Investimento/Renda:</strong> ${socio.renda || '---'}</p>
+                    <p><strong>E-mail:</strong> ${socio.email || '---'}</p>
+                </div>
+            `;
+        }
+
+        renderCarteirinha(socio);
+
+        // Fallback para imagem padrão se não carregar
+        document.querySelector('.foto-socio')?.addEventListener('error', function() {
+            this.src = 'src/imagens/avatar-padrao.jpg';
+        });
+    </script>
+</body>
+</html>
