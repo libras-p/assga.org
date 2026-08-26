@@ -10,17 +10,11 @@
 
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* ===== MESMO ESTILO DO ORIGINAL ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        /* ===== ESTILO COMPLETO ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -30,20 +24,9 @@
             display: flex;
             flex-direction: column;
         }
-        h2 {
-            text-align: center;
-            margin: 45px 0 35px;
-            color: #003366;
-            font-size: 2.5em;
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,.1);
-        }
+        h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
-        h3 {
-            color: #003366;
-            font-size: 1.5em;
-            margin: 25px 0 15px;
-        }
+        h3 { color: #003366; font-size: 1.5em; margin: 25px 0 15px; }
         h3 i { color: #004aad; margin-right: 8px; }
 
         /* HEADER (mesmo) */
@@ -59,32 +42,11 @@
             z-index: 9999;
             box-shadow: 0 8px 32px rgba(0,51,102,.3);
         }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: transform .3s ease;
-        }
+        .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform .3s ease; }
         .logo-area:hover { transform: scale(1.05); }
         .logo-area a { display: flex; text-decoration: none; }
-        .logo-area img {
-            width: 56px;
-            height: 68px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,.2);
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         .menu {
             list-style: none;
@@ -105,11 +67,7 @@
             border-radius: 25px;
             transition: all .4s ease;
         }
-        .menu a i {
-            margin-right: 7px;
-            color: #fff;
-            transition: .3s;
-        }
+        .menu a i { margin-right: 7px; color: #fff; transition: .3s; }
         .menu a:hover {
             color: #003366;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
@@ -135,33 +93,17 @@
         .menu-toggle:hover { background: rgba(255,255,255,.12); }
         .menu-toggle i { pointer-events: none; color: #fff; }
 
-        /* BANNER */
         .page-banner {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             padding: 60px 20px;
             text-align: center;
             color: #fff;
         }
-        .page-banner h1 {
-            font-size: 3em;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
+        .page-banner h1 { font-size: 3em; font-weight: 900; margin-bottom: 10px; }
         .page-banner h1 i { color: #ffd700; margin-right: 15px; }
-        .page-banner p {
-            font-size: 1.2em;
-            opacity: .9;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .page-banner p { font-size: 1.2em; opacity: .9; max-width: 700px; margin: 0 auto; }
 
-        /* ESTATUTO */
-        .estatuto-container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-            flex: 1;
-        }
+        .estatuto-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; flex: 1; }
         .estatuto-card {
             background: #fff;
             border-radius: 20px;
@@ -176,17 +118,9 @@
             box-shadow: 0 18px 50px rgba(0,74,173,.2);
             border-left-color: #ffd700;
         }
-        .estatuto-card p {
-            font-size: 1.05em;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 10px;
-        }
+        .estatuto-card p { font-size: 1.05em; line-height: 1.8; color: #555; margin-bottom: 10px; }
         .estatuto-card p i { color: #004aad; margin-right: 6px; }
-        .estatuto-card ul {
-            list-style: none;
-            padding: 0;
-        }
+        .estatuto-card ul { list-style: none; padding: 0; }
         .estatuto-card ul li {
             padding: 10px 15px;
             margin-bottom: 8px;
@@ -202,11 +136,7 @@
             border-left-color: #ffd700;
             transform: translateX(5px);
         }
-        .estatuto-card ul li i {
-            color: #004aad;
-            margin-right: 10px;
-            width: 20px;
-        }
+        .estatuto-card ul li i { color: #004aad; margin-right: 10px; width: 20px; }
         .btn-download {
             display: inline-flex;
             align-items: center;
@@ -273,11 +203,7 @@
             transition: .4s;
         }
         .info-card:hover .icon { transform: scale(1.15) rotate(8deg); }
-        .info-card h3 {
-            color: #003366;
-            margin: 12px 0;
-            font-size: 1.3em;
-        }
+        .info-card h3 { color: #003366; margin: 12px 0; font-size: 1.3em; }
         .info-card h3 i { color: #004aad; margin-right: 6px; }
         .info-card p { color: #666; line-height: 1.5; word-break: break-word; }
         .info-card a {
@@ -294,11 +220,7 @@
             text-decoration: none;
             transition: all .3s ease;
         }
-        .info-card a:hover {
-            color: #003366;
-            background: #ffd700;
-            transform: scale(1.15);
-        }
+        .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
 
         footer {
             background: linear-gradient(135deg, #003366 0%, #002244 100%);
@@ -315,11 +237,7 @@
             max-width: 1200px;
             margin: auto;
         }
-        .footer-copy {
-            font-size: 13px;
-            line-height: 1.8;
-            opacity: .9;
-        }
+        .footer-copy { font-size: 13px; line-height: 1.8; opacity: .9; }
         .footer-copy i { color: #ffd700; margin-right: 5px; }
         .footer-redes {
             display: flex;
@@ -339,13 +257,8 @@
             text-decoration: none;
             transition: all .3s ease;
         }
-        .footer-redes a:hover {
-            color: #003366;
-            background: #ffd700;
-            transform: translateY(-5px) scale(1.1);
-        }
+        .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -419,6 +332,8 @@
                 <li><a href="evento.html"><i class="fas fa-calendar-days"></i> Eventos</a></li>
                 <li><a href="estatuto.html"><i class="fas fa-file-contract"></i> Estatuto</a></li>
                 <li><a href="diretoria.html"><i class="fas fa-users"></i> Diretoria</a></li>
+                <li><a href="login.html"><i class="fas fa-id-card"></i> Área do Sócio</a></li>
+                <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
             </ul>
         </nav>
     </header>
@@ -592,7 +507,18 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // Carregar dados do admin
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>"']/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                if (m === "'") return '&#039;';
+                return m;
+            });
+        }
+
         const statuteContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").estatuto;
         if (statuteContent) {
             const banner = document.getElementById("bannerEstatuto");
@@ -609,18 +535,6 @@
                 p.style.cssText = "background:#f0f4fa; padding:20px; border-radius:16px; margin-bottom:30px; font-size:1.1rem; line-height:1.7; border-left:4px solid #ffd700;";
                 extraDiv.appendChild(p);
             }
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            return String(text).replace(/[&<>"']/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                if (m === '"') return '&quot;';
-                if (m === "'") return '&#039;';
-                return m;
-            });
         }
     </script>
 </body>

@@ -100,9 +100,7 @@
             <h1><i class="fas fa-id-card"></i> Carteirinha</h1>
             <button class="btn-sair" id="sairBtn"><i class="fas fa-right-from-bracket"></i> Sair</button>
         </div>
-        <div class="carteirinha" id="carteirinhaContent">
-            <!-- preenchido via JS -->
-        </div>
+        <div class="carteirinha" id="carteirinhaContent"></div>
         <div class="aviso">
             <i class="fas fa-shield-halved"></i> Apresente este documento para ter acesso aos eventos e benefícios ASSGA.
         </div>
@@ -137,11 +135,6 @@
         }
 
         renderCarteirinha(socio);
-
-        // Fallback para imagem padrão se não carregar
-        document.querySelector('.foto-socio')?.addEventListener('error', function() {
-            this.src = 'src/imagens/avatar-padrao.jpg';
-        });
     </script>
 </body>
 </html>

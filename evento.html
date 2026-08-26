@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* ===== ESTILO IDÊNTICO AO ORIGINAL, COM OS MESMOS COMPONENTES ===== */
+        /* ===== ESTILO COMPLETO (similar ao original) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -26,12 +26,7 @@
         }
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
-        .badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.8em; font-weight: 700; }
-        .badge-pago { background: #d4edda; color: #155724; }
-        .badge-pendente { background: #fff3cd; color: #856404; }
-        .badge-atrasado { background: #f8d7da; color: #721c24; }
 
-        /* HEADER (mesmo do index) */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -49,6 +44,7 @@
         .logo-area a { display: flex; text-decoration: none; }
         .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
         .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
         .menu {
             list-style: none;
             display: inline-grid;
@@ -178,9 +174,105 @@
         .btn-inscricao i { color: #ffd700; }
 
         /* FALE CONOSCO e FOOTER (mesmo do index) */
-        /* (omitido para brevidade, mas deve ser mantido igual) */
+        .info {
+            background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
+            padding: 50px 20px;
+            margin-top: 40px;
+        }
+        .info-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .info-card {
+            width: 250px;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            padding: 28px 22px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,.1);
+            transition: all .4s ease;
+            border-top: 4px solid #004aad;
+        }
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 48px rgba(0,74,173,.2);
+            border-top-color: #ffd700;
+        }
+        .info-card .icon {
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #003366, #004aad);
+            color: #ffd700;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(0,51,102,.25);
+            transition: .4s;
+        }
+        .info-card:hover .icon { transform: scale(1.15) rotate(8deg); }
+        .info-card h3 { color: #003366; margin: 12px 0; font-size: 1.3em; }
+        .info-card h3 i { color: #004aad; margin-right: 6px; }
+        .info-card p { color: #666; line-height: 1.5; word-break: break-word; }
+        .info-card a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            color: #fff;
+            background: #004aad;
+            margin-top: 15px;
+            border-radius: 50%;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all .3s ease;
+        }
+        .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
 
-        /* Responsividade similar ao index */
+        footer {
+            background: linear-gradient(135deg, #003366 0%, #002244 100%);
+            color: #fff;
+            padding: 35px 20px;
+            margin-top: 50px;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .footer-copy { font-size: 13px; line-height: 1.8; opacity: .9; }
+        .footer-copy i { color: #ffd700; margin-right: 5px; }
+        .footer-redes {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-redes a {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 21px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.10);
+            text-decoration: none;
+            transition: all .3s ease;
+        }
+        .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
+
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -270,7 +362,7 @@
         <p>Confira a programação de eventos e faça sua inscrição.</p>
     </section>
 
-    <!-- ===== LISTA DE EVENTOS (dinâmica) ===== -->
+    <!-- ===== LISTA DE EVENTOS ===== -->
     <main class="eventos-container">
         <h2><i class="fas fa-calendar-check"></i> Eventos Disponíveis</h2>
         <div id="listaEventosPagina"></div>
@@ -280,7 +372,38 @@
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
-            <!-- mesmos cards de endereço, email, telefone, CNPJ -->
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-location-dot"></i></div>
+                <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                <p>São Gonçalo do Amarante - RN</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=S%C3%A3o%20Gon%C3%A7alo%20do%20Amarante%20RN" target="_blank" rel="noopener noreferrer" aria-label="Abrir endereço no Google Maps" title="Abrir no Google Maps">
+                    <i class="fas fa-map-location-dot"></i>
+                </a>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-envelope"></i></div>
+                <h3><i class="fas fa-at"></i> Email</h3>
+                <p>assgar2019@gmail.com</p>
+                <a href="mailto:assgar2019@gmail.com" aria-label="Enviar email para ASSGA" title="Enviar email">
+                    <i class="fas fa-paper-plane"></i>
+                </a>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-phone"></i></div>
+                <h3><i class="fas fa-phone"></i> Telefone</h3>
+                <p>(84) 99698-1248</p>
+                <a href="tel:+5584996981248" aria-label="Ligar para ASSGA" title="Ligar">
+                    <i class="fas fa-phone-volume"></i>
+                </a>
+            </div>
+            <div class="info-card">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <h3><i class="fas fa-id-card"></i> CNPJ</h3>
+                <p>57.242.499/0001-60</p>
+                <a href="#" aria-label="CNPJ da ASSGA" title="CNPJ" onclick="return false;">
+                    <i class="fas fa-id-card"></i>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -293,17 +416,25 @@
                 <i class="fas fa-futbol"></i> Associação Desportiva
             </div>
             <div class="footer-redes" aria-label="Redes sociais da ASSGA">
-                <a href="https://www.instagram.com/assga_2019/" target="_blank" rel="noopener noreferrer" aria-label="Instagram ASSGA" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@ASSGAESPORTES" target="_blank" rel="noopener noreferrer" aria-label="YouTube ASSGA" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="https://wa.me/5584996981248?text=Ol%C3%A1%2C%20eu%20estou%20aqui" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ASSGA" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="mailto:assgar2019@gmail.com" aria-label="Email ASSGA" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.instagram.com/assga_2019/" target="_blank" rel="noopener noreferrer" aria-label="Instagram ASSGA" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@ASSGAESPORTES" target="_blank" rel="noopener noreferrer" aria-label="YouTube ASSGA" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/5584996981248?text=Ol%C3%A1%2C%20eu%20estou%20aqui" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ASSGA" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="mailto:assgar2019@gmail.com" aria-label="Email ASSGA" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
             </div>
         </div>
     </footer>
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // Menu mobile (mesmo do index)
+        // Menu mobile
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
@@ -349,7 +480,6 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // Função para escapar HTML
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -362,7 +492,6 @@
             });
         }
 
-        // Carregar eventos do localStorage
         function carregarEventos() {
             const container = document.getElementById('listaEventosPagina');
             const eventos = JSON.parse(localStorage.getItem('assga_eventos') || '[]');
