@@ -444,7 +444,7 @@
         </div>
     </div>
 
-    <!-- HISTÓRIA -->
+    <!-- ===== HISTÓRIA (NOVA VERSÃO COM CAMPOS COMPLETOS) ===== -->
     <div id="tab-historia" class="tab-content">
         <div class="content-editor">
             <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
@@ -457,10 +457,34 @@
                     <label>Subtítulo</label>
                     <input class="field" id="histSubtitulo" placeholder="Ex: Conheça nossa trajetória" />
                 </div>
-                <div class="form-group full">
-                    <label>Texto adicional</label>
-                    <textarea class="field" id="histTexto" placeholder="Texto extra que aparecerá no topo da página..."></textarea>
+
+                <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
+                    <label><i class="fas fa-flag-checkered"></i> Fundação</label>
+                    <textarea class="field" id="histFundacao" placeholder="Texto sobre a fundação..." rows="3"></textarea>
                 </div>
+
+                <div class="form-group full">
+                    <label><i class="fas fa-bullseye"></i> Missão</label>
+                    <textarea class="field" id="histMissao" placeholder="Texto da missão..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label><i class="fas fa-gem"></i> Valores (separados por vírgula)</label>
+                    <input class="field" id="histValores" placeholder="Ex: Respeito, Inclusão, Excelência, Paixão" />
+                </div>
+
+                <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
+                    <label><i class="fas fa-timeline"></i> Linha do Tempo (cada linha: ANO|DESCRIÇÃO)</label>
+                    <textarea class="field" id="histTimeline" placeholder="Ex: 2019|Fundação da ASSGA...&#10;2020|Primeiras atividades..." rows="8"></textarea>
+                    <small>Cada linha deve conter o ano e a descrição separados por uma barra vertical (|).</small>
+                </div>
+
+                <div class="form-group full">
+                    <label><i class="fas fa-chart-simple"></i> Números (cada linha: NÚMERO|RÓTULO)</label>
+                    <textarea class="field" id="histNumeros" placeholder="Ex: 7+|Anos de história&#10;500+|Participantes" rows="4"></textarea>
+                    <small>Cada linha deve conter o número e o rótulo separados por uma barra vertical (|).</small>
+                </div>
+
                 <button class="action" type="submit"><i class="fas fa-save"></i> Salvar História</button>
             </form>
             <p style="margin-top:10px; color:var(--success);" id="msgHist"></p>
@@ -1036,6 +1060,51 @@
     }
 
     // ============================================================
+    // GERENCIAMENTO DA HISTÓRIA (substitui a função genérica)
+    // ============================================================
+    function carregarHistoria() {
+        const data = getContents().historia || {};
+        document.getElementById('histTitulo').value = data.titulo || '';
+        document.getElementById('histSubtitulo').value = data.subtitulo || '';
+        document.getElementById('histFundacao').value = data.fundacao || '';
+        document.getElementById('histMissao').value = data.missao || '';
+        document.getElementById('histValores').value = (data.valores || []).join(', ');
+        document.getElementById('histTimeline').value = (data.timeline || []).map(item => `${item.ano}|${item.descricao}`).join('\n');
+        document.getElementById('histNumeros').value = (data.numeros || []).map(item => `${item.numero}|${item.label}`).join('\n');
+    }
+
+    function salvarHistoria() {
+        const conteudos = getContents();
+        const timeline = document.getElementById('histTimeline').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { ano: parts[0] || '', descricao: parts[1] || '' };
+            });
+        const numeros = document.getElementById('histNumeros').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { numero: parts[0] || '', label: parts[1] || '' };
+            });
+        const valores = document.getElementById('histValores').value.split(',')
+            .map(s => s.trim())
+            .filter(s => s !== '');
+
+        conteudos.historia = {
+            titulo: document.getElementById('histTitulo').value.trim(),
+            subtitulo: document.getElementById('histSubtitulo').value.trim(),
+            fundacao: document.getElementById('histFundacao').value.trim(),
+            missao: document.getElementById('histMissao').value.trim(),
+            valores: valores,
+            timeline: timeline,
+            numeros: numeros
+        };
+        saveContents(conteudos);
+        showMessage('✅ História salva com sucesso!', 'success', 'msgHist');
+    }
+
+    // ============================================================
     // DIRETORIA (CRUD)
     // ============================================================
     function abrirModalDiretor(index = -1) {
@@ -1224,7 +1293,7 @@
             renderSocios();
             renderNoticias();
             carregarConteudo('index');
-            carregarConteudo('historia');
+            carregarHistoria();      // <-- substituído
             carregarConteudo('esportiva');
             carregarConteudo('estatuto');
         } else {
@@ -1251,7 +1320,7 @@
         renderSocios();
         renderNoticias();
         carregarConteudo('index');
-        carregarConteudo('historia');
+        carregarHistoria();          // <-- substituído
         carregarConteudo('esportiva');
         carregarConteudo('estatuto');
     }
@@ -1263,10 +1332,13 @@
         e.preventDefault();
         salvarConteudo('index', 'homeForm', 'msgHome');
     });
+
+    // Substitui o evento genérico pelo específico da História
     document.getElementById("historiaForm").addEventListener("submit", function(e) {
         e.preventDefault();
-        salvarConteudo('historia', 'historiaForm', 'msgHist');
+        salvarHistoria();
     });
+
     document.getElementById("esportivaForm").addEventListener("submit", function(e) {
         e.preventDefault();
         salvarConteudo('esportiva', 'esportivaForm', 'msgEsp');

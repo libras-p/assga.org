@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ASSGA - Associação Desportiva. Conheça nossa história, trajetória e conquistas.">
     <meta name="theme-color" content="#003366">
     <title>História - ASSGA</title>
-
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
-        /* ===== MESMO ESTILO DO ORIGINAL (mantido) ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        /* ===== MESMO ESTILO DO ORIGINAL ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -29,20 +21,9 @@
             display: flex;
             flex-direction: column;
         }
-        h2 {
-            text-align: center;
-            margin: 45px 0 35px;
-            color: #003366;
-            font-size: 2.5em;
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,.1);
-        }
+        h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
-        h3 {
-            color: #003366;
-            font-size: 1.5em;
-            margin: 25px 0 15px;
-        }
+        h3 { color: #003366; font-size: 1.5em; margin: 25px 0 15px; }
         h3 i { color: #004aad; margin-right: 8px; }
 
         /* HEADER */
@@ -58,34 +39,12 @@
             z-index: 9999;
             box-shadow: 0 8px 32px rgba(0,51,102,.3);
         }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: transform .3s ease;
-        }
+        .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform .3s ease; }
         .logo-area:hover { transform: scale(1.05); }
         .logo-area a { display: flex; text-decoration: none; }
-        .logo-area img {
-            width: 56px;
-            height: 68px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,.2);
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-        /* MENU */
         .menu {
             list-style: none;
             display: inline-grid;
@@ -105,11 +64,7 @@
             border-radius: 25px;
             transition: all .4s ease;
         }
-        .menu a i {
-            margin-right: 7px;
-            color: #fff;
-            transition: .3s;
-        }
+        .menu a i { margin-right: 7px; color: #fff; transition: .3s; }
         .menu a:hover {
             color: #003366;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
@@ -142,26 +97,11 @@
             text-align: center;
             color: #fff;
         }
-        .page-banner h1 {
-            font-size: 3em;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
+        .page-banner h1 { font-size: 3em; font-weight: 900; margin-bottom: 10px; }
         .page-banner h1 i { color: #ffd700; margin-right: 15px; }
-        .page-banner p {
-            font-size: 1.2em;
-            opacity: .9;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .page-banner p { font-size: 1.2em; opacity: .9; max-width: 700px; margin: 0 auto; }
 
-        /* CONTEÚDO */
-        .historia-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            flex: 1;
-        }
+        .historia-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; }
         .historia-card {
             background: #fff;
             border-radius: 20px;
@@ -176,12 +116,7 @@
             box-shadow: 0 18px 50px rgba(0,74,173,.2);
             border-left-color: #ffd700;
         }
-        .historia-card p {
-            font-size: 1.05em;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 12px;
-        }
+        .historia-card p { font-size: 1.05em; line-height: 1.8; color: #555; margin-bottom: 12px; }
         .historia-card p i { color: #004aad; margin-right: 6px; }
         .data-destaque {
             display: inline-block;
@@ -212,19 +147,10 @@
             box-shadow: 0 10px 30px rgba(0,74,173,.15);
             border-top-color: #ffd700;
         }
-        .destaque-item .numero {
-            font-size: 2.8em;
-            font-weight: 900;
-            color: #003366;
-        }
-        .destaque-item .numero i {
-            color: #ffd700;
-            font-size: 0.6em;
-            margin-right: 5px;
-        }
+        .destaque-item .numero { font-size: 2.8em; font-weight: 900; color: #003366; }
+        .destaque-item .numero i { color: #ffd700; font-size: 0.6em; margin-right: 5px; }
         .destaque-item p { color: #666; font-weight: 600; margin-top: 5px; }
 
-        /* TIMELINE */
         .timeline {
             position: relative;
             padding-left: 40px;
@@ -256,15 +182,11 @@
             border: 3px solid #ffd700;
             border-radius: 50%;
         }
-        .timeline-item .ano {
-            font-size: 1.4em;
-            font-weight: 900;
-            color: #003366;
-        }
+        .timeline-item .ano { font-size: 1.4em; font-weight: 900; color: #003366; }
         .timeline-item .ano i { color: #ffd700; margin-right: 8px; }
         .timeline-item p { color: #555; line-height: 1.6; margin-top: 5px; }
 
-        /* FALE CONOSCO */
+        /* FALE CONOSCO e FOOTER (mesmo do index) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -308,11 +230,7 @@
             transition: .4s;
         }
         .info-card:hover .icon { transform: scale(1.15) rotate(8deg); }
-        .info-card h3 {
-            color: #003366;
-            margin: 12px 0;
-            font-size: 1.3em;
-        }
+        .info-card h3 { color: #003366; margin: 12px 0; font-size: 1.3em; }
         .info-card h3 i { color: #004aad; margin-right: 6px; }
         .info-card p { color: #666; line-height: 1.5; word-break: break-word; }
         .info-card a {
@@ -329,13 +247,8 @@
             text-decoration: none;
             transition: all .3s ease;
         }
-        .info-card a:hover {
-            color: #003366;
-            background: #ffd700;
-            transform: scale(1.15);
-        }
+        .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
 
-        /* FOOTER */
         footer {
             background: linear-gradient(135deg, #003366 0%, #002244 100%);
             color: #fff;
@@ -351,11 +264,7 @@
             max-width: 1200px;
             margin: auto;
         }
-        .footer-copy {
-            font-size: 13px;
-            line-height: 1.8;
-            opacity: .9;
-        }
+        .footer-copy { font-size: 13px; line-height: 1.8; opacity: .9; }
         .footer-copy i { color: #ffd700; margin-right: 5px; }
         .footer-redes {
             display: flex;
@@ -375,13 +284,8 @@
             text-decoration: none;
             transition: all .3s ease;
         }
-        .footer-redes a:hover {
-            color: #003366;
-            background: #ffd700;
-            transform: translateY(-5px) scale(1.1);
-        }
+        .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -423,9 +327,7 @@
             .footer-container { flex-direction: column; text-align: center; }
             .footer-redes { margin-top: 15px; }
         }
-        @media (max-width: 480px) {
-            .destaques-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 480px) { .destaques-grid { grid-template-columns: 1fr; } }
         @media (min-width: 768px) and (max-width: 1023px) {
             header { padding: 15px; }
             .logo { font-size: 20px; }
@@ -440,7 +342,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <!-- ===== HEADER ===== -->
@@ -468,63 +369,15 @@
         </nav>
     </header>
 
-    <!-- ===== BANNER ===== -->
+    <!-- ===== BANNER (dinâmico) ===== -->
     <section class="page-banner" id="bannerHistoria">
         <h1 id="histTituloBanner"><i class="fas fa-book-open"></i> Nossa História</h1>
         <p id="histSubtituloBanner">Conheça a trajetória da ASSGA, desde sua fundação até os dias atuais.</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <main class="historia-container">
-        <!-- Texto extra injetado via JS (gerenciado pelo admin) -->
-        <div id="historiaExtra"></div>
-
-        <div class="historia-card">
-            <h3><i class="fas fa-flag-checkered"></i> Fundação</h3>
-            <p><i class="fas fa-calendar-days"></i> A <strong>ASSGA - Associação Desportiva</strong> foi fundada em <strong>2019</strong> na cidade de <strong>São Gonçalo do Amarante - RN</strong>, com o objetivo de promover o esporte, a integração social e o bem-estar da comunidade.</p>
-            <p><i class="fas fa-users"></i> Um grupo de apaixonados por esportes se uniu para criar uma associação que pudesse oferecer atividades esportivas de qualidade para todas as idades.</p>
-            <span class="data-destaque"><i class="fas fa-star"></i> Fundada em 2019</span>
-        </div>
-
-        <div class="historia-card">
-            <h3><i class="fas fa-bullseye"></i> Nossa Missão</h3>
-            <p><i class="fas fa-heart"></i> Promover o esporte como ferramenta de <strong>inclusão social</strong>, <strong>saúde</strong> e <strong>desenvolvimento humano</strong>, oferecendo atividades que integrem a comunidade e estimulem a prática esportiva.</p>
-            <p><i class="fas fa-handshake"></i> Acreditamos que o esporte transforma vidas e constrói cidadãos mais conscientes e saudáveis.</p>
-        </div>
-
-        <div class="historia-card">
-            <h3><i class="fas fa-gem"></i> Nossos Valores</h3>
-            <div class="destaques-grid">
-                <div class="destaque-item"><div class="numero"><i class="fas fa-handshake"></i></div><p>Respeito</p></div>
-                <div class="destaque-item"><div class="numero"><i class="fas fa-users"></i></div><p>Inclusão</p></div>
-                <div class="destaque-item"><div class="numero"><i class="fas fa-trophy"></i></div><p>Excelência</p></div>
-                <div class="destaque-item"><div class="numero"><i class="fas fa-heart"></i></div><p>Paixão</p></div>
-            </div>
-        </div>
-
-        <div class="historia-card">
-            <h3><i class="fas fa-timeline"></i> Linha do Tempo</h3>
-            <div class="timeline">
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2019</div><p>Fundação da ASSGA em São Gonçalo do Amarante - RN.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2020</div><p>Primeiras atividades esportivas e campeonatos de futsal.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2021</div><p>Expansão das atividades e início dos projetos sociais.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2022</div><p>Consolidação da associação e crescimento da comunidade.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2023</div><p>Novos projetos e parcerias para o desenvolvimento esportivo.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2024</div><p>Implementação do site e presença digital da ASSGA.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2025</div><p>Eventos e campeonatos com grande participação da comunidade.</p></div>
-                <div class="timeline-item"><div class="ano"><i class="fas fa-calendar-check"></i> 2026</div><p>2º Halloween ASSGA e novas oportunidades para todos.</p></div>
-            </div>
-        </div>
-
-        <div class="historia-card">
-            <h3><i class="fas fa-chart-simple"></i> ASSGA em Números</h3>
-            <div class="destaques-grid">
-                <div class="destaque-item"><div class="numero"><i class="fas fa-calendar"></i> 7+</div><p>Anos de história</p></div>
-                <div class="destaque-item"><div class="numero"><i class="fas fa-users"></i> 500+</div><p>Participantes</p></div>
-                <div class="destaque-item"><div class="numero"><i class="fas fa-trophy"></i> 20+</div><p>Eventos realizados</p></div>
-                <div class="destaque-item"><div class="numero"><i class="fas fa-futbol"></i> 10+</div><p>Modalidades esportivas</p></div>
-            </div>
-        </div>
+    <!-- ===== CONTEÚDO PRINCIPAL (dinâmico) ===== -->
+    <main class="historia-container" id="historiaContainer">
+        <!-- O conteúdo será renderizado via JavaScript -->
     </main>
 
     <!-- ===== FALE CONOSCO ===== -->
@@ -591,7 +444,6 @@
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script>
         // Menu mobile
         function toggleMenu() {
@@ -639,25 +491,7 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // Carregar dados do admin (assga_conteudos)
-        const historyContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").historia;
-        if (historyContent) {
-            const banner = document.getElementById("bannerHistoria");
-            if (banner && historyContent.titulo) {
-                document.getElementById("histTituloBanner").innerHTML = `<i class="fas fa-book-open"></i> ${escapeHtml(historyContent.titulo)}`;
-            }
-            if (banner && historyContent.subtitulo) {
-                document.getElementById("histSubtituloBanner").textContent = historyContent.subtitulo;
-            }
-            if (historyContent.texto) {
-                const extraDiv = document.getElementById("historiaExtra");
-                const p = document.createElement("p");
-                p.textContent = historyContent.texto;
-                p.style.cssText = "background:#f0f4fa; padding:20px; border-radius:16px; margin-bottom:30px; font-size:1.1rem; line-height:1.7; border-left:4px solid #ffd700;";
-                extraDiv.appendChild(p);
-            }
-        }
-
+        // Função para escapar HTML
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -669,6 +503,117 @@
                 return m;
             });
         }
+
+        // Dados padrão (fallback)
+        const defaultHistoria = {
+            titulo: "Nossa História",
+            subtitulo: "Conheça a trajetória da ASSGA, desde sua fundação até os dias atuais.",
+            fundacao: "A ASSGA - Associação Desportiva foi fundada em 2019 na cidade de São Gonçalo do Amarante - RN, com o objetivo de promover o esporte, a integração social e o bem-estar da comunidade. Um grupo de apaixonados por esportes se uniu para criar uma associação que pudesse oferecer atividades esportivas de qualidade para todas as idades.",
+            missao: "Promover o esporte como ferramenta de inclusão social, saúde e desenvolvimento humano, oferecendo atividades que integrem a comunidade e estimulem a prática esportiva. Acreditamos que o esporte transforma vidas e constrói cidadãos mais conscientes e saudáveis.",
+            valores: ["Respeito", "Inclusão", "Excelência", "Paixão"],
+            timeline: [
+                { ano: "2019", descricao: "Fundação da ASSGA em São Gonçalo do Amarante - RN." },
+                { ano: "2020", descricao: "Primeiras atividades esportivas e campeonatos de futsal." },
+                { ano: "2021", descricao: "Expansão das atividades e início dos projetos sociais." },
+                { ano: "2022", descricao: "Consolidação da associação e crescimento da comunidade." },
+                { ano: "2023", descricao: "Novos projetos e parcerias para o desenvolvimento esportivo." },
+                { ano: "2024", descricao: "Implementação do site e presença digital da ASSGA." },
+                { ano: "2025", descricao: "Eventos e campeonatos com grande participação da comunidade." },
+                { ano: "2026", descricao: "2º Halloween ASSGA e novas oportunidades para todos." }
+            ],
+            numeros: [
+                { numero: "7+", label: "Anos de história" },
+                { numero: "500+", label: "Participantes" },
+                { numero: "20+", label: "Eventos realizados" },
+                { numero: "10+", label: "Modalidades esportivas" }
+            ]
+        };
+
+        // Carregar dados do admin ou usar padrão
+        const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
+        const data = stored.historia || defaultHistoria;
+
+        // Preencher banner
+        document.getElementById("histTituloBanner").innerHTML = `<i class="fas fa-book-open"></i> ${escapeHtml(data.titulo)}`;
+        document.getElementById("histSubtituloBanner").textContent = data.subtitulo;
+
+        // Construir conteúdo principal
+        const container = document.getElementById("historiaContainer");
+        let html = '';
+
+        // Fundação
+        if (data.fundacao) {
+            html += `
+                <div class="historia-card">
+                    <h3><i class="fas fa-flag-checkered"></i> Fundação</h3>
+                    ${data.fundacao.split('\n').map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+                    <span class="data-destaque"><i class="fas fa-star"></i> Fundada em 2019</span>
+                </div>
+            `;
+        }
+
+        // Missão
+        if (data.missao) {
+            html += `
+                <div class="historia-card">
+                    <h3><i class="fas fa-bullseye"></i> Nossa Missão</h3>
+                    ${data.missao.split('\n').map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+                </div>
+            `;
+        }
+
+        // Valores
+        if (data.valores && data.valores.length > 0) {
+            html += `
+                <div class="historia-card">
+                    <h3><i class="fas fa-gem"></i> Nossos Valores</h3>
+                    <div class="destaques-grid">
+                        ${data.valores.map(v => `
+                            <div class="destaque-item">
+                                <div class="numero"><i class="fas fa-check-circle"></i></div>
+                                <p>${escapeHtml(v)}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Linha do Tempo
+        if (data.timeline && data.timeline.length > 0) {
+            html += `
+                <div class="historia-card">
+                    <h3><i class="fas fa-timeline"></i> Linha do Tempo</h3>
+                    <div class="timeline">
+                        ${data.timeline.map(item => `
+                            <div class="timeline-item">
+                                <div class="ano"><i class="fas fa-calendar-check"></i> ${escapeHtml(item.ano)}</div>
+                                <p>${escapeHtml(item.descricao)}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Números
+        if (data.numeros && data.numeros.length > 0) {
+            html += `
+                <div class="historia-card">
+                    <h3><i class="fas fa-chart-simple"></i> ASSGA em Números</h3>
+                    <div class="destaques-grid">
+                        ${data.numeros.map(item => `
+                            <div class="destaque-item">
+                                <div class="numero">${escapeHtml(item.numero)}</div>
+                                <p>${escapeHtml(item.label)}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
     </script>
 </body>
 </html>
