@@ -3,137 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Carteirinha | ASSGA</title>
+    <title>Carteirinha ASSGA</title>
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            min-height: 100vh;
-            background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%);
+            background: #e9ecef;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.15);
+        }
+        .btn-print {
+            background: #003366;
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-print:hover { background: #004aad; transform: scale(1.02); }
+        .btn-voltar {
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .btn-voltar:hover { background: #5a6268; }
+
+        /* ===== CARTEIRINHA ===== */
+        .carteira-wrapper {
+            background: #fff;
+            border: 2px solid #003366;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+        }
+        .carteira-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: space-between;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
         }
-        .card-wrapper {
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 18px 50px rgba(0,51,102,.14);
+        .carteira-header img {
+            height: 60px;
+            width: auto;
+            border-radius: 8px;
+        }
+        .carteira-header h1 {
+            font-size: 1.8rem;
+            color: #003366;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        .carteira-header h1 i { color: #ffd700; margin-right: 6px; }
+        .carteira-header .subtitulo {
+            font-size: 0.85rem;
+            color: #555;
+            text-align: right;
+        }
+        .carteira-body {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .foto-area {
+            flex: 0 0 140px;
             text-align: center;
         }
-        .card-header {
+        .foto-area img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #003366;
+            background: #f0f4fa;
+        }
+        .foto-area .matricula {
+            margin-top: 8px;
+            font-weight: 700;
+            color: #003366;
+            font-size: 0.9rem;
+        }
+        .dados-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .dados-area p {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px dashed #d9e1eb;
+            font-size: 1rem;
+        }
+        .dados-area p strong {
+            color: #003366;
+        }
+        .dados-area .endereco {
+            font-size: 0.9rem;
+            color: #555;
+            border-bottom: none;
+            padding-top: 6px;
+        }
+        .rodape-carteira {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 2px solid #003366;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #667085;
+        }
+        .rodape-carteira .cnpj { font-weight: 600; color: #003366; }
+        .fundacao { font-style: italic; }
+
+        /* ===== CARTÃO DE MENSALIDADE ===== */
+        .mensalidade-wrapper {
+            background: #fff;
+            border: 2px solid #ffd700;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+        }
+        .mensalidade-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
         }
-        .card-header h1 {
+        .mensalidade-header h2 {
             color: #003366;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
         }
-        .btn-sair {
-            background: transparent;
+        .mensalidade-header h2 i { color: #ffd700; margin-right: 6px; }
+        .mensalidade-header .ano { font-weight: 700; color: #003366; }
+        .meses-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+        }
+        .mes-item {
+            background: #f8f9fa;
             border: 1px solid #d9e1eb;
-            padding: 8px 16px;
             border-radius: 8px;
-            color: #667085;
-            cursor: pointer;
+            padding: 8px 0;
+            text-align: center;
             font-weight: 600;
-            transition: .3s;
+            font-size: 0.75rem;
+            color: #555;
+            transition: .2s;
+            position: relative;
         }
-        .btn-sair:hover { background: #f0f4fa; }
-        .carteirinha {
-            background: linear-gradient(145deg, #f7f9fc, #eef3f8);
-            border-radius: 16px;
-            padding: 25px 20px;
-            border: 2px solid #d9e1eb;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,.02);
+        .mes-item.pago {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
         }
-        .foto-socio {
-            width: 120px;
-            height: 120px;
+        .mes-item.pago::after {
+            content: "✓";
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #28a745;
+            color: #fff;
             border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #003366;
-            background: #ccc;
-            margin: 0 auto 12px;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            line-height: 18px;
+            text-align: center;
+        }
+        .mes-item .mes-nome {
             display: block;
+            font-weight: 700;
+            font-size: 0.7rem;
         }
-        .dados {
-            text-align: left;
-            margin-top: 10px;
-        }
-        .dados p {
+        .rodape-mensalidade {
+            margin-top: 14px;
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #d9e1eb;
-            font-size: 0.95rem;
-        }
-        .dados p:last-child { border-bottom: 0; }
-        .dados strong { color: #003366; }
-        .badge-socio {
-            display: inline-block;
-            background: #003366;
-            color: #ffd700;
-            padding: 4px 18px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-        .aviso {
-            margin-top: 20px;
+            font-size: 0.8rem;
             color: #667085;
-            font-size: 0.85rem;
+            border-top: 1px solid #d9e1eb;
+            padding-top: 12px;
         }
-        .aviso i { color: #ffd700; }
+        .rodape-mensalidade .secretaria {
+            font-weight: 700;
+            color: #003366;
+        }
+
+        /* ===== IMPRESSÃO ===== */
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; padding: 10px; }
+            .btn-print, .btn-voltar { display: none; }
+            .carteira-wrapper, .mensalidade-wrapper {
+                box-shadow: none;
+                border: 1px solid #003366;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .carteira-wrapper { margin-bottom: 20px; }
+            .foto-area img { width: 120px; height: 120px; }
+        }
+        @media (max-width: 600px) {
+            .carteira-body { flex-direction: column; align-items: center; }
+            .dados-area p { flex-direction: column; align-items: center; gap: 2px; }
+            .meses-grid { grid-template-columns: repeat(3, 1fr); }
+            .carteira-header { flex-wrap: wrap; justify-content: center; gap: 8px; text-align: center; }
+        }
     </style>
 </head>
 <body>
-    <div class="card-wrapper">
-        <div class="card-header">
-            <h1><i class="fas fa-id-card"></i> Carteirinha</h1>
-            <button class="btn-sair" id="sairBtn"><i class="fas fa-right-from-bracket"></i> Sair</button>
+    <div class="container">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+            <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> Imprimir / PDF</button>
+            <a href="admin.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
         </div>
-        <div class="carteirinha" id="carteirinhaContent">
-            <!-- preenchido via JS -->
-        </div>
-        <div class="aviso">
-            <i class="fas fa-shield-halved"></i> Apresente este documento para ter acesso aos eventos e benefícios ASSGA.
+
+        <!-- ===== DADOS DO SÓCIO (via URL ou sessionStorage) ===== -->
+        <div id="carteiraContainer">
+            <!-- renderizado via JS -->
         </div>
     </div>
 
     <script>
-        const socioStr = sessionStorage.getItem('socioLogado');
-        if (!socioStr) {
-            window.location.href = 'login.html';
+        // ==========================================================
+        // Obtém dados do sócio: da URL (parâmetro ?socio=index) ou do sessionStorage
+        // ==========================================================
+        function getSocio() {
+            const params = new URLSearchParams(window.location.search);
+            const index = params.get('socio');
+            if (index !== null) {
+                const socios = JSON.parse(localStorage.getItem('assga_socios') || '[]');
+                return socios[parseInt(index)] || null;
+            }
+            // Fallback: sócio logado
+            const socioStr = sessionStorage.getItem('socioLogado');
+            if (socioStr) return JSON.parse(socioStr);
+            return null;
         }
-        const socio = JSON.parse(socioStr);
 
-        document.getElementById('sairBtn').addEventListener('click', function() {
-            sessionStorage.removeItem('socioLogado');
-            window.location.href = 'login.html';
-        });
-
-        function renderCarteirinha(socio) {
-            const container = document.getElementById('carteirinhaContent');
-            const foto = socio.foto || 'src/imagens/avatar-padrao.jpg';
-            container.innerHTML = `
-                <img class="foto-socio" src="${foto}" alt="Foto do sócio" onerror="this.src='src/imagens/avatar-padrao.jpg'">
-                <h2 style="color:#003366;">${socio.nome || 'Sócio'}</h2>
-                <span class="badge-socio"><i class="fas fa-trophy"></i> Sócio nº ${socio.numeroSocio || '---'}</span>
-                <div class="dados">
-                    <p><strong>CPF:</strong> ${socio.cpf || '---'}</p>
-                    <p><strong>RG:</strong> ${socio.rg || '---'}</p>
-                    <p><strong>Investimento/Renda:</strong> ${socio.renda || '---'}</p>
-                    <p><strong>E-mail:</strong> ${socio.email || '---'}</p>
+        const socio = getSocio();
+        if (!socio) {
+            document.getElementById('carteiraContainer').innerHTML = `
+                <div style="text-align:center; padding:40px; color:#b42318;">
+                    <i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>
+                    <p style="margin-top:10px;">Nenhum sócio selecionado. Volte ao painel e escolha um sócio para imprimir.</p>
+                    <a href="admin.html" class="btn-voltar" style="margin-top:15px;">Voltar</a>
                 </div>
             `;
+            throw new Error('Sócio não encontrado');
+        }
+
+        // ==========================================================
+        // Dados fixos da associação
+        // ==========================================================
+        const ASSGA = {
+            nome: "Associação de surdos de São Gonçalo do Amarante",
+            fundacao: "Fundada 23 de julho de 2024",
+            cnpj: "CNPJ: 57.242.499/0001-60",
+            endereco: "Rua da Floresta, 562 - São Gonçalo do Amarante-RN"
+        };
+
+        // ==========================================================
+        // Renderizar Carteirinha
+        // ==========================================================
+        function renderCarteirinha(socio) {
+            const container = document.getElementById('carteiraContainer');
+            const foto = socio.foto || 'src/imagens/avatar-padrao.jpg';
+
+            // Mapeamento de meses (pagos ou não)
+            const meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+            const mesesPagos = socio.mesesPagos || []; // array de índices (0-11)
+
+            let html = `
+                <!-- CARTEIRINHA PRINCIPAL -->
+                <div class="carteira-wrapper">
+                    <div class="carteira-header">
+                        <div>
+                            <img src="src/imagens/Assga_foto.jpg" alt="Logo ASSGA" onerror="this.style.display='none'">
+                        </div>
+                        <h1><i class="fas fa-id-card"></i> SÓCIO ASSGA</h1>
+                        <div class="subtitulo">
+                            <div>${ASSGA.nome}</div>
+                            <div>${ASSGA.fundacao}</div>
+                        </div>
+                    </div>
+                    <div class="carteira-body">
+                        <div class="foto-area">
+                            <img src="${foto}" alt="Foto do sócio" onerror="this.src='src/imagens/avatar-padrao.jpg'">
+                            <div class="matricula">Matrícula: ${socio.matricula || socio.numeroSocio || '______'}</div>
+                        </div>
+                        <div class="dados-area">
+                            <p><strong>Nome:</strong> ${socio.nome || '__________________'}</p>
+                            <p><strong>CPF:</strong> ${socio.cpf || '______'}</p>
+                            <p><strong>Data de nascimento:</strong> ${socio.nascimento || '__/__/____'}</p>
+                            <p class="endereco"><i class="fas fa-map-pin"></i> ${ASSGA.endereco}</p>
+                        </div>
+                    </div>
+                    <div class="rodape-carteira">
+                        <span class="cnpj">${ASSGA.cnpj}</span>
+                        <span class="fundacao">${ASSGA.fundacao}</span>
+                    </div>
+                </div>
+
+                <!-- CARTÃO DE MENSALIDADE -->
+                <div class="mensalidade-wrapper">
+                    <div class="mensalidade-header">
+                        <h2><i class="fas fa-calendar-check"></i> CARTÃO DE MENSALIDADE</h2>
+                        <span class="ano">2026</span>
+                    </div>
+                    <div class="meses-grid">
+                        ${meses.map((mes, idx) => {
+                            const pago = mesesPagos.includes(idx);
+                            return `<div class="mes-item ${pago ? 'pago' : ''}">
+                                <span class="mes-nome">${mes}</span>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                    <div class="rodape-mensalidade">
+                        <span>${ASSGA.nome}</span>
+                        <span class="secretaria">${socio.secretaria || 'SECRETARIA'}</span>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
         }
 
         renderCarteirinha(socio);

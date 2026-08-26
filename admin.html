@@ -514,7 +514,7 @@
         </div>
     </div>
 
-    <!-- ===== ESTATUTO (COMPLETO) ===== -->
+    <!-- ESTATUTO -->
     <div id="tab-estatuto" class="tab-content">
         <div class="content-editor">
             <h2><i class="fas fa-file-contract"></i> Conteúdo do Estatuto</h2>
@@ -527,33 +527,27 @@
                     <label>Subtítulo</label>
                     <input class="field" id="estSubtitulo" placeholder="Ex: Documentos oficiais e normas da ASSGA." />
                 </div>
-
                 <div class="form-group full" style="border-top:2px solid var(--line); padding-top:15px;">
                     <label><i class="fas fa-building"></i> Dados da Associação (cada linha: NOME|VALOR)</label>
                     <textarea class="field" id="estDados" placeholder="Ex: Nome|ASSGA - Associação Desportiva&#10;Data de Fundação|2019&#10;Sede|São Gonçalo do Amarante - RN&#10;CNPJ|57.242.499/0001-60&#10;Atividades|Esporte, integração, eventos e participação social." rows="6"></textarea>
                     <small>Use o formato CHAVE|VALOR, uma linha para cada dado.</small>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-bullseye"></i> Objetivos (cada linha um objetivo)</label>
                     <textarea class="field" id="estObjetivos" placeholder="Ex: Promover a prática de atividades esportivas...&#10;Fomentar a integração social..." rows="6"></textarea>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-users"></i> Diretoria (cada linha um cargo)</label>
                     <textarea class="field" id="estDiretoria" placeholder="Ex: Presidente&#10;Vice-Presidente&#10;Secretário..." rows="6"></textarea>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-gavel"></i> Disposições Gerais</label>
                     <textarea class="field" id="estDisposicoes" placeholder="Texto das disposições gerais..." rows="4"></textarea>
                 </div>
-
                 <div class="form-group full">
                     <label><i class="fas fa-file-pdf"></i> Link para download do PDF (opcional)</label>
                     <input class="field" id="estPdf" type="url" placeholder="https://exemplo.com/estatuto.pdf" />
                 </div>
-
                 <button class="action" type="submit"><i class="fas fa-save"></i> Salvar Estatuto</button>
             </form>
             <p style="margin-top:10px; color:var(--success);" id="msgEst"></p>
@@ -612,7 +606,7 @@
         </div>
     </div>
 
-    <!-- SOCIOS -->
+    <!-- ===== SOCIOS ===== -->
     <div id="tab-socios" class="tab-content">
         <div class="management">
             <h2><i class="fas fa-id-card"></i> Gerenciar Sócios</h2>
@@ -900,6 +894,15 @@
         `).join("");
     }
 
+    // ============================================================
+    // GERENCIAMENTO DE SÓCIOS (com suporte à carteirinha)
+    // ============================================================
+    function getSocios() {
+        try { return JSON.parse(localStorage.getItem(SOCIOS_KEY) || '[]'); }
+        catch { return []; }
+    }
+    function saveSocios(lista) { localStorage.setItem(SOCIOS_KEY, JSON.stringify(lista)); }
+
     function renderSocios() {
         const lista = getSocios();
         const container = document.getElementById('listaSocios');
@@ -917,10 +920,99 @@
                     <button class="table-action" onclick="editarSocio(${i})">Editar</button>
                     <button class="table-action" onclick="gerarSenhaSocio(${i})">Gerar senha</button>
                     <button class="table-action" onclick="enviarEmailSocio(${i})">Enviar e-mail</button>
+                    <button class="table-action" onclick="imprimirCarteirinha(${i})" style="background:#003366;color:#fff;border-color:#003366;">
+                        <i class="fas fa-id-card"></i> Carteirinha
+                    </button>
                     <button class="table-action delete" onclick="excluirSocio(${i})">Excluir</button>
                 </div>
             </div>
         `).join('');
+    }
+
+    // Função para abrir a carteirinha impressa
+    function imprimirCarteirinha(index) {
+        window.open(`carteirinha-impressa.html?socio=${index}`, '_blank');
+    }
+
+    function abrirModalSocio(index = -1) {
+        if (index >= 0) {
+            const socios = getSocios();
+            const s = socios[index];
+            const nome = prompt('Nome completo:', s.nome) || s.nome;
+            const cpf = prompt('CPF (apenas números):', s.cpf) || s.cpf;
+            const rg = prompt('RG:', s.rg) || s.rg;
+            const numeroSocio = prompt('Número de sócio:', s.numeroSocio) || s.numeroSocio;
+            const renda = prompt('Investimento/Renda:', s.renda) || s.renda;
+            const email = prompt('E-mail:', s.email) || s.email;
+            const foto = prompt('URL da foto 3x4 (ou deixe vazio):', s.foto) || s.foto;
+            // Campos extras para carteirinha
+            const matricula = prompt('Número de matrícula:', s.matricula || '') || s.matricula;
+            const nascimento = prompt('Data de nascimento (DD/MM/AAAA):', s.nascimento || '') || s.nascimento;
+            const secretaria = prompt('Secretaria responsável:', s.secretaria || 'SECRETARIA') || 'SECRETARIA';
+            const mesesPagosStr = prompt('Meses pagos (índices 0-11, separados por vírgula):', (s.mesesPagos || []).join(','));
+            const mesesPagos = mesesPagosStr ? mesesPagosStr.split(',').map(Number).filter(n => !isNaN(n)) : [];
+
+            socios[index] = { ...s, nome, cpf, rg, numeroSocio, renda, email, foto, matricula, nascimento, secretaria, mesesPagos };
+            saveSocios(socios);
+            renderSocios();
+            showMessage('Sócio atualizado!', 'success', 'msgSocio');
+        } else {
+            const nome = prompt('Nome completo:');
+            if (!nome) return;
+            const cpf = prompt('CPF (apenas números):');
+            if (!cpf) return;
+            const rg = prompt('RG:') || '';
+            const numeroSocio = prompt('Número de sócio:') || '';
+            const renda = prompt('Investimento/Renda:') || '';
+            const email = prompt('E-mail:') || '';
+            const foto = prompt('URL da foto 3x4 (opcional):') || '';
+            const senha = prompt('Senha de acesso (mínimo 4 caracteres):') || '1234';
+            // Campos extras
+            const matricula = prompt('Número de matrícula:') || '';
+            const nascimento = prompt('Data de nascimento (DD/MM/AAAA):') || '';
+            const secretaria = prompt('Secretaria responsável:') || 'SECRETARIA';
+            const mesesPagosStr = prompt('Meses pagos (índices 0-11, separados por vírgula - deixe vazio se nenhum):') || '';
+            const mesesPagos = mesesPagosStr ? mesesPagosStr.split(',').map(Number).filter(n => !isNaN(n)) : [];
+
+            const socios = getSocios();
+            socios.push({ nome, cpf, rg, numeroSocio, renda, email, foto, senha, matricula, nascimento, secretaria, mesesPagos });
+            saveSocios(socios);
+            renderSocios();
+            showMessage('Sócio adicionado com sucesso!', 'success', 'msgSocio');
+        }
+    }
+
+    function editarSocio(index) { abrirModalSocio(index); }
+    function excluirSocio(index) {
+        if (!confirm('Excluir este sócio?')) return;
+        const socios = getSocios();
+        socios.splice(index, 1);
+        saveSocios(socios);
+        renderSocios();
+        showMessage('Sócio removido.', 'success', 'msgSocio');
+    }
+    function gerarSenhaSocio(index) {
+        const socios = getSocios();
+        const s = socios[index];
+        const novaSenha = Math.random().toString(36).slice(-6).toUpperCase();
+        s.senha = novaSenha;
+        saveSocios(socios);
+        renderSocios();
+        alert(`Nova senha para ${s.nome}: ${novaSenha}`);
+        showMessage('Senha gerada e atualizada.', 'success', 'msgSocio');
+    }
+    function enviarEmailSocio(index) {
+        const socios = getSocios();
+        const s = socios[index];
+        if (!s.email) {
+            alert('Este sócio não possui e-mail cadastrado.');
+            return;
+        }
+        const assunto = 'Suas credenciais de acesso - ASSGA';
+        const corpo = `Olá ${s.nome},\n\nSuas credenciais para acessar a área do sócio são:\nCPF: ${s.cpf}\nSenha: ${s.senha}\n\nAcesse: ${window.location.origin}/login.html\n\nAtenciosamente,\nASSGA`;
+        const mailto = `mailto:${s.email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+        window.open(mailto, '_blank');
+        showMessage(`E-mail enviado para ${s.email} (abra o cliente de e-mail).`, 'success', 'msgSocio');
     }
 
     // ============================================================
@@ -987,76 +1079,6 @@
         saveNoticias(noticias);
         renderNoticias();
         showMessage('Notícia removida.', 'success', 'msgNoticia');
-    }
-
-    // ============================================================
-    // GERENCIAMENTO DE SÓCIOS (CRUD)
-    // ============================================================
-    function abrirModalSocio(index = -1) {
-        if (index >= 0) {
-            const socios = getSocios();
-            const s = socios[index];
-            const nome = prompt('Nome completo:', s.nome) || s.nome;
-            const cpf = prompt('CPF (apenas números):', s.cpf) || s.cpf;
-            const rg = prompt('RG:', s.rg) || s.rg;
-            const numeroSocio = prompt('Número de sócio:', s.numeroSocio) || s.numeroSocio;
-            const renda = prompt('Investimento/Renda:', s.renda) || s.renda;
-            const email = prompt('E-mail:', s.email) || s.email;
-            const foto = prompt('URL da foto 3x4 (ou deixe vazio):', s.foto) || s.foto;
-            socios[index] = { ...s, nome, cpf, rg, numeroSocio, renda, email, foto };
-            saveSocios(socios);
-            renderSocios();
-            showMessage('Sócio atualizado!', 'success', 'msgSocio');
-        } else {
-            const nome = prompt('Nome completo:');
-            if (!nome) return;
-            const cpf = prompt('CPF (apenas números):');
-            if (!cpf) return;
-            const rg = prompt('RG:') || '';
-            const numeroSocio = prompt('Número de sócio:') || '';
-            const renda = prompt('Investimento/Renda:') || '';
-            const email = prompt('E-mail:') || '';
-            const foto = prompt('URL da foto 3x4 (opcional):') || '';
-            const senha = prompt('Senha de acesso (mínimo 4 caracteres):') || '1234';
-            const socios = getSocios();
-            socios.push({ nome, cpf, rg, numeroSocio, renda, email, foto, senha });
-            saveSocios(socios);
-            renderSocios();
-            showMessage('Sócio adicionado com sucesso!', 'success', 'msgSocio');
-        }
-    }
-
-    function editarSocio(index) { abrirModalSocio(index); }
-    function excluirSocio(index) {
-        if (!confirm('Excluir este sócio?')) return;
-        const socios = getSocios();
-        socios.splice(index, 1);
-        saveSocios(socios);
-        renderSocios();
-        showMessage('Sócio removido.', 'success', 'msgSocio');
-    }
-    function gerarSenhaSocio(index) {
-        const socios = getSocios();
-        const s = socios[index];
-        const novaSenha = Math.random().toString(36).slice(-6).toUpperCase();
-        s.senha = novaSenha;
-        saveSocios(socios);
-        renderSocios();
-        alert(`Nova senha para ${s.nome}: ${novaSenha}`);
-        showMessage('Senha gerada e atualizada.', 'success', 'msgSocio');
-    }
-    function enviarEmailSocio(index) {
-        const socios = getSocios();
-        const s = socios[index];
-        if (!s.email) {
-            alert('Este sócio não possui e-mail cadastrado.');
-            return;
-        }
-        const assunto = 'Suas credenciais de acesso - ASSGA';
-        const corpo = `Olá ${s.nome},\n\nSuas credenciais para acessar a área do sócio são:\nCPF: ${s.cpf}\nSenha: ${s.senha}\n\nAcesse: ${window.location.origin}/login.html\n\nAtenciosamente,\nASSGA`;
-        const mailto = `mailto:${s.email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
-        window.open(mailto, '_blank');
-        showMessage(`E-mail enviado para ${s.email} (abra o cliente de e-mail).`, 'success', 'msgSocio');
     }
 
     // ============================================================
@@ -1170,12 +1192,9 @@
         const data = getContents().estatuto || {};
         document.getElementById('estTitulo').value = data.titulo || '';
         document.getElementById('estSubtitulo').value = data.subtitulo || '';
-
-        // Dados da Associação (objeto -> linhas CHAVE|VALOR)
         const dados = data.dados || {};
         const dadosStr = Object.entries(dados).map(([chave, valor]) => `${chave}|${valor}`).join('\n');
         document.getElementById('estDados').value = dadosStr;
-
         document.getElementById('estObjetivos').value = (data.objetivos || []).join('\n');
         document.getElementById('estDiretoria').value = (data.diretoria || []).join('\n');
         document.getElementById('estDisposicoes').value = data.disposicoes || '';
@@ -1184,8 +1203,6 @@
 
     function salvarEstatuto() {
         const conteudos = getContents();
-
-        // Processar Dados da Associação
         const dadosLinhas = document.getElementById('estDados').value.split('\n')
             .filter(line => line.trim() !== '')
             .map(line => {
@@ -1194,11 +1211,8 @@
             });
         const dados = {};
         dadosLinhas.forEach(item => { if (item.chave) dados[item.chave] = item.valor; });
-
-        const objetivos = document.getElementById('estObjetivos').value.split('\n')
-            .filter(line => line.trim() !== '');
-        const diretoria = document.getElementById('estDiretoria').value.split('\n')
-            .filter(line => line.trim() !== '');
+        const objetivos = document.getElementById('estObjetivos').value.split('\n').filter(line => line.trim() !== '');
+        const diretoria = document.getElementById('estDiretoria').value.split('\n').filter(line => line.trim() !== '');
 
         conteudos.estatuto = {
             titulo: document.getElementById('estTitulo').value.trim(),
