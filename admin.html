@@ -8,7 +8,7 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== VARIÁVEIS E RESET ===== */
+        /* ===== MESMO ESTILO DO SEU PAINEL (mantido) ===== */
         :root {
             --navy: #003366;
             --blue: #004aad;
@@ -422,6 +422,7 @@
         <button class="tab-btn" data-tab="tab-diretoria"><i class="fas fa-users"></i> Diretoria</button>
         <button class="tab-btn" data-tab="tab-paginas"><i class="fas fa-file"></i> Páginas</button>
         <button class="tab-btn" data-tab="tab-socios"><i class="fas fa-id-card"></i> Sócios</button>
+        <button class="tab-btn" data-tab="tab-noticias"><i class="fas fa-newspaper"></i> Notícias</button>
     </div>
 
     <!-- HOME -->
@@ -574,6 +575,16 @@
         </div>
     </div>
 
+    <!-- ===== NOTÍCIAS ===== -->
+    <div id="tab-noticias" class="tab-content">
+        <div class="management">
+            <h2><i class="fas fa-newspaper"></i> Gerenciar Notícias da Home</h2>
+            <button class="action" onclick="abrirModalNoticia()"><i class="fas fa-plus"></i> Adicionar Notícia</button>
+            <div id="listaNoticias" class="member-list"></div>
+            <p style="margin-top:10px; color:var(--success);" id="msgNoticia"></p>
+        </div>
+    </div>
+
 </main>
 
 <!-- ==================== MODAL DIRETOR ==================== -->
@@ -660,6 +671,7 @@
     const CUSTOM_PAGES_KEY = "assga_paginas";
     const EVENTOS_KEY = "assga_eventos";
     const SOCIOS_KEY = "assga_socios";
+    const NOTICIAS_KEY = "assga_noticias";
     const MAX_SLOTS = 100;
     const AUTH_KEY = "assga_admin";
 
@@ -720,13 +732,25 @@
     }
     function saveCustomPages(lista) { localStorage.setItem(CUSTOM_PAGES_KEY, JSON.stringify(lista)); }
 
+    function getSocios() {
+        try { return JSON.parse(localStorage.getItem(SOCIOS_KEY) || '[]'); }
+        catch { return []; }
+    }
+    function saveSocios(lista) { localStorage.setItem(SOCIOS_KEY, JSON.stringify(lista)); }
+
+    function getNoticias() {
+        try { return JSON.parse(localStorage.getItem(NOTICIAS_KEY) || '[]'); }
+        catch { return []; }
+    }
+    function saveNoticias(lista) { localStorage.setItem(NOTICIAS_KEY, JSON.stringify(lista)); }
+
     function showMessage(text, type, targetId = "message") {
         const el = document.getElementById(targetId);
         if (el) { el.textContent = text; el.className = `message ${type}`; }
     }
 
     // ============================================================
-    // FUNÇÕES DE RENDERIZAÇÃO (INSCRIÇÕES, DIRETORIA, EVENTOS, PÁGINAS, SÓCIOS)
+    // FUNÇÕES DE RENDERIZAÇÃO (TODAS AS LISTAS)
     // ============================================================
     function renderInscricoes() {
         const registrations = getRegistrations();
@@ -829,15 +853,6 @@
         `).join("");
     }
 
-    // ============================================================
-    // GERENCIAMENTO DE SÓCIOS
-    // ============================================================
-    function getSocios() {
-        try { return JSON.parse(localStorage.getItem(SOCIOS_KEY) || '[]'); }
-        catch { return []; }
-    }
-    function saveSocios(lista) { localStorage.setItem(SOCIOS_KEY, JSON.stringify(lista)); }
-
     function renderSocios() {
         const lista = getSocios();
         const container = document.getElementById('listaSocios');
@@ -861,6 +876,75 @@
         `).join('');
     }
 
+    // ============================================================
+    // GERENCIAMENTO DE NOTÍCIAS (CRUD)
+    // ============================================================
+    function renderNoticias() {
+        const lista = getNoticias();
+        const container = document.getElementById('listaNoticias');
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty">Nenhuma notícia cadastrada.</div>';
+            return;
+        }
+        container.innerHTML = lista.map((n, i) => `
+            <div class="member-row">
+                <div>
+                    <strong>${escapeHtml(n.titulo)}</strong><br>
+                    <span style="font-size:0.9em; color:#555;">${escapeHtml(n.resumo || '')}</span><br>
+                    <span style="font-size:0.8em; color:var(--muted);">
+                        <i class="fas fa-calendar"></i> ${escapeHtml(n.data || '')}
+                        ${n.imagem ? `| <i class="fas fa-image"></i> ${escapeHtml(n.imagem)}` : ''}
+                    </span>
+                </div>
+                <div class="member-actions">
+                    <button class="table-action" onclick="editarNoticia(${i})">Editar</button>
+                    <button class="table-action delete" onclick="excluirNoticia(${i})">Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function abrirModalNoticia(index = -1) {
+        if (index >= 0) {
+            const noticias = getNoticias();
+            const n = noticias[index];
+            const titulo = prompt('Título da notícia:', n.titulo) || n.titulo;
+            const resumo = prompt('Resumo/descrição:', n.resumo) || n.resumo;
+            const texto = prompt('Texto completo (opcional):', n.texto) || n.texto;
+            const data = prompt('Data (ex: 15 de agosto de 2026):', n.data) || n.data;
+            const imagem = prompt('URL da imagem (opcional):', n.imagem) || n.imagem;
+            noticias[index] = { titulo, resumo, texto, data, imagem };
+            saveNoticias(noticias);
+            renderNoticias();
+            showMessage('Notícia atualizada!', 'success', 'msgNoticia');
+        } else {
+            const titulo = prompt('Título da notícia:');
+            if (!titulo) return;
+            const resumo = prompt('Resumo/descrição:') || '';
+            const texto = prompt('Texto completo (opcional):') || '';
+            const data = prompt('Data (ex: 15 de agosto de 2026):') || '';
+            const imagem = prompt('URL da imagem (opcional):') || '';
+            const noticias = getNoticias();
+            noticias.push({ titulo, resumo, texto, data, imagem });
+            saveNoticias(noticias);
+            renderNoticias();
+            showMessage('Notícia adicionada!', 'success', 'msgNoticia');
+        }
+    }
+
+    function editarNoticia(index) { abrirModalNoticia(index); }
+    function excluirNoticia(index) {
+        if (!confirm('Excluir esta notícia?')) return;
+        const noticias = getNoticias();
+        noticias.splice(index, 1);
+        saveNoticias(noticias);
+        renderNoticias();
+        showMessage('Notícia removida.', 'success', 'msgNoticia');
+    }
+
+    // ============================================================
+    // GERENCIAMENTO DE SÓCIOS (CRUD)
+    // ============================================================
     function abrirModalSocio(index = -1) {
         if (index >= 0) {
             const socios = getSocios();
@@ -895,10 +979,7 @@
         }
     }
 
-    function editarSocio(index) {
-        abrirModalSocio(index);
-    }
-
+    function editarSocio(index) { abrirModalSocio(index); }
     function excluirSocio(index) {
         if (!confirm('Excluir este sócio?')) return;
         const socios = getSocios();
@@ -907,7 +988,6 @@
         renderSocios();
         showMessage('Sócio removido.', 'success', 'msgSocio');
     }
-
     function gerarSenhaSocio(index) {
         const socios = getSocios();
         const s = socios[index];
@@ -918,7 +998,6 @@
         alert(`Nova senha para ${s.nome}: ${novaSenha}`);
         showMessage('Senha gerada e atualizada.', 'success', 'msgSocio');
     }
-
     function enviarEmailSocio(index) {
         const socios = getSocios();
         const s = socios[index];
@@ -1143,6 +1222,7 @@
             renderEventos();
             renderCustomPages();
             renderSocios();
+            renderNoticias();
             carregarConteudo('index');
             carregarConteudo('historia');
             carregarConteudo('esportiva');
@@ -1169,6 +1249,7 @@
         renderEventos();
         renderCustomPages();
         renderSocios();
+        renderNoticias();
         carregarConteudo('index');
         carregarConteudo('historia');
         carregarConteudo('esportiva');
@@ -1196,7 +1277,7 @@
     });
 
     // ============================================================
-    // TABS - com chamada para renderSocios na aba socios
+    // TABS - com chamada para cada lista
     // ============================================================
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -1204,11 +1285,12 @@
             this.classList.add('active');
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById(this.dataset.tab).classList.add('active');
-            // Recarregar listas se necessário
+            // Recarregar listas conforme a aba
             if (this.dataset.tab === 'tab-eventos') renderEventos();
             if (this.dataset.tab === 'tab-diretoria') renderDirectors();
             if (this.dataset.tab === 'tab-paginas') renderCustomPages();
             if (this.dataset.tab === 'tab-socios') renderSocios();
+            if (this.dataset.tab === 'tab-noticias') renderNoticias();
         });
     });
 

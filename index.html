@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        /* ===== MESMO ESTILO DO ORIGINAL (mantido) ===== */
+        /* ===== MESMO ESTILO DO SEU ORIGINAL ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -174,76 +174,8 @@
         .texto p { line-height: 1.7; color: #555; margin: 10px 0; font-size: 15px; }
         .texto p i { color: #004aad; margin-right: 5px; }
         .texto p strong { color: #003366; }
-        .evento-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
-        .evento-info-item {
-            padding: 14px 15px;
-            background: linear-gradient(135deg, #eef5ff, #f7faff);
-            border-radius: 12px;
-            border-left: 4px solid #004aad;
-            color: #444;
-            font-size: 14px;
-            line-height: 1.5;
-            transition: all .3s ease;
-        }
-        .evento-info-item:hover {
-            transform: translateY(-3px);
-            border-left-color: #ffd700;
-            box-shadow: 0 5px 15px rgba(0,74,173,.12);
-        }
-        .evento-info-item i { color: #004aad; width: 20px; margin-right: 5px; }
-        .evento-info-item strong { color: #003366; }
-        .preco-evento {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 13px 22px;
-            background: linear-gradient(135deg, #fff8d6, #fff1a8);
-            border: 2px solid #ffd700;
-            border-radius: 12px;
-            color: #6b5200;
-            font-size: 19px;
-            font-weight: 900;
-            box-shadow: 0 5px 15px rgba(255,215,0,.2);
-        }
-        .preco-evento i { margin-right: 7px; }
-        .aviso-vagas {
-            margin-top: 15px;
-            padding: 13px 16px;
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 10px;
-            color: #664d03;
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .aviso-vagas i { margin-right: 6px; }
-        .botao-inscricao {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #003366 0%, #004aad 55%, #0066cc 100%);
-            color: #fff;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 800;
-            border: 2px solid #ffd700;
-            box-shadow: 0 8px 20px rgba(0,51,102,.30);
-            transition: all .3s ease;
-        }
-        .botao-inscricao:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 30px rgba(0,74,173,.4);
-        }
-        .botao-inscricao i { color: #ffd700; }
 
-        /* FALE CONOSCO */
+        /* FALE CONOSCO e FOOTER (mesmo do original, mantidos) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -306,7 +238,6 @@
         }
         .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
 
-        /* FOOTER */
         footer {
             background: linear-gradient(135deg, #003366 0%, #002244 100%);
             color: #fff;
@@ -344,7 +275,7 @@
         }
         .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        /* RESPONSIVIDADE */
+        /* RESPONSIVIDADE (resumida, mas igual à sua) */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -378,9 +309,6 @@
             .noticia-imagem { width: 100%; height: 250px; }
             .texto { text-align: center; }
             .texto h3 { font-size: 1.45em; }
-            .evento-info { grid-template-columns: 1fr; text-align: left; }
-            .botao-inscricao { width: 100%; padding: 15px 20px; justify-content: center; }
-            .preco-evento { width: 100%; text-align: center; }
             .info-card { width: 100%; }
             .footer-container { flex-direction: column; text-align: center; }
             .footer-redes { margin-top: 15px; }
@@ -404,7 +332,6 @@
             .slider img { width: 100%; height: 400px; object-fit: cover; object-position: center; }
             .noticia-item { flex-direction: column; text-align: center; }
             .noticia-imagem { width: 100%; height: 350px; }
-            .evento-info { text-align: left; }
             .info-card { width: 45%; }
         }
         a:focus, button:focus { outline: 3px solid #ffd700; outline-offset: 3px; }
@@ -452,44 +379,10 @@
         </div>
     </section>
 
-    <!-- ===== NOTÍCIAS ===== -->
+    <!-- ===== NOTÍCIAS DINÂMICAS ===== -->
     <main class="noticias">
         <h2><i class="fas fa-newspaper"></i> Notícias</h2>
-
-        <article class="noticia-item">
-            <a class="noticia-imagem" href="src/imagens/halloween-assga.jpeg" target="_blank" rel="noopener noreferrer" aria-label="Abrir imagem do Halloween ASSGA">
-                <img src="src/imagens/halloween-assga.jpeg" alt="2º Halloween ASSGA" onerror="this.src='src/imagens/Assga_foto.jpg'">
-            </a>
-
-            <div class="texto">
-                <h3><i class="fas fa-ghost"></i> 2º HALLOWEEN ASSGA</h3>
-                <data datetime="2026-08-15T17:00">
-                    <i class="fas fa-calendar-check"></i> Publicado em 15 de agosto de 2026
-                </data>
-
-                <p><strong><i class="fas fa-bullhorn"></i> Estão abertas as inscrições para o 2º HALLOWEEN ASSGA!</strong></p>
-                <p><i class="fas fa-star"></i> Prepare-se para um evento especial com muita diversão, esporte, integração e confraternização.</p>
-
-                <div class="evento-info">
-                    <div class="evento-info-item"><i class="fas fa-calendar-days"></i><strong>Data</strong><br>28 e 29 de novembro de 2026</div>
-                    <div class="evento-info-item"><i class="fas fa-location-dot"></i><strong>Local</strong><br>Em breve</div>
-                    <div class="evento-info-item"><i class="fas fa-ticket"></i><strong>Vagas</strong><br>100 participantes</div>
-                    <div class="evento-info-item"><i class="fas fa-calendar-check"></i><strong>Inscrições</strong><br>11/08 até 15/09/2026</div>
-                    <div class="evento-info-item"><i class="fas fa-credit-card"></i><strong>Pagamento</strong><br>PIX / Crédito em até 2x / Dinheiro</div>
-                    <div class="evento-info-item"><i class="fas fa-gift"></i><strong>Evento</strong><br>Diversão, esporte e integração</div>
-                    <div class="evento-info-item"><i class="fas fa-users"></i><strong>Público</strong><br>Participantes inscritos</div>
-                    <div class="evento-info-item"><i class="fas fa-circle-info"></i><strong>Informações</strong><br>Entre em contato com a ASSGA</div>
-                </div>
-
-                <div class="preco-evento"><i class="fas fa-money-bill-wave"></i> Inscrição: R$ 100,00</div>
-                <div class="aviso-vagas"><i class="fas fa-triangle-exclamation"></i> Atenção: inscrições limitadas às primeiras 100 pessoas.</div>
-                <div style="margin-top:20px;">
-                    <a href="pagamento.html" class="botao-inscricao" aria-label="Fazer inscrição no Halloween ASSGA">
-                        <i class="fas fa-ticket"></i> Fazer inscrição <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </article>
+        <div id="containerNoticias"></div>
     </main>
 
     <!-- ===== FALE CONOSCO ===== -->
@@ -604,7 +497,7 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // SLIDER
+        // SLIDER (mesmo do seu original)
         const imagens = [
             "src/imagens/foto1.jpg",
             "src/imagens/foto2.jpg",
@@ -650,21 +543,62 @@
             this.alt = "Logo da ASSGA";
         });
 
-        // Animação da notícia
-        document.addEventListener("DOMContentLoaded", function() {
-            const noticia = document.querySelector(".noticia-item");
-            if (noticia) {
-                noticia.style.opacity = "0";
-                noticia.style.transform = "translateY(30px)";
-                setTimeout(function() {
-                    noticia.style.transition = "all .7s ease";
-                    noticia.style.opacity = "1";
-                    noticia.style.transform = "translateY(0)";
-                }, 150);
-            }
-        });
+        // ===== ESCAPE HTML (segurança) =====
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>"']/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                if (m === "'") return '&#039;';
+                return m;
+            });
+        }
 
-        // Carregar dados do admin (título do slider e texto extra)
+        // ===== CARREGAR NOTÍCIAS DO localStorage =====
+        function carregarNoticias() {
+            const container = document.getElementById('containerNoticias');
+            const noticias = JSON.parse(localStorage.getItem('assga_noticias') || '[]');
+
+            // Se não houver notícias, usa a notícia padrão (Halloween) como fallback
+            if (noticias.length === 0) {
+                container.innerHTML = `
+                    <article class="noticia-item">
+                        <a class="noticia-imagem" href="src/imagens/halloween-assga.jpeg" target="_blank" rel="noopener noreferrer">
+                            <img src="src/imagens/halloween-assga.jpeg" alt="2º Halloween ASSGA" onerror="this.src='src/imagens/Assga_foto.jpg'">
+                        </a>
+                        <div class="texto">
+                            <h3><i class="fas fa-ghost"></i> 2º HALLOWEEN ASSGA</h3>
+                            <data datetime="2026-08-15T17:00"><i class="fas fa-calendar-check"></i> Publicado em 15 de agosto de 2026</data>
+                            <p><strong><i class="fas fa-bullhorn"></i> Estão abertas as inscrições para o 2º HALLOWEEN ASSGA!</strong></p>
+                            <p><i class="fas fa-star"></i> Prepare-se para um evento especial com muita diversão, esporte, integração e confraternização.</p>
+                            <div style="margin-top:15px;"><a href="pagamento.html" class="botao-inscricao" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#003366 0%,#004aad 55%,#0066cc 100%);color:#fff;padding:15px 30px;border-radius:30px;text-decoration:none;font-size:16px;font-weight:800;border:2px solid #ffd700;box-shadow:0 8px 20px rgba(0,51,102,.30);transition:all .3s ease;"><i class="fas fa-ticket"></i> Fazer inscrição <i class="fas fa-arrow-right"></i></a></div>
+                        </div>
+                    </article>
+                `;
+                return;
+            }
+
+            // Renderiza as notícias cadastradas
+            container.innerHTML = noticias.map(n => `
+                <article class="noticia-item">
+                    ${n.imagem ? `
+                        <a class="noticia-imagem" href="${escapeHtml(n.imagem)}" target="_blank" rel="noopener noreferrer">
+                            <img src="${escapeHtml(n.imagem)}" alt="${escapeHtml(n.titulo)}" onerror="this.src='src/imagens/Assga_foto.jpg'">
+                        </a>
+                    ` : ''}
+                    <div class="texto">
+                        <h3><i class="fas fa-newspaper"></i> ${escapeHtml(n.titulo)}</h3>
+                        ${n.data ? `<data datetime="${escapeHtml(n.data)}"><i class="fas fa-calendar-check"></i> ${escapeHtml(n.data)}</data>` : ''}
+                        ${n.resumo ? `<p>${escapeHtml(n.resumo)}</p>` : ''}
+                        ${n.texto ? `<p>${escapeHtml(n.texto)}</p>` : ''}
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // ===== CARREGAR DADOS DO ADMIN (título do slider e texto extra) =====
         const homeContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").index;
         if (homeContent) {
             const sliderInfo = document.getElementById("sliderInfo");
@@ -676,6 +610,9 @@
                 document.querySelector("main.noticias")?.prepend(contentNote);
             }
         }
+
+        // Inicializa ao carregar a página
+        document.addEventListener('DOMContentLoaded', carregarNoticias);
     </script>
 </body>
 </html>
