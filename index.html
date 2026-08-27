@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== MESMO ESTILO DO ORIGINAL (mantido) ===== */
+        /* ===== ESTILOS COMPLETOS (mesmo do original) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -486,7 +486,6 @@
 
         // =============================================================
         // SLIDER DINÂMICO – busca slides do localStorage (chave: assga_slider)
-        // Se não houver slides salvos, usa os padrões (foto1, foto2, foto3)
         // =============================================================
         function obterSlides() {
             const stored = localStorage.getItem('assga_slider');
@@ -494,12 +493,10 @@
                 try {
                     const slides = JSON.parse(stored);
                     if (Array.isArray(slides) && slides.length > 0) {
-                        // Cada slide deve ter { imagem, texto }
                         return slides;
                     }
                 } catch (e) { /* ignora */ }
             }
-            // fallback: slides padrão
             return [
                 { imagem: "src/imagens/foto1.jpg", texto: "ASSGA - Associação Desportiva" },
                 { imagem: "src/imagens/foto2.jpg", texto: "Esporte e integração da ASSGA" },
@@ -531,7 +528,6 @@
             }
         }
 
-        // Inicializar com o primeiro slide
         if (slides.length > 0) {
             const slide = document.getElementById("slide");
             const sliderInfo = document.getElementById("sliderInfo");
@@ -549,7 +545,6 @@
         });
         iniciarSlider();
 
-        // Fallback de erro de carregamento da imagem
         document.getElementById("slide").addEventListener("error", function() {
             this.onerror = null;
             this.src = "src/imagens/Assga_foto.jpg";
@@ -614,23 +609,35 @@
         // CONTEÚDO DA HOME (título do slider e texto extra)
         // =============================================================
         const homeContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").index;
-        if (homeContent) {
-            const sliderInfo = document.getElementById("sliderInfo");
-            if (sliderInfo && homeContent.titulo) {
-                // Atualiza o texto do slider (já que o sliderInfo contém o primeiro slide)
-                // Mas o slider já foi definido acima, então não sobrescrevemos.
-                // Deixamos o sliderInfo ser atualizado pelo script do slider.
-                // Se quiser usar o título da home, você pode ajustar.
+        if (homeContent && homeContent.texto) {
+            const contentNote = document.createElement("p");
+            contentNote.textContent = homeContent.texto;
+            contentNote.style.cssText = "max-width:900px;margin:24px auto;text-align:center;font-size:1.1rem;line-height:1.7";
+            document.querySelector("main.noticias")?.prepend(contentNote);
+        }
+
+        // =============================================================
+        // CARREGAR LOGO DO localStorage
+        // =============================================================
+        function carregarLogo() {
+            const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
+            const logoImg = document.querySelector('.logo-area img');
+            const logoTxt = document.querySelector('.logo');
+            if (logoImg && config.logoImg && config.logoImg.startsWith('data:image')) {
+                logoImg.src = config.logoImg;
             }
-            if (homeContent.texto) {
-                const contentNote = document.createElement("p");
-                contentNote.textContent = homeContent.texto;
-                contentNote.style.cssText = "max-width:900px;margin:24px auto;text-align:center;font-size:1.1rem;line-height:1.7";
-                document.querySelector("main.noticias")?.prepend(contentNote);
+            if (logoTxt && config.logoTxt) {
+                logoTxt.textContent = config.logoTxt;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', carregarNoticias);
+        // =============================================================
+        // INICIALIZAÇÃO
+        // =============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarLogo();
+            carregarNoticias();
+        });
     </script>
 </body>
 </html>

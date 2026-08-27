@@ -248,7 +248,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA HISTÓRIA (COM IMAGEM E TEXTO EXTRA) ========== -->
+            <!-- ========== ABA HISTÓRIA ========== -->
             <div id="tab-historia" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
@@ -295,7 +295,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA EVENTOS (COM IMAGEM) ========== -->
+            <!-- ========== ABA EVENTOS ========== -->
             <div id="tab-eventos" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-calendar-days"></i> Gerenciar Eventos</h2>
@@ -454,12 +454,6 @@
         }
         function setObject(key, obj) {
             localStorage.setItem(key, JSON.stringify(obj));
-        }
-        function getConfig() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.config) || '{}'); } catch { return {}; }
-        }
-        function setConfig(config) {
-            localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(config));
         }
 
         function escapeHtml(text) {
@@ -1163,8 +1157,17 @@
         }
 
         // ==========================================================
-        // LOGO (CONFIGURAÇÕES GERAIS)
+        // LOGO (CONFIGURAÇÃO GERAL)
         // ==========================================================
+        const CONFIG_KEY = 'assga_config';
+
+        function getConfig() {
+            try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}'); } catch { return {}; }
+        }
+        function setConfig(config) {
+            localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+        }
+
         function carregarLogo() {
             const config = getConfig();
             const img = document.getElementById('logoPreview');
