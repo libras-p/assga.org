@@ -23,7 +23,7 @@
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
 
-        /* HEADER e MENU = mesmo do index (omitido) */
+        /* HEADER e MENU */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -97,79 +97,70 @@
         .page-banner p { font-size: 1.2em; opacity: .9; max-width: 700px; margin: 0 auto; }
 
         .eventos-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; }
+
+        /* CARD COM IMAGEM */
         .evento-card {
+            display: flex;
+            gap: 30px;
             background: #fff;
             border-radius: 20px;
-            padding: 35px;
+            padding: 25px;
             margin-bottom: 30px;
             box-shadow: 0 10px 35px rgba(0,0,0,.1);
             border-left: 6px solid #004aad;
             transition: all .4s ease;
+            flex-wrap: wrap;
         }
         .evento-card:hover {
-            transform: translateY(-5px) scale(1.01);
+            transform: translateY(-5px);
             box-shadow: 0 18px 50px rgba(0,74,173,.2);
-            border-left-color: #ffd700;
         }
-        .evento-card .status {
-            display: inline-block;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .status-aberto { background: #d4edda; color: #155724; }
-        .status-fechado { background: #f8d7da; color: #721c24; }
-        .status-andamento { background: #fff3cd; color: #856404; }
-        .evento-card h3 { color: #003366; font-size: 1.8em; margin-bottom: 10px; }
-        .evento-card h3 i { color: #004aad; margin-right: 10px; }
-        .evento-grid-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 15px 0;
-        }
-        .evento-grid-info .info-item {
-            background: #f0f4fa;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 0.95em;
-            color: #444;
-        }
-        .evento-grid-info .info-item i { color: #004aad; margin-right: 6px; width: 20px; }
-        .evento-card .descricao { color: #555; line-height: 1.7; margin: 10px 0; }
-        .evento-card .preco {
-            display: inline-block;
-            background: linear-gradient(135deg, #fff8d6, #fff1a8);
-            border: 2px solid #ffd700;
+        .evento-imagem {
+            flex: 0 0 280px;
             border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            font-weight: 900;
-            color: #6b5200;
-            margin-top: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,.15);
         }
-        .evento-card .preco i { margin-right: 6px; }
-        .btn-inscricao {
+        .evento-imagem img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .evento-info { flex: 1; }
+        .evento-info h3 { color: #003366; font-size: 1.6rem; margin-bottom: 10px; }
+        .evento-info h3 i { color: #ffd700; margin-right: 10px; }
+        .evento-desc { color: #555; line-height: 1.7; margin-bottom: 12px; }
+        .evento-detalhes { display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0; font-size: 0.95rem; }
+        .evento-detalhes span { background: #f0f4fa; padding: 5px 15px; border-radius: 20px; color: #003366; }
+        .evento-detalhes span i { margin-right: 5px; color: #004aad; }
+        .status-badge { font-weight: 700; padding: 5px 15px; border-radius: 20px; }
+        .status-aberto { background: #d4edda; color: #155724; }
+        .status-andamento { background: #fff3cd; color: #856404; }
+        .status-fechado { background: #f8d7da; color: #721c24; }
+        .btn-inscrever {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #003366 0%, #004aad 55%, #0066cc 100%);
+            background: linear-gradient(135deg, #003366, #004aad);
             color: #fff;
-            padding: 14px 28px;
+            padding: 12px 28px;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: 800;
+            font-weight: 700;
             border: 2px solid #ffd700;
-            box-shadow: 0 8px 20px rgba(0,51,102,.30);
-            transition: all .3s ease;
-            margin-top: 15px;
+            transition: .3s;
         }
-        .btn-inscricao:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 30px rgba(0,74,173,.4); }
-        .btn-inscricao i { color: #ffd700; }
+        .btn-inscrever:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,51,102,.3);
+        }
+        @media (max-width: 767px) {
+            .evento-imagem { flex: 0 0 100%; }
+            .evento-imagem img { height: 200px; }
+        }
 
-        /* FALE CONOSCO e FOOTER = mesmo do index (omitido) */
+        /* FALE CONOSCO e FOOTER */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -298,14 +289,14 @@
             .page-banner h1 { font-size: 2em; }
             .page-banner p { font-size: 1em; }
             .evento-card { padding: 20px; }
-            .evento-card h3 { font-size: 1.4em; }
-            .evento-grid-info { grid-template-columns: 1fr 1fr; }
-            .evento-grid-info .info-item { font-size: 0.85em; padding: 8px 12px; }
+            .evento-info h3 { font-size: 1.4em; }
+            .evento-detalhes { gap: 10px; }
+            .evento-detalhes span { font-size: 0.85em; }
             h2 { font-size: 1.8em; margin: 30px 0; }
             .info-card { width: 100%; }
             .footer-container { flex-direction: column; text-align: center; }
             .footer-redes { margin-top: 15px; }
-            .btn-inscricao { width: 100%; justify-content: center; }
+            .btn-inscrever { width: 100%; justify-content: center; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
             header { padding: 15px; }
@@ -353,7 +344,7 @@
         <p>Confira a programação de eventos e faça sua inscrição.</p>
     </section>
 
-    <!-- ===== LISTA DE EVENTOS (dinâmica) ===== -->
+    <!-- ===== LISTA DE EVENTOS (dinâmica com imagem) ===== -->
     <main class="eventos-container">
         <h2><i class="fas fa-calendar-check"></i> Eventos Disponíveis</h2>
         <div id="listaEventosPagina"></div>
@@ -483,29 +474,52 @@
             });
         }
 
-        // CARREGAR EVENTOS
+        // CARREGAR EVENTOS COM IMAGEM
         function carregarEventos() {
             const container = document.getElementById('listaEventosPagina');
             const eventos = JSON.parse(localStorage.getItem('assga_eventos') || '[]');
+
             if (eventos.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#888;">Nenhum evento cadastrado no momento.</p>';
+                container.innerHTML = `
+                    <div style="text-align:center; padding:60px 20px; background:#fff; border-radius:20px; box-shadow:0 10px 35px rgba(0,0,0,.1);">
+                        <i class="fas fa-calendar-day" style="font-size:4rem; color:#003366; margin-bottom:20px;"></i>
+                        <p style="font-size:1.2rem; color:#555;">Nenhum evento cadastrado no momento.</p>
+                        <p style="color:#888;">Volte em breve para conferir nossas novidades!</p>
+                    </div>
+                `;
                 return;
             }
-            const statusMap = { aberto: 'Inscrições Abertas', andamento: 'Em andamento', fechado: 'Inscrições Encerradas' };
-            const statusClass = { aberto: 'status-aberto', andamento: 'status-andamento', fechado: 'status-fechado' };
+
+            const statusMap = {
+                aberto: { label: 'Inscrições Abertas', class: 'status-aberto' },
+                andamento: { label: 'Em andamento', class: 'status-andamento' },
+                fechado: { label: 'Encerrado', class: 'status-fechado' }
+            };
+
             container.innerHTML = eventos.map(e => `
                 <div class="evento-card">
-                    <span class="status ${statusClass[e.status] || 'status-aberto'}"><i class="fas fa-circle-check"></i> ${statusMap[e.status] || 'Aberto'}</span>
-                    <h3><i class="fas fa-calendar-days"></i> ${escapeHtml(e.titulo)}</h3>
-                    <div class="evento-grid-info">
-                        <div class="info-item"><i class="fas fa-calendar-days"></i> ${escapeHtml(e.data || 'Data a definir')}</div>
-                        <div class="info-item"><i class="fas fa-location-dot"></i> ${escapeHtml(e.local || 'Local a definir')}</div>
-                        <div class="info-item"><i class="fas fa-ticket"></i> Vagas: limitadas</div>
-                        <div class="info-item"><i class="fas fa-users"></i> Público: Todos</div>
+                    ${e.imagem ? `
+                        <div class="evento-imagem">
+                            <img src="${e.imagem}" alt="${escapeHtml(e.titulo)}" />
+                        </div>
+                    ` : ''}
+                    <div class="evento-info">
+                        <h3><i class="fas fa-calendar-alt"></i> ${escapeHtml(e.titulo)}</h3>
+                        <p class="evento-desc">${escapeHtml(e.descricao || '')}</p>
+                        <div class="evento-detalhes">
+                            ${e.data ? `<span><i class="fas fa-calendar-check"></i> ${escapeHtml(e.data)}</span>` : ''}
+                            ${e.local ? `<span><i class="fas fa-map-pin"></i> ${escapeHtml(e.local)}</span>` : ''}
+                            ${e.preco ? `<span><i class="fas fa-tag"></i> R$ ${escapeHtml(e.preco)}</span>` : ''}
+                            <span class="status-badge ${statusMap[e.status]?.class || 'status-aberto'}">
+                                ${statusMap[e.status]?.label || 'Inscrições Abertas'}
+                            </span>
+                        </div>
+                        ${e.status === 'aberto' ? `
+                            <a href="pagamento.html" class="btn-inscrever">
+                                <i class="fas fa-ticket"></i> Inscreva-se
+                            </a>
+                        ` : ''}
                     </div>
-                    <p class="descricao">${escapeHtml(e.descricao || '')}</p>
-                    ${e.preco ? `<div class="preco"><i class="fas fa-money-bill-wave"></i> R$ ${escapeHtml(e.preco)}</div>` : ''}
-                    ${e.status !== 'fechado' ? `<div style="margin-top:15px;"><a href="pagamento.html" class="btn-inscricao"><i class="fas fa-ticket"></i> Fazer inscrição <i class="fas fa-arrow-right"></i></a></div>` : ''}
                 </div>
             `).join('');
         }

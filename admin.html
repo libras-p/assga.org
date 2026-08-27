@@ -7,6 +7,7 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        /* ===== ESTILOS COMPLETOS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%); min-height: 100vh; display: flex; justify-content: center; padding: 30px 20px; }
         .container { max-width: 1200px; width: 100%; background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 20px 60px rgba(0,51,102,.25); }
@@ -84,11 +85,11 @@
         .foto-upload .label { font-weight: 600; color: #003366; }
         .foto-upload input[type="file"] { display: none; }
 
-        /* Lista de itens (diretoria, eventos, slider, etc) */
+        /* Lista de itens */
         .item-list { display: grid; gap: 10px; margin-top: 16px; }
         .item-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid #003366; background: #f7f9fc; border-radius: 8px; flex-wrap: wrap; }
         .item-row .info { display: flex; align-items: center; gap: 12px; flex: 1; }
-        .item-row .info img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid #003366; background: #e6f0fa; }
+        .item-row .info img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 2px solid #003366; background: #e6f0fa; }
         .item-row strong { color: #003366; }
         .item-actions { display: flex; gap: 7px; flex-wrap: wrap; }
 
@@ -246,7 +247,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA HISTÓRIA ========== -->
+            <!-- ========== ABA HISTÓRIA (COM IMAGEM E TEXTO EXTRA) ========== -->
             <div id="tab-historia" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
@@ -254,6 +255,12 @@
                         <div class="form-grid">
                             <input class="field" id="histTitulo" placeholder="Título da página" />
                             <input class="field" id="histSubtitulo" placeholder="Subtítulo" />
+                            <div class="foto-upload" onclick="document.getElementById('histFotoInput').click()" style="grid-column:1/-1;">
+                                <img id="histFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem de capa da História" />
+                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem de capa</span>
+                                <input type="file" id="histFotoInput" accept="image/*" />
+                            </div>
+                            <textarea class="field full" id="histTextoExtra" placeholder="Texto adicional (pode conter HTML, imagens, etc.)" rows="6"></textarea>
                             <textarea class="field full" id="histFundacao" placeholder="Fundação" rows="3"></textarea>
                             <textarea class="field full" id="histMissao" placeholder="Missão" rows="3"></textarea>
                             <input class="field full" id="histValores" placeholder="Valores (separados por vírgula)" />
@@ -287,7 +294,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA EVENTOS ========== -->
+            <!-- ========== ABA EVENTOS (COM IMAGEM) ========== -->
             <div id="tab-eventos" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-calendar-days"></i> Gerenciar Eventos</h2>
@@ -308,6 +315,11 @@
                                     <option value="fechado">Encerrado</option>
                                 </select>
                                 <textarea class="field full" id="evDescricao" placeholder="Descrição" rows="3"></textarea>
+                                <div class="foto-upload" onclick="document.getElementById('evFotoInput').click()" style="grid-column:1/-1;">
+                                    <img id="evFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem do evento" />
+                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem do evento</span>
+                                    <input type="file" id="evFotoInput" accept="image/*" />
+                                </div>
                                 <div class="form-actions">
                                     <button type="button" class="btn btn-outline" onclick="fecharFormularioEvento()"><i class="fas fa-times"></i> Cancelar</button>
                                     <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
@@ -397,12 +409,12 @@
             socios: 'assga_socios',
             diretoria: 'assga_diretoria',
             noticias: 'assga_noticias',
-            historia: 'assga_historia',
-            esportiva: 'assga_esportiva',
+            historia: 'assga_conteudos',
+            esportiva: 'assga_conteudos',
             eventos: 'assga_eventos',
-            estatuto: 'assga_estatuto',
+            estatuto: 'assga_conteudos',
             slider: 'assga_slider',
-            index: 'assga_index'
+            index: 'assga_conteudos'
         };
 
         // ==========================================================
@@ -423,11 +435,12 @@
 
         function escapeHtml(text) {
             if (!text) return '';
-            return String(text).replace(/[&<>"]/g, function(m) {
+            return String(text).replace(/[&<>"']/g, function(m) {
                 if (m === '&') return '&amp;';
                 if (m === '<') return '&lt;';
                 if (m === '>') return '&gt;';
                 if (m === '"') return '&quot;';
+                if (m === "'") return '&#039;';
                 return m;
             });
         }
@@ -525,7 +538,6 @@
             container.innerHTML = html;
         }
 
-        // Upload foto sócio
         document.getElementById('fotoInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -813,17 +825,39 @@
         }
 
         // ==========================================================
-        // HISTÓRIA
+        // HISTÓRIA (COM IMAGEM E TEXTO EXTRA)
         // ==========================================================
+        document.getElementById('histFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('histFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getHistFotoBase64() {
+            const img = document.getElementById('histFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setHistFotoPreview(url) {
+            const img = document.getElementById('histFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
         function carregarHistoria() {
-            const data = getObject(STORAGE_KEYS.historia);
+            const data = getObject(STORAGE_KEYS.historia).historia || {};
             document.getElementById('histTitulo').value = data.titulo || '';
             document.getElementById('histSubtitulo').value = data.subtitulo || '';
+            document.getElementById('histTextoExtra').value = data.textoExtra || '';
             document.getElementById('histFundacao').value = data.fundacao || '';
             document.getElementById('histMissao').value = data.missao || '';
             document.getElementById('histValores').value = (data.valores || []).join(', ');
             document.getElementById('histTimeline').value = (data.timeline || []).map(item => `${item.ano}|${item.descricao}`).join('\n');
             document.getElementById('histNumeros').value = (data.numeros || []).map(item => `${item.numero}|${item.label}`).join('\n');
+            setHistFotoPreview(data.imagem || '');
         }
 
         document.getElementById('historiaForm').addEventListener('submit', function(e) {
@@ -841,16 +875,19 @@
                     return { numero: parts[0] || '', label: parts[1] || '' };
                 });
             const valores = document.getElementById('histValores').value.split(',').map(s => s.trim()).filter(s => s);
-            const obj = {
+            const conteudos = getObject(STORAGE_KEYS.historia);
+            conteudos.historia = {
                 titulo: document.getElementById('histTitulo').value.trim(),
                 subtitulo: document.getElementById('histSubtitulo').value.trim(),
+                textoExtra: document.getElementById('histTextoExtra').value.trim(),
                 fundacao: document.getElementById('histFundacao').value.trim(),
                 missao: document.getElementById('histMissao').value.trim(),
                 valores,
                 timeline,
-                numeros
+                numeros,
+                imagem: getHistFotoBase64()
             };
-            setObject(STORAGE_KEYS.historia, obj);
+            setObject(STORAGE_KEYS.historia, conteudos);
             showMessage('msgHist', '✅ História salva com sucesso!');
         });
 
@@ -858,7 +895,7 @@
         // ESPORTIVA
         // ==========================================================
         function carregarEsportiva() {
-            const data = getObject(STORAGE_KEYS.esportiva);
+            const data = getObject(STORAGE_KEYS.esportiva).esportiva || {};
             document.getElementById('espTitulo').value = data.titulo || '';
             document.getElementById('espSubtitulo').value = data.subtitulo || '';
             document.getElementById('espModalidades').value = (data.modalidades || []).map(m => `${m.icone}|${m.nome}|${m.descricao}|${m.tag}`).join('\n');
@@ -879,19 +916,40 @@
                     const parts = line.split('|').map(s => s.trim());
                     return { titulo: parts[0] || '', data: parts[1] || '', participantes: parts[2] || '', local: parts[3] || '', status: parts[4] || '' };
                 });
-            const obj = {
+            const conteudos = getObject(STORAGE_KEYS.esportiva);
+            conteudos.esportiva = {
                 titulo: document.getElementById('espTitulo').value.trim(),
                 subtitulo: document.getElementById('espSubtitulo').value.trim(),
                 modalidades,
                 campeonatos
             };
-            setObject(STORAGE_KEYS.esportiva, obj);
+            setObject(STORAGE_KEYS.esportiva, conteudos);
             showMessage('msgEsp', '✅ Esportiva salva com sucesso!');
         });
 
         // ==========================================================
-        // EVENTOS (CRUD)
+        // EVENTOS (CRUD com upload de imagem)
         // ==========================================================
+        document.getElementById('evFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('evFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getEvFotoBase64() {
+            const img = document.getElementById('evFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setEvFotoPreview(url) {
+            const img = document.getElementById('evFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
         function renderEventos() {
             const container = document.getElementById('listaEventos');
             const lista = getData(STORAGE_KEYS.eventos);
@@ -902,7 +960,19 @@
             const statusMap = { aberto: '🟢 Inscrições Abertas', andamento: '🟡 Em andamento', fechado: '🔴 Encerrado' };
             container.innerHTML = lista.map((e, i) => `
                 <div class="item-row">
-                    <div><strong>${escapeHtml(e.titulo)}</strong><br><span style="font-size:0.9em;color:#555;">${escapeHtml(e.descricao || '')}</span></div>
+                    <div class="info">
+                        <img src="${e.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem do evento" />
+                        <div>
+                            <strong>${escapeHtml(e.titulo)}</strong>
+                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(e.descricao || '')}</span>
+                            <br><span style="font-size:0.8em;color:#667085;">
+                                <i class="fas fa-calendar"></i> ${escapeHtml(e.data || '')} &nbsp;|&nbsp;
+                                <i class="fas fa-map-pin"></i> ${escapeHtml(e.local || '')} &nbsp;|&nbsp;
+                                R$ ${escapeHtml(e.preco || '0,00')}
+                                &nbsp; <span style="font-weight:600;">${statusMap[e.status] || 'Aberto'}</span>
+                            </span>
+                        </div>
+                    </div>
                     <div class="item-actions">
                         <button class="btn btn-warning btn-sm" onclick="editarEvento(${i})"><i class="fas fa-edit"></i> Editar</button>
                         <button class="btn btn-danger btn-sm" onclick="excluirEvento(${i})"><i class="fas fa-trash"></i> Excluir</button>
@@ -918,6 +988,7 @@
             document.getElementById('eventoFormTitle').textContent = editIndex === -1 ? 'Novo Evento' : 'Editar Evento';
             if (editIndex === -1) {
                 document.getElementById('eventoForm').reset();
+                setEvFotoPreview('');
             } else {
                 const e = getData(STORAGE_KEYS.eventos)[editIndex];
                 if (e) {
@@ -927,6 +998,7 @@
                     document.getElementById('evPreco').value = e.preco || '';
                     document.getElementById('evStatus').value = e.status || 'aberto';
                     document.getElementById('evDescricao').value = e.descricao || '';
+                    setEvFotoPreview(e.imagem || '');
                 }
             }
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -946,7 +1018,8 @@
                 data: document.getElementById('evData').value.trim(),
                 local: document.getElementById('evLocal').value.trim(),
                 preco: document.getElementById('evPreco').value.trim() || '0,00',
-                status: document.getElementById('evStatus').value
+                status: document.getElementById('evStatus').value,
+                imagem: getEvFotoBase64()
             };
             let lista = getData(STORAGE_KEYS.eventos);
             if (index === -1) lista.push(obj);
@@ -992,7 +1065,7 @@
             const container = document.getElementById('listaSlider');
             const slides = getData(STORAGE_KEYS.slider);
             if (slides.length === 0) {
-                container.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>Nenhum slide cadastrado. Adicione imagens para o carrossel.</p></div>';
+                container.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>Nenhum slide cadastrado.</p></div>';
                 return;
             }
             container.innerHTML = slides.map((slide, i) => `
@@ -1062,7 +1135,7 @@
         // ESTATUTO
         // ==========================================================
         function carregarEstatuto() {
-            const data = getObject(STORAGE_KEYS.estatuto);
+            const data = getObject(STORAGE_KEYS.estatuto).estatuto || {};
             document.getElementById('estTitulo').value = data.titulo || '';
             document.getElementById('estSubtitulo').value = data.subtitulo || '';
             const dados = data.dados || {};
@@ -1086,7 +1159,8 @@
             dadosLinhas.forEach(item => { if (item.chave) dados[item.chave] = item.valor; });
             const objetivos = document.getElementById('estObjetivos').value.split('\n').filter(line => line.trim() !== '');
             const diretoria = document.getElementById('estDiretoria').value.split('\n').filter(line => line.trim() !== '');
-            const obj = {
+            const conteudos = getObject(STORAGE_KEYS.estatuto);
+            conteudos.estatuto = {
                 titulo: document.getElementById('estTitulo').value.trim(),
                 subtitulo: document.getElementById('estSubtitulo').value.trim(),
                 dados,
@@ -1095,7 +1169,7 @@
                 disposicoes: document.getElementById('estDisposicoes').value.trim(),
                 pdf: document.getElementById('estPdf').value.trim()
             };
-            setObject(STORAGE_KEYS.estatuto, obj);
+            setObject(STORAGE_KEYS.estatuto, conteudos);
             showMessage('msgEst', '✅ Estatuto salvo com sucesso!');
         });
 
@@ -1103,18 +1177,19 @@
         // PÁGINA INICIAL (INDEX)
         // ==========================================================
         function carregarIndex() {
-            const data = getObject(STORAGE_KEYS.index);
+            const data = getObject(STORAGE_KEYS.index).index || {};
             document.getElementById('idxTitulo').value = data.titulo || '';
             document.getElementById('idxTexto').value = data.texto || '';
         }
 
         document.getElementById('indexForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const obj = {
+            const conteudos = getObject(STORAGE_KEYS.index);
+            conteudos.index = {
                 titulo: document.getElementById('idxTitulo').value.trim(),
                 texto: document.getElementById('idxTexto').value.trim()
             };
-            setObject(STORAGE_KEYS.index, obj);
+            setObject(STORAGE_KEYS.index, conteudos);
             showMessage('msgIndex', '✅ Página inicial salva com sucesso!');
         });
 
@@ -1126,24 +1201,6 @@
             document.getElementById('panelView').style.display = 'block';
             carregarTodasAbas();
         }
-
-        // Caso já existam slides pré-definidos, podemos inicializar com os arrays fornecidos
-        // (opcional - se quiser que os slides padrão sejam carregados automaticamente)
-        // Descomente o bloco abaixo se quiser preencher com os dados de exemplo quando não houver nenhum slide.
-        /*
-        (function initSliderDefault() {
-            const slides = getData(STORAGE_KEYS.slider);
-            if (slides.length === 0) {
-                const defaultSlides = [
-                    { imagem: "src/imagens/foto1.jpg", texto: "ASSGA - Associação Desportiva" },
-                    { imagem: "src/imagens/foto2.jpg", texto: "Esporte e integração da ASSGA" },
-                    { imagem: "src/imagens/foto3.jpg", texto: "Futsal e atividades esportivas ASSGA" }
-                ];
-                setData(STORAGE_KEYS.slider, defaultSlides);
-                renderSlider();
-            }
-        })();
-        */
     </script>
 </body>
 </html>

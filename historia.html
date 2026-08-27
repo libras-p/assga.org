@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== MESMO ESTILO DO ORIGINAL ===== */
+        /* ===== ESTILOS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -90,7 +90,6 @@
         .menu-toggle:hover { background: rgba(255,255,255,.12); }
         .menu-toggle i { pointer-events: none; color: #fff; }
 
-        /* BANNER */
         .page-banner {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             padding: 60px 20px;
@@ -186,7 +185,7 @@
         .timeline-item .ano i { color: #ffd700; margin-right: 8px; }
         .timeline-item p { color: #555; line-height: 1.6; margin-top: 5px; }
 
-        /* FALE CONOSCO e FOOTER (mesmo do index) */
+        /* FALE CONOSCO e FOOTER */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -375,7 +374,7 @@
         <p id="histSubtituloBanner">Conheça a trajetória da ASSGA, desde sua fundação até os dias atuais.</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL (dinâmico) ===== -->
+    <!-- ===== CONTEÚDO PRINCIPAL (dinâmico com imagem e texto extra) ===== -->
     <main class="historia-container" id="historiaContainer">
         <!-- O conteúdo será renderizado via JavaScript -->
     </main>
@@ -508,6 +507,8 @@
         const defaultHistoria = {
             titulo: "Nossa História",
             subtitulo: "Conheça a trajetória da ASSGA, desde sua fundação até os dias atuais.",
+            imagem: "src/imagens/Assga_foto.jpg",
+            textoExtra: `<p><i class="fas fa-star" style="color:#ffd700;"></i> A ASSGA é feita de pessoas, histórias e conquistas. Cada passo é uma vitória!</p>`,
             fundacao: "A ASSGA - Associação Desportiva foi fundada em 2019 na cidade de São Gonçalo do Amarante - RN, com o objetivo de promover o esporte, a integração social e o bem-estar da comunidade. Um grupo de apaixonados por esportes se uniu para criar uma associação que pudesse oferecer atividades esportivas de qualidade para todas as idades.",
             missao: "Promover o esporte como ferramenta de inclusão social, saúde e desenvolvimento humano, oferecendo atividades que integrem a comunidade e estimulem a prática esportiva. Acreditamos que o esporte transforma vidas e constrói cidadãos mais conscientes e saudáveis.",
             valores: ["Respeito", "Inclusão", "Excelência", "Paixão"],
@@ -541,7 +542,33 @@
         const container = document.getElementById("historiaContainer");
         let html = '';
 
-        // Fundação
+        // ===== IMAGEM DE CAPA =====
+        if (data.imagem && data.imagem.startsWith('data:image')) {
+            html += `
+                <div class="historia-card" style="padding:10px; background:transparent; box-shadow:none; border-left:0;">
+                    <img src="${data.imagem}" alt="Imagem da História ASSGA" style="width:100%; max-height:500px; object-fit:cover; border-radius:16px; box-shadow:0 10px 35px rgba(0,0,0,.15);" />
+                </div>
+            `;
+        } else if (data.imagem && !data.imagem.startsWith('data:image')) {
+            html += `
+                <div class="historia-card" style="padding:10px; background:transparent; box-shadow:none; border-left:0;">
+                    <img src="${escapeHtml(data.imagem)}" alt="Imagem da História ASSGA" style="width:100%; max-height:500px; object-fit:cover; border-radius:16px; box-shadow:0 10px 35px rgba(0,0,0,.15);" />
+                </div>
+            `;
+        }
+
+        // ===== TEXTO EXTRA =====
+        if (data.textoExtra) {
+            html += `
+                <div class="historia-card" style="background: linear-gradient(135deg, #fff8e1, #fff3cd); border-left-color: #ffd700;">
+                    <div style="font-size:1.05em; line-height:1.8; color:#333;">
+                        ${data.textoExtra}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== FUNDAÇÃO =====
         if (data.fundacao) {
             html += `
                 <div class="historia-card">
@@ -552,7 +579,7 @@
             `;
         }
 
-        // Missão
+        // ===== MISSÃO =====
         if (data.missao) {
             html += `
                 <div class="historia-card">
@@ -562,7 +589,7 @@
             `;
         }
 
-        // Valores
+        // ===== VALORES =====
         if (data.valores && data.valores.length > 0) {
             html += `
                 <div class="historia-card">
@@ -579,7 +606,7 @@
             `;
         }
 
-        // Linha do Tempo
+        // ===== LINHA DO TEMPO =====
         if (data.timeline && data.timeline.length > 0) {
             html += `
                 <div class="historia-card">
@@ -596,7 +623,7 @@
             `;
         }
 
-        // Números
+        // ===== NÚMEROS =====
         if (data.numeros && data.numeros.length > 0) {
             html += `
                 <div class="historia-card">
