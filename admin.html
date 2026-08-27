@@ -276,7 +276,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA ESPORTIVA (COM IMAGEM, TEXTO EXTRA E DATA) ========== -->
+            <!-- ========== ABA ESPORTIVA (COM IMAGEM, TEXTO EXTRA, DATA E MEMBROS) ========== -->
             <div id="tab-esportiva" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-futbol"></i> Conteúdo da Esportiva</h2>
@@ -299,6 +299,32 @@
                         </div>
                     </form>
                     <p id="msgEsp" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+
+                    <!-- ===== GERENCIAR MEMBROS ===== -->
+                    <hr style="margin: 30px 0; border-color: #d9e1eb;">
+                    <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-users"></i> Gerenciar Membros</h3>
+                    <button class="btn btn-success" onclick="mostrarFormularioMembro()"><i class="fas fa-plus"></i> Adicionar Membro</button>
+                    <div id="listaMembros" class="item-list"></div>
+                    <div class="form-card" id="formMembro">
+                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-user-plus"></i> <span id="membroFormTitle">Novo Membro</span></h3>
+                        <form id="membroForm">
+                            <input type="hidden" id="editMembroIndex" value="-1" />
+                            <div class="form-grid">
+                                <input class="field" type="text" id="memNome" placeholder="Nome completo" required />
+                                <input class="field" type="text" id="memCargo" placeholder="Cargo/Função" required />
+                                <input class="field" type="text" id="memDescricao" placeholder="Descrição (opcional)" />
+                                <div class="foto-upload" onclick="document.getElementById('memFotoInput').click()">
+                                    <img id="memFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto do membro" />
+                                    <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
+                                    <input type="file" id="memFotoInput" accept="image/*" />
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioMembro()"><i class="fas fa-times"></i> Cancelar</button>
+                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -519,7 +545,7 @@
                 else if (tab === 'slider') renderSlider();
                 else if (tab === 'logo') carregarLogo();
                 else if (tab === 'historia') carregarHistoria();
-                else if (tab === 'esportiva') carregarEsportiva();
+                else if (tab === 'esportiva') { carregarEsportiva(); renderMembros(); }
                 else if (tab === 'estatuto') carregarEstatuto();
                 else if (tab === 'index') carregarIndex();
             });
@@ -534,6 +560,7 @@
             carregarLogo();
             carregarHistoria();
             carregarEsportiva();
+            renderMembros();
             carregarEstatuto();
             carregarIndex();
         }
@@ -924,7 +951,7 @@
         });
 
         // ==========================================================
-        // ESPORTIVA (COM IMAGEM, TEXTO EXTRA E DATA)
+        // ESPORTIVA (COM IMAGEM, TEXTO EXTRA, DATA E MEMBROS)
         // ==========================================================
         document.getElementById('espFotoInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -955,6 +982,7 @@
             document.getElementById('espModalidades').value = (data.modalidades || []).map(m => `${m.icone}|${m.nome}|${m.descricao}|${m.tag}`).join('\n');
             document.getElementById('espCampeonatos').value = (data.campeonatos || []).map(c => `${c.titulo}|${c.data}|${c.participantes}|${c.local}|${c.status}`).join('\n');
             setEspFotoPreview(data.imagem || '');
+            renderMembros();
         }
 
         document.getElementById('esportivaForm').addEventListener('submit', function(e) {
@@ -979,11 +1007,119 @@
                 textoExtra: document.getElementById('espTextoExtra').value.trim(),
                 modalidades,
                 campeonatos,
-                imagem: getEspFotoBase64()
+                imagem: getEspFotoBase64(),
+                membros: conteudos.esportiva?.membros || []
             };
             setObject(STORAGE_KEYS.esportiva, conteudos);
             showMessage('msgEsp', '✅ Esportiva salva com sucesso!');
         });
+
+        // ==========================================================
+        // MEMBROS DA ESPORTIVA (CRUD com foto)
+        // ==========================================================
+        document.getElementById('memFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('memFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getMemFotoBase64() {
+            const img = document.getElementById('memFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setMemFotoPreview(url) {
+            const img = document.getElementById('memFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
+        function renderMembros() {
+            const container = document.getElementById('listaMembros');
+            const data = getObject(STORAGE_KEYS.esportiva).esportiva || {};
+            const membros = data.membros || [];
+            if (membros.length === 0) {
+                container.innerHTML = '<div class="empty"><i class="fas fa-users"></i><p>Nenhum membro cadastrado.</p></div>';
+                return;
+            }
+            container.innerHTML = membros.map((m, i) => `
+                <div class="item-row">
+                    <div class="info">
+                        <img src="${m.foto || 'src/imagens/avatar-padrao.jpg'}" alt="Foto de ${escapeHtml(m.nome)}" />
+                        <div>
+                            <strong>${escapeHtml(m.nome)}</strong> - ${escapeHtml(m.cargo)}
+                            <br><span style="font-size:0.85em;color:#555;">${escapeHtml(m.descricao || '')}</span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning btn-sm" onclick="editarMembro(${i})"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirMembro(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function mostrarFormularioMembro(editIndex = -1) {
+            const card = document.getElementById('formMembro');
+            card.classList.add('visible');
+            document.getElementById('editMembroIndex').value = editIndex;
+            document.getElementById('membroFormTitle').textContent = editIndex === -1 ? 'Novo Membro' : 'Editar Membro';
+            if (editIndex === -1) {
+                document.getElementById('membroForm').reset();
+                setMemFotoPreview('');
+            } else {
+                const data = getObject(STORAGE_KEYS.esportiva).esportiva || {};
+                const membros = data.membros || [];
+                const m = membros[editIndex];
+                if (m) {
+                    document.getElementById('memNome').value = m.nome || '';
+                    document.getElementById('memCargo').value = m.cargo || '';
+                    document.getElementById('memDescricao').value = m.descricao || '';
+                    setMemFotoPreview(m.foto || '');
+                }
+            }
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        function fecharFormularioMembro() {
+            document.getElementById('formMembro').classList.remove('visible');
+        }
+
+        document.getElementById('membroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('editMembroIndex').value);
+            const nome = document.getElementById('memNome').value.trim();
+            const cargo = document.getElementById('memCargo').value.trim();
+            if (!nome || !cargo) { alert('Nome e Cargo são obrigatórios.'); return; }
+            const obj = {
+                nome,
+                cargo,
+                descricao: document.getElementById('memDescricao').value.trim(),
+                foto: getMemFotoBase64()
+            };
+            const conteudos = getObject(STORAGE_KEYS.esportiva);
+            if (!conteudos.esportiva) conteudos.esportiva = {};
+            if (!conteudos.esportiva.membros) conteudos.esportiva.membros = [];
+            const membros = conteudos.esportiva.membros;
+            if (index === -1) membros.push(obj);
+            else membros[index] = obj;
+            setObject(STORAGE_KEYS.esportiva, conteudos);
+            renderMembros();
+            fecharFormularioMembro();
+        });
+
+        function editarMembro(index) { mostrarFormularioMembro(index); }
+        function excluirMembro(index) {
+            if (!confirm('Excluir este membro?')) return;
+            const conteudos = getObject(STORAGE_KEYS.esportiva);
+            const membros = conteudos.esportiva.membros || [];
+            membros.splice(index, 1);
+            conteudos.esportiva.membros = membros;
+            setObject(STORAGE_KEYS.esportiva, conteudos);
+            renderMembros();
+        }
 
         // ==========================================================
         // EVENTOS (CRUD com upload de imagem)
