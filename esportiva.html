@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ASSGA - Associação Desportiva. Modalidades esportivas, campeonatos e atividades.">
+    <meta name="description" content="ASSGA - Esportiva. Modalidades, campeonatos e atividades esportivas.">
     <meta name="theme-color" content="#003366">
     <title>Esportiva - ASSGA</title>
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-    <link rel="shortcut icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== ESTILO IDÊNTICO AO HISTORIA, com adaptações ===== */
+        /* ===== ESTILOS (mesmo padrão das outras páginas) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -23,8 +22,10 @@
         }
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
+        h3 { color: #003366; font-size: 1.5em; margin: 25px 0 15px; }
+        h3 i { color: #004aad; margin-right: 8px; }
 
-        /* HEADER (mesmo do index) */
+        /* HEADER */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -40,7 +41,7 @@
         .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform .3s ease; }
         .logo-area:hover { transform: scale(1.05); }
         .logo-area a { display: flex; text-decoration: none; }
-        .logo-area img { width: 56px; object-fit: cover; }
+        .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
         .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         .menu {
@@ -88,6 +89,7 @@
         .menu-toggle:hover { background: rgba(255,255,255,.12); }
         .menu-toggle i { pointer-events: none; color: #fff; }
 
+        /* BANNER */
         .page-banner {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             padding: 60px 20px;
@@ -98,87 +100,98 @@
         .page-banner h1 i { color: #ffd700; margin-right: 15px; }
         .page-banner p { font-size: 1.2em; opacity: .9; max-width: 700px; margin: 0 auto; }
 
-        .modalidades-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; }
-        .modalidades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        .modalidade-card {
+        /* CONTEÚDO PRINCIPAL */
+        .esportiva-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; }
+        .esportiva-card {
             background: #fff;
             border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 35px rgba(0,0,0,.1);
-            transition: all .4s ease;
-            border-bottom: 5px solid #004aad;
-        }
-        .modalidade-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 18px 50px rgba(0,74,173,.2);
-            border-bottom-color: #ffd700;
-        }
-        .modalidade-card .icon-grande {
-            font-size: 4em;
-            color: #003366;
-            margin-bottom: 15px;
-            display: block;
-        }
-        .modalidade-card .icon-grande i {
-            background: linear-gradient(135deg, #003366, #004aad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .modalidade-card h3 { color: #003366; font-size: 1.6em; margin-bottom: 10px; }
-        .modalidade-card p { color: #666; line-height: 1.6; font-size: 1em; }
-        .modalidade-card .tag {
-            display: inline-block;
-            background: #003366;
-            color: #ffd700;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 700;
-            margin-top: 10px;
-        }
-
-        .campeonato-item {
-            background: #fff;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
             box-shadow: 0 10px 35px rgba(0,0,0,.1);
             border-left: 6px solid #004aad;
             transition: all .4s ease;
         }
-        .campeonato-item:hover {
-            transform: translateX(8px);
+        .esportiva-card:hover {
+            transform: translateY(-5px);
             box-shadow: 0 18px 50px rgba(0,74,173,.2);
             border-left-color: #ffd700;
         }
-        .campeonato-item h3 { color: #003366; font-size: 1.6em; }
-        .campeonato-item h3 i { color: #004aad; margin-right: 10px; }
-        .campeonato-item .info-camp {
+        .esportiva-card p { font-size: 1.05em; line-height: 1.8; color: #555; margin-bottom: 12px; }
+        .esportiva-card p i { color: #004aad; margin-right: 6px; }
+
+        /* Grade de modalidades */
+        .modalidades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .modalidade-item {
+            background: linear-gradient(135deg, #f8f9fa, #eef5ff);
+            padding: 25px 20px;
+            border-radius: 16px;
+            text-align: center;
+            border-top: 4px solid #004aad;
+            transition: all .3s ease;
+        }
+        .modalidade-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,74,173,.15);
+            border-top-color: #ffd700;
+        }
+        .modalidade-item .icone {
+            font-size: 3em;
+            color: #003366;
+            margin-bottom: 10px;
+        }
+        .modalidade-item h4 { color: #003366; font-size: 1.2em; margin-bottom: 5px; }
+        .modalidade-item p { color: #555; font-size: 0.95em; line-height: 1.5; }
+        .modalidade-item .tag {
+            display: inline-block;
+            background: #003366;
+            color: #ffd700;
+            font-size: 0.7em;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 8px;
+        }
+
+        /* Campeonatos */
+        .campeonato-item {
+            background: #f7f9fc;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #004aad;
+            transition: .3s;
+        }
+        .campeonato-item:hover {
+            border-left-color: #ffd700;
+            background: #f0f4fa;
+        }
+        .campeonato-item h4 { color: #003366; font-size: 1.2em; }
+        .campeonato-item .info {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 10px;
+            gap: 15px;
+            margin-top: 8px;
+            font-size: 0.9em;
             color: #555;
         }
-        .campeonato-item .info-camp span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #f0f4fa;
-            padding: 5px 15px;
+        .campeonato-item .info span i { color: #004aad; margin-right: 4px; }
+        .campeonato-item .status {
+            display: inline-block;
+            padding: 2px 14px;
             border-radius: 20px;
-            font-size: 0.9em;
+            font-weight: 700;
+            font-size: 0.8em;
         }
-        .campeonato-item .info-camp i { color: #004aad; }
+        .status-andamento { background: #fff3cd; color: #856404; }
+        .status-aberto { background: #d4edda; color: #155724; }
+        .status-realizado { background: #cce5ff; color: #004085; }
 
-        /* FALE CONOSCO e FOOTER = mesmo do index */
+        /* FALE CONOSCO e FOOTER (mesmo do index) */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -278,7 +291,6 @@
         }
         .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -307,13 +319,8 @@
             .page-banner { padding: 40px 15px; }
             .page-banner h1 { font-size: 2em; }
             .page-banner p { font-size: 1em; }
-            .modalidades-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
-            .modalidade-card { padding: 20px; }
-            .modalidade-card .icon-grande { font-size: 2.8em; }
-            .modalidade-card h3 { font-size: 1.2em; }
-            .campeonato-item { padding: 20px; }
-            .campeonato-item h3 { font-size: 1.3em; }
-            .campeonato-item .info-camp span { font-size: 0.8em; padding: 4px 10px; }
+            .esportiva-card { padding: 25px; }
+            .modalidades-grid { grid-template-columns: 1fr 1fr; }
             h2 { font-size: 1.8em; margin: 30px 0; }
             .info-card { width: 100%; }
             .footer-container { flex-direction: column; text-align: center; }
@@ -358,18 +365,19 @@
                 <li><a href="estatuto.html"><i class="fas fa-file-contract"></i> Estatuto</a></li>
                 <li><a href="diretoria.html"><i class="fas fa-users"></i> Diretoria</a></li>
                 <li><a href="login.html"><i class="fas fa-id-card"></i> Área do Sócio</a></li>
+                <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- ===== BANNER (dinâmico) ===== -->
     <section class="page-banner" id="bannerEsportiva">
-        <h1 id="espTituloBanner"><i class="fas fa-futbol"></i> Nossa Área Esportiva</h1>
+        <h1 id="espTituloBanner"><i class="fas fa-futbol"></i> Nossa Esportiva</h1>
         <p id="espSubtituloBanner">Conheça as modalidades e campeonatos da ASSGA.</p>
     </section>
 
     <!-- ===== CONTEÚDO PRINCIPAL (dinâmico) ===== -->
-    <main class="modalidades-container" id="esportivaContainer">
+    <main class="esportiva-container" id="esportivaContainer">
         <!-- O conteúdo será renderizado via JavaScript -->
     </main>
 
@@ -418,7 +426,7 @@
             <div class="footer-copy">
                 <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados<br>
                 <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60<br>
-                <i class="fas fa-futbol"></i> Associação dos surdos de são Gonçalo do amarante
+                <i class="fas fa-futbol"></i> Associação Desportiva
             </div>
             <div class="footer-redes" aria-label="Redes sociais da ASSGA">
                 <a href="https://www.instagram.com/assga_2019/" target="_blank" rel="noopener noreferrer" aria-label="Instagram ASSGA" title="Instagram">
@@ -485,7 +493,9 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // Função para escapar HTML
+        // =============================================================
+        // ESCAPE HTML
+        // =============================================================
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -498,78 +508,8 @@
             });
         }
 
-        // Dados padrão (fallback) – exatamente o conteúdo atual
-        const defaultEsportiva = {
-            titulo: "Nossa Área Esportiva",
-            subtitulo: "Conheça as modalidades e campeonatos da ASSGA.",
-            modalidades: [
-                { icone: "fa-futbol", nome: "Futsal", descricao: "Modalidade principal da ASSGA, com campeonatos e treinos para todas as idades.", tag: "Mais popular" },
-                { icone: "fa-volleyball", nome: "Vôlei", descricao: "Esporte de equipe que promove integração, agilidade e trabalho em grupo.", tag: "Em crescimento" },
-                { icone: "fa-basketball", nome: "Basquete", descricao: "Modalidade dinâmica que desenvolve coordenação e espírito esportivo.", tag: "Novidade" },
-                { icone: "fa-running", nome: "Atletismo", descricao: "Corrida e atividades de pista para quem busca condicionamento e superação.", tag: "Disponível" },
-                { icone: "fa-swimmer", nome: "Natação", descricao: "Atividades aquáticas para todas as idades, com foco em saúde e lazer.", tag: "Em breve" },
-                { icone: "fa-dumbbell", nome: "Fitness", descricao: "Treinos funcionais e condicionamento físico para manter a saúde em dia.", tag: "Disponível" }
-            ],
-            campeonatos: [
-                { titulo: "Campeonato de Futsal - 2026", data: "15/03 a 15/12/2026", participantes: "8 equipes", local: "Ginásio ASSGA", status: "Em andamento" },
-                { titulo: "2º Halloween ASSGA", data: "28 e 29/11/2026", participantes: "100 participantes", local: "A definir", status: "Inscrições abertas" },
-                { titulo: "Torneio de Vôlei de Praia", data: "02 a 04/10/2026", participantes: "16 duplas", local: "Praia de Pirangi", status: "Confirmado" },
-                { titulo: "Corrida Rústica ASSGA", data: "25/07/2026", participantes: "200 inscritos", local: "Centro de São Gonçalo", status: "Realizado" }
-            ]
-        };
-
-        // Carregar dados do admin ou usar padrão
-        const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
-        const data = stored.esportiva || defaultEsportiva;
-
-        // Preencher banner
-        document.getElementById("espTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(data.titulo)}`;
-        document.getElementById("espSubtituloBanner").textContent = data.subtitulo;
-
-        // Construir conteúdo principal
-        const container = document.getElementById("esportivaContainer");
-        let html = '';
-
-        // Modalidades
-        if (data.modalidades && data.modalidades.length > 0) {
-            html += `<h2><i class="fas fa-star"></i> Modalidades Oferecidas</h2><div class="modalidades-grid">`;
-            data.modalidades.forEach(m => {
-                html += `
-                    <div class="modalidade-card">
-                        <span class="icon-grande"><i class="fas ${escapeHtml(m.icone)}"></i></span>
-                        <h3>${escapeHtml(m.nome)}</h3>
-                        <p>${escapeHtml(m.descricao)}</p>
-                        ${m.tag ? `<span class="tag">${escapeHtml(m.tag)}</span>` : ''}
-                    </div>
-                `;
-            });
-            html += `</div>`;
-        }
-
-        // Campeonatos
-        if (data.campeonatos && data.campeonatos.length > 0) {
-            html += `<h2 style="margin-top:60px;"><i class="fas fa-trophy"></i> Campeonatos e Atividades</h2>`;
-            data.campeonatos.forEach(c => {
-                const statusColor = c.status === 'Realizado' ? '#28a745' : c.status === 'Em andamento' ? '#17a2b8' : '#ffc107';
-                html += `
-                    <div class="campeonato-item">
-                        <h3><i class="fas fa-trophy"></i> ${escapeHtml(c.titulo)}</h3>
-                        <div class="info-camp">
-                            ${c.data ? `<span><i class="fas fa-calendar-days"></i> ${escapeHtml(c.data)}</span>` : ''}
-                            ${c.participantes ? `<span><i class="fas fa-users"></i> ${escapeHtml(c.participantes)}</span>` : ''}
-                            ${c.local ? `<span><i class="fas fa-location-dot"></i> ${escapeHtml(c.local)}</span>` : ''}
-                            ${c.status ? `<span><i class="fas fa-circle-check" style="color:${statusColor};"></i> ${escapeHtml(c.status)}</span>` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        container.innerHTML = html;
-
-
         // =============================================================
-        // CARREGAR LOGO DO localStorage
+        // CARREGAR LOGO
         // =============================================================
         function carregarLogo() {
             const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
@@ -584,11 +524,119 @@
         }
 
         // =============================================================
+        // DADOS PADRÃO (fallback)
+        // =============================================================
+        const defaultEsportiva = {
+            titulo: "Nossa Esportiva",
+            subtitulo: "Conheça as modalidades e campeonatos da ASSGA.",
+            imagem: "src/imagens/foto1.jpg",
+            textoExtra: `<p><i class="fas fa-star" style="color:#ffd700;"></i> A ASSGA oferece diversas modalidades esportivas para todas as idades. Participe!</p>`,
+            modalidades: [
+                { icone: "fa-futbol", nome: "Futsal", descricao: "Modalidade principal, com campeonatos e treinos regulares.", tag: "Mais popular" },
+                { icone: "fa-volleyball", nome: "Vôlei", descricao: "Atividades de vôlei para todas as idades e níveis.", tag: "Em crescimento" },
+                { icone: "fa-basketball", nome: "Basquete", descricao: "Treinos e jogos de basquete para jovens e adultos.", tag: "Novidade" },
+                { icone: "fa-running", nome: "Atletismo", descricao: "Corridas, saltos e atividades de pista.", tag: "Aberto a todos" }
+            ],
+            campeonatos: [
+                { titulo: "Campeonato de Futsal - 2026", data: "15/03 a 15/12/2026", participantes: "8 equipes", local: "Ginásio ASSGA", status: "andamento" },
+                { titulo: "Copa ASSGA de Vôlei", data: "01/07 a 30/09/2026", participantes: "6 equipes", local: "Quadra ASSGA", status: "aberto" },
+                { titulo: "Torneio de Basquete 3x3", data: "10/10/2026", participantes: "12 times", local: "Praça Esportiva", status: "aberto" }
+            ]
+        };
+
+        // =============================================================
+        // CARREGAR CONTEÚDO DA ESPORTIVA
+        // =============================================================
+        function carregarEsportiva() {
+            const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
+            const data = stored.esportiva || defaultEsportiva;
+
+            // Banner
+            document.getElementById("espTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(data.titulo)}`;
+            document.getElementById("espSubtituloBanner").textContent = data.subtitulo;
+
+            const container = document.getElementById("esportivaContainer");
+            let html = '';
+
+            // ===== IMAGEM DE CAPA =====
+            if (data.imagem && data.imagem.startsWith('data:image')) {
+                html += `
+                    <div class="esportiva-card" style="padding:10px; background:transparent; box-shadow:none; border-left:0;">
+                        <img src="${data.imagem}" alt="Imagem da Esportiva ASSGA" style="width:100%; max-height:500px; object-fit:cover; border-radius:16px; box-shadow:0 10px 35px rgba(0,0,0,.15);" />
+                    </div>
+                `;
+            } else if (data.imagem && !data.imagem.startsWith('data:image')) {
+                html += `
+                    <div class="esportiva-card" style="padding:10px; background:transparent; box-shadow:none; border-left:0;">
+                        <img src="${escapeHtml(data.imagem)}" alt="Imagem da Esportiva ASSGA" style="width:100%; max-height:500px; object-fit:cover; border-radius:16px; box-shadow:0 10px 35px rgba(0,0,0,.15);" />
+                    </div>
+                `;
+            }
+
+            // ===== TEXTO EXTRA =====
+            if (data.textoExtra) {
+                html += `
+                    <div class="esportiva-card" style="background: linear-gradient(135deg, #fff8e1, #fff3cd); border-left-color: #ffd700;">
+                        <div style="font-size:1.05em; line-height:1.8; color:#333;">
+                            ${data.textoExtra}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ===== MODALIDADES =====
+            if (data.modalidades && data.modalidades.length > 0) {
+                html += `
+                    <div class="esportiva-card">
+                        <h3><i class="fas fa-list"></i> Modalidades</h3>
+                        <div class="modalidades-grid">
+                            ${data.modalidades.map(m => `
+                                <div class="modalidade-item">
+                                    <div class="icone"><i class="fas ${m.icone || 'fa-futbol'}"></i></div>
+                                    <h4>${escapeHtml(m.nome)}</h4>
+                                    <p>${escapeHtml(m.descricao)}</p>
+                                    ${m.tag ? `<span class="tag">${escapeHtml(m.tag)}</span>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ===== CAMPEONATOS =====
+            if (data.campeonatos && data.campeonatos.length > 0) {
+                const statusMap = {
+                    andamento: { label: 'Em andamento', class: 'status-andamento' },
+                    aberto: { label: 'Inscrições abertas', class: 'status-aberto' },
+                    realizado: { label: 'Realizado', class: 'status-realizado' }
+                };
+                html += `
+                    <div class="esportiva-card">
+                        <h3><i class="fas fa-trophy"></i> Campeonatos</h3>
+                        ${data.campeonatos.map(c => `
+                            <div class="campeonato-item">
+                                <h4>${escapeHtml(c.titulo)}</h4>
+                                <div class="info">
+                                    ${c.data ? `<span><i class="fas fa-calendar"></i> ${escapeHtml(c.data)}</span>` : ''}
+                                    ${c.participantes ? `<span><i class="fas fa-users"></i> ${escapeHtml(c.participantes)}</span>` : ''}
+                                    ${c.local ? `<span><i class="fas fa-map-pin"></i> ${escapeHtml(c.local)}</span>` : ''}
+                                    ${c.status ? `<span class="status ${statusMap[c.status]?.class || ''}">${statusMap[c.status]?.label || c.status}</span>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // =============================================================
         // INICIALIZAÇÃO
         // =============================================================
         document.addEventListener('DOMContentLoaded', function() {
             carregarLogo();
-            carregarNoticias();
+            carregarEsportiva();
         });
     </script>
 </body>
