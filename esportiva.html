@@ -119,7 +119,19 @@
         .esportiva-card p { font-size: 1.05em; line-height: 1.8; color: #555; margin-bottom: 12px; }
         .esportiva-card p i { color: #004aad; margin-right: 6px; }
 
-        /* Grids */
+        /* Destaque da data */
+        .data-destaque {
+            display: inline-block;
+            background: #003366;
+            color: #ffd700;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* Modalidades */
         .modalidades-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -526,7 +538,7 @@
             titulo: "Nossa Esportiva",
             subtitulo: "Conheça as modalidades e campeonatos da ASSGA.",
             imagem: "src/imagens/foto1.jpg",
-            data: "Fundada em 23 de julho de 2024",
+            data: "23 de julho de 2024",
             textoExtra: `<p><i class="fas fa-star" style="color:#ffd700;"></i> A ASSGA oferece diversas modalidades esportivas para todas as idades. Participe!</p>`,
             modalidades: [
                 { icone: "fa-futbol", nome: "Futsal", descricao: "Modalidade principal, com campeonatos e treinos regulares.", tag: "Mais popular" },
@@ -538,10 +550,6 @@
                 { titulo: "Campeonato de Futsal - 2026", data: "15/03 a 15/12/2026", participantes: "8 equipes", local: "Ginásio ASSGA", status: "andamento" },
                 { titulo: "Copa ASSGA de Vôlei", data: "01/07 a 30/09/2026", participantes: "6 equipes", local: "Quadra ASSGA", status: "aberto" },
                 { titulo: "Torneio de Basquete 3x3", data: "10/10/2026", participantes: "12 times", local: "Praça Esportiva", status: "aberto" }
-            ],
-            membros: [
-                { nome: "João Silva", cargo: "Técnico de Futsal", descricao: "10 anos de experiência", foto: "" },
-                { nome: "Maria Oliveira", cargo: "Preparadora Física", descricao: "Especialista em treinamento funcional", foto: "" }
             ]
         };
 
@@ -574,24 +582,25 @@
                 `;
             }
 
-            // ===== TEXTO EXTRA =====
-            if (data.textoExtra) {
+            // ===== DATA (destaque) =====
+            if (data.data) {
                 html += `
                     <div class="esportiva-card" style="background: linear-gradient(135deg, #fff8e1, #fff3cd); border-left-color: #ffd700;">
-                        <div style="font-size:1.05em; line-height:1.8; color:#333;">
-                            ${data.textoExtra}
+                        <div style="font-size:1.1em; line-height:1.8; color:#333;">
+                            <i class="fas fa-calendar-check" style="color:#003366; margin-right:8px;"></i>
+                            <strong>Data:</strong> ${escapeHtml(data.data)}
                         </div>
                     </div>
                 `;
             }
 
-            // ===== DATA =====
-            if (data.data) {
+            // ===== TEXTO EXTRA =====
+            if (data.textoExtra) {
                 html += `
-                    <div class="esportiva-card" style="border-left-color: #ffd700;">
-                        <p style="text-align:center; font-size:1.2em; font-weight:700; color:#003366;">
-                            <i class="fas fa-calendar-check" style="color:#ffd700;"></i> ${escapeHtml(data.data)}
-                        </p>
+                    <div class="esportiva-card" style="background: linear-gradient(135deg, #f0f7ff, #e6f0fa); border-left-color: #004aad;">
+                        <div style="font-size:1.05em; line-height:1.8; color:#333;">
+                            ${data.textoExtra}
+                        </div>
                     </div>
                 `;
             }
@@ -636,27 +645,6 @@
                                 </div>
                             </div>
                         `).join('')}
-                    </div>
-                `;
-            }
-
-            // ===== MEMBROS =====
-            if (data.membros && data.membros.length > 0) {
-                html += `
-                    <div class="esportiva-card">
-                        <h3><i class="fas fa-users"></i> Membros</h3>
-                        <div class="modalidades-grid">
-                            ${data.membros.map(m => `
-                                <div class="modalidade-item" style="padding:20px;">
-                                    <div style="width:100px;height:100px;border-radius:50%;overflow:hidden;margin:0 auto 12px;border:3px solid #003366;box-shadow:0 4px 12px rgba(0,0,0,.15);">
-                                        <img src="${m.foto || 'src/imagens/avatar-padrao.jpg'}" alt="${escapeHtml(m.nome)}" style="width:100%;height:100%;object-fit:cover;" />
-                                    </div>
-                                    <h4>${escapeHtml(m.nome)}</h4>
-                                    <p style="font-weight:700;color:#004aad;">${escapeHtml(m.cargo)}</p>
-                                    ${m.descricao ? `<p style="font-size:0.9em;color:#555;">${escapeHtml(m.descricao)}</p>` : ''}
-                                </div>
-                            `).join('')}
-                        </div>
                     </div>
                 `;
             }
