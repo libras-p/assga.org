@@ -88,7 +88,7 @@
         .item-list { display: grid; gap: 10px; margin-top: 16px; }
         .item-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid #003366; background: #f7f9fc; border-radius: 8px; flex-wrap: wrap; }
         .item-row .info { display: flex; align-items: center; gap: 12px; flex: 1; }
-        .item-row .info img { width: 50px; height: 50px; object-fit: cover; border-radius: 50%; border: 2px solid #003366; background: #e6f0fa; }
+        .item-row .info img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 2px solid #003366; background: #e6f0fa; }
         .item-row strong { color: #003366; }
         .item-actions { display: flex; gap: 7px; flex-wrap: wrap; }
 
@@ -184,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA DIRETORIA (COM FOTO) ========== -->
+            <!-- ========== ABA DIRETORIA ========== -->
             <div id="tab-diretoria" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-users"></i> Gerenciar Diretoria</h2>
@@ -200,7 +200,6 @@
                                 <input class="field" type="text" id="dirDescricao" placeholder="Descrição" />
                                 <input class="field" type="email" id="dirEmail" placeholder="E-mail" />
                                 <input class="field" type="text" id="dirTelefone" placeholder="Telefone" />
-                                <!-- Upload de foto do diretor -->
                                 <div class="foto-upload" onclick="document.getElementById('dirFotoInput').click()">
                                     <img id="dirFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto do diretor" />
                                     <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
@@ -216,7 +215,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA NOTÍCIAS ========== -->
+            <!-- ========== ABA NOTÍCIAS (COM UPLOAD DE IMAGEM) ========== -->
             <div id="tab-noticias" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-newspaper"></i> Gerenciar Notícias</h2>
@@ -229,9 +228,14 @@
                             <div class="form-grid">
                                 <input class="field" type="text" id="notTitulo" placeholder="Título" required />
                                 <input class="field" type="text" id="notData" placeholder="Data (ex: 15 de agosto de 2026)" />
-                                <input class="field" type="text" id="notImagem" placeholder="URL da imagem (opcional)" />
                                 <textarea class="field full" id="notResumo" placeholder="Resumo/descrição" rows="3"></textarea>
                                 <textarea class="field full" id="notTexto" placeholder="Texto completo (opcional)" rows="5"></textarea>
+                                <!-- Upload de imagem da notícia -->
+                                <div class="foto-upload" onclick="document.getElementById('notFotoInput').click()">
+                                    <img id="notFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da notícia" />
+                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
+                                    <input type="file" id="notFotoInput" accept="image/*" />
+                                </div>
                                 <div class="form-actions">
                                     <button type="button" class="btn btn-outline" onclick="fecharFormularioNoticia()"><i class="fas fa-times"></i> Cancelar</button>
                                     <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
@@ -577,7 +581,6 @@
         // ==========================================================
         // DIRETORIA (CRUD com foto)
         // ==========================================================
-        // Upload foto diretor
         document.getElementById('dirFotoInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -679,8 +682,28 @@
         }
 
         // ==========================================================
-        // NOTÍCIAS (CRUD)
+        // NOTÍCIAS (CRUD com upload de imagem)
         // ==========================================================
+        document.getElementById('notFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('notFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getNotFotoBase64() {
+            const img = document.getElementById('notFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setNotFotoPreview(url) {
+            const img = document.getElementById('notFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
         function renderNoticias() {
             const container = document.getElementById('listaNoticias');
             const lista = getData(STORAGE_KEYS.noticias);
@@ -690,7 +713,14 @@
             }
             container.innerHTML = lista.map((n, i) => `
                 <div class="item-row">
-                    <div><strong>${escapeHtml(n.titulo)}</strong><br><span style="font-size:0.9em;color:#555;">${escapeHtml(n.resumo || '')}</span></div>
+                    <div class="info">
+                        <img src="${n.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da notícia" />
+                        <div>
+                            <strong>${escapeHtml(n.titulo)}</strong>
+                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(n.resumo || '')}</span>
+                            ${n.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(n.data)}</span>` : ''}
+                        </div>
+                    </div>
                     <div class="item-actions">
                         <button class="btn btn-warning btn-sm" onclick="editarNoticia(${i})"><i class="fas fa-edit"></i> Editar</button>
                         <button class="btn btn-danger btn-sm" onclick="excluirNoticia(${i})"><i class="fas fa-trash"></i> Excluir</button>
@@ -706,14 +736,15 @@
             document.getElementById('noticiaFormTitle').textContent = editIndex === -1 ? 'Nova Notícia' : 'Editar Notícia';
             if (editIndex === -1) {
                 document.getElementById('noticiaForm').reset();
+                setNotFotoPreview('');
             } else {
                 const n = getData(STORAGE_KEYS.noticias)[editIndex];
                 if (n) {
                     document.getElementById('notTitulo').value = n.titulo || '';
                     document.getElementById('notData').value = n.data || '';
-                    document.getElementById('notImagem').value = n.imagem || '';
                     document.getElementById('notResumo').value = n.resumo || '';
                     document.getElementById('notTexto').value = n.texto || '';
+                    setNotFotoPreview(n.imagem || '');
                 }
             }
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -730,9 +761,9 @@
             const obj = {
                 titulo,
                 data: document.getElementById('notData').value.trim(),
-                imagem: document.getElementById('notImagem').value.trim(),
                 resumo: document.getElementById('notResumo').value.trim(),
-                texto: document.getElementById('notTexto').value.trim()
+                texto: document.getElementById('notTexto').value.trim(),
+                imagem: getNotFotoBase64() // agora é base64 em vez de URL
             };
             let lista = getData(STORAGE_KEYS.noticias);
             if (index === -1) lista.push(obj);
