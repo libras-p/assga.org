@@ -84,11 +84,11 @@
         .foto-upload .label { font-weight: 600; color: #003366; }
         .foto-upload input[type="file"] { display: none; }
 
-        /* Lista de itens (diretoria, eventos, etc) */
+        /* Lista de itens (diretoria, eventos, slider, etc) */
         .item-list { display: grid; gap: 10px; margin-top: 16px; }
         .item-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid #003366; background: #f7f9fc; border-radius: 8px; flex-wrap: wrap; }
         .item-row .info { display: flex; align-items: center; gap: 12px; flex: 1; }
-        .item-row .info img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 2px solid #003366; background: #e6f0fa; }
+        .item-row .info img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid #003366; background: #e6f0fa; }
         .item-row strong { color: #003366; }
         .item-actions { display: flex; gap: 7px; flex-wrap: wrap; }
 
@@ -134,6 +134,7 @@
                 <button class="tab-btn" data-tab="esportiva"><i class="fas fa-futbol"></i> Esportiva</button>
                 <button class="tab-btn" data-tab="eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
                 <button class="tab-btn" data-tab="estatuto"><i class="fas fa-file-contract"></i> Estatuto</button>
+                <button class="tab-btn" data-tab="slider"><i class="fas fa-images"></i> Slider</button>
                 <button class="tab-btn" data-tab="index"><i class="fas fa-house"></i> Página Inicial</button>
             </div>
 
@@ -215,7 +216,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA NOTÍCIAS (COM UPLOAD DE IMAGEM) ========== -->
+            <!-- ========== ABA NOTÍCIAS ========== -->
             <div id="tab-noticias" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-newspaper"></i> Gerenciar Notícias</h2>
@@ -230,7 +231,6 @@
                                 <input class="field" type="text" id="notData" placeholder="Data (ex: 15 de agosto de 2026)" />
                                 <textarea class="field full" id="notResumo" placeholder="Resumo/descrição" rows="3"></textarea>
                                 <textarea class="field full" id="notTexto" placeholder="Texto completo (opcional)" rows="5"></textarea>
-                                <!-- Upload de imagem da notícia -->
                                 <div class="foto-upload" onclick="document.getElementById('notFotoInput').click()">
                                     <img id="notFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da notícia" />
                                     <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
@@ -340,6 +340,33 @@
                 </div>
             </div>
 
+            <!-- ========== ABA SLIDER ========== -->
+            <div id="tab-slider" class="tab-content">
+                <div class="content-card">
+                    <h2><i class="fas fa-images"></i> Gerenciar Slider da Página Inicial</h2>
+                    <button class="btn btn-success" onclick="mostrarFormularioSlide()"><i class="fas fa-plus"></i> Adicionar Slide</button>
+                    <div id="listaSlider" class="item-list"></div>
+                    <div class="form-card" id="formSlide">
+                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-plus-circle"></i> <span id="slideFormTitle">Novo Slide</span></h3>
+                        <form id="slideForm">
+                            <input type="hidden" id="editSlideIndex" value="-1" />
+                            <div class="form-grid">
+                                <input class="field full" type="text" id="slideTexto" placeholder="Texto do slide" required />
+                                <div class="foto-upload" onclick="document.getElementById('slideFotoInput').click()">
+                                    <img id="slideFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem do slide" />
+                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
+                                    <input type="file" id="slideFotoInput" accept="image/*" />
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioSlide()"><i class="fas fa-times"></i> Cancelar</button>
+                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- ========== ABA PÁGINA INICIAL ========== -->
             <div id="tab-index" class="tab-content">
                 <div class="content-card">
@@ -374,6 +401,7 @@
             esportiva: 'assga_esportiva',
             eventos: 'assga_eventos',
             estatuto: 'assga_estatuto',
+            slider: 'assga_slider',
             index: 'assga_index'
         };
 
@@ -445,6 +473,7 @@
                 else if (tab === 'diretoria') renderDiretoria();
                 else if (tab === 'noticias') renderNoticias();
                 else if (tab === 'eventos') renderEventos();
+                else if (tab === 'slider') renderSlider();
                 else if (tab === 'historia') carregarHistoria();
                 else if (tab === 'esportiva') carregarEsportiva();
                 else if (tab === 'estatuto') carregarEstatuto();
@@ -457,6 +486,7 @@
             renderDiretoria();
             renderNoticias();
             renderEventos();
+            renderSlider();
             carregarHistoria();
             carregarEsportiva();
             carregarEstatuto();
@@ -763,7 +793,7 @@
                 data: document.getElementById('notData').value.trim(),
                 resumo: document.getElementById('notResumo').value.trim(),
                 texto: document.getElementById('notTexto').value.trim(),
-                imagem: getNotFotoBase64() // agora é base64 em vez de URL
+                imagem: getNotFotoBase64()
             };
             let lista = getData(STORAGE_KEYS.noticias);
             if (index === -1) lista.push(obj);
@@ -936,6 +966,99 @@
         }
 
         // ==========================================================
+        // SLIDER (CRUD com upload de imagem)
+        // ==========================================================
+        document.getElementById('slideFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('slideFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getSlideFotoBase64() {
+            const img = document.getElementById('slideFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setSlideFotoPreview(url) {
+            const img = document.getElementById('slideFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
+        function renderSlider() {
+            const container = document.getElementById('listaSlider');
+            const slides = getData(STORAGE_KEYS.slider);
+            if (slides.length === 0) {
+                container.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>Nenhum slide cadastrado. Adicione imagens para o carrossel.</p></div>';
+                return;
+            }
+            container.innerHTML = slides.map((slide, i) => `
+                <div class="item-row">
+                    <div class="info">
+                        <img src="${slide.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Slide ${i+1}" />
+                        <div>
+                            <strong>Slide ${i+1}</strong>
+                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(slide.texto || '')}</span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning btn-sm" onclick="editarSlide(${i})"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirSlide(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function mostrarFormularioSlide(editIndex = -1) {
+            const card = document.getElementById('formSlide');
+            card.classList.add('visible');
+            document.getElementById('editSlideIndex').value = editIndex;
+            document.getElementById('slideFormTitle').textContent = editIndex === -1 ? 'Novo Slide' : 'Editar Slide';
+            if (editIndex === -1) {
+                document.getElementById('slideForm').reset();
+                setSlideFotoPreview('');
+            } else {
+                const slide = getData(STORAGE_KEYS.slider)[editIndex];
+                if (slide) {
+                    document.getElementById('slideTexto').value = slide.texto || '';
+                    setSlideFotoPreview(slide.imagem || '');
+                }
+            }
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        function fecharFormularioSlide() {
+            document.getElementById('formSlide').classList.remove('visible');
+        }
+
+        document.getElementById('slideForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('editSlideIndex').value);
+            const texto = document.getElementById('slideTexto').value.trim();
+            if (!texto) { alert('O texto do slide é obrigatório.'); return; }
+            const imagem = getSlideFotoBase64();
+            if (!imagem) { alert('Por favor, selecione uma imagem para o slide.'); return; }
+            const obj = { texto, imagem };
+            let slides = getData(STORAGE_KEYS.slider);
+            if (index === -1) slides.push(obj);
+            else slides[index] = obj;
+            setData(STORAGE_KEYS.slider, slides);
+            renderSlider();
+            fecharFormularioSlide();
+        });
+
+        function editarSlide(index) { mostrarFormularioSlide(index); }
+        function excluirSlide(index) {
+            if (!confirm('Excluir este slide?')) return;
+            let slides = getData(STORAGE_KEYS.slider);
+            slides.splice(index, 1);
+            setData(STORAGE_KEYS.slider, slides);
+            renderSlider();
+        }
+
+        // ==========================================================
         // ESTATUTO
         // ==========================================================
         function carregarEstatuto() {
@@ -1003,6 +1126,24 @@
             document.getElementById('panelView').style.display = 'block';
             carregarTodasAbas();
         }
+
+        // Caso já existam slides pré-definidos, podemos inicializar com os arrays fornecidos
+        // (opcional - se quiser que os slides padrão sejam carregados automaticamente)
+        // Descomente o bloco abaixo se quiser preencher com os dados de exemplo quando não houver nenhum slide.
+        /*
+        (function initSliderDefault() {
+            const slides = getData(STORAGE_KEYS.slider);
+            if (slides.length === 0) {
+                const defaultSlides = [
+                    { imagem: "src/imagens/foto1.jpg", texto: "ASSGA - Associação Desportiva" },
+                    { imagem: "src/imagens/foto2.jpg", texto: "Esporte e integração da ASSGA" },
+                    { imagem: "src/imagens/foto3.jpg", texto: "Futsal e atividades esportivas ASSGA" }
+                ];
+                setData(STORAGE_KEYS.slider, defaultSlides);
+                renderSlider();
+            }
+        })();
+        */
     </script>
 </body>
 </html>

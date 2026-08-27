@@ -172,7 +172,7 @@
         .texto p i { color: #004aad; margin-right: 5px; }
         .texto p strong { color: #003366; }
 
-        /* FALE CONOSCO e FOOTER (mesmo do original) */
+        /* FALE CONOSCO e FOOTER */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -272,7 +272,7 @@
         }
         .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
-        /* RESPONSIVIDADE (resumida) */
+        /* RESPONSIVIDADE */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
             .logo-area { gap: 10px; }
@@ -484,38 +484,62 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
-        // SLIDER
-        const imagens = [
-            "src/imagens/foto1.jpg",
-            "src/imagens/foto2.jpg",
-            "src/imagens/foto3.jpg"
-        ];
-        const textosSlider = [
-            "ASSGA - Associação Desportiva",
-            "Esporte e integração da ASSGA",
-            "Futsal e atividades esportivas ASSGA"
-        ];
+        // =============================================================
+        // SLIDER DINÂMICO – busca slides do localStorage (chave: assga_slider)
+        // Se não houver slides salvos, usa os padrões (foto1, foto2, foto3)
+        // =============================================================
+        function obterSlides() {
+            const stored = localStorage.getItem('assga_slider');
+            if (stored) {
+                try {
+                    const slides = JSON.parse(stored);
+                    if (Array.isArray(slides) && slides.length > 0) {
+                        // Cada slide deve ter { imagem, texto }
+                        return slides;
+                    }
+                } catch (e) { /* ignora */ }
+            }
+            // fallback: slides padrão
+            return [
+                { imagem: "src/imagens/foto1.jpg", texto: "ASSGA - Associação Desportiva" },
+                { imagem: "src/imagens/foto2.jpg", texto: "Esporte e integração da ASSGA" },
+                { imagem: "src/imagens/foto3.jpg", texto: "Futsal e atividades esportivas ASSGA" }
+            ];
+        }
+
+        const slides = obterSlides();
         let index = 0;
         let intervaloSlider;
 
         function trocarImagem() {
-            index++;
-            if (index >= imagens.length) index = 0;
+            index = (index + 1) % slides.length;
             const slide = document.getElementById("slide");
             const sliderInfo = document.getElementById("sliderInfo");
             slide.style.opacity = "0";
             setTimeout(function() {
-                slide.src = imagens[index];
-                slide.alt = textosSlider[index];
-                sliderInfo.innerHTML = '<i class="fas fa-futbol"></i> ' + textosSlider[index];
+                slide.src = slides[index].imagem;
+                slide.alt = slides[index].texto;
+                sliderInfo.innerHTML = '<i class="fas fa-futbol"></i> ' + slides[index].texto;
                 slide.style.opacity = "1";
             }, 300);
         }
 
         function iniciarSlider() {
             clearInterval(intervaloSlider);
-            intervaloSlider = setInterval(trocarImagem, 4000);
+            if (slides.length > 1) {
+                intervaloSlider = setInterval(trocarImagem, 4000);
+            }
         }
+
+        // Inicializar com o primeiro slide
+        if (slides.length > 0) {
+            const slide = document.getElementById("slide");
+            const sliderInfo = document.getElementById("sliderInfo");
+            slide.src = slides[0].imagem;
+            slide.alt = slides[0].texto;
+            sliderInfo.innerHTML = '<i class="fas fa-futbol"></i> ' + slides[0].texto;
+        }
+
         const slider = document.querySelector(".slider");
         slider.addEventListener("mouseenter", function() { clearInterval(intervaloSlider); });
         slider.addEventListener("mouseleave", function() { iniciarSlider(); });
@@ -524,13 +548,17 @@
             else iniciarSlider();
         });
         iniciarSlider();
+
+        // Fallback de erro de carregamento da imagem
         document.getElementById("slide").addEventListener("error", function() {
             this.onerror = null;
             this.src = "src/imagens/Assga_foto.jpg";
             this.alt = "Logo da ASSGA";
         });
 
-        // ESCAPE HTML
+        // =============================================================
+        // NOTÍCIAS
+        // =============================================================
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -543,7 +571,6 @@
             });
         }
 
-        // CARREGAR NOTÍCIAS
         function carregarNoticias() {
             const container = document.getElementById('containerNoticias');
             const noticias = JSON.parse(localStorage.getItem('assga_noticias') || '[]');
@@ -583,11 +610,18 @@
             `).join('');
         }
 
-        // CARREGAR DADOS DA HOME (título do slider e texto extra)
+        // =============================================================
+        // CONTEÚDO DA HOME (título do slider e texto extra)
+        // =============================================================
         const homeContent = JSON.parse(localStorage.getItem("assga_conteudos") || "{}").index;
         if (homeContent) {
             const sliderInfo = document.getElementById("sliderInfo");
-            if (sliderInfo && homeContent.titulo) sliderInfo.lastChild.textContent = ` ${homeContent.titulo}`;
+            if (sliderInfo && homeContent.titulo) {
+                // Atualiza o texto do slider (já que o sliderInfo contém o primeiro slide)
+                // Mas o slider já foi definido acima, então não sobrescrevemos.
+                // Deixamos o sliderInfo ser atualizado pelo script do slider.
+                // Se quiser usar o título da home, você pode ajustar.
+            }
             if (homeContent.texto) {
                 const contentNote = document.createElement("p");
                 contentNote.textContent = homeContent.texto;
