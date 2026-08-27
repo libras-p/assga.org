@@ -40,7 +40,6 @@
         .btn-primary-action { background: #003366; color: #fff; box-shadow: 0 4px 14px rgba(0,51,102,.3); }
         .btn-primary-action:hover { background: #004aad; transform: translateY(-2px); }
         .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
-        .btn-group-vertical { display: flex; flex-direction: column; gap: 8px; }
 
         /* Abas */
         .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 16px; border-bottom: 2px solid #d9e1eb; padding-bottom: 10px; }
@@ -52,12 +51,12 @@
         .tab-content.active { display: block; }
         @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Cards de conteúdo */
+        /* Cards */
         .content-card { background: #f8faff; border-radius: 16px; padding: 25px; border: 1px solid #d9e1eb; margin-top: 20px; }
         .content-card h2 { color: #003366; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
         .content-card h2 i { color: #b22234; }
 
-        /* Tabelas */
+        /* Tabelas e listas */
         .table-responsive { overflow-x: auto; border-radius: 16px; border: 1px solid #d9e1eb; }
         table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
         thead { background: #003366; color: #fff; }
@@ -69,7 +68,7 @@
         .empty { text-align: center; padding: 40px; color: #667085; }
         .empty i { font-size: 3rem; color: #b22234; margin-bottom: 10px; }
 
-        /* Formulários genéricos */
+        /* Formulários */
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
         .form-grid .field { width: 100%; padding: 12px 14px; border: 1px solid #d9e1eb; border-radius: 10px; font-size: 0.95rem; }
         .form-grid .field:focus { outline: 2px solid #004aad; border-color: transparent; }
@@ -78,16 +77,18 @@
         .form-card { display: none; margin-top: 20px; background: #f8faff; border-radius: 16px; padding: 25px; border: 1px solid #d9e1eb; }
         .form-card.visible { display: block; }
 
-        /* Upload de foto */
+        /* Upload de foto genérico */
         .foto-upload { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; border: 2px dashed #d9e1eb; border-radius: 12px; cursor: pointer; transition: 0.3s; background: #fff; }
         .foto-upload:hover { border-color: #003366; background: #f0f4fa; }
         .foto-upload img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; border: 3px solid #003366; background: #f0f4fa; }
         .foto-upload .label { font-weight: 600; color: #003366; }
         .foto-upload input[type="file"] { display: none; }
 
-        /* Listas de itens (diretoria, eventos, etc) */
+        /* Lista de itens (diretoria, eventos, etc) */
         .item-list { display: grid; gap: 10px; margin-top: 16px; }
         .item-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid #003366; background: #f7f9fc; border-radius: 8px; flex-wrap: wrap; }
+        .item-row .info { display: flex; align-items: center; gap: 12px; flex: 1; }
+        .item-row .info img { width: 50px; height: 50px; object-fit: cover; border-radius: 50%; border: 2px solid #003366; background: #e6f0fa; }
         .item-row strong { color: #003366; }
         .item-actions { display: flex; gap: 7px; flex-wrap: wrap; }
 
@@ -101,7 +102,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- ==================== LOGIN ==================== -->
+        <!-- ===== LOGIN ===== -->
         <div id="loginView" class="login-box">
             <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
             <h1><i class="fas fa-lock"></i> Acesso Admin</h1>
@@ -113,7 +114,7 @@
             <div class="login-error" id="loginError">Senha incorreta. Tente novamente.</div>
         </div>
 
-        <!-- ==================== PAINEL ==================== -->
+        <!-- ===== PAINEL ===== -->
         <div id="panelView" class="panel">
             <!-- Topo -->
             <div class="top-bar">
@@ -183,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- ========== ABA DIRETORIA ========== -->
+            <!-- ========== ABA DIRETORIA (COM FOTO) ========== -->
             <div id="tab-diretoria" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-users"></i> Gerenciar Diretoria</h2>
@@ -199,6 +200,12 @@
                                 <input class="field" type="text" id="dirDescricao" placeholder="Descrição" />
                                 <input class="field" type="email" id="dirEmail" placeholder="E-mail" />
                                 <input class="field" type="text" id="dirTelefone" placeholder="Telefone" />
+                                <!-- Upload de foto do diretor -->
+                                <div class="foto-upload" onclick="document.getElementById('dirFotoInput').click()">
+                                    <img id="dirFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto do diretor" />
+                                    <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
+                                    <input type="file" id="dirFotoInput" accept="image/*" />
+                                </div>
                                 <div class="form-actions">
                                     <button type="button" class="btn btn-outline" onclick="fecharFormularioDiretor()"><i class="fas fa-times"></i> Cancelar</button>
                                     <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
@@ -429,7 +436,6 @@
                 this.classList.add('active');
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 document.getElementById('tab-' + this.dataset.tab).classList.add('active');
-                // Recarregar conteúdo da aba se necessário
                 const tab = this.dataset.tab;
                 if (tab === 'socios') renderSocios();
                 else if (tab === 'diretoria') renderDiretoria();
@@ -442,9 +448,6 @@
             });
         });
 
-        // ==========================================================
-        // CARREGAR TODAS AS ABAS (após login)
-        // ==========================================================
         function carregarTodasAbas() {
             renderSocios();
             renderDiretoria();
@@ -488,7 +491,7 @@
             container.innerHTML = html;
         }
 
-        // Upload foto
+        // Upload foto sócio
         document.getElementById('fotoInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -512,16 +515,13 @@
         function mostrarFormularioSocio(editIndex = -1) {
             const card = document.getElementById('formSocio');
             card.classList.add('visible');
-            const title = document.getElementById('socioFormTitle');
             document.getElementById('editSocioIndex').value = editIndex;
+            document.getElementById('socioFormTitle').textContent = editIndex === -1 ? 'Novo Sócio' : 'Editar Sócio';
             if (editIndex === -1) {
-                title.textContent = 'Novo Sócio';
                 document.getElementById('socioForm').reset();
                 document.querySelectorAll('.mes-check').forEach(cb => cb.checked = false);
                 setFotoPreview('');
-                document.getElementById('socioNome').focus();
             } else {
-                title.textContent = 'Editar Sócio';
                 const s = getData(STORAGE_KEYS.socios)[editIndex];
                 if (s) {
                     document.getElementById('socioNome').value = s.nome || '';
@@ -575,8 +575,29 @@
         }
 
         // ==========================================================
-        // DIRETORIA (CRUD)
+        // DIRETORIA (CRUD com foto)
         // ==========================================================
+        // Upload foto diretor
+        document.getElementById('dirFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('dirFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getDirFotoBase64() {
+            const img = document.getElementById('dirFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setDirFotoPreview(url) {
+            const img = document.getElementById('dirFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
         function renderDiretoria() {
             const container = document.getElementById('listaDiretoria');
             const lista = getData(STORAGE_KEYS.diretoria);
@@ -586,7 +607,13 @@
             }
             container.innerHTML = lista.map((d, i) => `
                 <div class="item-row">
-                    <div><strong>${escapeHtml(d.nome)}</strong> - ${escapeHtml(d.cargo)}</div>
+                    <div class="info">
+                        <img src="${d.foto || 'src/imagens/avatar-padrao.jpg'}" alt="Foto de ${escapeHtml(d.nome)}" />
+                        <div>
+                            <strong>${escapeHtml(d.nome)}</strong> - ${escapeHtml(d.cargo)}
+                            <br><span style="font-size:0.85em;color:#555;">${escapeHtml(d.descricao || '')}</span>
+                        </div>
+                    </div>
                     <div class="item-actions">
                         <button class="btn btn-warning btn-sm" onclick="editarDiretor(${i})"><i class="fas fa-edit"></i> Editar</button>
                         <button class="btn btn-danger btn-sm" onclick="excluirDiretor(${i})"><i class="fas fa-trash"></i> Excluir</button>
@@ -602,6 +629,7 @@
             document.getElementById('diretorFormTitle').textContent = editIndex === -1 ? 'Novo Membro' : 'Editar Membro';
             if (editIndex === -1) {
                 document.getElementById('diretorForm').reset();
+                setDirFotoPreview('');
             } else {
                 const d = getData(STORAGE_KEYS.diretoria)[editIndex];
                 if (d) {
@@ -610,6 +638,7 @@
                     document.getElementById('dirDescricao').value = d.descricao || '';
                     document.getElementById('dirEmail').value = d.email || '';
                     document.getElementById('dirTelefone').value = d.telefone || '';
+                    setDirFotoPreview(d.foto || '');
                 }
             }
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -625,10 +654,12 @@
             const cargo = document.getElementById('dirCargo').value.trim();
             if (!nome || !cargo) { alert('Nome e Cargo são obrigatórios.'); return; }
             const obj = {
-                nome, cargo,
+                nome,
+                cargo,
                 descricao: document.getElementById('dirDescricao').value.trim(),
                 email: document.getElementById('dirEmail').value.trim(),
-                telefone: document.getElementById('dirTelefone').value.trim()
+                telefone: document.getElementById('dirTelefone').value.trim(),
+                foto: getDirFotoBase64()
             };
             let lista = getData(STORAGE_KEYS.diretoria);
             if (index === -1) lista.push(obj);
