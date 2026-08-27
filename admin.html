@@ -66,6 +66,25 @@
         .meses-checkbox label:hover { background: #e6f0fa; }
         .meses-checkbox input[type="checkbox"] { accent-color: #003366; width: 16px; height: 16px; }
 
+        /* Upload de foto */
+        .foto-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border: 2px dashed #d9e1eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            grid-column: 1 / -1;
+            background: #fff;
+        }
+        .foto-upload:hover { border-color: #003366; background: #f0f4fa; }
+        .foto-upload img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; border: 3px solid #003366; background: #f0f4fa; }
+        .foto-upload .label { font-weight: 600; color: #003366; }
+        .foto-upload input[type="file"] { display: none; }
+
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
             .form-grid { grid-template-columns: 1fr; }
@@ -112,7 +131,14 @@
                         <input class="field" type="text" id="senha" placeholder="Senha" required />
                         <input class="field" type="text" id="matricula" placeholder="Nº de sócio (opcional)" />
                         <input class="field" type="text" id="secretaria" placeholder="Secretaria (opcional)" />
-                        <input class="field" type="text" id="foto" placeholder="URL da foto (opcional)" />
+
+                        <!-- Upload de foto 3x4 -->
+                        <div class="foto-upload" onclick="document.getElementById('fotoInput').click()">
+                            <img id="fotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto 3x4" />
+                            <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
+                            <input type="file" id="fotoInput" accept="image/*" />
+                        </div>
+
                         <div class="meses-checkbox">
                             <span style="font-weight:600; color:#003366; margin-right:6px;">Meses pagos em 2026:</span>
                             <label><input type="checkbox" class="mes-check" value="0" /> JAN</label>
@@ -128,6 +154,7 @@
                             <label><input type="checkbox" class="mes-check" value="10" /> NOV</label>
                             <label><input type="checkbox" class="mes-check" value="11" /> DEZ</label>
                         </div>
+
                         <div class="form-actions">
                             <button type="button" class="btn btn-outline" onclick="fecharFormulario()"><i class="fas fa-times"></i> Cancelar</button>
                             <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
@@ -147,6 +174,34 @@
         // ===== DADOS =====
         function getSocios() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
         function setSocios(socios) { localStorage.setItem(STORAGE_KEY, JSON.stringify(socios)); }
+
+        // ===== UPLOAD DE FOTO =====
+        document.getElementById('fotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('fotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getFotoBase64() {
+            const img = document.getElementById('fotoPreview');
+            if (img.src && img.src.startsWith('data:image')) {
+                return img.src;
+            }
+            return '';
+        }
+
+        function setFotoPreview(url) {
+            const img = document.getElementById('fotoPreview');
+            if (url && url.startsWith('data:image')) {
+                img.src = url;
+            } else {
+                img.src = 'src/imagens/avatar-padrao.jpg';
+            }
+        }
 
         // ===== RENDERIZAR TABELA =====
         function carregarSocios() {
@@ -188,6 +243,7 @@
                 document.getElementById('editIndex').value = '-1';
                 document.getElementById('socioForm').reset();
                 document.querySelectorAll('.mes-check').forEach(cb => cb.checked = false);
+                setFotoPreview('');
                 document.getElementById('nome').focus();
             } else {
                 title.textContent = 'Editar Sócio';
@@ -200,7 +256,7 @@
                     document.getElementById('senha').value = s.senha || '';
                     document.getElementById('matricula').value = s.matricula || '';
                     document.getElementById('secretaria').value = s.secretaria || '';
-                    document.getElementById('foto').value = s.foto || '';
+                    setFotoPreview(s.foto || '');
                     const pagos = s.mesesPagos || [];
                     document.querySelectorAll('.mes-check').forEach(cb => {
                         cb.checked = pagos.includes(parseInt(cb.value));
@@ -220,7 +276,7 @@
             const senha = document.getElementById('senha').value.trim();
             const matricula = document.getElementById('matricula').value.trim();
             const secretaria = document.getElementById('secretaria').value.trim();
-            const foto = document.getElementById('foto').value.trim();
+            const foto = getFotoBase64(); // agora pega a imagem em base64
             const mesesPagos = [];
             document.querySelectorAll('.mes-check:checked').forEach(cb => mesesPagos.push(parseInt(cb.value)));
             if (!nome || !cpf || !senha) { alert('Nome, CPF e senha são obrigatórios.'); return; }
