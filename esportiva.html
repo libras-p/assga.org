@@ -567,6 +567,30 @@
         }
 
         container.innerHTML = html;
+
+
+        // =============================================================
+        // CARREGAR LOGO DO localStorage
+        // =============================================================
+        function carregarLogo() {
+            const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
+            const logoImg = document.querySelector('.logo-area img');
+            const logoTxt = document.querySelector('.logo');
+            if (logoImg && config.logoImg && config.logoImg.startsWith('data:image')) {
+                logoImg.src = config.logoImg;
+            }
+            if (logoTxt && config.logoTxt) {
+                logoTxt.textContent = config.logoTxt;
+            }
+        }
+
+        // =============================================================
+        // INICIALIZAÇÃO
+        // =============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarLogo();
+            carregarNoticias();
+        });
     </script>
 </body>
 </html>
