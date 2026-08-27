@@ -136,6 +136,7 @@
                 <button class="tab-btn" data-tab="eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
                 <button class="tab-btn" data-tab="estatuto"><i class="fas fa-file-contract"></i> Estatuto</button>
                 <button class="tab-btn" data-tab="slider"><i class="fas fa-images"></i> Slider</button>
+                <button class="tab-btn" data-tab="logo"><i class="fas fa-image"></i> Logo</button>
                 <button class="tab-btn" data-tab="index"><i class="fas fa-house"></i> Página Inicial</button>
             </div>
 
@@ -379,6 +380,27 @@
                 </div>
             </div>
 
+            <!-- ========== ABA LOGO ========== -->
+            <div id="tab-logo" class="tab-content">
+                <div class="content-card">
+                    <h2><i class="fas fa-image"></i> Gerenciar Logo</h2>
+                    <form id="logoForm">
+                        <div class="form-grid">
+                            <div class="foto-upload" onclick="document.getElementById('logoImgInput').click()" style="grid-column:1/-1;">
+                                <img id="logoPreview" src="src/imagens/Assga_foto.jpg" alt="Logo atual" />
+                                <span class="label"><i class="fas fa-camera"></i> Clique para trocar a imagem da logo</span>
+                                <input type="file" id="logoImgInput" accept="image/*" />
+                            </div>
+                            <input class="field full" type="text" id="logoTxt" placeholder="Texto da logo (ex: ASSGA)" />
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Logo</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p id="msgLogo" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+                </div>
+            </div>
+
             <!-- ========== ABA PÁGINA INICIAL ========== -->
             <div id="tab-index" class="tab-content">
                 <div class="content-card">
@@ -414,6 +436,7 @@
             eventos: 'assga_eventos',
             estatuto: 'assga_conteudos',
             slider: 'assga_slider',
+            config: 'assga_config',
             index: 'assga_conteudos'
         };
 
@@ -431,6 +454,12 @@
         }
         function setObject(key, obj) {
             localStorage.setItem(key, JSON.stringify(obj));
+        }
+        function getConfig() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.config) || '{}'); } catch { return {}; }
+        }
+        function setConfig(config) {
+            localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(config));
         }
 
         function escapeHtml(text) {
@@ -487,6 +516,7 @@
                 else if (tab === 'noticias') renderNoticias();
                 else if (tab === 'eventos') renderEventos();
                 else if (tab === 'slider') renderSlider();
+                else if (tab === 'logo') carregarLogo();
                 else if (tab === 'historia') carregarHistoria();
                 else if (tab === 'esportiva') carregarEsportiva();
                 else if (tab === 'estatuto') carregarEstatuto();
@@ -500,6 +530,7 @@
             renderNoticias();
             renderEventos();
             renderSlider();
+            carregarLogo();
             carregarHistoria();
             carregarEsportiva();
             carregarEstatuto();
@@ -1130,6 +1161,43 @@
             setData(STORAGE_KEYS.slider, slides);
             renderSlider();
         }
+
+        // ==========================================================
+        // LOGO (CONFIGURAÇÕES GERAIS)
+        // ==========================================================
+        function carregarLogo() {
+            const config = getConfig();
+            const img = document.getElementById('logoPreview');
+            const txt = document.getElementById('logoTxt');
+            if (config.logoImg && config.logoImg.startsWith('data:image')) {
+                img.src = config.logoImg;
+            } else {
+                img.src = 'src/imagens/Assga_foto.jpg';
+            }
+            txt.value = config.logoTxt || 'ASSGA';
+        }
+
+        document.getElementById('logoImgInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('logoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('logoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const img = document.getElementById('logoPreview');
+            const txt = document.getElementById('logoTxt').value.trim();
+            const config = {
+                logoImg: img.src && img.src.startsWith('data:image') ? img.src : '',
+                logoTxt: txt || 'ASSGA'
+            };
+            setConfig(config);
+            showMessage('msgLogo', '✅ Logo salva com sucesso!');
+        });
 
         // ==========================================================
         // ESTATUTO
