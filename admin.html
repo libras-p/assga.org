@@ -7,377 +7,75 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%); min-height: 100vh; display: flex; justify-content: center; padding: 30px 20px; }
+        .container { max-width: 1200px; width: 100%; background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 20px 60px rgba(0,51,102,.25); }
 
-        body {
-            background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 30px 20px;
-        }
+        /* Login */
+        .login-box { max-width: 420px; margin: 40px auto; text-align: center; padding: 30px 25px; background: #f8faff; border-radius: 20px; border: 1px solid #d9e1eb; }
+        .login-box img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; }
+        .login-box h1 { color: #003366; font-size: 1.6rem; margin-bottom: 8px; }
+        .login-box p { color: #667085; margin-bottom: 20px; }
+        .login-box .field { width: 100%; padding: 14px 16px; border: 1px solid #d9e1eb; border-radius: 10px; font-size: 1rem; margin-bottom: 14px; }
+        .login-box .field:focus { outline: 2px solid #004aad; border-color: transparent; }
+        .btn-primary { width: 100%; padding: 14px; background: #003366; color: #fff; border: 0; border-radius: 10px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: .3s; }
+        .btn-primary:hover { background: #004aad; }
+        .login-error { color: #b42318; font-weight: 600; margin-top: 12px; display: none; }
 
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 51, 102, .25);
-        }
+        /* Painel */
+        .panel { display: none; }
+        .top-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 3px solid #b22234; padding-bottom: 20px; }
+        .top-bar h1 { color: #003366; font-size: 2rem; display: flex; align-items: center; gap: 12px; }
+        .top-bar h1 i { color: #b22234; }
+        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { padding: 10px 22px; border: none; border-radius: 50px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-outline { background: transparent; color: #003366; border: 2px solid #003366; }
+        .btn-outline:hover { background: #003366; color: #fff; }
+        .btn-success { background: #28a745; color: #fff; box-shadow: 0 4px 14px rgba(40,167,69,.3); }
+        .btn-success:hover { background: #34ce57; transform: translateY(-2px); }
+        .btn-danger { background: #b22234; color: #fff; box-shadow: 0 4px 14px rgba(178,34,52,.3); }
+        .btn-danger:hover { background: #cc3333; transform: translateY(-2px); }
+        .btn-warning { background: #ffc107; color: #333; box-shadow: 0 4px 14px rgba(255,193,7,.3); }
+        .btn-warning:hover { background: #ffcd39; transform: translateY(-2px); }
+        .btn-primary-action { background: #003366; color: #fff; box-shadow: 0 4px 14px rgba(0,51,102,.3); }
+        .btn-primary-action:hover { background: #004aad; transform: translateY(-2px); }
+        .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+        .section-title { font-size: 1.6rem; color: #003366; margin: 30px 0 18px 0; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #b22234; }
+        .table-responsive { overflow-x: auto; border-radius: 16px; border: 1px solid #d9e1eb; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        thead { background: #003366; color: #fff; }
+        th { padding: 14px 12px; text-align: left; font-weight: 600; }
+        td { padding: 12px; border-bottom: 1px solid #e9edf2; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: #f8faff; }
+        .acoes { display: flex; gap: 8px; flex-wrap: wrap; }
+        .badge { display: inline-block; background: #d4edda; color: #155724; padding: 3px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; }
+        .empty { text-align: center; padding: 40px; color: #667085; }
+        .empty i { font-size: 3rem; color: #b22234; margin-bottom: 10px; }
 
-        /* ===== LOGIN ===== */
-        .login-box {
-            max-width: 420px;
-            margin: 40px auto;
-            text-align: center;
-            padding: 30px 25px;
-            background: #f8faff;
-            border-radius: 20px;
-            border: 1px solid #d9e1eb;
-        }
-
-        .login-box img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .login-box h1 {
-            color: #003366;
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .login-box p {
-            color: #667085;
-            margin-bottom: 20px;
-        }
-
-        .login-box .field {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #d9e1eb;
-            border-radius: 10px;
-            font-size: 1rem;
-            margin-bottom: 14px;
-        }
-
-        .login-box .field:focus {
-            outline: 2px solid #004aad;
-            border-color: transparent;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: #003366;
-            color: #fff;
-            border: 0;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .btn-primary:hover {
-            background: #004aad;
-        }
-
-        .login-error {
-            color: #b42318;
-            font-weight: 600;
-            margin-top: 12px;
-            display: none;
-        }
-
-        /* ===== PAINEL ===== */
-        .panel {
-            display: none;
-        }
-
-        .top-bar {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #b22234;
-            padding-bottom: 20px;
-        }
-
-        .top-bar h1 {
-            color: #003366;
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .top-bar h1 i {
-            color: #b22234;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #003366;
-            border: 2px solid #003366;
-        }
-
-        .btn-outline:hover {
-            background: #003366;
-            color: #fff;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(40, 167, 69, .3);
-        }
-
-        .btn-success:hover {
-            background: #34ce57;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: #b22234;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(178, 34, 52, .3);
-        }
-
-        .btn-danger:hover {
-            background: #cc3333;
-            transform: translateY(-2px);
-        }
-
-        .btn-warning {
-            background: #ffc107;
-            color: #333;
-            box-shadow: 0 4px 14px rgba(255, 193, 7, .3);
-        }
-
-        .btn-warning:hover {
-            background: #ffcd39;
-            transform: translateY(-2px);
-        }
-
-        .btn-primary-action {
-            background: #003366;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(0, 51, 102, .3);
-        }
-
-        .btn-primary-action:hover {
-            background: #004aad;
-            transform: translateY(-2px);
-        }
-
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.85rem;
-        }
-
-        .section-title {
-            font-size: 1.6rem;
-            color: #003366;
-            margin: 30px 0 18px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: #b22234;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 16px;
-            border: 1px solid #d9e1eb;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-
-        thead {
-            background: #003366;
-            color: #fff;
-        }
-
-        th {
-            padding: 14px 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #e9edf2;
-            vertical-align: middle;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover {
-            background: #f8faff;
-        }
-
-        .acoes {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #d4edda;
-            color: #155724;
-            padding: 3px 12px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 40px;
-            color: #667085;
-        }
-
-        .empty i {
-            font-size: 3rem;
-            color: #b22234;
-            margin-bottom: 10px;
-        }
-
-        /* ===== FORMULÁRIO DE SÓCIO ===== */
-        .form-card {
-            background: #f8faff;
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid #d9e1eb;
-            margin-top: 20px;
-            display: none;
-        }
-
-        .form-card.visible {
-            display: block;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .form-grid .field {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #d9e1eb;
-            border-radius: 10px;
-            font-size: 0.95rem;
-        }
-
-        .form-grid .field:focus {
-            outline: 2px solid #004aad;
-            border-color: transparent;
-        }
-
-        .form-actions {
-            grid-column: 1 / -1;
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 8px;
-        }
-
-        .meses-checkbox {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            grid-column: 1 / -1;
-        }
-
-        .meses-checkbox label {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: #fff;
-            padding: 4px 12px;
-            border-radius: 30px;
-            border: 1px solid #d9e1eb;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .meses-checkbox label:hover {
-            background: #e6f0fa;
-        }
-
-        .meses-checkbox input[type="checkbox"] {
-            accent-color: #003366;
-            width: 16px;
-            height: 16px;
-        }
+        /* Formulário */
+        .form-card { background: #f8faff; border-radius: 16px; padding: 25px; border: 1px solid #d9e1eb; margin-top: 20px; display: none; }
+        .form-card.visible { display: block; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .form-grid .field { width: 100%; padding: 12px 14px; border: 1px solid #d9e1eb; border-radius: 10px; font-size: 0.95rem; }
+        .form-grid .field:focus { outline: 2px solid #004aad; border-color: transparent; }
+        .form-actions { grid-column: 1 / -1; display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+        .meses-checkbox { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; grid-column: 1 / -1; }
+        .meses-checkbox label { display: flex; align-items: center; gap: 4px; background: #fff; padding: 4px 12px; border-radius: 30px; border: 1px solid #d9e1eb; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .meses-checkbox label:hover { background: #e6f0fa; }
+        .meses-checkbox input[type="checkbox"] { accent-color: #003366; width: 16px; height: 16px; }
 
         @media (max-width: 600px) {
-            .top-bar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .acoes {
-                flex-direction: column;
-            }
+            .top-bar { flex-direction: column; align-items: flex-start; }
+            .form-grid { grid-template-columns: 1fr; }
+            .acoes { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <!-- ==================== LOGIN ==================== -->
+        <!-- Login -->
         <div id="loginView" class="login-box">
             <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
             <h1><i class="fas fa-lock"></i> Acesso Admin</h1>
@@ -389,38 +87,25 @@
             <div class="login-error" id="loginError">Senha incorreta. Tente novamente.</div>
         </div>
 
-        <!-- ==================== PAINEL ==================== -->
+        <!-- Painel -->
         <div id="panelView" class="panel">
-
-            <!-- Top bar -->
             <div class="top-bar">
                 <h1><i class="fas fa-user-shield"></i> Painel ASSGA</h1>
                 <div class="btn-group">
                     <button class="btn btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
-                    <button class="btn btn-success" onclick="mostrarFormulario()">
-                        <i class="fas fa-plus-circle"></i> Novo Sócio
-                    </button>
-                    <button class="btn btn-primary-action" onclick="carregarSocios()">
-                        <i class="fas fa-sync"></i> Atualizar
-                    </button>
+                    <button class="btn btn-success" onclick="mostrarFormulario()"><i class="fas fa-plus-circle"></i> Novo Sócio</button>
+                    <button class="btn btn-primary-action" onclick="carregarSocios()"><i class="fas fa-sync"></i> Atualizar</button>
                 </div>
             </div>
 
-            <!-- Tabela de sócios -->
             <h2 class="section-title"><i class="fas fa-id-card"></i> Gerenciar Carteirinhas</h2>
-            <div class="table-responsive" id="tabelaContainer">
-                <!-- renderizado via JS -->
-            </div>
+            <div class="table-responsive" id="tabelaContainer"></div>
 
-            <!-- Formulário de cadastro/edição -->
             <div class="form-card" id="formCard">
-                <h3 style="color:#003366; margin-bottom:16px;">
-                    <i class="fas fa-user-edit"></i> <span id="formTitleText">Novo Sócio</span>
-                </h3>
+                <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-user-edit"></i> <span id="formTitleText">Novo Sócio</span></h3>
                 <form id="socioForm">
                     <div class="form-grid">
                         <input type="hidden" id="editIndex" value="-1" />
-
                         <input class="field" type="text" id="nome" placeholder="Nome completo" required />
                         <input class="field" type="text" id="cpf" placeholder="CPF (apenas números)" required />
                         <input class="field" type="text" id="nascimento" placeholder="Nascimento (DD/MM/AAAA)" />
@@ -428,7 +113,6 @@
                         <input class="field" type="text" id="matricula" placeholder="Nº de sócio (opcional)" />
                         <input class="field" type="text" id="secretaria" placeholder="Secretaria (opcional)" />
                         <input class="field" type="text" id="foto" placeholder="URL da foto (opcional)" />
-
                         <div class="meses-checkbox">
                             <span style="font-weight:600; color:#003366; margin-right:6px;">Meses pagos em 2026:</span>
                             <label><input type="checkbox" class="mes-check" value="0" /> JAN</label>
@@ -444,113 +128,60 @@
                             <label><input type="checkbox" class="mes-check" value="10" /> NOV</label>
                             <label><input type="checkbox" class="mes-check" value="11" /> DEZ</label>
                         </div>
-
                         <div class="form-actions">
-                            <button type="button" class="btn btn-outline" onclick="fecharFormulario()">
-                                <i class="fas fa-times"></i> Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-primary-action">
-                                <i class="fas fa-save"></i> Salvar
-                            </button>
+                            <button type="button" class="btn btn-outline" onclick="fecharFormulario()"><i class="fas fa-times"></i> Cancelar</button>
+                            <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
                         </div>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 
     <script>
-        // ==========================================================
-        //  CONFIGURAÇÕES
-        // ==========================================================
+        // ===== CONFIG =====
         const ADMIN_PASSWORD = 'ASSGA2026';
         const STORAGE_KEY = 'assga_socios';
         const AUTH_KEY = 'assga_admin';
 
-        // ==========================================================
-        //  DADOS
-        // ==========================================================
-        function getSocios() {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        }
+        // ===== DADOS =====
+        function getSocios() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+        function setSocios(socios) { localStorage.setItem(STORAGE_KEY, JSON.stringify(socios)); }
 
-        function setSocios(socios) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(socios));
-        }
-
-        // ==========================================================
-        //  RENDERIZAR TABELA DE SÓCIOS
-        // ==========================================================
+        // ===== RENDERIZAR TABELA =====
         function carregarSocios() {
             const container = document.getElementById('tabelaContainer');
             const socios = getSocios();
-
             if (socios.length === 0) {
-                container.innerHTML = `
-                    <div class="empty">
-                        <i class="fas fa-users"></i>
-                        <p>Nenhum sócio cadastrado ainda.</p>
-                        <p style="font-size:0.9rem;">Clique em "Novo Sócio" para adicionar.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty"><i class="fas fa-users"></i><p>Nenhum sócio cadastrado ainda.</p><p style="font-size:0.9rem;">Clique em "Novo Sócio" para adicionar.</p></div>`;
                 return;
             }
-
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Nasc.</th>
-                            <th>Meses Pago</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
+            let html = `<table><thead><tr><th>Nº</th><th>Nome</th><th>CPF</th><th>Nasc.</th><th>Meses Pago</th><th>Ações</th></tr></thead><tbody>`;
             socios.forEach((s, index) => {
-                const mesesPagos = s.mesesPagos || [];
-                const qtd = mesesPagos.length;
-                const mesesStr = qtd > 0 ? `${qtd}/12` : '0/12';
-                html += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td><strong>${s.nome || '—'}</strong></td>
-                        <td>${s.cpf || '—'}</td>
-                        <td>${s.nascimento || '—'}</td>
-                        <td><span class="badge">${mesesStr}</span></td>
-                        <td>
-                            <div class="acoes">
-                                <a href="carteirinha.html?socio=${index}" target="_blank" class="btn btn-primary-action btn-sm">
-                                    <i class="fas fa-print"></i> Imprimir
-                                </a>
-                                <button class="btn btn-warning btn-sm" onclick="editarSocio(${index})">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                                <button class="btn btn-danger btn-sm" onclick="excluirSocio(${index})">
-                                    <i class="fas fa-trash"></i> Excluir
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                const qtd = (s.mesesPagos || []).length;
+                html += `<tr>
+                    <td>${index+1}</td>
+                    <td><strong>${s.nome || '—'}</strong></td>
+                    <td>${s.cpf || '—'}</td>
+                    <td>${s.nascimento || '—'}</td>
+                    <td><span class="badge">${qtd}/12</span></td>
+                    <td>
+                        <div class="acoes">
+                            <a href="carteirinha-impressa.html?socio=${index}" target="_blank" class="btn btn-primary-action btn-sm"><i class="fas fa-print"></i> Imprimir</a>
+                            <button class="btn btn-warning btn-sm" onclick="editarSocio(${index})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="excluirSocio(${index})"><i class="fas fa-trash"></i> Excluir</button>
+                        </div>
+                    </td>
+                </tr>`;
             });
-
             html += `</tbody></table>`;
             container.innerHTML = html;
         }
 
-        // ==========================================================
-        //  FORMULÁRIO (novo / editar)
-        // ==========================================================
+        // ===== FORMULÁRIO =====
         function mostrarFormulario(editIndex = -1) {
             const card = document.getElementById('formCard');
             card.classList.add('visible');
-
             const title = document.getElementById('formTitleText');
             if (editIndex === -1) {
                 title.textContent = 'Novo Sócio';
@@ -561,8 +192,7 @@
             } else {
                 title.textContent = 'Editar Sócio';
                 document.getElementById('editIndex').value = editIndex;
-                const socios = getSocios();
-                const s = socios[editIndex];
+                const s = getSocios()[editIndex];
                 if (s) {
                     document.getElementById('nome').value = s.nome || '';
                     document.getElementById('cpf').value = s.cpf || '';
@@ -571,7 +201,6 @@
                     document.getElementById('matricula').value = s.matricula || '';
                     document.getElementById('secretaria').value = s.secretaria || '';
                     document.getElementById('foto').value = s.foto || '';
-
                     const pagos = s.mesesPagos || [];
                     document.querySelectorAll('.mes-check').forEach(cb => {
                         cb.checked = pagos.includes(parseInt(cb.value));
@@ -580,17 +209,10 @@
             }
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+        function fecharFormulario() { document.getElementById('formCard').classList.remove('visible'); }
 
-        function fecharFormulario() {
-            document.getElementById('formCard').classList.remove('visible');
-        }
-
-        // ==========================================================
-        //  SALVAR (inserir ou atualizar)
-        // ==========================================================
         document.getElementById('socioForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
             const index = parseInt(document.getElementById('editIndex').value);
             const nome = document.getElementById('nome').value.trim();
             const cpf = document.getElementById('cpf').value.trim().replace(/\D/g, '');
@@ -599,48 +221,19 @@
             const matricula = document.getElementById('matricula').value.trim();
             const secretaria = document.getElementById('secretaria').value.trim();
             const foto = document.getElementById('foto').value.trim();
-
             const mesesPagos = [];
-            document.querySelectorAll('.mes-check:checked').forEach(cb => {
-                mesesPagos.push(parseInt(cb.value));
-            });
-
-            if (!nome || !cpf || !senha) {
-                alert('Nome, CPF e senha são obrigatórios.');
-                return;
-            }
-
-            const socio = {
-                nome,
-                cpf,
-                nascimento,
-                senha,
-                matricula,
-                secretaria,
-                foto,
-                mesesPagos
-            };
-
+            document.querySelectorAll('.mes-check:checked').forEach(cb => mesesPagos.push(parseInt(cb.value)));
+            if (!nome || !cpf || !senha) { alert('Nome, CPF e senha são obrigatórios.'); return; }
+            const socio = { nome, cpf, nascimento, senha, matricula, secretaria, foto, mesesPagos };
             let socios = getSocios();
-
-            if (index === -1) {
-                socios.push(socio);
-            } else {
-                socios[index] = socio;
-            }
-
+            if (index === -1) socios.push(socio);
+            else socios[index] = socio;
             setSocios(socios);
             carregarSocios();
             fecharFormulario();
         });
 
-        // ==========================================================
-        //  EDITAR / EXCLUIR
-        // ==========================================================
-        function editarSocio(index) {
-            mostrarFormulario(index);
-        }
-
+        function editarSocio(index) { mostrarFormulario(index); }
         function excluirSocio(index) {
             if (!confirm('Tem certeza que deseja excluir este sócio?')) return;
             const socios = getSocios();
@@ -650,26 +243,18 @@
             fecharFormulario();
         }
 
-        // ==========================================================
-        //  LOGIN / LOGOUT
-        // ==========================================================
+        // ===== LOGIN / LOGOUT =====
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const senha = document.getElementById('adminPassword').value.trim();
-            if (senha === ADMIN_PASSWORD) {
+            if (document.getElementById('adminPassword').value.trim() === ADMIN_PASSWORD) {
                 sessionStorage.setItem(AUTH_KEY, 'true');
                 document.getElementById('loginView').style.display = 'none';
                 document.getElementById('panelView').style.display = 'block';
                 carregarSocios();
-                // Se houver parâmetro ?novo na URL, abre o formulário
-                if (new URLSearchParams(window.location.search).has('novo')) {
-                    mostrarFormulario();
-                }
             } else {
                 document.getElementById('loginError').style.display = 'block';
             }
         });
-
         document.getElementById('logoutBtn').addEventListener('click', function() {
             sessionStorage.removeItem(AUTH_KEY);
             document.getElementById('loginView').style.display = 'block';
@@ -678,18 +263,12 @@
             document.getElementById('loginError').style.display = 'none';
         });
 
-        // ==========================================================
-        //  INICIALIZAÇÃO
-        // ==========================================================
+        // ===== INICIALIZAÇÃO =====
         if (sessionStorage.getItem(AUTH_KEY) === 'true') {
             document.getElementById('loginView').style.display = 'none';
             document.getElementById('panelView').style.display = 'block';
             carregarSocios();
-            if (new URLSearchParams(window.location.search).has('novo')) {
-                mostrarFormulario();
-            }
         }
     </script>
-
 </body>
 </html>

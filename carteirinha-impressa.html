@@ -1,340 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carteirinha ASSGA</title>
-    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: linear-gradient(135deg, #e6f0fa 0%, #d4e4f7 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 20px;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 950px;
-            width: 100%;
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,51,102,.25);
-        }
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
-        }
-        .btn-print {
-            background: linear-gradient(135deg, #003366, #1a4f8b);
-            color: #fff;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: .3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 6px 18px rgba(0,51,102,.3);
-        }
-        .btn-print:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(0,51,102,.4);
-            background: linear-gradient(135deg, #004aad, #1a5fa8);
-        }
-        .btn-voltar {
-            background: linear-gradient(135deg, #b22234, #cc3333);
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 6px 18px rgba(178,34,52,.3);
-            transition: .3s;
-        }
-        .btn-voltar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(178,34,52,.4);
-            background: linear-gradient(135deg, #cc3333, #dd4444);
-        }
+        body { background: linear-gradient(135deg, #e6f0fa 0%, #d4e4f7 100%); display: flex; flex-direction: column; align-items: center; padding: 30px 20px; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; }
+        .container { max-width: 950px; width: 100%; background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 20px 60px rgba(0,51,102,.25); }
+        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 25px; }
+        .btn-print { background: linear-gradient(135deg, #003366, #1a4f8b); color: #fff; border: none; padding: 14px 32px; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: .3s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 6px 18px rgba(0,51,102,.3); }
+        .btn-print:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,51,102,.4); background: linear-gradient(135deg, #004aad, #1a5fa8); }
+        .btn-voltar { background: linear-gradient(135deg, #b22234, #cc3333); color: #fff; border: none; padding: 12px 24px; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 6px 18px rgba(178,34,52,.3); transition: .3s; }
+        .btn-voltar:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(178,34,52,.4); background: linear-gradient(135deg, #cc3333, #dd4444); }
 
-        /* ===== CARTEIRINHA ===== */
-        .carteira-wrapper {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 30px rgba(0,0,0,.08);
-            border-left: 8px solid #003366;
-            border-right: 8px solid #b22234;
-            position: relative;
-            overflow: hidden;
-        }
-        .carteira-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(0,51,102,.04);
-            border-radius: 50%;
-        }
-        .carteira-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 3px solid #b22234;
-            padding-bottom: 12px;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .carteira-header .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .carteira-header .logo img {
-            height: 60px;
-            width: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,.1);
-        }
-        .carteira-header h1 {
-            font-size: 1.8rem;
-            color: #003366;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-        .carteira-header h1 i {
-            color: #b22234;
-            margin-right: 6px;
-        }
-        .carteira-header .subtitulo {
-            font-size: 0.8rem;
-            color: #555;
-            text-align: right;
-            background: #f0f4fa;
-            padding: 6px 14px;
-            border-radius: 30px;
-            border: 1px solid #d9e1eb;
-        }
-        .carteira-body {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-        .foto-area {
-            flex: 0 0 150px;
-            text-align: center;
-        }
-        .foto-area img {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 4px solid #003366;
-            background: #f0f4fa;
-            box-shadow: 0 4px 16px rgba(0,51,102,.2);
-        }
-        .foto-area .matricula {
-            margin-top: 10px;
-            font-weight: 700;
-            color: #003366;
-            font-size: 0.9rem;
-            background: #e6f0fa;
-            padding: 4px 12px;
-            border-radius: 30px;
-            display: inline-block;
-        }
-        .dados-area {
-            flex: 1;
-            min-width: 200px;
-        }
-        .dados-area p {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #d9e1eb;
-            font-size: 1rem;
-            align-items: center;
-        }
-        .dados-area p strong {
-            color: #003366;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .dados-area p strong i {
-            color: #b22234;
-        }
-        .dados-area .endereco {
-            font-size: 0.9rem;
-            color: #555;
-            border-bottom: none;
-            padding-top: 8px;
-            background: #f8faff;
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-top: 4px;
-        }
-        .dados-area .endereco i {
-            color: #003366;
-        }
-        .rodape-carteira {
-            margin-top: 20px;
-            padding-top: 14px;
-            border-top: 3px solid #003366;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #667085;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .rodape-carteira .cnpj {
-            font-weight: 700;
-            color: #003366;
-            background: #e6f0fa;
-            padding: 4px 14px;
-            border-radius: 30px;
-        }
-        .fundacao {
-            font-style: italic;
-            background: #f0f4fa;
-            padding: 4px 14px;
-            border-radius: 30px;
-        }
+        /* Carteirinha */
+        .carteira-wrapper { background: #ffffff; border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 8px 30px rgba(0,0,0,.08); border-left: 8px solid #003366; border-right: 8px solid #b22234; position: relative; overflow: hidden; }
+        .carteira-wrapper::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(0,51,102,.04); border-radius: 50%; }
+        .carteira-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #b22234; padding-bottom: 12px; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+        .carteira-header .logo { display: flex; align-items: center; gap: 12px; }
+        .carteira-header .logo img { height: 60px; width: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+        .carteira-header h1 { font-size: 1.8rem; color: #003366; font-weight: 900; letter-spacing: 1px; }
+        .carteira-header h1 i { color: #b22234; margin-right: 6px; }
+        .carteira-header .subtitulo { font-size: 0.8rem; color: #555; text-align: right; background: #f0f4fa; padding: 6px 14px; border-radius: 30px; border: 1px solid #d9e1eb; }
+        .carteira-body { display: flex; gap: 25px; flex-wrap: wrap; align-items: flex-start; }
+        .foto-area { flex: 0 0 150px; text-align: center; }
+        .foto-area img { width: 140px; height: 140px; object-fit: cover; border-radius: 16px; border: 4px solid #003366; background: #f0f4fa; box-shadow: 0 4px 16px rgba(0,51,102,.2); }
+        .foto-area .matricula { margin-top: 10px; font-weight: 700; color: #003366; font-size: 0.9rem; background: #e6f0fa; padding: 4px 12px; border-radius: 30px; display: inline-block; }
+        .dados-area { flex: 1; min-width: 200px; }
+        .dados-area p { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #d9e1eb; font-size: 1rem; align-items: center; }
+        .dados-area p strong { color: #003366; display: flex; align-items: center; gap: 6px; }
+        .dados-area p strong i { color: #b22234; }
+        .dados-area .endereco { font-size: 0.9rem; color: #555; border-bottom: none; padding-top: 8px; background: #f8faff; border-radius: 8px; padding: 10px 14px; margin-top: 4px; }
+        .dados-area .endereco i { color: #003366; }
+        .rodape-carteira { margin-top: 20px; padding-top: 14px; border-top: 3px solid #003366; display: flex; justify-content: space-between; font-size: 0.8rem; color: #667085; flex-wrap: wrap; gap: 8px; }
+        .rodape-carteira .cnpj { font-weight: 700; color: #003366; background: #e6f0fa; padding: 4px 14px; border-radius: 30px; }
+        .fundacao { font-style: italic; background: #f0f4fa; padding: 4px 14px; border-radius: 30px; }
 
-        /* ===== CARTÃO DE MENSALIDADE ===== */
-        .mensalidade-wrapper {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,.08);
-            border-left: 8px solid #b22234;
-            border-right: 8px solid #003366;
-        }
-        .mensalidade-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid #b22234;
-            padding-bottom: 10px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .mensalidade-header h2 {
-            color: #003366;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .mensalidade-header h2 i {
-            color: #b22234;
-        }
-        .mensalidade-header .ano {
-            font-weight: 700;
-            color: #b22234;
-            background: #fff0f0;
-            padding: 4px 16px;
-            border-radius: 30px;
-            border: 1px solid #b22234;
-        }
-        .meses-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 10px;
-        }
-        .mes-item {
-            background: #f8f9fa;
-            border: 2px solid #d9e1eb;
-            border-radius: 12px;
-            padding: 10px 0;
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: #555;
-            transition: .2s;
-            position: relative;
-        }
-        .mes-item.pago {
-            background: #d4edda;
-            border-color: #28a745;
-            color: #155724;
-            box-shadow: 0 2px 8px rgba(40,167,69,.2);
-        }
-        .mes-item.pago::after {
-            content: "✓";
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #28a745;
-            color: #fff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            line-height: 20px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(40,167,69,.3);
-        }
-        .mes-item .mes-nome {
-            display: block;
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-        }
-        .rodape-mensalidade {
-            margin-top: 16px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #667085;
-            border-top: 2px solid #d9e1eb;
-            padding-top: 14px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .rodape-mensalidade .secretaria {
-            font-weight: 700;
-            color: #b22234;
-            background: #fff0f0;
-            padding: 2px 14px;
-            border-radius: 30px;
-        }
+        /* Mensalidade */
+        .mensalidade-wrapper { background: #ffffff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,.08); border-left: 8px solid #b22234; border-right: 8px solid #003366; }
+        .mensalidade-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #b22234; padding-bottom: 10px; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+        .mensalidade-header h2 { color: #003366; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        .mensalidade-header h2 i { color: #b22234; }
+        .mensalidade-header .ano { font-weight: 700; color: #b22234; background: #fff0f0; padding: 4px 16px; border-radius: 30px; border: 1px solid #b22234; }
+        .meses-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+        .mes-item { background: #f8f9fa; border: 2px solid #d9e1eb; border-radius: 12px; padding: 10px 0; text-align: center; font-weight: 700; font-size: 0.8rem; color: #555; transition: .2s; position: relative; }
+        .mes-item.pago { background: #d4edda; border-color: #28a745; color: #155724; box-shadow: 0 2px 8px rgba(40,167,69,.2); }
+        .mes-item.pago::after { content: "✓"; position: absolute; top: -8px; right: -8px; background: #28a745; color: #fff; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; line-height: 20px; text-align: center; box-shadow: 0 2px 8px rgba(40,167,69,.3); }
+        .mes-item .mes-nome { display: block; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .5px; }
+        .rodape-mensalidade { margin-top: 16px; display: flex; justify-content: space-between; font-size: 0.8rem; color: #667085; border-top: 2px solid #d9e1eb; padding-top: 14px; flex-wrap: wrap; gap: 8px; }
+        .rodape-mensalidade .secretaria { font-weight: 700; color: #b22234; background: #fff0f0; padding: 2px 14px; border-radius: 30px; }
 
-        /* ===== IMPRESSÃO ===== */
         @media print {
             body { background: #fff; padding: 0; }
             .container { box-shadow: none; padding: 10px; border-radius: 0; }
             .btn-print, .btn-voltar { display: none; }
-            .carteira-wrapper, .mensalidade-wrapper {
-                box-shadow: none;
-                border-left: 4px solid #003366;
-                border-right: 4px solid #b22234;
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
+            .carteira-wrapper, .mensalidade-wrapper { box-shadow: none; border-left: 4px solid #003366; border-right: 4px solid #b22234; break-inside: avoid; page-break-inside: avoid; }
             .carteira-wrapper { margin-bottom: 20px; }
             .foto-area img { width: 120px; height: 120px; }
             .mes-item { padding: 6px 0; font-size: 0.7rem; }
@@ -354,16 +77,10 @@
             <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> Imprimir / PDF</button>
             <a href="admin.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
         </div>
-
-        <div id="carteiraContainer">
-            <!-- renderizado via JS -->
-        </div>
+        <div id="carteiraContainer"></div>
     </div>
-
     <script>
-        // ==========================================================
-        // Obtém dados do sócio: da URL (?socio=index) ou sessionStorage
-        // ==========================================================
+        // Obtém o sócio: da URL (?socio=index) ou sessionStorage (login do sócio)
         function getSocio() {
             const params = new URLSearchParams(window.location.search);
             const index = params.get('socio');
@@ -389,9 +106,6 @@
             throw new Error('Sócio não encontrado');
         }
 
-        // ==========================================================
-        // Dados fixos da associação
-        // ==========================================================
         const ASSGA = {
             nome: "Associação de surdos de São Gonçalo do Amarante",
             fundacao: "Fundada 23 de julho de 2024",
@@ -399,17 +113,13 @@
             endereco: "Rua da Floresta, 562 - São Gonçalo do Amarante-RN"
         };
 
-        // ==========================================================
-        // Renderizar Carteirinha
-        // ==========================================================
         function renderCarteirinha(socio) {
             const container = document.getElementById('carteiraContainer');
             const foto = socio.foto || 'src/imagens/avatar-padrao.jpg';
-            const meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+            const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
             const mesesPagos = socio.mesesPagos || [];
 
             let html = `
-                <!-- CARTEIRINHA PRINCIPAL -->
                 <div class="carteira-wrapper">
                     <div class="carteira-header">
                         <div class="logo">
@@ -439,19 +149,17 @@
                     </div>
                 </div>
 
-                <!-- CARTÃO DE MENSALIDADE -->
                 <div class="mensalidade-wrapper">
                     <div class="mensalidade-header">
                         <h2><i class="fas fa-calendar-check"></i> CARTÃO DE MENSALIDADE</h2>
                         <span class="ano">2026</span>
                     </div>
                     <div class="meses-grid">
-                        ${meses.map((mes, idx) => {
-                            const pago = mesesPagos.includes(idx);
-                            return `<div class="mes-item ${pago ? 'pago' : ''}">
+                        ${meses.map((mes, idx) => `
+                            <div class="mes-item ${mesesPagos.includes(idx) ? 'pago' : ''}">
                                 <span class="mes-nome">${mes}</span>
-                            </div>`;
-                        }).join('')}
+                            </div>
+                        `).join('')}
                     </div>
                     <div class="rodape-mensalidade">
                         <span><i class="fas fa-users"></i> ${ASSGA.nome}</span>
@@ -459,7 +167,6 @@
                     </div>
                 </div>
             `;
-
             container.innerHTML = html;
         }
 

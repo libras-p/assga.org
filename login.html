@@ -1,82 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Área do Sócio | ASSGA</title>
-    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%);
-            padding: 20px;
-        }
-        .login-box {
-            background: #fff;
-            padding: 40px 35px;
-            border-radius: 20px;
-            box-shadow: 0 18px 50px rgba(0,51,102,.14);
-            width: min(420px, 100%);
-            text-align: center;
-        }
-        .login-box img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-        .login-box h1 {
-            color: #003366;
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-        }
-        .login-box p {
-            color: #667085;
-            margin-bottom: 25px;
-        }
-        .field {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #d9e1eb;
-            border-radius: 10px;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .field:focus {
-            outline: 2px solid #004aad;
-            border-color: transparent;
-        }
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: #003366;
-            color: #fff;
-            border: 0;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: .3s;
-        }
+        body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%); padding: 20px; }
+        .login-box { background: #fff; padding: 40px 35px; border-radius: 20px; box-shadow: 0 18px 50px rgba(0,51,102,.14); width: min(420px, 100%); text-align: center; }
+        .login-box img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; }
+        .login-box h1 { color: #003366; font-size: 1.8rem; margin-bottom: 6px; }
+        .login-box p { color: #667085; margin-bottom: 25px; }
+        .field { width: 100%; padding: 14px 16px; border: 1px solid #d9e1eb; border-radius: 10px; margin-bottom: 16px; font-size: 1rem; }
+        .field:focus { outline: 2px solid #004aad; border-color: transparent; }
+        .btn-primary { width: 100%; padding: 14px; background: #003366; color: #fff; border: 0; border-radius: 10px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: .3s; }
         .btn-primary:hover { background: #004aad; }
-        .error {
-            color: #b42318;
-            font-weight: 600;
-            margin-top: 12px;
-            display: none;
-        }
-        .link-voltar {
-            display: inline-block;
-            margin-top: 18px;
-            color: #004aad;
-            text-decoration: none;
-        }
+        .error { color: #b42318; font-weight: 600; margin-top: 12px; display: none; }
+        .link-voltar { display: inline-block; margin-top: 18px; color: #004aad; text-decoration: none; }
         .link-voltar:hover { text-decoration: underline; }
     </style>
 </head>
@@ -86,14 +28,13 @@
         <h1><i class="fas fa-id-card"></i> Área do Sócio</h1>
         <p>Informe seu CPF e senha para acessar sua carteirinha digital.</p>
         <form id="loginForm">
-            <input class="field" type="text" id="cpf" placeholder="CPF (apenas números)" required>
-            <input class="field" type="password" id="senha" placeholder="Senha" required>
+            <input class="field" type="text" id="cpf" placeholder="CPF (apenas números)" required />
+            <input class="field" type="password" id="senha" placeholder="Senha" required />
             <button class="btn-primary" type="submit"><i class="fas fa-arrow-right-to-bracket"></i> Entrar</button>
         </form>
-        <div class="error" id="loginError" role="alert">CPF ou senha inválidos.</div>
+        <div class="error" id="loginError">CPF ou senha inválidos.</div>
         <a href="index.html" class="link-voltar"><i class="fas fa-chevron-left"></i> Voltar ao site</a>
     </div>
-
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -103,7 +44,7 @@
             const socio = socios.find(s => s.cpf === cpf && s.senha === senha);
             if (socio) {
                 sessionStorage.setItem('socioLogado', JSON.stringify(socio));
-                window.location.href = 'carteirinha.html';
+                window.location.href = 'carteirinha-impressa.html';
             } else {
                 document.getElementById('loginError').style.display = 'block';
             }
