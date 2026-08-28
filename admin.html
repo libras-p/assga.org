@@ -103,11 +103,33 @@
         .hidden { display: none !important; }
         .empty-msg { color: #999; font-style: italic; text-align: center; padding: 20px; }
 
+        /* Toast para mensagens de sucesso */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #28a745;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.2);
+            font-weight: 700;
+            z-index: 9999;
+            transition: .5s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
             .form-grid { grid-template-columns: 1fr; }
             .item-row { flex-direction: column; align-items: stretch; }
             .tabs .tab-btn { flex: 1; text-align: center; font-size: 0.8rem; padding: 8px 12px; }
+            .toast { left: 30px; right: 30px; text-align: center; }
         }
     </style>
 </head>
@@ -505,6 +527,9 @@
         </div>
     </div>
 
+    <!-- Toast para mensagens de sucesso -->
+    <div id="toast" class="toast">✅ Esportiva salva com sucesso!</div>
+
     <script>
         // ==========================================================
         // CONFIGURAÇÕES GERAIS
@@ -556,6 +581,15 @@
         function showMessage(id, text, type = 'success') {
             const el = document.getElementById(id);
             if (el) { el.textContent = text; el.style.color = type === 'success' ? '#28a745' : '#b22234'; }
+        }
+
+        // Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         // ==========================================================
@@ -1306,23 +1340,31 @@
             document.getElementById('formEsportivaItem').classList.remove('visible');
         }
 
+        // ===== EVENTO DE SALVAR (SEM REDIRECIONAMENTO) =====
         document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const index = parseInt(document.getElementById('editEsportivaIndex').value);
             const titulo = document.getElementById('espItemTitulo').value.trim();
             if (!titulo) { alert('Título é obrigatório.'); return; }
+
             const obj = {
                 titulo,
                 data: document.getElementById('espItemData').value.trim(),
                 texto: document.getElementById('espItemTexto').value.trim(),
                 imagem: getEspItemFotoBase64()
             };
+
             let lista = getEsportivas();
             if (index === -1) lista.push(obj);
             else lista[index] = obj;
             setEsportivas(lista);
-            // 🔁 REDIRECIONAMENTO PARA A PÁGINA PÚBLICA
-            window.location.href = 'esportiva.html';
+
+            // Fecha o formulário e recarrega a lista
+            fecharFormularioEsportiva();
+            renderEsportivas();
+
+            // Mostra mensagem de sucesso (Toast)
+            showToast('✅ Esportiva salva com sucesso!');
         });
 
         function editarEsportiva(index) {
@@ -1335,6 +1377,7 @@
             lista.splice(index, 1);
             setEsportivas(lista);
             renderEsportivas();
+            showToast('🗑️ Esportiva removida com sucesso.');
         }
 
         function carregarEsportivas() {
