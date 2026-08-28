@@ -1,228 +1,73 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nossas Esportivas - ASSGA</title>
-    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ASSGA - Esportivas">
+    <title>Esportivas - ASSGA</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: linear-gradient(145deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: #1e293b;
-        }
-        header {
-            background: linear-gradient(135deg, #003366, #004aad);
-            color: #fff;
-            padding: 18px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 4px 20px rgba(0,51,102,0.25);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; }
-        .logo-area img { width: 48px; height: 56px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
-        .logo-text {
-            font-size: 24px; font-weight: 800; letter-spacing: 1px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-        }
-        nav a {
-            color: #fff; text-decoration: none; font-weight: 600; padding: 8px 16px;
-            border-radius: 30px; transition: 0.3s;
-        }
-        nav a:hover { background: rgba(255,215,0,0.2); color: #ffd700; }
-        .hero {
-            background: linear-gradient(135deg, #003366, #1a5276);
-            padding: 50px 20px 40px;
-            text-align: center;
-            color: #fff;
-            border-bottom: 4px solid #ffd700;
-        }
-        .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; }
-        .hero h1 i { color: #ffd700; margin-right: 12px; }
-        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 8px auto 0; }
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
-        .esportivas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        .card {
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border: 1px solid #e9edf2;
-            transform: translateY(0);
-        }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 16px 50px rgba(0,51,102,0.15); border-color: #ffd700; }
-        .card-img {
-            width: 100%; height: 200px; object-fit: cover; background: #e6edf5;
-            transition: transform 0.5s ease;
-        }
-        .card:hover .card-img { transform: scale(1.03); }
-        .card-body { padding: 20px 22px 24px; }
-        .card-body h3 { color: #003366; font-size: 1.4rem; margin-bottom: 4px; font-weight: 700; }
-        .card-body .data { font-size: 0.9rem; color: #64748b; margin-bottom: 12px; }
-        .card-body .data i { color: #004aad; margin-right: 6px; }
-        .card-body .desc { color: #334155; line-height: 1.6; font-size: 0.95rem; word-break: break-word; }
-        .card-body .desc a { color: #004aad; text-decoration: none; font-weight: 600; }
-        .card-body .desc a:hover { text-decoration: underline; }
-        .empty-state { text-align: center; padding: 70px 20px; grid-column: 1 / -1; }
-        .empty-state i { font-size: 4rem; color: #b22234; margin-bottom: 16px; display: block; }
-        .empty-state p { font-size: 1.2rem; color: #64748b; }
-        .back-link { display: inline-block; margin-top: 30px; color: #003366; font-weight: 600; text-decoration: none; transition: 0.3s; }
-        .back-link i { margin-right: 8px; }
-        .back-link:hover { color: #004aad; transform: translateX(-4px); }
-        .info-section {
-            background: linear-gradient(135deg, #e9eef5, #d4e1ed);
-            padding: 50px 20px;
-            margin-top: 40px;
-        }
-        .info-section h2 { text-align: center; color: #003366; font-size: 2rem; margin-bottom: 30px; }
-        .info-section h2 i { color: #b22234; }
-        .info-grid {
-            display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;
-            max-width: 1000px; margin: 0 auto;
-        }
-        .info-card {
-            background: #fff; width: 220px; padding: 24px 20px; border-radius: 16px;
-            text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-            border-top: 4px solid #004aad; transition: 0.3s;
-        }
-        .info-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,74,173,0.12); border-top-color: #ffd700; }
-        .info-card .icon {
-            width: 60px; height: 60px; background: linear-gradient(135deg, #003366, #004aad);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 12px; color: #ffd700; font-size: 24px;
-        }
-        .info-card h3 { color: #003366; font-size: 1.1rem; margin-bottom: 6px; }
-        .info-card p { color: #475569; font-size: 0.95rem; line-height: 1.5; }
-        .info-card a { display: inline-block; margin-top: 12px; color: #004aad; font-size: 1.2rem; transition: 0.3s; }
-        .info-card a:hover { color: #ffd700; transform: scale(1.15); }
-        footer {
-            background: linear-gradient(135deg, #003366, #002244);
-            color: #fff;
-            padding: 30px 20px;
-            margin-top: 50px;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .footer-content .copy { font-size: 0.9rem; opacity: 0.85; line-height: 1.6; }
-        .footer-content .copy i { color: #ffd700; }
-        .social-links { display: flex; gap: 12px; }
-        .social-links a {
-            width: 42px; height: 42px; border-radius: 50%;
-            background: rgba(255,255,255,0.08);
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 1.2rem; transition: 0.3s; text-decoration: none;
-        }
-        .social-links a:hover { background: #ffd700; color: #003366; transform: translateY(-4px); }
-        @media (max-width: 768px) {
-            header { padding: 14px 20px; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .esportivas-grid { grid-template-columns: 1fr 1fr; }
-            .info-grid { flex-direction: column; align-items: center; }
-            .info-card { width: 100%; max-width: 300px; }
-        }
-        @media (max-width: 480px) {
-            .esportivas-grid { grid-template-columns: 1fr; }
-            .logo-text { font-size: 18px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, Helvetica, sans-serif; background: #f5f7fa; color: #12365a; }
+        .container { width: min(1180px, 92%); margin: 0 auto; }
+        header { background: #fff; border-bottom: 3px solid #c51f3a; padding: 18px 0; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+        .header-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .brand { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; color: #063b6d; text-decoration: none; }
+        .brand-icon { width: 44px; height: 44px; border-radius: 10px; background: #c51f3a; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: bold; }
+        .btn-voltar { text-decoration: none; color: #fff; background: #063b6d; padding: 11px 20px; border-radius: 22px; font-weight: 700; transition: background .2s; }
+        .btn-voltar:hover { background: #052f56; }
+        main { padding: 35px 0 60px; }
+        .title-area { text-align: center; margin-bottom: 30px; }
+        .title-area h1 { color: #063b6d; font-size: 32px; margin-bottom: 8px; }
+        .title-area h1::before { content: "⚽ "; }
+        .title-area p { color: #66788a; font-size: 16px; }
+        .esportivas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+        .card { background: #fff; border: 1px solid #dbe3ec; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,.07); transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(0,0,0,.12); }
+        .card-image { height: 145px; background: linear-gradient(135deg, #063b6d, #0b5b91); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 54px; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+        .card-content h2 { color: #063b6d; font-size: 19px; margin-bottom: 8px; }
+        .card-content p { color: #6d7b89; font-size: 14px; line-height: 1.5; margin-bottom: 12px; word-break: break-word; flex: 1; }
+        .card-content p a { color: #063b6d; text-decoration: none; font-weight: 600; }
+        .card-content p a:hover { text-decoration: underline; }
+        .data { color: #c51f3a; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+        .btn { display: block; text-align: center; text-decoration: none; background: #063b6d; color: #fff; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 14px; transition: background .2s; }
+        .btn:hover { background: #052f56; }
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #66788a; }
+        .empty-state i { font-size: 48px; color: #c51f3a; display: block; margin-bottom: 16px; }
+        footer { background: #063b6d; color: #fff; text-align: center; padding: 20px; font-size: 14px; }
+        @media (max-width: 1050px) { .esportivas { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 700px) {
+            .header-content { flex-direction: column; }
+            .brand { font-size: 24px; }
+            .esportivas { grid-template-columns: 1fr; }
+            .card-image { height: 180px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo-area">
-            <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
-            <span class="logo-text">ASSGA</span>
+<header>
+    <div class="container header-content">
+        <a href="index.html" class="brand">
+            <div class="brand-icon" id="brandIcon">A</div>
+            <span id="brandText">ASSGA</span>
         </a>
-        <nav>
-            <a href="index.html"><i class="fas fa-house"></i> Home</a>
-            <a href="esportiva.html" style="background:rgba(255,215,0,0.2);"><i class="fas fa-futbol"></i> Esportivas</a>
-            <a href="login.html"><i class="fas fa-id-card"></i> Área do Sócio</a>
-        </nav>
-    </header>
+        <a href="index.html" class="btn-voltar">← Página Inicial</a>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <section class="title-area">
+            <h1>Gerenciar Esportivas</h1>
+            <p>Confira as atividades e competições esportivas da ASSGA.</p>
+        </section>
+        <section class="esportivas" id="esportivasContainer"></section>
+    </div>
+</main>
+<footer>© 2026 ASSGA - Associação Desportiva</footer>
 
-    <section class="hero">
-        <h1><i class="fas fa-futbol"></i> Nossas Esportivas</h1>
-        <p>Atividades e campeonatos organizados pela ASSGA</p>
-    </section>
-
-    <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
-        <a href="admin.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
-    </main>
-
-    <section class="info-section">
-        <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
-        <div class="info-grid">
-            <div class="info-card">
-                <div class="icon"><i class="fas fa-location-dot"></i></div>
-                <h3>Endereço</h3>
-                <p>São Gonçalo do Amarante - RN</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=S%C3%A3o%20Gon%C3%A7alo%20do%20Amarante%20RN" target="_blank"><i class="fas fa-map-location-dot"></i></a>
-            </div>
-            <div class="info-card">
-                <div class="icon"><i class="fas fa-envelope"></i></div>
-                <h3>Email</h3>
-                <p>assgar2019@gmail.com</p>
-                <a href="mailto:assgar2019@gmail.com"><i class="fas fa-paper-plane"></i></a>
-            </div>
-            <div class="info-card">
-                <div class="icon"><i class="fas fa-phone"></i></div>
-                <h3>Telefone</h3>
-                <p>(84) 99698-1248</p>
-                <a href="tel:+5584996981248"><i class="fas fa-phone-volume"></i></a>
-            </div>
-            <div class="info-card">
-                <div class="icon"><i class="fas fa-building"></i></div>
-                <h3>CNPJ</h3>
-                <p>57.242.499/0001-60</p>
-                <a href="#"><i class="fas fa-id-card"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="copy">
-                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados<br />
-                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60
-            </div>
-            <div class="social-links">
-                <a href="https://www.instagram.com/assga_2019/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@ASSGAESPORTES" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="https://wa.me/5584996981248" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="mailto:assgar2019@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
+<script>
+    (function() {
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -239,29 +84,24 @@
             return /^https?:\/\/\S+/i.test(text.trim());
         }
 
-        function formatLink(text) {
-            if (isLink(text)) {
-                return `<a href="${escapeHtml(text.trim())}" target="_blank" rel="noopener">${escapeHtml(text.trim())}</a>`;
-            }
-            return escapeHtml(text);
-        }
-
-        function carregarLogo() {
+        function carregarConfig() {
             try {
                 const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
-                const logoImg = document.querySelector('.logo-area img');
-                if (logoImg && config.logoImg && config.logoImg.startsWith('data:image')) {
-                    logoImg.src = config.logoImg;
+                const icon = document.getElementById('brandIcon');
+                const text = document.getElementById('brandText');
+                if (icon && config.logoImg && config.logoImg.startsWith('data:image')) {
+                    icon.style.background = 'none';
+                    icon.style.padding = '0';
+                    icon.innerHTML = `<img src="${config.logoImg}" style="width:44px;height:44px;border-radius:10px;object-fit:cover;" alt="Logo">`;
                 }
-                const logoTxt = document.querySelector('.logo-text');
-                if (logoTxt && config.logoTxt) {
-                    logoTxt.textContent = config.logoTxt;
+                if (text && config.logoTxt) {
+                    text.textContent = config.logoTxt;
                 }
-            } catch (e) {}
+            } catch (e) { /* ignora */ }
         }
 
         function carregarEsportivas() {
-            const container = document.getElementById('esportivasList');
+            const container = document.getElementById('esportivasContainer');
             let lista = [];
             try {
                 const stored = localStorage.getItem('assga_esportivas');
@@ -271,12 +111,7 @@
             }
 
             if (!lista || lista.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-futbol"></i>
-                        <p>Nenhuma esportiva cadastrada no momento.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><i>🏟️</i><p>Nenhuma esportiva cadastrada no momento.</p></div>`;
                 return;
             }
 
@@ -288,25 +123,45 @@
                 return 0;
             });
 
-            container.innerHTML = lista.map(item => {
-                let desc = formatLink(item.texto || '');
-                return `
-                    <div class="card">
-                        <img class="card-img" src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="${escapeHtml(item.titulo)}" loading="lazy" />
-                        <div class="card-body">
-                            <h3>${escapeHtml(item.titulo)}</h3>
-                            ${item.data ? `<div class="data"><i class="fas fa-calendar-alt"></i> ${escapeHtml(item.data)}</div>` : ''}
-                            <div class="desc">${desc}</div>
+            let html = '';
+            lista.forEach(item => {
+                const titulo = escapeHtml(item.titulo || '');
+                const data = escapeHtml(item.data || '');
+                let descricao = escapeHtml(item.texto || '');
+                let linkUrl = '#';
+                if (isLink(item.texto)) {
+                    const url = item.texto.trim();
+                    descricao = `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(url)}</a>`;
+                    linkUrl = url;
+                }
+
+                let imagemHtml = '';
+                if (item.imagem && item.imagem.startsWith('data:image')) {
+                    imagemHtml = `<img src="${item.imagem}" alt="${titulo}">`;
+                } else {
+                    imagemHtml = '⚽';
+                }
+
+                html += `
+                    <article class="card">
+                        <div class="card-image">${imagemHtml}</div>
+                        <div class="card-content">
+                            <h2>${titulo}</h2>
+                            <p>${descricao}</p>
+                            ${data ? `<div class="data">📅 ${data}</div>` : ''}
+                            <a href="${linkUrl}" class="btn" ${linkUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>Ver Esportiva</a>
                         </div>
-                    </div>
+                    </article>
                 `;
-            }).join('');
+            });
+            container.innerHTML = html;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            carregarLogo();
+            carregarConfig();
             carregarEsportivas();
         });
-    </script>
+    })();
+</script>
 </body>
 </html>
