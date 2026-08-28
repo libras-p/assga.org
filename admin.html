@@ -7,12 +7,9 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== ESTILOS COMPLETOS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%); min-height: 100vh; display: flex; justify-content: center; padding: 30px 20px; }
         .container { max-width: 1200px; width: 100%; background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 20px 60px rgba(0,51,102,.25); }
-
-        /* Login */
         .login-box { max-width: 420px; margin: 40px auto; text-align: center; padding: 30px 25px; background: #f8faff; border-radius: 20px; border: 1px solid #d9e1eb; }
         .login-box img { width: 80px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; }
         .login-box h1 { color: #003366; font-size: 1.6rem; margin-bottom: 8px; }
@@ -22,8 +19,6 @@
         .btn-primary { width: 100%; padding: 14px; background: #003366; color: #fff; border: 0; border-radius: 10px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: .3s; }
         .btn-primary:hover { background: #004aad; }
         .login-error { color: #b42318; font-weight: 600; margin-top: 12px; display: none; }
-
-        /* Painel */
         .panel { display: none; }
         .top-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 3px solid #b22234; padding-bottom: 20px; }
         .top-bar h1 { color: #003366; font-size: 2rem; display: flex; align-items: center; gap: 12px; }
@@ -43,8 +38,6 @@
         .btn-secondary { background: #6c757d; color: #fff; }
         .btn-secondary:hover { background: #5a6268; transform: translateY(-2px); }
         .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
-
-        /* Abas */
         .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 16px; border-bottom: 2px solid #d9e1eb; padding-bottom: 10px; }
         .tab-btn { background: transparent; border: none; padding: 10px 20px; font-weight: 700; color: #667085; border-radius: 30px; cursor: pointer; transition: .3s; font-size: 0.95rem; }
         .tab-btn i { margin-right: 6px; }
@@ -53,13 +46,9 @@
         .tab-content { display: none; animation: fade .4s ease; }
         .tab-content.active { display: block; }
         @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Cards */
         .content-card { background: #f8faff; border-radius: 16px; padding: 25px; border: 1px solid #d9e1eb; margin-top: 20px; }
         .content-card h2 { color: #003366; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
         .content-card h2 i { color: #b22234; }
-
-        /* Tabelas e listas */
         .table-responsive { overflow-x: auto; border-radius: 16px; border: 1px solid #d9e1eb; }
         table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
         thead { background: #003366; color: #fff; }
@@ -70,8 +59,6 @@
         .badge { display: inline-block; background: #d4edda; color: #155724; padding: 3px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; }
         .empty { text-align: center; padding: 40px; color: #667085; }
         .empty i { font-size: 3rem; color: #b22234; margin-bottom: 10px; }
-
-        /* Formulários */
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
         .form-grid .field { width: 100%; padding: 12px 14px; border: 1px solid #d9e1eb; border-radius: 10px; font-size: 0.95rem; }
         .form-grid .field:focus { outline: 2px solid #004aad; border-color: transparent; }
@@ -79,30 +66,23 @@
         .form-actions { grid-column: 1 / -1; display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
         .form-card { display: none; margin-top: 20px; background: #f8faff; border-radius: 16px; padding: 25px; border: 1px solid #d9e1eb; }
         .form-card.visible { display: block; }
-
-        /* Upload de foto genérico */
         .foto-upload { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; border: 2px dashed #d9e1eb; border-radius: 12px; cursor: pointer; transition: 0.3s; background: #fff; }
         .foto-upload:hover { border-color: #003366; background: #f0f4fa; }
         .foto-upload img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; border: 3px solid #003366; background: #f0f4fa; }
         .foto-upload .label { font-weight: 600; color: #003366; }
         .foto-upload input[type="file"] { display: none; }
-
-        /* Lista de itens */
         .item-list { display: grid; gap: 10px; margin-top: 16px; }
         .item-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border-left: 4px solid #003366; background: #f7f9fc; border-radius: 8px; flex-wrap: wrap; }
         .item-row .info { display: flex; align-items: center; gap: 12px; flex: 1; }
         .item-row .info img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 2px solid #003366; background: #e6f0fa; }
         .item-row strong { color: #003366; }
         .item-actions { display: flex; gap: 7px; flex-wrap: wrap; }
-
-        /* Estilos adicionais para a Esportiva */
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: 600; color: #003366; margin-bottom: 5px; }
         .form-group label i { margin-right: 6px; color: #004aad; }
         .image-preview { max-width: 200px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd; }
         .hidden { display: none !important; }
         .empty-msg { color: #999; font-style: italic; text-align: center; padding: 20px; }
-
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
             .form-grid { grid-template-columns: 1fr; }
@@ -112,901 +92,908 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- ===== LOGIN ===== -->
-        <div id="loginView" class="login-box">
-            <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
-            <h1><i class="fas fa-lock"></i> Acesso Admin</h1>
-            <p>Digite a senha administrativa para gerenciar o sistema.</p>
-            <form id="loginForm">
-                <input class="field" type="password" id="adminPassword" placeholder="Senha administrativa" required />
-                <button class="btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> Entrar</button>
-            </form>
-            <div class="login-error" id="loginError">Senha incorreta. Tente novamente.</div>
-        </div>
-
-        <!-- ===== PAINEL ===== -->
-        <div id="panelView" class="panel">
-            <!-- Topo -->
-            <div class="top-bar">
-                <h1><i class="fas fa-user-shield"></i> Painel ASSGA</h1>
-                <div class="btn-group">
-                    <button class="btn btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
-                    <button class="btn btn-primary-action" onclick="location.reload()"><i class="fas fa-sync"></i> Atualizar</button>
-                </div>
-            </div>
-
-            <!-- Abas -->
-            <div class="tabs" id="tabButtons">
-                <button class="tab-btn active" data-tab="socios"><i class="fas fa-id-card"></i> Sócios</button>
-                <button class="tab-btn" data-tab="diretoria"><i class="fas fa-users"></i> Diretoria</button>
-                <button class="tab-btn" data-tab="noticias"><i class="fas fa-newspaper"></i> Notícias</button>
-                <button class="tab-btn" data-tab="historia"><i class="fas fa-book-open"></i> História</button>
-                <button class="tab-btn" data-tab="esportiva"><i class="fas fa-futbol"></i> Esportiva</button>
-                <button class="tab-btn" data-tab="esportivas"><i class="fas fa-list"></i> Esportivas</button>
-                <button class="tab-btn" data-tab="eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
-                <button class="tab-btn" data-tab="estatuto"><i class="fas fa-file-contract"></i> Estatuto</button>
-                <button class="tab-btn" data-tab="slider"><i class="fas fa-images"></i> Slider</button>
-                <button class="tab-btn" data-tab="logo"><i class="fas fa-image"></i> Logo</button>
-                <button class="tab-btn" data-tab="index"><i class="fas fa-house"></i> Página Inicial</button>
-            </div>
-
-            <!-- ===== ABA SÓCIOS ===== -->
-            <div id="tab-socios" class="tab-content active">
-                <div class="content-card">
-                    <h2><i class="fas fa-id-card"></i> Gerenciar Sócios</h2>
-                    <button class="btn btn-success" onclick="mostrarFormularioSocio()"><i class="fas fa-plus"></i> Novo Sócio</button>
-                    <div class="table-responsive" id="tabelaSocios" style="margin-top:16px;"></div>
-                    <div class="form-card" id="formSocio">
-                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-user-edit"></i> <span id="socioFormTitle">Novo Sócio</span></h3>
-                        <form id="socioForm">
-                            <input type="hidden" id="editSocioIndex" value="-1" />
-                            <div class="form-grid">
-                                <input class="field" type="text" id="socioNome" placeholder="Nome completo" required />
-                                <input class="field" type="text" id="socioCpf" placeholder="CPF (apenas números)" required />
-                                <input class="field" type="text" id="socioNasc" placeholder="Nascimento (DD/MM/AAAA)" />
-                                <input class="field" type="text" id="socioSenha" placeholder="Senha" required />
-                                <input class="field" type="text" id="socioMatricula" placeholder="Nº de sócio (opcional)" />
-                                <input class="field" type="text" id="socioSecretaria" placeholder="Secretaria (opcional)" />
-                                <div class="foto-upload" onclick="document.getElementById('fotoInput').click()">
-                                    <img id="fotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto 3x4" />
-                                    <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
-                                    <input type="file" id="fotoInput" accept="image/*" />
-                                </div>
-                                <div class="meses-checkbox" style="grid-column:1/-1; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
-                                    <span style="font-weight:600; color:#003366; margin-right:6px;">Meses pagos em 2026:</span>
-                                    <label><input type="checkbox" class="mes-check" value="0" /> JAN</label>
-                                    <label><input type="checkbox" class="mes-check" value="1" /> FEV</label>
-                                    <label><input type="checkbox" class="mes-check" value="2" /> MAR</label>
-                                    <label><input type="checkbox" class="mes-check" value="3" /> ABR</label>
-                                    <label><input type="checkbox" class="mes-check" value="4" /> MAI</label>
-                                    <label><input type="checkbox" class="mes-check" value="5" /> JUN</label>
-                                    <label><input type="checkbox" class="mes-check" value="6" /> JUL</label>
-                                    <label><input type="checkbox" class="mes-check" value="7" /> AGO</label>
-                                    <label><input type="checkbox" class="mes-check" value="8" /> SET</label>
-                                    <label><input type="checkbox" class="mes-check" value="9" /> OUT</label>
-                                    <label><input type="checkbox" class="mes-check" value="10" /> NOV</label>
-                                    <label><input type="checkbox" class="mes-check" value="11" /> DEZ</label>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioSocio()"><i class="fas fa-times"></i> Cancelar</button>
-                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ABA DIRETORIA ===== -->
-            <div id="tab-diretoria" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-users"></i> Gerenciar Diretoria</h2>
-                    <button class="btn btn-success" onclick="mostrarFormularioDiretor()"><i class="fas fa-plus"></i> Adicionar Membro</button>
-                    <div id="listaDiretoria" class="item-list"></div>
-                    <div class="form-card" id="formDiretor">
-                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-user-plus"></i> <span id="diretorFormTitle">Novo Membro</span></h3>
-                        <form id="diretorForm">
-                            <input type="hidden" id="editDiretorIndex" value="-1" />
-                            <div class="form-grid">
-                                <input class="field" type="text" id="dirNome" placeholder="Nome completo" required />
-                                <input class="field" type="text" id="dirCargo" placeholder="Cargo" required />
-                                <input class="field" type="text" id="dirDescricao" placeholder="Descrição" />
-                                <input class="field" type="email" id="dirEmail" placeholder="E-mail" />
-                                <input class="field" type="text" id="dirTelefone" placeholder="Telefone" />
-                                <div class="foto-upload" onclick="document.getElementById('dirFotoInput').click()">
-                                    <img id="dirFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto do diretor" />
-                                    <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
-                                    <input type="file" id="dirFotoInput" accept="image/*" />
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioDiretor()"><i class="fas fa-times"></i> Cancelar</button>
-                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ABA NOTÍCIAS ===== -->
-            <div id="tab-noticias" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-newspaper"></i> Gerenciar Notícias</h2>
-                    <button class="btn btn-success" onclick="mostrarFormularioNoticia()"><i class="fas fa-plus"></i> Adicionar Notícia</button>
-                    <div id="listaNoticias" class="item-list"></div>
-                    <div class="form-card" id="formNoticia">
-                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-plus-circle"></i> <span id="noticiaFormTitle">Nova Notícia</span></h3>
-                        <form id="noticiaForm">
-                            <input type="hidden" id="editNoticiaIndex" value="-1" />
-                            <div class="form-grid">
-                                <input class="field" type="text" id="notTitulo" placeholder="Título" required />
-                                <input class="field" type="text" id="notData" placeholder="Data (ex: 15 de agosto de 2026)" />
-                                <textarea class="field full" id="notResumo" placeholder="Resumo/descrição" rows="3"></textarea>
-                                <textarea class="field full" id="notTexto" placeholder="Texto completo (opcional)" rows="5"></textarea>
-                                <div class="foto-upload" onclick="document.getElementById('notFotoInput').click()">
-                                    <img id="notFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da notícia" />
-                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
-                                    <input type="file" id="notFotoInput" accept="image/*" />
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioNoticia()"><i class="fas fa-times"></i> Cancelar</button>
-                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ABA HISTÓRIA ===== -->
-            <div id="tab-historia" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
-                    <form id="historiaForm">
-                        <div class="form-grid">
-                            <input class="field" id="histTitulo" placeholder="Título da página" />
-                            <input class="field" id="histSubtitulo" placeholder="Subtítulo" />
-                            <div class="foto-upload" onclick="document.getElementById('histFotoInput').click()" style="grid-column:1/-1;">
-                                <img id="histFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem de capa da História" />
-                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem de capa</span>
-                                <input type="file" id="histFotoInput" accept="image/*" />
-                            </div>
-                            <textarea class="field full" id="histTextoExtra" placeholder="Texto adicional (pode conter HTML, imagens, etc.)" rows="6"></textarea>
-                            <textarea class="field full" id="histFundacao" placeholder="Fundação" rows="3"></textarea>
-                            <textarea class="field full" id="histMissao" placeholder="Missão" rows="3"></textarea>
-                            <input class="field full" id="histValores" placeholder="Valores (separados por vírgula)" />
-                            <textarea class="field full" id="histTimeline" placeholder="Linha do tempo (ANO|DESCRIÇÃO, uma por linha)" rows="5"></textarea>
-                            <textarea class="field full" id="histNumeros" placeholder="Números (NÚMERO|RÓTULO, uma por linha)" rows="4"></textarea>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar História</button>
-                            </div>
-                        </div>
-                    </form>
-                    <p id="msgHist" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
-                </div>
-            </div>
-
-            <!-- ===== ABA ESPORTIVA (CONTEÚDO DA PÁGINA /esportiva.html) ===== -->
-            <div id="tab-esportiva" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-futbol"></i> Gerenciar Conteúdo da Esportiva</h2>
-                    <form id="formEsportiva">
-                        <div class="form-group">
-                            <label for="espTitulo"><i class="fas fa-heading"></i> Título do Banner</label>
-                            <input type="text" id="espTitulo" class="field" placeholder="Ex: Nossa Esportiva" style="width:100%;" />
-                        </div>
-                        <div class="form-group">
-                            <label for="espSubtitulo"><i class="fas fa-align-left"></i> Subtítulo</label>
-                            <input type="text" id="espSubtitulo" class="field" placeholder="Ex: Conheça as modalidades e campeonatos" style="width:100%;" />
-                        </div>
-                        <div class="form-group">
-                            <label for="espImagemUpload"><i class="fas fa-image"></i> Imagem de Capa</label>
-                            <input type="file" id="espImagemUpload" accept="image/*" />
-                            <div id="espPreviewContainer" class="hidden" style="margin-top:10px;">
-                                <img id="espImagemPreview" class="image-preview" alt="Pré-visualização" />
-                                <button type="button" class="btn btn-danger" id="espRemoverImagem" style="margin-top:8px; padding:5px 12px; font-size:0.8rem;">
-                                    <i class="fas fa-trash"></i> Remover imagem
-                                </button>
-                            </div>
-                            <input type="hidden" id="espImagemBase64" />
-                        </div>
-                        <div class="form-group">
-                            <label for="espData"><i class="fas fa-calendar-alt"></i> Data de Destaque</label>
-                            <input type="text" id="espData" class="field" placeholder="Ex: 23 de julho de 2024" style="width:100%;" />
-                        </div>
-                        <div class="form-group">
-                            <label for="espTextoExtra"><i class="fas fa-paragraph"></i> Texto Extra (pode usar HTML)</label>
-                            <textarea id="espTextoExtra" class="field" rows="3" placeholder="Ex: &lt;p&gt;A ASSGA oferece diversas modalidades...&lt;/p&gt;" style="width:100%;"></textarea>
-                        </div>
-                        <hr style="margin: 30px 0; border: 1px dashed #ccc;" />
-                        <h3 style="color: #003366; margin-top: 20px;"><i class="fas fa-list"></i> Modalidades</h3>
-                        <div id="espModalidadesList"></div>
-                        <button type="button" class="btn btn-success" id="espAddModalidadeBtn"><i class="fas fa-plus-circle"></i> Adicionar Modalidade</button>
-                        <hr style="margin: 30px 0; border: 1px dashed #ccc;" />
-                        <h3 style="color: #003366; margin-top: 20px;"><i class="fas fa-trophy"></i> Campeonatos</h3>
-                        <div id="espCampeonatosList"></div>
-                        <button type="button" class="btn btn-success" id="espAddCampeonatoBtn"><i class="fas fa-plus-circle"></i> Adicionar Campeonato</button>
-                        <div class="btn-group" style="margin-top: 40px;">
-                            <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Alterações</button>
-                            <button type="button" class="btn btn-warning" id="espCarregarDadosBtn"><i class="fas fa-undo-alt"></i> Recarregar Dados</button>
-                            <a href="esportiva.html" target="_blank" class="btn btn-secondary"><i class="fas fa-eye"></i> Visualizar Página</a>
-                        </div>
-                    </form>
-                    <p id="msgEsp" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
-                </div>
-            </div>
-
-            <!-- ===== ABA ESPORTIVAS (LISTA DE ITENS INDIVIDUAIS) ===== -->
-            <div id="tab-esportivas" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-list"></i> Gerenciar Esportivas</h2>
-                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
-                        <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
-                            <i class="fas fa-plus"></i> Adicionar Esportiva
-                        </button>
-                        <a href="esportiva.html" target="_blank" class="btn btn-secondary">
-                            <i class="fas fa-eye"></i> Visualizar Página
-                        </a>
-                    </div>
-                    <div id="listaEsportivas" class="item-list"></div>
-                    <div class="form-card" id="formEsportivaItem">
-                        <h3 style="color:#003366; margin-bottom:16px;">
-                            <i class="fas fa-plus-circle"></i> <span id="esportivaFormTitle">Nova Esportiva</span>
-                        </h3>
-                        <form id="esportivaItemForm">
-                            <input type="hidden" id="editEsportivaIndex" value="-1" />
-                            <div class="form-grid">
-                                <input class="field" type="text" id="espItemTitulo" placeholder="Título" required />
-                                <input class="field" type="text" id="espItemData" placeholder="Data (ex: 12/20)" />
-                                <textarea class="field full" id="espItemTexto" placeholder="Descrição ou texto" rows="4"></textarea>
-                                <div class="foto-upload" onclick="document.getElementById('espItemFotoInput').click()" style="grid-column:1/-1;">
-                                    <img id="espItemFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da esportiva" />
-                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
-                                    <input type="file" id="espItemFotoInput" accept="image/*" />
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioEsportiva()">
-                                        <i class="fas fa-times"></i> Cancelar
-                                    </button>
-                                    <button type="submit" class="btn btn-primary-action">
-                                        <i class="fas fa-save"></i> Salvar
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ABA EVENTOS ===== -->
-            <div id="tab-eventos" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-calendar-days"></i> Gerenciar Eventos</h2>
-                    <button class="btn btn-success" onclick="mostrarFormularioEvento()"><i class="fas fa-plus"></i> Adicionar Evento</button>
-                    <div id="listaEventos" class="item-list"></div>
-                    <div class="form-card" id="formEvento">
-                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-calendar-plus"></i> <span id="eventoFormTitle">Novo Evento</span></h3>
-                        <form id="eventoForm">
-                            <input type="hidden" id="editEventoIndex" value="-1" />
-                            <div class="form-grid">
-                                <input class="field" type="text" id="evTitulo" placeholder="Título" required />
-                                <input class="field" type="text" id="evData" placeholder="Data" />
-                                <input class="field" type="text" id="evLocal" placeholder="Local" />
-                                <input class="field" type="text" id="evPreco" placeholder="Preço (R$)" />
-                                <select class="field" id="evStatus">
-                                    <option value="aberto">Inscrições Abertas</option>
-                                    <option value="andamento">Em andamento</option>
-                                    <option value="fechado">Encerrado</option>
-                                </select>
-                                <textarea class="field full" id="evDescricao" placeholder="Descrição" rows="3"></textarea>
-                                <div class="foto-upload" onclick="document.getElementById('evFotoInput').click()" style="grid-column:1/-1;">
-                                    <img id="evFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem do evento" />
-                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem do evento</span>
-                                    <input type="file" id="evFotoInput" accept="image/*" />
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioEvento()"><i class="fas fa-times"></i> Cancelar</button>
-                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ABA ESTATUTO ===== -->
-            <div id="tab-estatuto" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-file-contract"></i> Conteúdo do Estatuto</h2>
-                    <form id="estatutoForm">
-                        <div class="form-grid">
-                            <input class="field" id="estTitulo" placeholder="Título da página" />
-                            <input class="field" id="estSubtitulo" placeholder="Subtítulo" />
-                            <textarea class="field full" id="estDados" placeholder="Dados (CHAVE|VALOR, uma por linha)" rows="5"></textarea>
-                            <textarea class="field full" id="estObjetivos" placeholder="Objetivos (um por linha)" rows="4"></textarea>
-                            <textarea class="field full" id="estDiretoria" placeholder="Cargos da diretoria (um por linha)" rows="4"></textarea>
-                            <textarea class="field full" id="estDisposicoes" placeholder="Disposições Gerais" rows="4"></textarea>
-                            <input class="field full" id="estPdf" placeholder="Link para PDF (opcional)" />
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Estatuto</button>
-                            </div>
-                        </div>
-                    </form>
-                    <p id="msgEst" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
-                </div>
-            </div>
-
-            <!-- ===== ABA SLIDER ===== -->
-            <div id="tab-slider" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-images"></i> Gerenciar Slider da Página Inicial</h2>
-                    <button class="btn btn-success" onclick="mostrarFormularioSlide()"><i class="fas fa-plus"></i> Adicionar Slide</button>
-                    <div id="listaSlider" class="item-list"></div>
-                    <div class="form-card" id="formSlide">
-                        <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-plus-circle"></i> <span id="slideFormTitle">Novo Slide</span></h3>
-                        <form id="slideForm">
-                            <input type="hidden" id="editSlideIndex" value="-1" />
-                            <div class="form-grid">
-                                <input class="field full" type="text" id="slideTexto" placeholder="Texto do slide" required />
-                                <div class="foto-upload" onclick="document.getElementById('slideFotoInput').click()">
-                                    <img id="slideFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem do slide" />
-                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
-                                    <input type="file" id="slideFotoInput" accept="image/*" />
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioSlide()"><i class="fas fa-times"></i> Cancelar</button>
-                                    <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== ABA LOGO ===== -->
-            <div id="tab-logo" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-image"></i> Gerenciar Logo</h2>
-                    <form id="logoForm">
-                        <div class="form-grid">
-                            <div class="foto-upload" onclick="document.getElementById('logoImgInput').click()" style="grid-column:1/-1;">
-                                <img id="logoPreview" src="src/imagens/Assga_foto.jpg" alt="Logo atual" />
-                                <span class="label"><i class="fas fa-camera"></i> Clique para trocar a imagem da logo</span>
-                                <input type="file" id="logoImgInput" accept="image/*" />
-                            </div>
-                            <input class="field full" type="text" id="logoTxt" placeholder="Texto da logo (ex: ASSGA)" />
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Logo</button>
-                            </div>
-                        </div>
-                    </form>
-                    <p id="msgLogo" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
-                </div>
-            </div>
-
-            <!-- ===== ABA PÁGINA INICIAL ===== -->
-            <div id="tab-index" class="tab-content">
-                <div class="content-card">
-                    <h2><i class="fas fa-house"></i> Conteúdo da Página Inicial</h2>
-                    <form id="indexForm">
-                        <div class="form-grid">
-                            <input class="field full" id="idxTitulo" placeholder="Título do Slider" />
-                            <textarea class="field full" id="idxTexto" placeholder="Texto adicional (abaixo do slider)" rows="4"></textarea>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Página Inicial</button>
-                            </div>
-                        </div>
-                    </form>
-                    <p id="msgIndex" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
-                </div>
-            </div>
-
-        </div>
+<div class="container">
+    <!-- LOGIN -->
+    <div id="loginView" class="login-box">
+        <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
+        <h1><i class="fas fa-lock"></i> Acesso Admin</h1>
+        <p>Digite a senha administrativa para gerenciar o sistema.</p>
+        <form id="loginForm">
+            <input class="field" type="password" id="adminPassword" placeholder="Senha administrativa" required />
+            <button class="btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+        </form>
+        <div class="login-error" id="loginError">Senha incorreta. Tente novamente.</div>
     </div>
 
-    <script>
-        // ==========================================================
-        // CONFIGURAÇÕES GERAIS
-        // ==========================================================
-        const ADMIN_PASSWORD = 'ASSGA2026';
-        const AUTH_KEY = 'assga_admin';
-        const STORAGE_KEYS = {
-            socios: 'assga_socios',
-            diretoria: 'assga_diretoria',
-            noticias: 'assga_noticias',
-            historia: 'assga_conteudos',
-            esportiva: 'assga_conteudos',
-            eventos: 'assga_eventos',
-            estatuto: 'assga_conteudos',
-            slider: 'assga_slider',
-            config: 'assga_config',
-            index: 'assga_conteudos',
-            esportivas: 'assga_esportivas'
+    <!-- PAINEL -->
+    <div id="panelView" class="panel">
+        <div class="top-bar">
+            <h1><i class="fas fa-user-shield"></i> Painel ASSGA</h1>
+            <div class="btn-group">
+                <button class="btn btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                <button class="btn btn-primary-action" onclick="location.reload()"><i class="fas fa-sync"></i> Atualizar</button>
+            </div>
+        </div>
+
+        <div class="tabs" id="tabButtons">
+            <button class="tab-btn active" data-tab="socios"><i class="fas fa-id-card"></i> Sócios</button>
+            <button class="tab-btn" data-tab="diretoria"><i class="fas fa-users"></i> Diretoria</button>
+            <button class="tab-btn" data-tab="noticias"><i class="fas fa-newspaper"></i> Notícias</button>
+            <button class="tab-btn" data-tab="historia"><i class="fas fa-book-open"></i> História</button>
+            <button class="tab-btn" data-tab="esportiva"><i class="fas fa-futbol"></i> Esportiva</button>
+            <button class="tab-btn" data-tab="esportivas"><i class="fas fa-list"></i> Esportivas</button>
+            <button class="tab-btn" data-tab="eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
+            <button class="tab-btn" data-tab="estatuto"><i class="fas fa-file-contract"></i> Estatuto</button>
+            <button class="tab-btn" data-tab="slider"><i class="fas fa-images"></i> Slider</button>
+            <button class="tab-btn" data-tab="logo"><i class="fas fa-image"></i> Logo</button>
+            <button class="tab-btn" data-tab="index"><i class="fas fa-house"></i> Página Inicial</button>
+        </div>
+
+        <!-- SÓCIOS -->
+        <div id="tab-socios" class="tab-content active">
+            <div class="content-card">
+                <h2><i class="fas fa-id-card"></i> Gerenciar Sócios</h2>
+                <button class="btn btn-success" onclick="mostrarFormularioSocio()"><i class="fas fa-plus"></i> Novo Sócio</button>
+                <div class="table-responsive" id="tabelaSocios" style="margin-top:16px;"></div>
+                <div class="form-card" id="formSocio">
+                    <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-user-edit"></i> <span id="socioFormTitle">Novo Sócio</span></h3>
+                    <form id="socioForm">
+                        <input type="hidden" id="editSocioIndex" value="-1" />
+                        <div class="form-grid">
+                            <input class="field" type="text" id="socioNome" placeholder="Nome completo" required />
+                            <input class="field" type="text" id="socioCpf" placeholder="CPF (apenas números)" required />
+                            <input class="field" type="text" id="socioNasc" placeholder="Nascimento (DD/MM/AAAA)" />
+                            <input class="field" type="text" id="socioSenha" placeholder="Senha" required />
+                            <input class="field" type="text" id="socioMatricula" placeholder="Nº de sócio (opcional)" />
+                            <input class="field" type="text" id="socioSecretaria" placeholder="Secretaria (opcional)" />
+                            <div class="foto-upload" onclick="document.getElementById('fotoInput').click()">
+                                <img id="fotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto 3x4" />
+                                <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
+                                <input type="file" id="fotoInput" accept="image/*" />
+                            </div>
+                            <div class="meses-checkbox" style="grid-column:1/-1; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                                <span style="font-weight:600; color:#003366; margin-right:6px;">Meses pagos em 2026:</span>
+                                <label><input type="checkbox" class="mes-check" value="0" /> JAN</label>
+                                <label><input type="checkbox" class="mes-check" value="1" /> FEV</label>
+                                <label><input type="checkbox" class="mes-check" value="2" /> MAR</label>
+                                <label><input type="checkbox" class="mes-check" value="3" /> ABR</label>
+                                <label><input type="checkbox" class="mes-check" value="4" /> MAI</label>
+                                <label><input type="checkbox" class="mes-check" value="5" /> JUN</label>
+                                <label><input type="checkbox" class="mes-check" value="6" /> JUL</label>
+                                <label><input type="checkbox" class="mes-check" value="7" /> AGO</label>
+                                <label><input type="checkbox" class="mes-check" value="8" /> SET</label>
+                                <label><input type="checkbox" class="mes-check" value="9" /> OUT</label>
+                                <label><input type="checkbox" class="mes-check" value="10" /> NOV</label>
+                                <label><input type="checkbox" class="mes-check" value="11" /> DEZ</label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="fecharFormularioSocio()"><i class="fas fa-times"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIRETORIA -->
+        <div id="tab-diretoria" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-users"></i> Gerenciar Diretoria</h2>
+                <button class="btn btn-success" onclick="mostrarFormularioDiretor()"><i class="fas fa-plus"></i> Adicionar Membro</button>
+                <div id="listaDiretoria" class="item-list"></div>
+                <div class="form-card" id="formDiretor">
+                    <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-user-plus"></i> <span id="diretorFormTitle">Novo Membro</span></h3>
+                    <form id="diretorForm">
+                        <input type="hidden" id="editDiretorIndex" value="-1" />
+                        <div class="form-grid">
+                            <input class="field" type="text" id="dirNome" placeholder="Nome completo" required />
+                            <input class="field" type="text" id="dirCargo" placeholder="Cargo" required />
+                            <input class="field" type="text" id="dirDescricao" placeholder="Descrição" />
+                            <input class="field" type="email" id="dirEmail" placeholder="E-mail" />
+                            <input class="field" type="text" id="dirTelefone" placeholder="Telefone" />
+                            <div class="foto-upload" onclick="document.getElementById('dirFotoInput').click()">
+                                <img id="dirFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Foto do diretor" />
+                                <span class="label"><i class="fas fa-camera"></i> Clique para enviar foto 3x4</span>
+                                <input type="file" id="dirFotoInput" accept="image/*" />
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="fecharFormularioDiretor()"><i class="fas fa-times"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTÍCIAS -->
+        <div id="tab-noticias" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-newspaper"></i> Gerenciar Notícias</h2>
+                <button class="btn btn-success" onclick="mostrarFormularioNoticia()"><i class="fas fa-plus"></i> Adicionar Notícia</button>
+                <div id="listaNoticias" class="item-list"></div>
+                <div class="form-card" id="formNoticia">
+                    <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-plus-circle"></i> <span id="noticiaFormTitle">Nova Notícia</span></h3>
+                    <form id="noticiaForm">
+                        <input type="hidden" id="editNoticiaIndex" value="-1" />
+                        <div class="form-grid">
+                            <input class="field" type="text" id="notTitulo" placeholder="Título" required />
+                            <input class="field" type="text" id="notData" placeholder="Data (ex: 15 de agosto de 2026)" />
+                            <textarea class="field full" id="notResumo" placeholder="Resumo/descrição" rows="3"></textarea>
+                            <textarea class="field full" id="notTexto" placeholder="Texto completo (opcional)" rows="5"></textarea>
+                            <div class="foto-upload" onclick="document.getElementById('notFotoInput').click()">
+                                <img id="notFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da notícia" />
+                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
+                                <input type="file" id="notFotoInput" accept="image/*" />
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="fecharFormularioNoticia()"><i class="fas fa-times"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTÓRIA -->
+        <div id="tab-historia" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-book-open"></i> Conteúdo da História</h2>
+                <form id="historiaForm">
+                    <div class="form-grid">
+                        <input class="field" id="histTitulo" placeholder="Título da página" />
+                        <input class="field" id="histSubtitulo" placeholder="Subtítulo" />
+                        <div class="foto-upload" onclick="document.getElementById('histFotoInput').click()" style="grid-column:1/-1;">
+                            <img id="histFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem de capa da História" />
+                            <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem de capa</span>
+                            <input type="file" id="histFotoInput" accept="image/*" />
+                        </div>
+                        <textarea class="field full" id="histTextoExtra" placeholder="Texto adicional (pode conter HTML, imagens, etc.)" rows="6"></textarea>
+                        <textarea class="field full" id="histFundacao" placeholder="Fundação" rows="3"></textarea>
+                        <textarea class="field full" id="histMissao" placeholder="Missão" rows="3"></textarea>
+                        <input class="field full" id="histValores" placeholder="Valores (separados por vírgula)" />
+                        <textarea class="field full" id="histTimeline" placeholder="Linha do tempo (ANO|DESCRIÇÃO, uma por linha)" rows="5"></textarea>
+                        <textarea class="field full" id="histNumeros" placeholder="Números (NÚMERO|RÓTULO, uma por linha)" rows="4"></textarea>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar História</button>
+                        </div>
+                    </div>
+                </form>
+                <p id="msgHist" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+            </div>
+        </div>
+
+        <!-- ESPORTIVA (CONTEÚDO DA PÁGINA) -->
+        <div id="tab-esportiva" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-futbol"></i> Gerenciar Conteúdo da Esportiva</h2>
+                <form id="formEsportiva">
+                    <div class="form-group">
+                        <label for="espTitulo"><i class="fas fa-heading"></i> Título do Banner</label>
+                        <input type="text" id="espTitulo" class="field" placeholder="Ex: Nossa Esportiva" style="width:100%;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="espSubtitulo"><i class="fas fa-align-left"></i> Subtítulo</label>
+                        <input type="text" id="espSubtitulo" class="field" placeholder="Ex: Conheça as modalidades e campeonatos" style="width:100%;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="espImagemUpload"><i class="fas fa-image"></i> Imagem de Capa</label>
+                        <input type="file" id="espImagemUpload" accept="image/*" />
+                        <div id="espPreviewContainer" class="hidden" style="margin-top:10px;">
+                            <img id="espImagemPreview" class="image-preview" alt="Pré-visualização" />
+                            <button type="button" class="btn btn-danger" id="espRemoverImagem" style="margin-top:8px; padding:5px 12px; font-size:0.8rem;">
+                                <i class="fas fa-trash"></i> Remover imagem
+                            </button>
+                        </div>
+                        <input type="hidden" id="espImagemBase64" />
+                    </div>
+                    <div class="form-group">
+                        <label for="espData"><i class="fas fa-calendar-alt"></i> Data de Destaque</label>
+                        <input type="text" id="espData" class="field" placeholder="Ex: 23 de julho de 2024" style="width:100%;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="espTextoExtra"><i class="fas fa-paragraph"></i> Texto Extra (pode usar HTML)</label>
+                        <textarea id="espTextoExtra" class="field" rows="3" placeholder="Ex: &lt;p&gt;A ASSGA oferece diversas modalidades...&lt;/p&gt;" style="width:100%;"></textarea>
+                    </div>
+                    <hr style="margin: 30px 0; border: 1px dashed #ccc;" />
+                    <h3 style="color: #003366; margin-top: 20px;"><i class="fas fa-list"></i> Modalidades</h3>
+                    <div id="espModalidadesList"></div>
+                    <button type="button" class="btn btn-success" id="espAddModalidadeBtn"><i class="fas fa-plus-circle"></i> Adicionar Modalidade</button>
+                    <hr style="margin: 30px 0; border: 1px dashed #ccc;" />
+                    <h3 style="color: #003366; margin-top: 20px;"><i class="fas fa-trophy"></i> Campeonatos</h3>
+                    <div id="espCampeonatosList"></div>
+                    <button type="button" class="btn btn-success" id="espAddCampeonatoBtn"><i class="fas fa-plus-circle"></i> Adicionar Campeonato</button>
+                    <div class="btn-group" style="margin-top: 40px;">
+                        <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Alterações</button>
+                        <button type="button" class="btn btn-warning" id="espCarregarDadosBtn"><i class="fas fa-undo-alt"></i> Recarregar Dados</button>
+                        <a href="esportiva.html" target="_blank" class="btn btn-secondary"><i class="fas fa-eye"></i> Visualizar Página</a>
+                    </div>
+                </form>
+                <p id="msgEsp" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+            </div>
+        </div>
+
+        <!-- ESPORTIVAS (LISTA DE ITENS) -->
+        <div id="tab-esportivas" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-list"></i> Gerenciar Esportivas</h2>
+                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                    <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
+                        <i class="fas fa-plus"></i> Adicionar Esportiva
+                    </button>
+                    <a href="esportiva.html" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i> Visualizar Página
+                    </a>
+                </div>
+                <div id="listaEsportivas" class="item-list"></div>
+                <div class="form-card" id="formEsportivaItem">
+                    <h3 style="color:#003366; margin-bottom:16px;">
+                        <i class="fas fa-plus-circle"></i> <span id="esportivaFormTitle">Nova Esportiva</span>
+                    </h3>
+                    <form id="esportivaItemForm">
+                        <input type="hidden" id="editEsportivaIndex" value="-1" />
+                        <div class="form-grid">
+                            <input class="field" type="text" id="espItemTitulo" placeholder="Título" required />
+                            <input class="field" type="text" id="espItemData" placeholder="Data (ex: 12/20)" />
+                            <textarea class="field full" id="espItemTexto" placeholder="Descrição ou texto" rows="4"></textarea>
+                            <div class="foto-upload" onclick="document.getElementById('espItemFotoInput').click()" style="grid-column:1/-1;">
+                                <img id="espItemFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da esportiva" />
+                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
+                                <input type="file" id="espItemFotoInput" accept="image/*" />
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="fecharFormularioEsportiva()">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary-action">
+                                    <i class="fas fa-save"></i> Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- EVENTOS -->
+        <div id="tab-eventos" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-calendar-days"></i> Gerenciar Eventos</h2>
+                <button class="btn btn-success" onclick="mostrarFormularioEvento()"><i class="fas fa-plus"></i> Adicionar Evento</button>
+                <div id="listaEventos" class="item-list"></div>
+                <div class="form-card" id="formEvento">
+                    <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-calendar-plus"></i> <span id="eventoFormTitle">Novo Evento</span></h3>
+                    <form id="eventoForm">
+                        <input type="hidden" id="editEventoIndex" value="-1" />
+                        <div class="form-grid">
+                            <input class="field" type="text" id="evTitulo" placeholder="Título" required />
+                            <input class="field" type="text" id="evData" placeholder="Data" />
+                            <input class="field" type="text" id="evLocal" placeholder="Local" />
+                            <input class="field" type="text" id="evPreco" placeholder="Preço (R$)" />
+                            <select class="field" id="evStatus">
+                                <option value="aberto">Inscrições Abertas</option>
+                                <option value="andamento">Em andamento</option>
+                                <option value="fechado">Encerrado</option>
+                            </select>
+                            <textarea class="field full" id="evDescricao" placeholder="Descrição" rows="3"></textarea>
+                            <div class="foto-upload" onclick="document.getElementById('evFotoInput').click()" style="grid-column:1/-1;">
+                                <img id="evFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem do evento" />
+                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem do evento</span>
+                                <input type="file" id="evFotoInput" accept="image/*" />
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="fecharFormularioEvento()"><i class="fas fa-times"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESTATUTO -->
+        <div id="tab-estatuto" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-file-contract"></i> Conteúdo do Estatuto</h2>
+                <form id="estatutoForm">
+                    <div class="form-grid">
+                        <input class="field" id="estTitulo" placeholder="Título da página" />
+                        <input class="field" id="estSubtitulo" placeholder="Subtítulo" />
+                        <textarea class="field full" id="estDados" placeholder="Dados (CHAVE|VALOR, uma por linha)" rows="5"></textarea>
+                        <textarea class="field full" id="estObjetivos" placeholder="Objetivos (um por linha)" rows="4"></textarea>
+                        <textarea class="field full" id="estDiretoria" placeholder="Cargos da diretoria (um por linha)" rows="4"></textarea>
+                        <textarea class="field full" id="estDisposicoes" placeholder="Disposições Gerais" rows="4"></textarea>
+                        <input class="field full" id="estPdf" placeholder="Link para PDF (opcional)" />
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Estatuto</button>
+                        </div>
+                    </div>
+                </form>
+                <p id="msgEst" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+            </div>
+        </div>
+
+        <!-- SLIDER -->
+        <div id="tab-slider" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-images"></i> Gerenciar Slider da Página Inicial</h2>
+                <button class="btn btn-success" onclick="mostrarFormularioSlide()"><i class="fas fa-plus"></i> Adicionar Slide</button>
+                <div id="listaSlider" class="item-list"></div>
+                <div class="form-card" id="formSlide">
+                    <h3 style="color:#003366; margin-bottom:16px;"><i class="fas fa-plus-circle"></i> <span id="slideFormTitle">Novo Slide</span></h3>
+                    <form id="slideForm">
+                        <input type="hidden" id="editSlideIndex" value="-1" />
+                        <div class="form-grid">
+                            <input class="field full" type="text" id="slideTexto" placeholder="Texto do slide" required />
+                            <div class="foto-upload" onclick="document.getElementById('slideFotoInput').click()">
+                                <img id="slideFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem do slide" />
+                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
+                                <input type="file" id="slideFotoInput" accept="image/*" />
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="fecharFormularioSlide()"><i class="fas fa-times"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGO -->
+        <div id="tab-logo" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-image"></i> Gerenciar Logo</h2>
+                <form id="logoForm">
+                    <div class="form-grid">
+                        <div class="foto-upload" onclick="document.getElementById('logoImgInput').click()" style="grid-column:1/-1;">
+                            <img id="logoPreview" src="src/imagens/Assga_foto.jpg" alt="Logo atual" />
+                            <span class="label"><i class="fas fa-camera"></i> Clique para trocar a imagem da logo</span>
+                            <input type="file" id="logoImgInput" accept="image/*" />
+                        </div>
+                        <input class="field full" type="text" id="logoTxt" placeholder="Texto da logo (ex: ASSGA)" />
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Logo</button>
+                        </div>
+                    </div>
+                </form>
+                <p id="msgLogo" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+            </div>
+        </div>
+
+        <!-- PÁGINA INICIAL -->
+        <div id="tab-index" class="tab-content">
+            <div class="content-card">
+                <h2><i class="fas fa-house"></i> Conteúdo da Página Inicial</h2>
+                <form id="indexForm">
+                    <div class="form-grid">
+                        <input class="field full" id="idxTitulo" placeholder="Título do Slider" />
+                        <textarea class="field full" id="idxTexto" placeholder="Texto adicional (abaixo do slider)" rows="4"></textarea>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Página Inicial</button>
+                        </div>
+                    </div>
+                </form>
+                <p id="msgIndex" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==========================================================
+    // CONFIGURAÇÕES GERAIS
+    // ==========================================================
+    const ADMIN_PASSWORD = 'ASSGA2026';
+    const AUTH_KEY = 'assga_admin';
+    const STORAGE_KEYS = {
+        socios: 'assga_socios',
+        diretoria: 'assga_diretoria',
+        noticias: 'assga_noticias',
+        historia: 'assga_conteudos',
+        esportiva: 'assga_conteudos',
+        eventos: 'assga_eventos',
+        estatuto: 'assga_conteudos',
+        slider: 'assga_slider',
+        config: 'assga_config',
+        index: 'assga_conteudos',
+        esportivas: 'assga_esportivas'
+    };
+
+    // ==========================================================
+    // UTILITÁRIOS
+    // ==========================================================
+    function getData(key) {
+        try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
+    }
+    function setData(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+    function getObject(key) {
+        try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; }
+    }
+    function setObject(key, obj) {
+        localStorage.setItem(key, JSON.stringify(obj));
+    }
+    function escapeHtml(text) {
+        if (!text) return '';
+        return String(text).replace(/[&<>"']/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            if (m === '"') return '&quot;';
+            if (m === "'") return '&#039;';
+            return m;
+        });
+    }
+    function showMessage(id, text, type = 'success') {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = text; el.style.color = type === 'success' ? '#28a745' : '#b22234'; }
+    }
+
+    // ==========================================================
+    // LOGIN / LOGOUT
+    // ==========================================================
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (document.getElementById('adminPassword').value.trim() === ADMIN_PASSWORD) {
+            sessionStorage.setItem(AUTH_KEY, 'true');
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('panelView').style.display = 'block';
+            carregarTodasAbas();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    });
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        sessionStorage.removeItem(AUTH_KEY);
+        document.getElementById('loginView').style.display = 'block';
+        document.getElementById('panelView').style.display = 'none';
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('loginError').style.display = 'none';
+    });
+
+    // ==========================================================
+    // TABS
+    // ==========================================================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+            const tab = this.dataset.tab;
+            if (tab === 'socios') renderSocios();
+            else if (tab === 'diretoria') renderDiretoria();
+            else if (tab === 'noticias') renderNoticias();
+            else if (tab === 'eventos') renderEventos();
+            else if (tab === 'slider') renderSlider();
+            else if (tab === 'logo') carregarLogo();
+            else if (tab === 'historia') carregarHistoria();
+            else if (tab === 'esportiva') carregarEsportiva();
+            else if (tab === 'esportivas') carregarEsportivas();
+            else if (tab === 'estatuto') carregarEstatuto();
+            else if (tab === 'index') carregarIndex();
+        });
+    });
+
+    function carregarTodasAbas() {
+        renderSocios();
+        renderDiretoria();
+        renderNoticias();
+        renderEventos();
+        renderSlider();
+        carregarLogo();
+        carregarHistoria();
+        carregarEsportiva();
+        carregarEsportivas();
+        carregarEstatuto();
+        carregarIndex();
+    }
+
+    // ==========================================================
+    // SOCIOS
+    // ==========================================================
+    function renderSocios() {
+        const container = document.getElementById('tabelaSocios');
+        const socios = getData(STORAGE_KEYS.socios);
+        if (socios.length === 0) {
+            container.innerHTML = `<div class="empty"><i class="fas fa-users"></i><p>Nenhum sócio cadastrado.</p></div>`;
+            return;
+        }
+        let html = `<table><thead><tr><th>Nº</th><th>Nome</th><th>CPF</th><th>Nasc.</th><th>Meses</th><th>Ações</th></tr></thead><tbody>`;
+        socios.forEach((s, i) => {
+            const qtd = (s.mesesPagos || []).length;
+            html += `<tr>
+                <td>${i+1}</td>
+                <td><strong>${escapeHtml(s.nome)}</strong></td>
+                <td>${escapeHtml(s.cpf)}</td>
+                <td>${escapeHtml(s.nascimento)}</td>
+                <td><span class="badge">${qtd}/12</span></td>
+                <td>
+                    <div class="acoes">
+                        <a href="carteirinha-impressa.html?socio=${i}" target="_blank" class="btn btn-primary-action btn-sm"><i class="fas fa-print"></i> Imprimir</a>
+                        <button class="btn btn-warning btn-sm" onclick="editarSocio(${i})"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirSocio(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    document.getElementById('fotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('fotoPreview').src = ev.target.result;
         };
+        reader.readAsDataURL(file);
+    });
 
-        // ==========================================================
-        // UTILITÁRIOS
-        // ==========================================================
-        function getData(key) {
-            try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
-        }
-        function setData(key, data) {
-            localStorage.setItem(key, JSON.stringify(data));
-        }
-        function getObject(key) {
-            try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; }
-        }
-        function setObject(key, obj) {
-            localStorage.setItem(key, JSON.stringify(obj));
-        }
+    function getFotoBase64() {
+        const img = document.getElementById('fotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setFotoPreview(url) {
+        const img = document.getElementById('fotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            return String(text).replace(/[&<>"']/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                if (m === '"') return '&quot;';
-                if (m === "'") return '&#039;';
-                return m;
-            });
-        }
-
-        function showMessage(id, text, type = 'success') {
-            const el = document.getElementById(id);
-            if (el) { el.textContent = text; el.style.color = type === 'success' ? '#28a745' : '#b22234'; }
-        }
-
-        // ==========================================================
-        // LOGIN / LOGOUT
-        // ==========================================================
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (document.getElementById('adminPassword').value.trim() === ADMIN_PASSWORD) {
-                sessionStorage.setItem(AUTH_KEY, 'true');
-                document.getElementById('loginView').style.display = 'none';
-                document.getElementById('panelView').style.display = 'block';
-                carregarTodasAbas();
-            } else {
-                document.getElementById('loginError').style.display = 'block';
+    function mostrarFormularioSocio(editIndex = -1) {
+        const card = document.getElementById('formSocio');
+        card.classList.add('visible');
+        document.getElementById('editSocioIndex').value = editIndex;
+        document.getElementById('socioFormTitle').textContent = editIndex === -1 ? 'Novo Sócio' : 'Editar Sócio';
+        if (editIndex === -1) {
+            document.getElementById('socioForm').reset();
+            document.querySelectorAll('.mes-check').forEach(cb => cb.checked = false);
+            setFotoPreview('');
+        } else {
+            const s = getData(STORAGE_KEYS.socios)[editIndex];
+            if (s) {
+                document.getElementById('socioNome').value = s.nome || '';
+                document.getElementById('socioCpf').value = s.cpf || '';
+                document.getElementById('socioNasc').value = s.nascimento || '';
+                document.getElementById('socioSenha').value = s.senha || '';
+                document.getElementById('socioMatricula').value = s.matricula || '';
+                document.getElementById('socioSecretaria').value = s.secretaria || '';
+                setFotoPreview(s.foto || '');
+                const pagos = s.mesesPagos || [];
+                document.querySelectorAll('.mes-check').forEach(cb => {
+                    cb.checked = pagos.includes(parseInt(cb.value));
+                });
             }
-        });
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            sessionStorage.removeItem(AUTH_KEY);
-            document.getElementById('loginView').style.display = 'block';
-            document.getElementById('panelView').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('loginError').style.display = 'none';
-        });
-
-        // ==========================================================
-        // TABS
-        // ==========================================================
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                document.getElementById('tab-' + this.dataset.tab).classList.add('active');
-                const tab = this.dataset.tab;
-                if (tab === 'socios') renderSocios();
-                else if (tab === 'diretoria') renderDiretoria();
-                else if (tab === 'noticias') renderNoticias();
-                else if (tab === 'eventos') renderEventos();
-                else if (tab === 'slider') renderSlider();
-                else if (tab === 'logo') carregarLogo();
-                else if (tab === 'historia') carregarHistoria();
-                else if (tab === 'esportiva') carregarEsportiva();
-                else if (tab === 'esportivas') carregarEsportivas();
-                else if (tab === 'estatuto') carregarEstatuto();
-                else if (tab === 'index') carregarIndex();
-            });
-        });
-
-        function carregarTodasAbas() {
-            renderSocios();
-            renderDiretoria();
-            renderNoticias();
-            renderEventos();
-            renderSlider();
-            carregarLogo();
-            carregarHistoria();
-            carregarEsportiva();
-            carregarEsportivas();
-            carregarEstatuto();
-            carregarIndex();
         }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioSocio() {
+        document.getElementById('formSocio').classList.remove('visible');
+    }
 
-        // ==========================================================
-        // SOCIOS (CRUD com upload de foto)
-        // ==========================================================
-        function renderSocios() {
-            const container = document.getElementById('tabelaSocios');
-            const socios = getData(STORAGE_KEYS.socios);
-            if (socios.length === 0) {
-                container.innerHTML = `<div class="empty"><i class="fas fa-users"></i><p>Nenhum sócio cadastrado.</p></div>`;
-                return;
-            }
-            let html = `<table><thead><tr><th>Nº</th><th>Nome</th><th>CPF</th><th>Nasc.</th><th>Meses</th><th>Ações</th></tr></thead><tbody>`;
-            socios.forEach((s, i) => {
-                const qtd = (s.mesesPagos || []).length;
-                html += `<tr>
-                    <td>${i+1}</td>
-                    <td><strong>${escapeHtml(s.nome)}</strong></td>
-                    <td>${escapeHtml(s.cpf)}</td>
-                    <td>${escapeHtml(s.nascimento)}</td>
-                    <td><span class="badge">${qtd}/12</span></td>
-                    <td>
-                        <div class="acoes">
-                            <a href="carteirinha-impressa.html?socio=${i}" target="_blank" class="btn btn-primary-action btn-sm"><i class="fas fa-print"></i> Imprimir</a>
-                            <button class="btn btn-warning btn-sm" onclick="editarSocio(${i})"><i class="fas fa-edit"></i> Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="excluirSocio(${i})"><i class="fas fa-trash"></i> Excluir</button>
-                        </div>
-                    </td>
-                </tr>`;
-            });
-            html += `</tbody></table>`;
-            container.innerHTML = html;
+    document.getElementById('socioForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editSocioIndex').value);
+        const nome = document.getElementById('socioNome').value.trim();
+        const cpf = document.getElementById('socioCpf').value.trim().replace(/\D/g, '');
+        const nascimento = document.getElementById('socioNasc').value.trim();
+        const senha = document.getElementById('socioSenha').value.trim();
+        const matricula = document.getElementById('socioMatricula').value.trim();
+        const secretaria = document.getElementById('socioSecretaria').value.trim();
+        const foto = getFotoBase64();
+        const mesesPagos = [];
+        document.querySelectorAll('.mes-check:checked').forEach(cb => mesesPagos.push(parseInt(cb.value)));
+        if (!nome || !cpf || !senha) { alert('Nome, CPF e senha são obrigatórios.'); return; }
+        const socio = { nome, cpf, nascimento, senha, matricula, secretaria, foto, mesesPagos };
+        let socios = getData(STORAGE_KEYS.socios);
+        if (index === -1) socios.push(socio);
+        else socios[index] = socio;
+        setData(STORAGE_KEYS.socios, socios);
+        renderSocios();
+        fecharFormularioSocio();
+    });
+
+    function editarSocio(index) { mostrarFormularioSocio(index); }
+    function excluirSocio(index) {
+        if (!confirm('Excluir este sócio?')) return;
+        let socios = getData(STORAGE_KEYS.socios);
+        socios.splice(index, 1);
+        setData(STORAGE_KEYS.socios, socios);
+        renderSocios();
+    }
+
+    // ==========================================================
+    // DIRETORIA
+    // ==========================================================
+    document.getElementById('dirFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('dirFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getDirFotoBase64() {
+        const img = document.getElementById('dirFotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setDirFotoPreview(url) {
+        const img = document.getElementById('dirFotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+
+    function renderDiretoria() {
+        const container = document.getElementById('listaDiretoria');
+        const lista = getData(STORAGE_KEYS.diretoria);
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-users"></i><p>Nenhum membro cadastrado.</p></div>';
+            return;
         }
-
-        document.getElementById('fotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('fotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function getFotoBase64() {
-            const img = document.getElementById('fotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setFotoPreview(url) {
-            const img = document.getElementById('fotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
-
-        function mostrarFormularioSocio(editIndex = -1) {
-            const card = document.getElementById('formSocio');
-            card.classList.add('visible');
-            document.getElementById('editSocioIndex').value = editIndex;
-            document.getElementById('socioFormTitle').textContent = editIndex === -1 ? 'Novo Sócio' : 'Editar Sócio';
-            if (editIndex === -1) {
-                document.getElementById('socioForm').reset();
-                document.querySelectorAll('.mes-check').forEach(cb => cb.checked = false);
-                setFotoPreview('');
-            } else {
-                const s = getData(STORAGE_KEYS.socios)[editIndex];
-                if (s) {
-                    document.getElementById('socioNome').value = s.nome || '';
-                    document.getElementById('socioCpf').value = s.cpf || '';
-                    document.getElementById('socioNasc').value = s.nascimento || '';
-                    document.getElementById('socioSenha').value = s.senha || '';
-                    document.getElementById('socioMatricula').value = s.matricula || '';
-                    document.getElementById('socioSecretaria').value = s.secretaria || '';
-                    setFotoPreview(s.foto || '');
-                    const pagos = s.mesesPagos || [];
-                    document.querySelectorAll('.mes-check').forEach(cb => {
-                        cb.checked = pagos.includes(parseInt(cb.value));
-                    });
-                }
-            }
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        function fecharFormularioSocio() {
-            document.getElementById('formSocio').classList.remove('visible');
-        }
-
-        document.getElementById('socioForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('editSocioIndex').value);
-            const nome = document.getElementById('socioNome').value.trim();
-            const cpf = document.getElementById('socioCpf').value.trim().replace(/\D/g, '');
-            const nascimento = document.getElementById('socioNasc').value.trim();
-            const senha = document.getElementById('socioSenha').value.trim();
-            const matricula = document.getElementById('socioMatricula').value.trim();
-            const secretaria = document.getElementById('socioSecretaria').value.trim();
-            const foto = getFotoBase64();
-            const mesesPagos = [];
-            document.querySelectorAll('.mes-check:checked').forEach(cb => mesesPagos.push(parseInt(cb.value)));
-            if (!nome || !cpf || !senha) { alert('Nome, CPF e senha são obrigatórios.'); return; }
-            const socio = { nome, cpf, nascimento, senha, matricula, secretaria, foto, mesesPagos };
-            let socios = getData(STORAGE_KEYS.socios);
-            if (index === -1) socios.push(socio);
-            else socios[index] = socio;
-            setData(STORAGE_KEYS.socios, socios);
-            renderSocios();
-            fecharFormularioSocio();
-        });
-
-        function editarSocio(index) { mostrarFormularioSocio(index); }
-        function excluirSocio(index) {
-            if (!confirm('Excluir este sócio?')) return;
-            let socios = getData(STORAGE_KEYS.socios);
-            socios.splice(index, 1);
-            setData(STORAGE_KEYS.socios, socios);
-            renderSocios();
-        }
-
-        // ==========================================================
-        // DIRETORIA (CRUD com foto)
-        // ==========================================================
-        document.getElementById('dirFotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('dirFotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function getDirFotoBase64() {
-            const img = document.getElementById('dirFotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setDirFotoPreview(url) {
-            const img = document.getElementById('dirFotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
-
-        function renderDiretoria() {
-            const container = document.getElementById('listaDiretoria');
-            const lista = getData(STORAGE_KEYS.diretoria);
-            if (lista.length === 0) {
-                container.innerHTML = '<div class="empty"><i class="fas fa-users"></i><p>Nenhum membro cadastrado.</p></div>';
-                return;
-            }
-            container.innerHTML = lista.map((d, i) => `
-                <div class="item-row">
-                    <div class="info">
-                        <img src="${d.foto || 'src/imagens/avatar-padrao.jpg'}" alt="Foto de ${escapeHtml(d.nome)}" />
-                        <div>
-                            <strong>${escapeHtml(d.nome)}</strong> - ${escapeHtml(d.cargo)}
-                            <br><span style="font-size:0.85em;color:#555;">${escapeHtml(d.descricao || '')}</span>
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarDiretor(${i})"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirDiretor(${i})"><i class="fas fa-trash"></i> Excluir</button>
+        container.innerHTML = lista.map((d, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${d.foto || 'src/imagens/avatar-padrao.jpg'}" alt="Foto de ${escapeHtml(d.nome)}" />
+                    <div>
+                        <strong>${escapeHtml(d.nome)}</strong> - ${escapeHtml(d.cargo)}
+                        <br><span style="font-size:0.85em;color:#555;">${escapeHtml(d.descricao || '')}</span>
                     </div>
                 </div>
-            `).join('');
-        }
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarDiretor(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirDiretor(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        function mostrarFormularioDiretor(editIndex = -1) {
-            const card = document.getElementById('formDiretor');
-            card.classList.add('visible');
-            document.getElementById('editDiretorIndex').value = editIndex;
-            document.getElementById('diretorFormTitle').textContent = editIndex === -1 ? 'Novo Membro' : 'Editar Membro';
-            if (editIndex === -1) {
-                document.getElementById('diretorForm').reset();
-                setDirFotoPreview('');
-            } else {
-                const d = getData(STORAGE_KEYS.diretoria)[editIndex];
-                if (d) {
-                    document.getElementById('dirNome').value = d.nome || '';
-                    document.getElementById('dirCargo').value = d.cargo || '';
-                    document.getElementById('dirDescricao').value = d.descricao || '';
-                    document.getElementById('dirEmail').value = d.email || '';
-                    document.getElementById('dirTelefone').value = d.telefone || '';
-                    setDirFotoPreview(d.foto || '');
-                }
+    function mostrarFormularioDiretor(editIndex = -1) {
+        const card = document.getElementById('formDiretor');
+        card.classList.add('visible');
+        document.getElementById('editDiretorIndex').value = editIndex;
+        document.getElementById('diretorFormTitle').textContent = editIndex === -1 ? 'Novo Membro' : 'Editar Membro';
+        if (editIndex === -1) {
+            document.getElementById('diretorForm').reset();
+            setDirFotoPreview('');
+        } else {
+            const d = getData(STORAGE_KEYS.diretoria)[editIndex];
+            if (d) {
+                document.getElementById('dirNome').value = d.nome || '';
+                document.getElementById('dirCargo').value = d.cargo || '';
+                document.getElementById('dirDescricao').value = d.descricao || '';
+                document.getElementById('dirEmail').value = d.email || '';
+                document.getElementById('dirTelefone').value = d.telefone || '';
+                setDirFotoPreview(d.foto || '');
             }
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        function fecharFormularioDiretor() {
-            document.getElementById('formDiretor').classList.remove('visible');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioDiretor() {
+        document.getElementById('formDiretor').classList.remove('visible');
+    }
+
+    document.getElementById('diretorForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editDiretorIndex').value);
+        const nome = document.getElementById('dirNome').value.trim();
+        const cargo = document.getElementById('dirCargo').value.trim();
+        if (!nome || !cargo) { alert('Nome e Cargo são obrigatórios.'); return; }
+        const obj = {
+            nome,
+            cargo,
+            descricao: document.getElementById('dirDescricao').value.trim(),
+            email: document.getElementById('dirEmail').value.trim(),
+            telefone: document.getElementById('dirTelefone').value.trim(),
+            foto: getDirFotoBase64()
+        };
+        let lista = getData(STORAGE_KEYS.diretoria);
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setData(STORAGE_KEYS.diretoria, lista);
+        renderDiretoria();
+        fecharFormularioDiretor();
+    });
+
+    function editarDiretor(index) { mostrarFormularioDiretor(index); }
+    function excluirDiretor(index) {
+        if (!confirm('Remover este membro?')) return;
+        let lista = getData(STORAGE_KEYS.diretoria);
+        lista.splice(index, 1);
+        setData(STORAGE_KEYS.diretoria, lista);
+        renderDiretoria();
+    }
+
+    // ==========================================================
+    // NOTÍCIAS
+    // ==========================================================
+    document.getElementById('notFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('notFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getNotFotoBase64() {
+        const img = document.getElementById('notFotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setNotFotoPreview(url) {
+        const img = document.getElementById('notFotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+
+    function renderNoticias() {
+        const container = document.getElementById('listaNoticias');
+        const lista = getData(STORAGE_KEYS.noticias);
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-newspaper"></i><p>Nenhuma notícia cadastrada.</p></div>';
+            return;
         }
-
-        document.getElementById('diretorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('editDiretorIndex').value);
-            const nome = document.getElementById('dirNome').value.trim();
-            const cargo = document.getElementById('dirCargo').value.trim();
-            if (!nome || !cargo) { alert('Nome e Cargo são obrigatórios.'); return; }
-            const obj = {
-                nome,
-                cargo,
-                descricao: document.getElementById('dirDescricao').value.trim(),
-                email: document.getElementById('dirEmail').value.trim(),
-                telefone: document.getElementById('dirTelefone').value.trim(),
-                foto: getDirFotoBase64()
-            };
-            let lista = getData(STORAGE_KEYS.diretoria);
-            if (index === -1) lista.push(obj);
-            else lista[index] = obj;
-            setData(STORAGE_KEYS.diretoria, lista);
-            renderDiretoria();
-            fecharFormularioDiretor();
-        });
-
-        function editarDiretor(index) { mostrarFormularioDiretor(index); }
-        function excluirDiretor(index) {
-            if (!confirm('Remover este membro?')) return;
-            let lista = getData(STORAGE_KEYS.diretoria);
-            lista.splice(index, 1);
-            setData(STORAGE_KEYS.diretoria, lista);
-            renderDiretoria();
-        }
-
-        // ==========================================================
-        // NOTÍCIAS (CRUD com upload de imagem)
-        // ==========================================================
-        document.getElementById('notFotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('notFotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function getNotFotoBase64() {
-            const img = document.getElementById('notFotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setNotFotoPreview(url) {
-            const img = document.getElementById('notFotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
-
-        function renderNoticias() {
-            const container = document.getElementById('listaNoticias');
-            const lista = getData(STORAGE_KEYS.noticias);
-            if (lista.length === 0) {
-                container.innerHTML = '<div class="empty"><i class="fas fa-newspaper"></i><p>Nenhuma notícia cadastrada.</p></div>';
-                return;
-            }
-            container.innerHTML = lista.map((n, i) => `
-                <div class="item-row">
-                    <div class="info">
-                        <img src="${n.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da notícia" />
-                        <div>
-                            <strong>${escapeHtml(n.titulo)}</strong>
-                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(n.resumo || '')}</span>
-                            ${n.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(n.data)}</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarNoticia(${i})"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirNoticia(${i})"><i class="fas fa-trash"></i> Excluir</button>
+        container.innerHTML = lista.map((n, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${n.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da notícia" />
+                    <div>
+                        <strong>${escapeHtml(n.titulo)}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(n.resumo || '')}</span>
+                        ${n.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(n.data)}</span>` : ''}
                     </div>
                 </div>
-            `).join('');
-        }
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarNoticia(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirNoticia(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        function mostrarFormularioNoticia(editIndex = -1) {
-            const card = document.getElementById('formNoticia');
-            card.classList.add('visible');
-            document.getElementById('editNoticiaIndex').value = editIndex;
-            document.getElementById('noticiaFormTitle').textContent = editIndex === -1 ? 'Nova Notícia' : 'Editar Notícia';
-            if (editIndex === -1) {
-                document.getElementById('noticiaForm').reset();
-                setNotFotoPreview('');
-            } else {
-                const n = getData(STORAGE_KEYS.noticias)[editIndex];
-                if (n) {
-                    document.getElementById('notTitulo').value = n.titulo || '';
-                    document.getElementById('notData').value = n.data || '';
-                    document.getElementById('notResumo').value = n.resumo || '';
-                    document.getElementById('notTexto').value = n.texto || '';
-                    setNotFotoPreview(n.imagem || '');
-                }
+    function mostrarFormularioNoticia(editIndex = -1) {
+        const card = document.getElementById('formNoticia');
+        card.classList.add('visible');
+        document.getElementById('editNoticiaIndex').value = editIndex;
+        document.getElementById('noticiaFormTitle').textContent = editIndex === -1 ? 'Nova Notícia' : 'Editar Notícia';
+        if (editIndex === -1) {
+            document.getElementById('noticiaForm').reset();
+            setNotFotoPreview('');
+        } else {
+            const n = getData(STORAGE_KEYS.noticias)[editIndex];
+            if (n) {
+                document.getElementById('notTitulo').value = n.titulo || '';
+                document.getElementById('notData').value = n.data || '';
+                document.getElementById('notResumo').value = n.resumo || '';
+                document.getElementById('notTexto').value = n.texto || '';
+                setNotFotoPreview(n.imagem || '');
             }
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        function fecharFormularioNoticia() {
-            document.getElementById('formNoticia').classList.remove('visible');
-        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioNoticia() {
+        document.getElementById('formNoticia').classList.remove('visible');
+    }
 
-        document.getElementById('noticiaForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('editNoticiaIndex').value);
-            const titulo = document.getElementById('notTitulo').value.trim();
-            if (!titulo) { alert('Título é obrigatório.'); return; }
-            const obj = {
-                titulo,
-                data: document.getElementById('notData').value.trim(),
-                resumo: document.getElementById('notResumo').value.trim(),
-                texto: document.getElementById('notTexto').value.trim(),
-                imagem: getNotFotoBase64()
-            };
-            let lista = getData(STORAGE_KEYS.noticias);
-            if (index === -1) lista.push(obj);
-            else lista[index] = obj;
-            setData(STORAGE_KEYS.noticias, lista);
-            renderNoticias();
-            fecharFormularioNoticia();
-        });
+    document.getElementById('noticiaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editNoticiaIndex').value);
+        const titulo = document.getElementById('notTitulo').value.trim();
+        if (!titulo) { alert('Título é obrigatório.'); return; }
+        const obj = {
+            titulo,
+            data: document.getElementById('notData').value.trim(),
+            resumo: document.getElementById('notResumo').value.trim(),
+            texto: document.getElementById('notTexto').value.trim(),
+            imagem: getNotFotoBase64()
+        };
+        let lista = getData(STORAGE_KEYS.noticias);
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setData(STORAGE_KEYS.noticias, lista);
+        renderNoticias();
+        fecharFormularioNoticia();
+    });
 
-        function editarNoticia(index) { mostrarFormularioNoticia(index); }
-        function excluirNoticia(index) {
-            if (!confirm('Excluir esta notícia?')) return;
-            let lista = getData(STORAGE_KEYS.noticias);
-            lista.splice(index, 1);
-            setData(STORAGE_KEYS.noticias, lista);
-            renderNoticias();
-        }
+    function editarNoticia(index) { mostrarFormularioNoticia(index); }
+    function excluirNoticia(index) {
+        if (!confirm('Excluir esta notícia?')) return;
+        let lista = getData(STORAGE_KEYS.noticias);
+        lista.splice(index, 1);
+        setData(STORAGE_KEYS.noticias, lista);
+        renderNoticias();
+    }
 
-        // ==========================================================
-        // HISTÓRIA (COM IMAGEM E TEXTO EXTRA)
-        // ==========================================================
-        document.getElementById('histFotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('histFotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
+    // ==========================================================
+    // HISTÓRIA
+    // ==========================================================
+    document.getElementById('histFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('histFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
 
-        function getHistFotoBase64() {
-            const img = document.getElementById('histFotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setHistFotoPreview(url) {
-            const img = document.getElementById('histFotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
+    function getHistFotoBase64() {
+        const img = document.getElementById('histFotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setHistFotoPreview(url) {
+        const img = document.getElementById('histFotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
 
-        function carregarHistoria() {
-            const data = getObject(STORAGE_KEYS.historia).historia || {};
-            document.getElementById('histTitulo').value = data.titulo || '';
-            document.getElementById('histSubtitulo').value = data.subtitulo || '';
-            document.getElementById('histTextoExtra').value = data.textoExtra || '';
-            document.getElementById('histFundacao').value = data.fundacao || '';
-            document.getElementById('histMissao').value = data.missao || '';
-            document.getElementById('histValores').value = (data.valores || []).join(', ');
-            document.getElementById('histTimeline').value = (data.timeline || []).map(item => `${item.ano}|${item.descricao}`).join('\n');
-            document.getElementById('histNumeros').value = (data.numeros || []).map(item => `${item.numero}|${item.label}`).join('\n');
-            setHistFotoPreview(data.imagem || '');
-        }
+    function carregarHistoria() {
+        const data = getObject(STORAGE_KEYS.historia).historia || {};
+        document.getElementById('histTitulo').value = data.titulo || '';
+        document.getElementById('histSubtitulo').value = data.subtitulo || '';
+        document.getElementById('histTextoExtra').value = data.textoExtra || '';
+        document.getElementById('histFundacao').value = data.fundacao || '';
+        document.getElementById('histMissao').value = data.missao || '';
+        document.getElementById('histValores').value = (data.valores || []).join(', ');
+        document.getElementById('histTimeline').value = (data.timeline || []).map(item => `${item.ano}|${item.descricao}`).join('\n');
+        document.getElementById('histNumeros').value = (data.numeros || []).map(item => `${item.numero}|${item.label}`).join('\n');
+        setHistFotoPreview(data.imagem || '');
+    }
 
-        document.getElementById('historiaForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const timeline = document.getElementById('histTimeline').value.split('\n')
-                .filter(line => line.trim() !== '')
-                .map(line => {
-                    const parts = line.split('|').map(s => s.trim());
-                    return { ano: parts[0] || '', descricao: parts[1] || '' };
-                });
-            const numeros = document.getElementById('histNumeros').value.split('\n')
-                .filter(line => line.trim() !== '')
-                .map(line => {
-                    const parts = line.split('|').map(s => s.trim());
-                    return { numero: parts[0] || '', label: parts[1] || '' };
-                });
-            const valores = document.getElementById('histValores').value.split(',').map(s => s.trim()).filter(s => s);
-            const conteudos = getObject(STORAGE_KEYS.historia);
-            conteudos.historia = {
-                titulo: document.getElementById('histTitulo').value.trim(),
-                subtitulo: document.getElementById('histSubtitulo').value.trim(),
-                textoExtra: document.getElementById('histTextoExtra').value.trim(),
-                fundacao: document.getElementById('histFundacao').value.trim(),
-                missao: document.getElementById('histMissao').value.trim(),
-                valores,
-                timeline,
-                numeros,
-                imagem: getHistFotoBase64()
-            };
-            setObject(STORAGE_KEYS.historia, conteudos);
-            showMessage('msgHist', '✅ História salva com sucesso!');
-        });
+    document.getElementById('historiaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const timeline = document.getElementById('histTimeline').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { ano: parts[0] || '', descricao: parts[1] || '' };
+            });
+        const numeros = document.getElementById('histNumeros').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { numero: parts[0] || '', label: parts[1] || '' };
+            });
+        const valores = document.getElementById('histValores').value.split(',').map(s => s.trim()).filter(s => s);
+        const conteudos = getObject(STORAGE_KEYS.historia);
+        conteudos.historia = {
+            titulo: document.getElementById('histTitulo').value.trim(),
+            subtitulo: document.getElementById('histSubtitulo').value.trim(),
+            textoExtra: document.getElementById('histTextoExtra').value.trim(),
+            fundacao: document.getElementById('histFundacao').value.trim(),
+            missao: document.getElementById('histMissao').value.trim(),
+            valores,
+            timeline,
+            numeros,
+            imagem: getHistFotoBase64()
+        };
+        setObject(STORAGE_KEYS.historia, conteudos);
+        showMessage('msgHist', '✅ História salva com sucesso!');
+    });
 
-        // ==========================================================
-        // ESPORTIVA - GERENCIAMENTO DA PÁGINA /esportiva.html
-        // ==========================================================
-        let espData = {
+    // ==========================================================
+    // ESPORTIVA - CONTEÚDO DA PÁGINA
+    // ==========================================================
+    let espData = {
+        titulo: '',
+        subtitulo: '',
+        imagem: '',
+        data: '',
+        textoExtra: '',
+        modalidades: [],
+        campeonatos: []
+    };
+
+    function carregarEsportiva() {
+        const stored = getObject(STORAGE_KEYS.esportiva);
+        const data = stored.esportiva || {
             titulo: '',
             subtitulo: '',
             imagem: '',
@@ -1015,656 +1002,635 @@
             modalidades: [],
             campeonatos: []
         };
+        espData = data;
+        preencherFormEsportiva();
+        renderizarModalidadesEsp();
+        renderizarCampeonatosEsp();
+    }
 
-        function carregarEsportiva() {
-            const stored = getObject(STORAGE_KEYS.esportiva);
-            const data = stored.esportiva || {
-                titulo: '',
-                subtitulo: '',
-                imagem: '',
-                data: '',
-                textoExtra: '',
-                modalidades: [],
-                campeonatos: []
-            };
-            espData = data;
-            preencherFormEsportiva();
-            renderizarModalidadesEsp();
-            renderizarCampeonatosEsp();
+    function preencherFormEsportiva() {
+        document.getElementById('espTitulo').value = espData.titulo || '';
+        document.getElementById('espSubtitulo').value = espData.subtitulo || '';
+        document.getElementById('espData').value = espData.data || '';
+        document.getElementById('espTextoExtra').value = espData.textoExtra || '';
+
+        const preview = document.getElementById('espImagemPreview');
+        const container = document.getElementById('espPreviewContainer');
+        const hidden = document.getElementById('espImagemBase64');
+        if (espData.imagem && espData.imagem.startsWith('data:image')) {
+            preview.src = espData.imagem;
+            container.classList.remove('hidden');
+            hidden.value = espData.imagem;
+        } else {
+            preview.src = '';
+            container.classList.add('hidden');
+            hidden.value = '';
         }
+    }
 
-        function preencherFormEsportiva() {
-            document.getElementById('espTitulo').value = espData.titulo || '';
-            document.getElementById('espSubtitulo').value = espData.subtitulo || '';
-            document.getElementById('espData').value = espData.data || '';
-            document.getElementById('espTextoExtra').value = espData.textoExtra || '';
+    document.getElementById('espImagemUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const base64 = ev.target.result;
+            document.getElementById('espImagemBase64').value = base64;
+            document.getElementById('espImagemPreview').src = base64;
+            document.getElementById('espPreviewContainer').classList.remove('hidden');
+            espData.imagem = base64;
+        };
+        reader.readAsDataURL(file);
+    });
 
-            const preview = document.getElementById('espImagemPreview');
-            const container = document.getElementById('espPreviewContainer');
-            const hidden = document.getElementById('espImagemBase64');
-            if (espData.imagem && espData.imagem.startsWith('data:image')) {
-                preview.src = espData.imagem;
-                container.classList.remove('hidden');
-                hidden.value = espData.imagem;
-            } else {
-                preview.src = '';
-                container.classList.add('hidden');
-                hidden.value = '';
-            }
+    document.getElementById('espRemoverImagem').addEventListener('click', function() {
+        document.getElementById('espImagemPreview').src = '';
+        document.getElementById('espPreviewContainer').classList.add('hidden');
+        document.getElementById('espImagemBase64').value = '';
+        espData.imagem = '';
+    });
+
+    function renderizarModalidadesEsp() {
+        const list = document.getElementById('espModalidadesList');
+        if (!espData.modalidades || espData.modalidades.length === 0) {
+            list.innerHTML = '<div class="empty-msg">Nenhuma modalidade cadastrada.</div>';
+            return;
         }
+        list.innerHTML = espData.modalidades.map((m, idx) => `
+            <div class="item-row">
+                <div class="info">
+                    <strong><i class="fas ${m.icone || 'fa-futbol'}"></i> ${escapeHtml(m.nome)}</strong>
+                    <span style="display:block; color:#555; font-size:0.9rem;">${escapeHtml(m.descricao)}</span>
+                    ${m.tag ? `<span class="badge">${escapeHtml(m.tag)}</span>` : ''}
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarModalidadeEsp(${idx})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirModalidadeEsp(${idx})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        document.getElementById('espImagemUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                const base64 = ev.target.result;
-                document.getElementById('espImagemBase64').value = base64;
-                document.getElementById('espImagemPreview').src = base64;
-                document.getElementById('espPreviewContainer').classList.remove('hidden');
-                espData.imagem = base64;
-            };
-            reader.readAsDataURL(file);
+    function adicionarModalidadeEsp() {
+        const nome = prompt('Nome da modalidade:');
+        if (!nome) return;
+        const desc = prompt('Descrição:');
+        if (desc === null) return;
+        const tag = prompt('Tag (opcional):') || '';
+        const icone = prompt('Ícone (classe FontAwesome, ex: fa-futbol):', 'fa-futbol') || 'fa-futbol';
+        espData.modalidades.push({
+            icone: icone.trim(),
+            nome: nome.trim(),
+            descricao: desc.trim(),
+            tag: tag.trim()
         });
+        renderizarModalidadesEsp();
+    }
 
-        document.getElementById('espRemoverImagem').addEventListener('click', function() {
-            document.getElementById('espImagemPreview').src = '';
-            document.getElementById('espPreviewContainer').classList.add('hidden');
-            document.getElementById('espImagemBase64').value = '';
-            espData.imagem = '';
+    function editarModalidadeEsp(index) {
+        const m = espData.modalidades[index];
+        if (!m) return;
+        const novoNome = prompt('Nome da modalidade:', m.nome);
+        if (novoNome === null) return;
+        const novaDesc = prompt('Descrição:', m.descricao);
+        if (novaDesc === null) return;
+        const novaTag = prompt('Tag (opcional):', m.tag || '');
+        const iconeAtual = m.icone || 'fa-futbol';
+        const escolha = prompt('Ícone (classe FontAwesome):', iconeAtual);
+        m.nome = novoNome.trim() || m.nome;
+        m.descricao = novaDesc.trim() || m.descricao;
+        m.tag = novaTag ? novaTag.trim() : '';
+        if (escolha && escolha.trim()) m.icone = escolha.trim();
+        renderizarModalidadesEsp();
+    }
+
+    function excluirModalidadeEsp(index) {
+        if (!confirm('Remover esta modalidade?')) return;
+        espData.modalidades.splice(index, 1);
+        renderizarModalidadesEsp();
+    }
+
+    document.getElementById('espAddModalidadeBtn').addEventListener('click', adicionarModalidadeEsp);
+
+    function renderizarCampeonatosEsp() {
+        const list = document.getElementById('espCampeonatosList');
+        if (!espData.campeonatos || espData.campeonatos.length === 0) {
+            list.innerHTML = '<div class="empty-msg">Nenhum campeonato cadastrado.</div>';
+            return;
+        }
+        list.innerHTML = espData.campeonatos.map((c, idx) => `
+            <div class="item-row">
+                <div class="info">
+                    <strong>${escapeHtml(c.titulo)}</strong>
+                    <span style="display:block; color:#555; font-size:0.9rem;">
+                        ${c.data ? `<i class="fas fa-calendar"></i> ${escapeHtml(c.data)}` : ''}
+                        ${c.participantes ? ` | <i class="fas fa-users"></i> ${escapeHtml(c.participantes)}` : ''}
+                        ${c.local ? ` | <i class="fas fa-map-pin"></i> ${escapeHtml(c.local)}` : ''}
+                        ${c.status ? ` | <span class="badge" style="background:#004aad;color:#fff;">${escapeHtml(c.status)}</span>` : ''}
+                    </span>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarCampeonatoEsp(${idx})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirCampeonatoEsp(${idx})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function adicionarCampeonatoEsp() {
+        const titulo = prompt('Título do campeonato:');
+        if (!titulo) return;
+        const data = prompt('Data (ex: 15/03 a 15/12/2026):') || '';
+        const participantes = prompt('Participantes (ex: 8 equipes):') || '';
+        const local = prompt('Local:') || '';
+        const status = prompt('Status (andamento, aberto, realizado):', 'aberto') || 'aberto';
+        espData.campeonatos.push({
+            titulo: titulo.trim(),
+            data: data.trim(),
+            participantes: participantes.trim(),
+            local: local.trim(),
+            status: status.trim()
         });
+        renderizarCampeonatosEsp();
+    }
 
-        function renderizarModalidadesEsp() {
-            const list = document.getElementById('espModalidadesList');
-            if (!espData.modalidades || espData.modalidades.length === 0) {
-                list.innerHTML = '<div class="empty-msg">Nenhuma modalidade cadastrada.</div>';
-                return;
-            }
-            list.innerHTML = espData.modalidades.map((m, idx) => `
-                <div class="item-row">
-                    <div class="info">
-                        <strong><i class="fas ${m.icone || 'fa-futbol'}"></i> ${escapeHtml(m.nome)}</strong>
-                        <span style="display:block; color:#555; font-size:0.9rem;">${escapeHtml(m.descricao)}</span>
-                        ${m.tag ? `<span class="badge">${escapeHtml(m.tag)}</span>` : ''}
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarModalidadeEsp(${idx})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirModalidadeEsp(${idx})"><i class="fas fa-trash"></i></button>
+    function editarCampeonatoEsp(index) {
+        const c = espData.campeonatos[index];
+        if (!c) return;
+        const novoTitulo = prompt('Título:', c.titulo);
+        if (novoTitulo === null) return;
+        const novaData = prompt('Data:', c.data || '');
+        const novoParticipantes = prompt('Participantes:', c.participantes || '');
+        const novoLocal = prompt('Local:', c.local || '');
+        const novoStatus = prompt('Status (andamento, aberto, realizado):', c.status || '');
+        c.titulo = novoTitulo.trim() || c.titulo;
+        c.data = novaData ? novaData.trim() : '';
+        c.participantes = novoParticipantes ? novoParticipantes.trim() : '';
+        c.local = novoLocal ? novoLocal.trim() : '';
+        c.status = novoStatus ? novoStatus.trim() : '';
+        renderizarCampeonatosEsp();
+    }
+
+    function excluirCampeonatoEsp(index) {
+        if (!confirm('Remover este campeonato?')) return;
+        espData.campeonatos.splice(index, 1);
+        renderizarCampeonatosEsp();
+    }
+
+    document.getElementById('espAddCampeonatoBtn').addEventListener('click', adicionarCampeonatoEsp);
+
+    document.getElementById('formEsportiva').addEventListener('submit', function(e) {
+        e.preventDefault();
+        espData.titulo = document.getElementById('espTitulo').value.trim();
+        espData.subtitulo = document.getElementById('espSubtitulo').value.trim();
+        espData.data = document.getElementById('espData').value.trim();
+        espData.textoExtra = document.getElementById('espTextoExtra').value.trim();
+        const hiddenImg = document.getElementById('espImagemBase64').value;
+        if (hiddenImg) espData.imagem = hiddenImg;
+        const stored = getObject(STORAGE_KEYS.esportiva);
+        stored.esportiva = espData;
+        setObject(STORAGE_KEYS.esportiva, stored);
+        document.getElementById('msgEsp').textContent = '✅ Esportiva salva com sucesso!';
+        document.getElementById('msgEsp').style.color = '#28a745';
+    });
+
+    document.getElementById('espCarregarDadosBtn').addEventListener('click', function() {
+        carregarEsportiva();
+        document.getElementById('msgEsp').textContent = 'Dados recarregados.';
+        document.getElementById('msgEsp').style.color = '#28a745';
+    });
+
+    // ==========================================================
+    // ESPORTIVAS (LISTA DE ITENS) - REDIRECIONAMENTO
+    // ==========================================================
+    const STORAGE_ESPORTIVAS = 'assga_esportivas';
+
+    function getEsportivas() { return getData(STORAGE_ESPORTIVAS); }
+    function setEsportivas(lista) { setData(STORAGE_ESPORTIVAS, lista); }
+
+    document.getElementById('espItemFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('espItemFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getEspItemFotoBase64() {
+        const img = document.getElementById('espItemFotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setEspItemFotoPreview(url) {
+        const img = document.getElementById('espItemFotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+
+    function renderEsportivas() {
+        const container = document.getElementById('listaEsportivas');
+        const lista = getEsportivas();
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-futbol"></i><p>Nenhuma esportiva cadastrada.</p></div>';
+            return;
+        }
+        container.innerHTML = lista.map((item, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da esportiva" />
+                    <div>
+                        <strong>${escapeHtml(item.titulo)}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(item.texto || '')}</span>
+                        ${item.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(item.data)}</span>` : ''}
                     </div>
                 </div>
-            `).join('');
-        }
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarEsportiva(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirEsportiva(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        function adicionarModalidadeEsp() {
-            const nome = prompt('Nome da modalidade:');
-            if (!nome) return;
-            const desc = prompt('Descrição:');
-            if (desc === null) return;
-            const tag = prompt('Tag (opcional):') || '';
-            const icone = prompt('Ícone (classe FontAwesome, ex: fa-futbol):', 'fa-futbol') || 'fa-futbol';
-            espData.modalidades.push({
-                icone: icone.trim(),
-                nome: nome.trim(),
-                descricao: desc.trim(),
-                tag: tag.trim()
-            });
-            renderizarModalidadesEsp();
-        }
-
-        function editarModalidadeEsp(index) {
-            const m = espData.modalidades[index];
-            if (!m) return;
-            const novoNome = prompt('Nome da modalidade:', m.nome);
-            if (novoNome === null) return;
-            const novaDesc = prompt('Descrição:', m.descricao);
-            if (novaDesc === null) return;
-            const novaTag = prompt('Tag (opcional):', m.tag || '');
-            const iconeAtual = m.icone || 'fa-futbol';
-            const escolha = prompt('Ícone (classe FontAwesome):', iconeAtual);
-            m.nome = novoNome.trim() || m.nome;
-            m.descricao = novaDesc.trim() || m.descricao;
-            m.tag = novaTag ? novaTag.trim() : '';
-            if (escolha && escolha.trim()) m.icone = escolha.trim();
-            renderizarModalidadesEsp();
-        }
-
-        function excluirModalidadeEsp(index) {
-            if (!confirm('Remover esta modalidade?')) return;
-            espData.modalidades.splice(index, 1);
-            renderizarModalidadesEsp();
-        }
-
-        document.getElementById('espAddModalidadeBtn').addEventListener('click', adicionarModalidadeEsp);
-
-        function renderizarCampeonatosEsp() {
-            const list = document.getElementById('espCampeonatosList');
-            if (!espData.campeonatos || espData.campeonatos.length === 0) {
-                list.innerHTML = '<div class="empty-msg">Nenhum campeonato cadastrado.</div>';
-                return;
+    function mostrarFormularioEsportiva(editIndex = -1) {
+        const card = document.getElementById('formEsportivaItem');
+        card.classList.add('visible');
+        document.getElementById('editEsportivaIndex').value = editIndex;
+        document.getElementById('esportivaFormTitle').textContent = editIndex === -1 ? 'Nova Esportiva' : 'Editar Esportiva';
+        if (editIndex === -1) {
+            document.getElementById('esportivaItemForm').reset();
+            setEspItemFotoPreview('');
+        } else {
+            const lista = getEsportivas();
+            const item = lista[editIndex];
+            if (item) {
+                document.getElementById('espItemTitulo').value = item.titulo || '';
+                document.getElementById('espItemData').value = item.data || '';
+                document.getElementById('espItemTexto').value = item.texto || '';
+                setEspItemFotoPreview(item.imagem || '');
             }
-            list.innerHTML = espData.campeonatos.map((c, idx) => `
-                <div class="item-row">
-                    <div class="info">
-                        <strong>${escapeHtml(c.titulo)}</strong>
-                        <span style="display:block; color:#555; font-size:0.9rem;">
-                            ${c.data ? `<i class="fas fa-calendar"></i> ${escapeHtml(c.data)}` : ''}
-                            ${c.participantes ? ` | <i class="fas fa-users"></i> ${escapeHtml(c.participantes)}` : ''}
-                            ${c.local ? ` | <i class="fas fa-map-pin"></i> ${escapeHtml(c.local)}` : ''}
-                            ${c.status ? ` | <span class="badge" style="background:#004aad;color:#fff;">${escapeHtml(c.status)}</span>` : ''}
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function fecharFormularioEsportiva() {
+        document.getElementById('formEsportivaItem').classList.remove('visible');
+    }
+
+    // ===== SALVAR COM REDIRECIONAMENTO =====
+    document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editEsportivaIndex').value);
+        const titulo = document.getElementById('espItemTitulo').value.trim();
+        if (!titulo) { alert('Título é obrigatório.'); return; }
+
+        const obj = {
+            titulo,
+            data: document.getElementById('espItemData').value.trim(),
+            texto: document.getElementById('espItemTexto').value.trim(),
+            imagem: getEspItemFotoBase64()
+        };
+
+        let lista = getEsportivas();
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setEsportivas(lista);
+
+        // 🔁 REDIRECIONA PARA A PÁGINA PÚBLICA
+        window.location.href = 'esportiva.html';
+    });
+
+    function editarEsportiva(index) { mostrarFormularioEsportiva(index); }
+    function excluirEsportiva(index) {
+        if (!confirm('Excluir este item?')) return;
+        let lista = getEsportivas();
+        lista.splice(index, 1);
+        setEsportivas(lista);
+        renderEsportivas();
+    }
+
+    function carregarEsportivas() { renderEsportivas(); }
+
+    // ==========================================================
+    // EVENTOS
+    // ==========================================================
+    document.getElementById('evFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('evFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getEvFotoBase64() {
+        const img = document.getElementById('evFotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setEvFotoPreview(url) {
+        const img = document.getElementById('evFotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+
+    function renderEventos() {
+        const container = document.getElementById('listaEventos');
+        const lista = getData(STORAGE_KEYS.eventos);
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-calendar-days"></i><p>Nenhum evento cadastrado.</p></div>';
+            return;
+        }
+        const statusMap = { aberto: '🟢 Inscrições Abertas', andamento: '🟡 Em andamento', fechado: '🔴 Encerrado' };
+        container.innerHTML = lista.map((e, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${e.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem do evento" />
+                    <div>
+                        <strong>${escapeHtml(e.titulo)}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(e.descricao || '')}</span>
+                        <br><span style="font-size:0.8em;color:#667085;">
+                            <i class="fas fa-calendar"></i> ${escapeHtml(e.data || '')} &nbsp;|&nbsp;
+                            <i class="fas fa-map-pin"></i> ${escapeHtml(e.local || '')} &nbsp;|&nbsp;
+                            R$ ${escapeHtml(e.preco || '0,00')}
+                            &nbsp; <span style="font-weight:600;">${statusMap[e.status] || 'Aberto'}</span>
                         </span>
                     </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarCampeonatoEsp(${idx})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirCampeonatoEsp(${idx})"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarEvento(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirEvento(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function mostrarFormularioEvento(editIndex = -1) {
+        const card = document.getElementById('formEvento');
+        card.classList.add('visible');
+        document.getElementById('editEventoIndex').value = editIndex;
+        document.getElementById('eventoFormTitle').textContent = editIndex === -1 ? 'Novo Evento' : 'Editar Evento';
+        if (editIndex === -1) {
+            document.getElementById('eventoForm').reset();
+            setEvFotoPreview('');
+        } else {
+            const e = getData(STORAGE_KEYS.eventos)[editIndex];
+            if (e) {
+                document.getElementById('evTitulo').value = e.titulo || '';
+                document.getElementById('evData').value = e.data || '';
+                document.getElementById('evLocal').value = e.local || '';
+                document.getElementById('evPreco').value = e.preco || '';
+                document.getElementById('evStatus').value = e.status || 'aberto';
+                document.getElementById('evDescricao').value = e.descricao || '';
+                setEvFotoPreview(e.imagem || '');
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioEvento() {
+        document.getElementById('formEvento').classList.remove('visible');
+    }
+
+    document.getElementById('eventoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editEventoIndex').value);
+        const titulo = document.getElementById('evTitulo').value.trim();
+        if (!titulo) { alert('Título é obrigatório.'); return; }
+        const obj = {
+            titulo,
+            descricao: document.getElementById('evDescricao').value.trim(),
+            data: document.getElementById('evData').value.trim(),
+            local: document.getElementById('evLocal').value.trim(),
+            preco: document.getElementById('evPreco').value.trim() || '0,00',
+            status: document.getElementById('evStatus').value,
+            imagem: getEvFotoBase64()
+        };
+        let lista = getData(STORAGE_KEYS.eventos);
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setData(STORAGE_KEYS.eventos, lista);
+        renderEventos();
+        fecharFormularioEvento();
+    });
+
+    function editarEvento(index) { mostrarFormularioEvento(index); }
+    function excluirEvento(index) {
+        if (!confirm('Excluir este evento?')) return;
+        let lista = getData(STORAGE_KEYS.eventos);
+        lista.splice(index, 1);
+        setData(STORAGE_KEYS.eventos, lista);
+        renderEventos();
+    }
+
+    // ==========================================================
+    // SLIDER
+    // ==========================================================
+    document.getElementById('slideFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('slideFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getSlideFotoBase64() {
+        const img = document.getElementById('slideFotoPreview');
+        if (img.src && img.src.startsWith('data:image')) return img.src;
+        return '';
+    }
+    function setSlideFotoPreview(url) {
+        const img = document.getElementById('slideFotoPreview');
+        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+
+    function renderSlider() {
+        const container = document.getElementById('listaSlider');
+        const slides = getData(STORAGE_KEYS.slider);
+        if (slides.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>Nenhum slide cadastrado.</p></div>';
+            return;
+        }
+        container.innerHTML = slides.map((slide, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${slide.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Slide ${i+1}" />
+                    <div>
+                        <strong>Slide ${i+1}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(slide.texto || '')}</span>
                     </div>
                 </div>
-            `).join('');
-        }
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarSlide(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirSlide(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        function adicionarCampeonatoEsp() {
-            const titulo = prompt('Título do campeonato:');
-            if (!titulo) return;
-            const data = prompt('Data (ex: 15/03 a 15/12/2026):') || '';
-            const participantes = prompt('Participantes (ex: 8 equipes):') || '';
-            const local = prompt('Local:') || '';
-            const status = prompt('Status (andamento, aberto, realizado):', 'aberto') || 'aberto';
-            espData.campeonatos.push({
-                titulo: titulo.trim(),
-                data: data.trim(),
-                participantes: participantes.trim(),
-                local: local.trim(),
-                status: status.trim()
+    function mostrarFormularioSlide(editIndex = -1) {
+        const card = document.getElementById('formSlide');
+        card.classList.add('visible');
+        document.getElementById('editSlideIndex').value = editIndex;
+        document.getElementById('slideFormTitle').textContent = editIndex === -1 ? 'Novo Slide' : 'Editar Slide';
+        if (editIndex === -1) {
+            document.getElementById('slideForm').reset();
+            setSlideFotoPreview('');
+        } else {
+            const slide = getData(STORAGE_KEYS.slider)[editIndex];
+            if (slide) {
+                document.getElementById('slideTexto').value = slide.texto || '';
+                setSlideFotoPreview(slide.imagem || '');
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioSlide() {
+        document.getElementById('formSlide').classList.remove('visible');
+    }
+
+    document.getElementById('slideForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editSlideIndex').value);
+        const texto = document.getElementById('slideTexto').value.trim();
+        if (!texto) { alert('O texto do slide é obrigatório.'); return; }
+        const imagem = getSlideFotoBase64();
+        if (!imagem) { alert('Por favor, selecione uma imagem para o slide.'); return; }
+        const obj = { texto, imagem };
+        let slides = getData(STORAGE_KEYS.slider);
+        if (index === -1) slides.push(obj);
+        else slides[index] = obj;
+        setData(STORAGE_KEYS.slider, slides);
+        renderSlider();
+        fecharFormularioSlide();
+    });
+
+    function editarSlide(index) { mostrarFormularioSlide(index); }
+    function excluirSlide(index) {
+        if (!confirm('Excluir este slide?')) return;
+        let slides = getData(STORAGE_KEYS.slider);
+        slides.splice(index, 1);
+        setData(STORAGE_KEYS.slider, slides);
+        renderSlider();
+    }
+
+    // ==========================================================
+    // LOGO
+    // ==========================================================
+    const CONFIG_KEY = 'assga_config';
+
+    function getConfig() {
+        try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}'); } catch { return {}; }
+    }
+    function setConfig(config) {
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+    }
+
+    function carregarLogo() {
+        const config = getConfig();
+        const img = document.getElementById('logoPreview');
+        const txt = document.getElementById('logoTxt');
+        if (config.logoImg && config.logoImg.startsWith('data:image')) {
+            img.src = config.logoImg;
+        } else {
+            img.src = 'src/imagens/Assga_foto.jpg';
+        }
+        txt.value = config.logoTxt || 'ASSGA';
+    }
+
+    document.getElementById('logoImgInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('logoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('logoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const img = document.getElementById('logoPreview');
+        const txt = document.getElementById('logoTxt').value.trim();
+        const config = {
+            logoImg: img.src && img.src.startsWith('data:image') ? img.src : '',
+            logoTxt: txt || 'ASSGA'
+        };
+        setConfig(config);
+        showMessage('msgLogo', '✅ Logo salva com sucesso!');
+    });
+
+    // ==========================================================
+    // ESTATUTO
+    // ==========================================================
+    function carregarEstatuto() {
+        const data = getObject(STORAGE_KEYS.estatuto).estatuto || {};
+        document.getElementById('estTitulo').value = data.titulo || '';
+        document.getElementById('estSubtitulo').value = data.subtitulo || '';
+        const dados = data.dados || {};
+        const dadosStr = Object.entries(dados).map(([k, v]) => `${k}|${v}`).join('\n');
+        document.getElementById('estDados').value = dadosStr;
+        document.getElementById('estObjetivos').value = (data.objetivos || []).join('\n');
+        document.getElementById('estDiretoria').value = (data.diretoria || []).join('\n');
+        document.getElementById('estDisposicoes').value = data.disposicoes || '';
+        document.getElementById('estPdf').value = data.pdf || '';
+    }
+
+    document.getElementById('estatutoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const dadosLinhas = document.getElementById('estDados').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { chave: parts[0] || '', valor: parts[1] || '' };
             });
-            renderizarCampeonatosEsp();
-        }
+        const dados = {};
+        dadosLinhas.forEach(item => { if (item.chave) dados[item.chave] = item.valor; });
+        const objetivos = document.getElementById('estObjetivos').value.split('\n').filter(line => line.trim() !== '');
+        const diretoria = document.getElementById('estDiretoria').value.split('\n').filter(line => line.trim() !== '');
+        const conteudos = getObject(STORAGE_KEYS.estatuto);
+        conteudos.estatuto = {
+            titulo: document.getElementById('estTitulo').value.trim(),
+            subtitulo: document.getElementById('estSubtitulo').value.trim(),
+            dados,
+            objetivos,
+            diretoria,
+            disposicoes: document.getElementById('estDisposicoes').value.trim(),
+            pdf: document.getElementById('estPdf').value.trim()
+        };
+        setObject(STORAGE_KEYS.estatuto, conteudos);
+        showMessage('msgEst', '✅ Estatuto salvo com sucesso!');
+    });
 
-        function editarCampeonatoEsp(index) {
-            const c = espData.campeonatos[index];
-            if (!c) return;
-            const novoTitulo = prompt('Título:', c.titulo);
-            if (novoTitulo === null) return;
-            const novaData = prompt('Data:', c.data || '');
-            const novoParticipantes = prompt('Participantes:', c.participantes || '');
-            const novoLocal = prompt('Local:', c.local || '');
-            const novoStatus = prompt('Status (andamento, aberto, realizado):', c.status || '');
-            c.titulo = novoTitulo.trim() || c.titulo;
-            c.data = novaData ? novaData.trim() : '';
-            c.participantes = novoParticipantes ? novoParticipantes.trim() : '';
-            c.local = novoLocal ? novoLocal.trim() : '';
-            c.status = novoStatus ? novoStatus.trim() : '';
-            renderizarCampeonatosEsp();
-        }
+    // ==========================================================
+    // PÁGINA INICIAL
+    // ==========================================================
+    function carregarIndex() {
+        const data = getObject(STORAGE_KEYS.index).index || {};
+        document.getElementById('idxTitulo').value = data.titulo || '';
+        document.getElementById('idxTexto').value = data.texto || '';
+    }
 
-        function excluirCampeonatoEsp(index) {
-            if (!confirm('Remover este campeonato?')) return;
-            espData.campeonatos.splice(index, 1);
-            renderizarCampeonatosEsp();
-        }
+    document.getElementById('indexForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const conteudos = getObject(STORAGE_KEYS.index);
+        conteudos.index = {
+            titulo: document.getElementById('idxTitulo').value.trim(),
+            texto: document.getElementById('idxTexto').value.trim()
+        };
+        setObject(STORAGE_KEYS.index, conteudos);
+        showMessage('msgIndex', '✅ Página inicial salva com sucesso!');
+    });
 
-        document.getElementById('espAddCampeonatoBtn').addEventListener('click', adicionarCampeonatoEsp);
-
-        document.getElementById('formEsportiva').addEventListener('submit', function(e) {
-            e.preventDefault();
-            espData.titulo = document.getElementById('espTitulo').value.trim();
-            espData.subtitulo = document.getElementById('espSubtitulo').value.trim();
-            espData.data = document.getElementById('espData').value.trim();
-            espData.textoExtra = document.getElementById('espTextoExtra').value.trim();
-            const hiddenImg = document.getElementById('espImagemBase64').value;
-            if (hiddenImg) espData.imagem = hiddenImg;
-            const stored = getObject(STORAGE_KEYS.esportiva);
-            stored.esportiva = espData;
-            setObject(STORAGE_KEYS.esportiva, stored);
-            document.getElementById('msgEsp').textContent = '✅ Esportiva salva com sucesso!';
-            document.getElementById('msgEsp').style.color = '#28a745';
-        });
-
-        document.getElementById('espCarregarDadosBtn').addEventListener('click', function() {
-            carregarEsportiva();
-            document.getElementById('msgEsp').textContent = 'Dados recarregados.';
-            document.getElementById('msgEsp').style.color = '#28a745';
-        });
-
-        // ==========================================================
-        // ESPORTIVAS (LISTA DE ITENS INDIVIDUAIS) - CRUD
-        // ==========================================================
-        const STORAGE_ESPORTIVAS = 'assga_esportivas';
-
-        function getEsportivas() {
-            return getData(STORAGE_ESPORTIVAS);
-        }
-        function setEsportivas(lista) {
-            setData(STORAGE_ESPORTIVAS, lista);
-        }
-
-        document.getElementById('espItemFotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('espItemFotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function getEspItemFotoBase64() {
-            const img = document.getElementById('espItemFotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setEspItemFotoPreview(url) {
-            const img = document.getElementById('espItemFotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
-
-        function renderEsportivas() {
-            const container = document.getElementById('listaEsportivas');
-            const lista = getEsportivas();
-            if (lista.length === 0) {
-                container.innerHTML = '<div class="empty"><i class="fas fa-futbol"></i><p>Nenhuma esportiva cadastrada.</p></div>';
-                return;
-            }
-            container.innerHTML = lista.map((item, i) => `
-                <div class="item-row">
-                    <div class="info">
-                        <img src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da esportiva" />
-                        <div>
-                            <strong>${escapeHtml(item.titulo)}</strong>
-                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(item.texto || '')}</span>
-                            ${item.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(item.data)}</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarEsportiva(${i})"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirEsportiva(${i})"><i class="fas fa-trash"></i> Excluir</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function mostrarFormularioEsportiva(editIndex = -1) {
-            const card = document.getElementById('formEsportivaItem');
-            card.classList.add('visible');
-            document.getElementById('editEsportivaIndex').value = editIndex;
-            document.getElementById('esportivaFormTitle').textContent = editIndex === -1 ? 'Nova Esportiva' : 'Editar Esportiva';
-            if (editIndex === -1) {
-                document.getElementById('esportivaItemForm').reset();
-                setEspItemFotoPreview('');
-            } else {
-                const lista = getEsportivas();
-                const item = lista[editIndex];
-                if (item) {
-                    document.getElementById('espItemTitulo').value = item.titulo || '';
-                    document.getElementById('espItemData').value = item.data || '';
-                    document.getElementById('espItemTexto').value = item.texto || '';
-                    setEspItemFotoPreview(item.imagem || '');
-                }
-            }
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function fecharFormularioEsportiva() {
-            document.getElementById('formEsportivaItem').classList.remove('visible');
-        }
-
-        // ===== SALVAR COM REDIRECIONAMENTO =====
-        document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('editEsportivaIndex').value);
-            const titulo = document.getElementById('espItemTitulo').value.trim();
-            if (!titulo) { alert('Título é obrigatório.'); return; }
-
-            const obj = {
-                titulo,
-                data: document.getElementById('espItemData').value.trim(),
-                texto: document.getElementById('espItemTexto').value.trim(),
-                imagem: getEspItemFotoBase64()
-            };
-
-            let lista = getEsportivas();
-            if (index === -1) lista.push(obj);
-            else lista[index] = obj;
-            setEsportivas(lista);
-
-            // 🔁 Redireciona para a página pública
-            window.location.href = 'esportiva.html';
-        });
-
-        function editarEsportiva(index) {
-            mostrarFormularioEsportiva(index);
-        }
-
-        function excluirEsportiva(index) {
-            if (!confirm('Excluir este item?')) return;
-            let lista = getEsportivas();
-            lista.splice(index, 1);
-            setEsportivas(lista);
-            renderEsportivas();
-        }
-
-        function carregarEsportivas() {
-            renderEsportivas();
-        }
-
-        // ==========================================================
-        // EVENTOS (CRUD com upload de imagem)
-        // ==========================================================
-        document.getElementById('evFotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('evFotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function getEvFotoBase64() {
-            const img = document.getElementById('evFotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setEvFotoPreview(url) {
-            const img = document.getElementById('evFotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
-
-        function renderEventos() {
-            const container = document.getElementById('listaEventos');
-            const lista = getData(STORAGE_KEYS.eventos);
-            if (lista.length === 0) {
-                container.innerHTML = '<div class="empty"><i class="fas fa-calendar-days"></i><p>Nenhum evento cadastrado.</p></div>';
-                return;
-            }
-            const statusMap = { aberto: '🟢 Inscrições Abertas', andamento: '🟡 Em andamento', fechado: '🔴 Encerrado' };
-            container.innerHTML = lista.map((e, i) => `
-                <div class="item-row">
-                    <div class="info">
-                        <img src="${e.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem do evento" />
-                        <div>
-                            <strong>${escapeHtml(e.titulo)}</strong>
-                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(e.descricao || '')}</span>
-                            <br><span style="font-size:0.8em;color:#667085;">
-                                <i class="fas fa-calendar"></i> ${escapeHtml(e.data || '')} &nbsp;|&nbsp;
-                                <i class="fas fa-map-pin"></i> ${escapeHtml(e.local || '')} &nbsp;|&nbsp;
-                                R$ ${escapeHtml(e.preco || '0,00')}
-                                &nbsp; <span style="font-weight:600;">${statusMap[e.status] || 'Aberto'}</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarEvento(${i})"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirEvento(${i})"><i class="fas fa-trash"></i> Excluir</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function mostrarFormularioEvento(editIndex = -1) {
-            const card = document.getElementById('formEvento');
-            card.classList.add('visible');
-            document.getElementById('editEventoIndex').value = editIndex;
-            document.getElementById('eventoFormTitle').textContent = editIndex === -1 ? 'Novo Evento' : 'Editar Evento';
-            if (editIndex === -1) {
-                document.getElementById('eventoForm').reset();
-                setEvFotoPreview('');
-            } else {
-                const e = getData(STORAGE_KEYS.eventos)[editIndex];
-                if (e) {
-                    document.getElementById('evTitulo').value = e.titulo || '';
-                    document.getElementById('evData').value = e.data || '';
-                    document.getElementById('evLocal').value = e.local || '';
-                    document.getElementById('evPreco').value = e.preco || '';
-                    document.getElementById('evStatus').value = e.status || 'aberto';
-                    document.getElementById('evDescricao').value = e.descricao || '';
-                    setEvFotoPreview(e.imagem || '');
-                }
-            }
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        function fecharFormularioEvento() {
-            document.getElementById('formEvento').classList.remove('visible');
-        }
-
-        document.getElementById('eventoForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('editEventoIndex').value);
-            const titulo = document.getElementById('evTitulo').value.trim();
-            if (!titulo) { alert('Título é obrigatório.'); return; }
-            const obj = {
-                titulo,
-                descricao: document.getElementById('evDescricao').value.trim(),
-                data: document.getElementById('evData').value.trim(),
-                local: document.getElementById('evLocal').value.trim(),
-                preco: document.getElementById('evPreco').value.trim() || '0,00',
-                status: document.getElementById('evStatus').value,
-                imagem: getEvFotoBase64()
-            };
-            let lista = getData(STORAGE_KEYS.eventos);
-            if (index === -1) lista.push(obj);
-            else lista[index] = obj;
-            setData(STORAGE_KEYS.eventos, lista);
-            renderEventos();
-            fecharFormularioEvento();
-        });
-
-        function editarEvento(index) { mostrarFormularioEvento(index); }
-        function excluirEvento(index) {
-            if (!confirm('Excluir este evento?')) return;
-            let lista = getData(STORAGE_KEYS.eventos);
-            lista.splice(index, 1);
-            setData(STORAGE_KEYS.eventos, lista);
-            renderEventos();
-        }
-
-        // ==========================================================
-        // SLIDER (CRUD com upload de imagem)
-        // ==========================================================
-        document.getElementById('slideFotoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('slideFotoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function getSlideFotoBase64() {
-            const img = document.getElementById('slideFotoPreview');
-            if (img.src && img.src.startsWith('data:image')) return img.src;
-            return '';
-        }
-        function setSlideFotoPreview(url) {
-            const img = document.getElementById('slideFotoPreview');
-            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-        }
-
-        function renderSlider() {
-            const container = document.getElementById('listaSlider');
-            const slides = getData(STORAGE_KEYS.slider);
-            if (slides.length === 0) {
-                container.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>Nenhum slide cadastrado.</p></div>';
-                return;
-            }
-            container.innerHTML = slides.map((slide, i) => `
-                <div class="item-row">
-                    <div class="info">
-                        <img src="${slide.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Slide ${i+1}" />
-                        <div>
-                            <strong>Slide ${i+1}</strong>
-                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(slide.texto || '')}</span>
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn btn-warning btn-sm" onclick="editarSlide(${i})"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="excluirSlide(${i})"><i class="fas fa-trash"></i> Excluir</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function mostrarFormularioSlide(editIndex = -1) {
-            const card = document.getElementById('formSlide');
-            card.classList.add('visible');
-            document.getElementById('editSlideIndex').value = editIndex;
-            document.getElementById('slideFormTitle').textContent = editIndex === -1 ? 'Novo Slide' : 'Editar Slide';
-            if (editIndex === -1) {
-                document.getElementById('slideForm').reset();
-                setSlideFotoPreview('');
-            } else {
-                const slide = getData(STORAGE_KEYS.slider)[editIndex];
-                if (slide) {
-                    document.getElementById('slideTexto').value = slide.texto || '';
-                    setSlideFotoPreview(slide.imagem || '');
-                }
-            }
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        function fecharFormularioSlide() {
-            document.getElementById('formSlide').classList.remove('visible');
-        }
-
-        document.getElementById('slideForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('editSlideIndex').value);
-            const texto = document.getElementById('slideTexto').value.trim();
-            if (!texto) { alert('O texto do slide é obrigatório.'); return; }
-            const imagem = getSlideFotoBase64();
-            if (!imagem) { alert('Por favor, selecione uma imagem para o slide.'); return; }
-            const obj = { texto, imagem };
-            let slides = getData(STORAGE_KEYS.slider);
-            if (index === -1) slides.push(obj);
-            else slides[index] = obj;
-            setData(STORAGE_KEYS.slider, slides);
-            renderSlider();
-            fecharFormularioSlide();
-        });
-
-        function editarSlide(index) { mostrarFormularioSlide(index); }
-        function excluirSlide(index) {
-            if (!confirm('Excluir este slide?')) return;
-            let slides = getData(STORAGE_KEYS.slider);
-            slides.splice(index, 1);
-            setData(STORAGE_KEYS.slider, slides);
-            renderSlider();
-        }
-
-        // ==========================================================
-        // LOGO (CONFIGURAÇÃO GERAL)
-        // ==========================================================
-        const CONFIG_KEY = 'assga_config';
-
-        function getConfig() {
-            try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}'); } catch { return {}; }
-        }
-        function setConfig(config) {
-            localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
-        }
-
-        function carregarLogo() {
-            const config = getConfig();
-            const img = document.getElementById('logoPreview');
-            const txt = document.getElementById('logoTxt');
-            if (config.logoImg && config.logoImg.startsWith('data:image')) {
-                img.src = config.logoImg;
-            } else {
-                img.src = 'src/imagens/Assga_foto.jpg';
-            }
-            txt.value = config.logoTxt || 'ASSGA';
-        }
-
-        document.getElementById('logoImgInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('logoPreview').src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
-        document.getElementById('logoForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const img = document.getElementById('logoPreview');
-            const txt = document.getElementById('logoTxt').value.trim();
-            const config = {
-                logoImg: img.src && img.src.startsWith('data:image') ? img.src : '',
-                logoTxt: txt || 'ASSGA'
-            };
-            setConfig(config);
-            showMessage('msgLogo', '✅ Logo salva com sucesso!');
-        });
-
-        // ==========================================================
-        // ESTATUTO
-        // ==========================================================
-        function carregarEstatuto() {
-            const data = getObject(STORAGE_KEYS.estatuto).estatuto || {};
-            document.getElementById('estTitulo').value = data.titulo || '';
-            document.getElementById('estSubtitulo').value = data.subtitulo || '';
-            const dados = data.dados || {};
-            const dadosStr = Object.entries(dados).map(([k, v]) => `${k}|${v}`).join('\n');
-            document.getElementById('estDados').value = dadosStr;
-            document.getElementById('estObjetivos').value = (data.objetivos || []).join('\n');
-            document.getElementById('estDiretoria').value = (data.diretoria || []).join('\n');
-            document.getElementById('estDisposicoes').value = data.disposicoes || '';
-            document.getElementById('estPdf').value = data.pdf || '';
-        }
-
-        document.getElementById('estatutoForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const dadosLinhas = document.getElementById('estDados').value.split('\n')
-                .filter(line => line.trim() !== '')
-                .map(line => {
-                    const parts = line.split('|').map(s => s.trim());
-                    return { chave: parts[0] || '', valor: parts[1] || '' };
-                });
-            const dados = {};
-            dadosLinhas.forEach(item => { if (item.chave) dados[item.chave] = item.valor; });
-            const objetivos = document.getElementById('estObjetivos').value.split('\n').filter(line => line.trim() !== '');
-            const diretoria = document.getElementById('estDiretoria').value.split('\n').filter(line => line.trim() !== '');
-            const conteudos = getObject(STORAGE_KEYS.estatuto);
-            conteudos.estatuto = {
-                titulo: document.getElementById('estTitulo').value.trim(),
-                subtitulo: document.getElementById('estSubtitulo').value.trim(),
-                dados,
-                objetivos,
-                diretoria,
-                disposicoes: document.getElementById('estDisposicoes').value.trim(),
-                pdf: document.getElementById('estPdf').value.trim()
-            };
-            setObject(STORAGE_KEYS.estatuto, conteudos);
-            showMessage('msgEst', '✅ Estatuto salvo com sucesso!');
-        });
-
-        // ==========================================================
-        // PÁGINA INICIAL (INDEX)
-        // ==========================================================
-        function carregarIndex() {
-            const data = getObject(STORAGE_KEYS.index).index || {};
-            document.getElementById('idxTitulo').value = data.titulo || '';
-            document.getElementById('idxTexto').value = data.texto || '';
-        }
-
-        document.getElementById('indexForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const conteudos = getObject(STORAGE_KEYS.index);
-            conteudos.index = {
-                titulo: document.getElementById('idxTitulo').value.trim(),
-                texto: document.getElementById('idxTexto').value.trim()
-            };
-            setObject(STORAGE_KEYS.index, conteudos);
-            showMessage('msgIndex', '✅ Página inicial salva com sucesso!');
-        });
-
-        // ==========================================================
-        // INICIALIZAÇÃO
-        // ==========================================================
-        if (sessionStorage.getItem(AUTH_KEY) === 'true') {
-            document.getElementById('loginView').style.display = 'none';
-            document.getElementById('panelView').style.display = 'block';
-            carregarTodasAbas();
-        }
-    </script>
+    // ==========================================================
+    // INICIALIZAÇÃO
+    // ==========================================================
+    if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+        document.getElementById('loginView').style.display = 'none';
+        document.getElementById('panelView').style.display = 'block';
+        carregarTodasAbas();
+    }
+</script>
 </body>
 </html>
