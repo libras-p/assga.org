@@ -6,46 +6,237 @@
     <meta name="description" content="ASSGA - Esportivas">
     <title>Esportivas - ASSGA</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, Helvetica, sans-serif; background: #f5f7fa; color: #12365a; }
-        .container { width: min(1180px, 92%); margin: 0 auto; }
-        header { background: #fff; border-bottom: 3px solid #c51f3a; padding: 18px 0; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-        .brand { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; color: #063b6d; text-decoration: none; }
-        .brand-icon { width: 44px; height: 44px; border-radius: 10px; background: #c51f3a; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: bold; }
-        .btn-voltar { text-decoration: none; color: #fff; background: #063b6d; padding: 11px 20px; border-radius: 22px; font-weight: 700; transition: background .2s; }
-        .btn-voltar:hover { background: #052f56; }
-        main { padding: 35px 0 60px; }
-        .title-area { text-align: center; margin-bottom: 30px; }
-        .title-area h1 { color: #063b6d; font-size: 32px; margin-bottom: 8px; }
-        .title-area h1::before { content: "⚽ "; }
-        .title-area p { color: #66788a; font-size: 16px; }
-        .esportivas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
-        .card { background: #fff; border: 1px solid #dbe3ec; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,.07); transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(0,0,0,.12); }
-        .card-image { height: 145px; background: linear-gradient(135deg, #063b6d, #0b5b91); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 54px; overflow: hidden; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; }
-        .card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; }
-        .card-content h2 { color: #063b6d; font-size: 19px; margin-bottom: 8px; }
-        .card-content p { color: #6d7b89; font-size: 14px; line-height: 1.5; margin-bottom: 12px; word-break: break-word; flex: 1; }
-        .card-content p a { color: #063b6d; text-decoration: none; font-weight: 600; }
-        .card-content p a:hover { text-decoration: underline; }
-        .data { color: #c51f3a; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
-        .btn { display: block; text-align: center; text-decoration: none; background: #063b6d; color: #fff; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 14px; transition: background .2s; }
-        .btn:hover { background: #052f56; }
-        .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #66788a; }
-        .empty-state i { font-size: 48px; color: #c51f3a; display: block; margin-bottom: 16px; }
-        footer { background: #063b6d; color: #fff; text-align: center; padding: 20px; font-size: 14px; }
-        @media (max-width: 1050px) { .esportivas { grid-template-columns: repeat(3, 1fr); } }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fa;
+            color: #12365a;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 3px solid #c51f3a;
+            padding: 18px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #063b6d;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: #c51f3a;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .btn-voltar {
+            text-decoration: none;
+            color: #fff;
+            background: #063b6d;
+            padding: 11px 20px;
+            border-radius: 22px;
+            font-weight: 700;
+            transition: background .2s;
+        }
+        .btn-voltar:hover {
+            background: #052f56;
+        }
+
+        main {
+            padding: 35px 0 60px;
+        }
+
+        .title-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-area h1 {
+            color: #063b6d;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .title-area h1::before {
+            content: "⚽ ";
+        }
+
+        .title-area p {
+            color: #66788a;
+            font-size: 16px;
+        }
+
+        .esportivas {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #dbe3ec;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0,0,0,.07);
+            transition: transform .2s, box-shadow .2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px rgba(0,0,0,.12);
+        }
+
+        .card-image {
+            height: 145px;
+            background: linear-gradient(135deg, #063b6d, #0b5b91);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 54px;
+            overflow: hidden;
+        }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h2 {
+            color: #063b6d;
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .card-content p {
+            color: #6d7b89;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            word-break: break-word;
+            flex: 1;
+        }
+        .card-content p a {
+            color: #063b6d;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .card-content p a:hover {
+            text-decoration: underline;
+        }
+
+        .data {
+            color: #c51f3a;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #063b6d;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: background .2s;
+        }
+
+        .btn:hover {
+            background: #052f56;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #66788a;
+        }
+        .empty-state i {
+            font-size: 48px;
+            color: #c51f3a;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        footer {
+            background: #063b6d;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1050px) {
+            .esportivas {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 700px) {
-            .header-content { flex-direction: column; }
-            .brand { font-size: 24px; }
-            .esportivas { grid-template-columns: 1fr; }
-            .card-image { height: 180px; }
+            .header-content {
+                flex-direction: column;
+            }
+
+            .brand {
+                font-size: 24px;
+            }
+
+            .esportivas {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 180px;
+            }
         }
     </style>
 </head>
+
 <body>
+
 <header>
     <div class="container header-content">
         <a href="index.html" class="brand">
@@ -55,19 +246,28 @@
         <a href="index.html" class="btn-voltar">← Página Inicial</a>
     </div>
 </header>
+
 <main>
     <div class="container">
         <section class="title-area">
             <h1>Gerenciar Esportivas</h1>
             <p>Confira as atividades e competições esportivas da ASSGA.</p>
         </section>
-        <section class="esportivas" id="esportivasContainer"></section>
+
+        <section class="esportivas" id="esportivasContainer">
+            <!-- Os cards serão injetados aqui via JavaScript -->
+        </section>
     </div>
 </main>
-<footer>© 2026 ASSGA - Associação Desportiva</footer>
+
+<footer>
+    © 2026 ASSGA - Associação Desportiva
+</footer>
 
 <script>
     (function() {
+
+        // ===== ESCAPE HTML =====
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -80,10 +280,12 @@
             });
         }
 
+        // ===== VERIFICA SE É LINK =====
         function isLink(text) {
             return /^https?:\/\/\S+/i.test(text.trim());
         }
 
+        // ===== CARREGAR LOGO E TEXTO DO CONFIG =====
         function carregarConfig() {
             try {
                 const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
@@ -100,9 +302,11 @@
             } catch (e) { /* ignora */ }
         }
 
+        // ===== CARREGAR ESPORTIVAS =====
         function carregarEsportivas() {
             const container = document.getElementById('esportivasContainer');
             let lista = [];
+
             try {
                 const stored = localStorage.getItem('assga_esportivas');
                 lista = stored ? JSON.parse(stored) : [];
@@ -110,8 +314,14 @@
                 lista = [];
             }
 
+            // Se não houver dados
             if (!lista || lista.length === 0) {
-                container.innerHTML = `<div class="empty-state"><i>🏟️</i><p>Nenhuma esportiva cadastrada no momento.</p></div>`;
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i>🏟️</i>
+                        <p>Nenhuma esportiva cadastrada no momento.</p>
+                    </div>
+                `;
                 return;
             }
 
@@ -123,11 +333,14 @@
                 return 0;
             });
 
+            // Monta os cards
             let html = '';
             lista.forEach(item => {
                 const titulo = escapeHtml(item.titulo || '');
                 const data = escapeHtml(item.data || '');
                 let descricao = escapeHtml(item.texto || '');
+
+                // Se for link, transforma em link clicável e usa como URL do botão
                 let linkUrl = '#';
                 if (isLink(item.texto)) {
                     const url = item.texto.trim();
@@ -135,10 +348,12 @@
                     linkUrl = url;
                 }
 
+                // Imagem (se for base64 ou URL)
                 let imagemHtml = '';
                 if (item.imagem && item.imagem.startsWith('data:image')) {
                     imagemHtml = `<img src="${item.imagem}" alt="${titulo}">`;
                 } else {
+                    // Se não tiver imagem, coloca um ícone esportivo genérico
                     imagemHtml = '⚽';
                 }
 
@@ -154,14 +369,18 @@
                     </article>
                 `;
             });
+
             container.innerHTML = html;
         }
 
+        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
             carregarConfig();
             carregarEsportivas();
         });
+
     })();
 </script>
+
 </body>
 </html>

@@ -1271,7 +1271,6 @@
 
     function mostrarFormularioEsportiva(editIndex = -1) {
         const lista = getEsportivas();
-        // Verifica limite apenas se for novo cadastro
         if (editIndex === -1 && lista.length >= MAX_ESPORTIVAS) {
             alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido. Exclua uma para adicionar outra.`);
             return;
@@ -1299,18 +1298,17 @@
         document.getElementById('formEsportivaItem').classList.remove('visible');
     }
 
-    // ===== SALVAR COM REDIRECIONAMENTO E VERIFICAÇÃO DE LIMITE =====
+    // ===== SALVAR SEM REDIRECIONAR (ATUALIZA A LISTA E FECHA O FORM) =====
     document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const index = parseInt(document.getElementById('editEsportivaIndex').value);
         const titulo = document.getElementById('espItemTitulo').value.trim();
         if (!titulo) { alert('Título é obrigatório.'); return; }
 
-        // Se for novo, verifica limite novamente (segurança)
         if (index === -1) {
             const lista = getEsportivas();
             if (lista.length >= MAX_ESPORTIVAS) {
-                alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido. Não é possível adicionar mais.`);
+                alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido.`);
                 return;
             }
         }
@@ -1327,8 +1325,12 @@
         else lista[index] = obj;
         setEsportivas(lista);
 
-        // Redireciona para a página pública
-        window.location.href = 'esportiva.html';
+        // Fecha o formulário, recarrega a lista e limpa os campos
+        fecharFormularioEsportiva();
+        renderEsportivas();
+        document.getElementById('esportivaItemForm').reset();
+        setEspItemFotoPreview('');
+        alert('✅ Esportiva salva com sucesso!');
     });
 
     function editarEsportiva(index) { mostrarFormularioEsportiva(index); }
@@ -1580,7 +1582,6 @@
         reader.readAsDataURL(file);
     });
 
-    // Botão Remover Logo
     document.getElementById('removerLogoBtn').addEventListener('click', function() {
         if (!confirm('Deseja remover a logo personalizada e voltar ao padrão?')) return;
         const config = getConfig();
