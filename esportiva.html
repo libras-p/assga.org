@@ -100,8 +100,8 @@
         .page-banner h1 i { color: #ffd700; margin-right: 15px; }
         .page-banner p { font-size: 1.2em; opacity: .9; max-width: 700px; margin: 0 auto; }
 
-        /* CONTEÚDO PRINCIPAL - Classe ajustada para combinar com o novo HTML */
-        .Esportiva-container {
+        /* CONTEÚDO PRINCIPAL */
+        .esportiva-container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
@@ -203,6 +203,58 @@
         .status-andamento { background: #fff3cd; color: #856404; }
         .status-aberto { background: #d4edda; color: #155724; }
         .status-realizado { background: #cce5ff; color: #004085; }
+
+        /* ===== LISTA DE ESPORTIVAS (ITENS) ===== */
+        .esportivas-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #d9e1eb;
+        }
+        .esportivas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 25px;
+        }
+        .esportiva-item-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+            transition: all .3s ease;
+            border: 1px solid #e9edf2;
+        }
+        .esportiva-item-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,51,102,.15);
+        }
+        .esportiva-item-card .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f4fa;
+        }
+        .esportiva-item-card .card-body {
+            padding: 20px;
+        }
+        .esportiva-item-card .card-body h3 {
+            color: #003366;
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+        .esportiva-item-card .card-body .data {
+            font-size: 0.85rem;
+            color: #667085;
+            margin-bottom: 10px;
+        }
+        .esportiva-item-card .card-body .data i {
+            margin-right: 5px;
+        }
+        .esportiva-item-card .card-body .desc {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
 
         /* FALE CONOSCO e FOOTER */
         .info {
@@ -338,6 +390,7 @@
             .info-card { width: 100%; }
             .footer-container { flex-direction: column; text-align: center; }
             .footer-redes { margin-top: 15px; }
+            .esportivas-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .modalidades-grid { grid-template-columns: 1fr; }
@@ -382,16 +435,24 @@
         </nav>
     </header>
 
-    <!-- ===== BANNER (atualizado com seus IDs) ===== -->
+    <!-- ===== BANNER (dinâmico) ===== -->
     <section class="page-banner" id="bannerEsportiva">
-        <h1 id="estTituloBanner"><i class="fas fa-file-contract"></i>Esportiva</h1>
+        <h1 id="estTituloBanner"><i class="fas fa-file-contract"></i> Esportiva</h1>
         <p id="estSubtituloBanner">Documentos oficiais e normas da ASSGA.</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL (atualizado com seu ID e classe) ===== -->
-    <main class="Esportiva-container" id="EsportivaContainer">
-        <!-- Renderizado via JavaScript -->
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="esportiva-container" id="esportivaContainer">
+        <!-- Renderizado via JavaScript (conteúdo da aba "Esportiva") -->
     </main>
+
+    <!-- ===== SEÇÃO DE ESPORTIVAS (LISTA DE ITENS) ===== -->
+    <section class="esportiva-container" id="esportivasSection" style="display:none;">
+        <div class="esportiva-card" style="border-left-color: #ffd700;">
+            <h2><i class="fas fa-futbol"></i> Nossas Esportivas</h2>
+            <div id="esportivasList" class="esportivas-grid"></div>
+        </div>
+    </section>
 
     <!-- ===== FALE CONOSCO ===== -->
     <section class="info">
@@ -459,7 +520,9 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // Menu mobile
+        // =============================================================
+        // MENU MOBILE
+        // =============================================================
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
@@ -536,7 +599,7 @@
         }
 
         // =============================================================
-        // DADOS PADRÃO (fallback)
+        // DADOS PADRÃO (fallback para a página esportiva)
         // =============================================================
         const defaultEsportiva = {
             titulo: "Nossa Esportiva",
@@ -558,17 +621,17 @@
         };
 
         // =============================================================
-        // CARREGAR CONTEÚDO DA ESPORTIVA (com os novos IDs)
+        // CARREGAR CONTEÚDO DA ESPORTIVA (página principal)
         // =============================================================
         function carregarEsportiva() {
             const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
             const data = stored.esportiva || defaultEsportiva;
 
-            // Banner - usando os IDs que você pediu
-            document.getElementById("estTituloBanner").innerHTML = `<i class="fas fa-file-contract"></i> ${escapeHtml(data.titulo)}`;
+            // Banner
+            document.getElementById("estTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(data.titulo)}`;
             document.getElementById("estSubtituloBanner").textContent = data.subtitulo;
 
-            const container = document.getElementById("EsportivaContainer");
+            const container = document.getElementById("esportivaContainer");
             let html = '';
 
             // ===== IMAGEM DE CAPA =====
@@ -657,11 +720,38 @@
         }
 
         // =============================================================
+        // CARREGAR LISTA DE ESPORTIVAS (itens individuais)
+        // =============================================================
+        function carregarEsportivasLista() {
+            const lista = JSON.parse(localStorage.getItem('assga_esportivas') || '[]');
+            const section = document.getElementById('esportivasSection');
+            const container = document.getElementById('esportivasList');
+
+            if (lista.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            container.innerHTML = lista.map(item => `
+                <div class="esportiva-item-card">
+                    <img class="card-img" src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="${escapeHtml(item.titulo)}" />
+                    <div class="card-body">
+                        <h3>${escapeHtml(item.titulo)}</h3>
+                        ${item.data ? `<div class="data"><i class="fas fa-calendar-alt"></i> ${escapeHtml(item.data)}</div>` : ''}
+                        <div class="desc">${escapeHtml(item.texto || '')}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // =============================================================
         // INICIALIZAÇÃO
         // =============================================================
         document.addEventListener('DOMContentLoaded', function() {
             carregarLogo();
             carregarEsportiva();
+            carregarEsportivasLista();
         });
     </script>
 </body>
