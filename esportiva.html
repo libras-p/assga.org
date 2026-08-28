@@ -347,32 +347,7 @@
         <p>Confira as atividades e campeonatos organizados pela ASSGA.</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
-    </main>
-
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
-    </main>
-
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
-    </main>
-
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
-    </main>
-
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-    <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
-    </main>
-
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <!-- ===== CONTEÚDO PRINCIPAL (ÚNICO) ===== -->
     <main class="container">
         <div id="esportivasList" class="esportivas-grid"></div>
     </main>
@@ -508,9 +483,25 @@
             }
         }
 
-        // ===== CARREGAR LISTA DE ESPORTIVAS =====
+        // ===== CARREGAR LISTA DE ESPORTIVAS COM DADOS DE EXEMPLO =====
         function carregarEsportivas() {
-            const lista = JSON.parse(localStorage.getItem('assga_esportivas') || '[]');
+            // Lista com 5 itens de exemplo (caso não haja dados salvos)
+            const exemplo = [
+                { titulo: "COPA futsal 1", data: "12/08", texto: "fgsdgth", imagem: "" },
+                { titulo: "COPA futsal 2", data: "12/08", texto: "fgsdgth", imagem: "" },
+                { titulo: "COPA futsal 3", data: "12/08", texto: "fgsdgth", imagem: "" },
+                { titulo: "COPA futsal 4", data: "12/08", texto: "fgsdgth", imagem: "" },
+                { titulo: "COPA futsal 5", data: "12/08", texto: "fgsdgth", imagem: "" }
+            ];
+
+            // Tentar carregar do localStorage, se não houver nada, usar o exemplo
+            let lista = JSON.parse(localStorage.getItem('assga_esportivas') || '[]');
+            if (!lista || lista.length === 0) {
+                lista = exemplo;
+                // (opcional) salvar o exemplo no localStorage para não perder
+                localStorage.setItem('assga_esportivas', JSON.stringify(lista));
+            }
+
             const container = document.getElementById('esportivasList');
 
             if (lista.length === 0) {

@@ -1558,7 +1558,7 @@
     document.getElementById('removerLogoBtn').addEventListener('click', function() {
         if (!confirm('Deseja remover a logo personalizada e voltar ao padrão?')) return;
         const config = getConfig();
-        config.logoImg = ''; // remove a imagem salva
+        config.logoImg = '';
         setConfig(config);
         document.getElementById('logoPreview').src = 'src/imagens/Assga_foto.jpg';
         showMessage('msgLogo', 'Logo removida. Usando a imagem padrão.', 'success');
