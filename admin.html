@@ -40,6 +40,8 @@
         .btn-warning:hover { background: #ffcd39; transform: translateY(-2px); }
         .btn-primary-action { background: #003366; color: #fff; box-shadow: 0 4px 14px rgba(0,51,102,.3); }
         .btn-primary-action:hover { background: #004aad; transform: translateY(-2px); }
+        .btn-secondary { background: #6c757d; color: #fff; }
+        .btn-secondary:hover { background: #5a6268; transform: translateY(-2px); }
         .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
 
         /* Abas */
@@ -339,9 +341,14 @@
             <div id="tab-esportivas" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-list"></i> Gerenciar Esportivas</h2>
-                    <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
-                        <i class="fas fa-plus"></i> Adicionar Esportiva
-                    </button>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                        <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
+                            <i class="fas fa-plus"></i> Adicionar Esportiva
+                        </button>
+                        <a href="esportiva.html" target="_blank" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i> Visualizar Página
+                        </a>
+                    </div>
                     <div id="listaEsportivas" class="item-list"></div>
                     <div class="form-card" id="formEsportivaItem">
                         <h3 style="color:#003366; margin-bottom:16px;">
@@ -1314,8 +1321,8 @@
             if (index === -1) lista.push(obj);
             else lista[index] = obj;
             setEsportivas(lista);
-            renderEsportivas();
-            fecharFormularioEsportiva();
+            // Redireciona para a página pública após salvar
+            window.location.href = 'esportiva.html';
         });
 
         function editarEsportiva(index) {
