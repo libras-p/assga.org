@@ -103,7 +103,7 @@
         .hidden { display: none !important; }
         .empty-msg { color: #999; font-style: italic; text-align: center; padding: 20px; }
 
-        /* Toast para mensagens de sucesso */
+        /* Toast para mensagens de sucesso (não usado no redirecionamento, mas mantido) */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -527,7 +527,7 @@
         </div>
     </div>
 
-    <!-- Toast para mensagens de sucesso -->
+    <!-- Toast (mantido, mas não usado no redirecionamento) -->
     <div id="toast" class="toast">✅ Esportiva salva com sucesso!</div>
 
     <script>
@@ -1340,7 +1340,7 @@
             document.getElementById('formEsportivaItem').classList.remove('visible');
         }
 
-        // ===== EVENTO DE SALVAR (SEM REDIRECIONAMENTO) =====
+        // ===== EVENTO DE SALVAR (COM REDIRECIONAMENTO PARA esportiva.html) =====
         document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const index = parseInt(document.getElementById('editEsportivaIndex').value);
@@ -1359,12 +1359,8 @@
             else lista[index] = obj;
             setEsportivas(lista);
 
-            // Fecha o formulário e recarrega a lista
-            fecharFormularioEsportiva();
-            renderEsportivas();
-
-            // Mostra mensagem de sucesso (Toast)
-            showToast('✅ Esportiva salva com sucesso!');
+            // 🔁 REDIRECIONA PARA A PÁGINA PÚBLICA
+            window.location.href = 'esportiva.html';
         });
 
         function editarEsportiva(index) {
