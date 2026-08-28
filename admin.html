@@ -442,7 +442,7 @@
             </div>
         </div>
 
-        <!-- LOGO -->
+        <!-- LOGO (COM BOTÃO REMOVER) -->
         <div id="tab-logo" class="tab-content">
             <div class="content-card">
                 <h2><i class="fas fa-image"></i> Gerenciar Logo</h2>
@@ -452,6 +452,11 @@
                             <img id="logoPreview" src="src/imagens/Assga_foto.jpg" alt="Logo atual" />
                             <span class="label"><i class="fas fa-camera"></i> Clique para trocar a imagem da logo</span>
                             <input type="file" id="logoImgInput" accept="image/*" />
+                        </div>
+                        <div style="grid-column:1/-1; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                            <button type="button" class="btn btn-danger" id="removerLogoBtn">
+                                <i class="fas fa-trash"></i> Remover Logo (voltar ao padrão)
+                            </button>
                         </div>
                         <input class="field full" type="text" id="logoTxt" placeholder="Texto da logo (ex: ASSGA)" />
                         <div class="form-actions">
@@ -1516,7 +1521,7 @@
     }
 
     // ==========================================================
-    // LOGO
+    // LOGO (COM FUNÇÃO REMOVER)
     // ==========================================================
     const CONFIG_KEY = 'assga_config';
 
@@ -1547,6 +1552,16 @@
             document.getElementById('logoPreview').src = ev.target.result;
         };
         reader.readAsDataURL(file);
+    });
+
+    // Botão Remover Logo
+    document.getElementById('removerLogoBtn').addEventListener('click', function() {
+        if (!confirm('Deseja remover a logo personalizada e voltar ao padrão?')) return;
+        const config = getConfig();
+        config.logoImg = ''; // remove a imagem salva
+        setConfig(config);
+        document.getElementById('logoPreview').src = 'src/imagens/Assga_foto.jpg';
+        showMessage('msgLogo', 'Logo removida. Usando a imagem padrão.', 'success');
     });
 
     document.getElementById('logoForm').addEventListener('submit', function(e) {
