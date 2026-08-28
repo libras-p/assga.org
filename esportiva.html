@@ -7,13 +7,7 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== RESET E BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body {
             background: linear-gradient(145deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -22,8 +16,6 @@
             flex-direction: column;
             color: #1e293b;
         }
-
-        /* ===== HEADER ===== */
         header {
             background: linear-gradient(135deg, #003366, #004aad);
             color: #fff;
@@ -33,30 +25,15 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            box-shadow: 0 4px 20px rgba(0, 51, 102, 0.25);
+            box-shadow: 0 4px 20px rgba(0,51,102,0.25);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #fff;
-        }
-        .logo-area img {
-            width: 48px;
-            height: 56px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,.2);
-        }
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; }
+        .logo-area img { width: 48px; height: 56px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
         .logo-text {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 1px;
+            font-size: 24px; font-weight: 800; letter-spacing: 1px;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
             -webkit-background-clip: text;
             background-clip: text;
@@ -64,19 +41,10 @@
             -webkit-text-fill-color: transparent;
         }
         nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 30px;
-            transition: 0.3s;
+            color: #fff; text-decoration: none; font-weight: 600; padding: 8px 16px;
+            border-radius: 30px; transition: 0.3s;
         }
-        nav a:hover {
-            background: rgba(255,215,0,0.2);
-            color: #ffd700;
-        }
-
-        /* ===== HERO ===== */
+        nav a:hover { background: rgba(255,215,0,0.2); color: #ffd700; }
         .hero {
             background: linear-gradient(135deg, #003366, #1a5276);
             padding: 50px 20px 40px;
@@ -84,204 +52,69 @@
             color: #fff;
             border-bottom: 4px solid #ffd700;
         }
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .hero h1 i {
-            color: #ffd700;
-            margin-right: 12px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 8px auto 0;
-        }
-
-        /* ===== CONTEÚDO ===== */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            flex: 1;
-            width: 100%;
-        }
-
-        /* ===== LISTA DE CARDS ===== */
+        .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; }
+        .hero h1 i { color: #ffd700; margin-right: 12px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 8px auto 0; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
         .esportivas-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
-
         .card {
             background: #fff;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border: 1px solid #e9edf2;
             transform: translateY(0);
         }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 50px rgba(0, 51, 102, 0.15);
-            border-color: #ffd700;
-        }
-
+        .card:hover { transform: translateY(-8px); box-shadow: 0 16px 50px rgba(0,51,102,0.15); border-color: #ffd700; }
         .card-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #e6edf5;
+            width: 100%; height: 200px; object-fit: cover; background: #e6edf5;
             transition: transform 0.5s ease;
         }
-        .card:hover .card-img {
-            transform: scale(1.03);
-        }
-
-        .card-body {
-            padding: 20px 22px 24px;
-        }
-        .card-body h3 {
-            color: #003366;
-            font-size: 1.4rem;
-            margin-bottom: 4px;
-            font-weight: 700;
-        }
-        .card-body .data {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 12px;
-        }
-        .card-body .data i {
-            color: #004aad;
-            margin-right: 6px;
-        }
-        .card-body .desc {
-            color: #334155;
-            line-height: 1.6;
-            font-size: 0.95rem;
-            word-break: break-word;
-        }
-        .card-body .desc a {
-            color: #004aad;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .card-body .desc a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== ESTADO VAZIO ===== */
-        .empty-state {
-            text-align: center;
-            padding: 70px 20px;
-            grid-column: 1 / -1;
-        }
-        .empty-state i {
-            font-size: 4rem;
-            color: #b22234;
-            margin-bottom: 16px;
-            display: block;
-        }
-        .empty-state p {
-            font-size: 1.2rem;
-            color: #64748b;
-        }
-
-        /* ===== BOTÃO VOLTAR ===== */
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: #003366;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .back-link i {
-            margin-right: 8px;
-        }
-        .back-link:hover {
-            color: #004aad;
-            transform: translateX(-4px);
-        }
-
-        /* ===== FALE CONOSCO ===== */
+        .card:hover .card-img { transform: scale(1.03); }
+        .card-body { padding: 20px 22px 24px; }
+        .card-body h3 { color: #003366; font-size: 1.4rem; margin-bottom: 4px; font-weight: 700; }
+        .card-body .data { font-size: 0.9rem; color: #64748b; margin-bottom: 12px; }
+        .card-body .data i { color: #004aad; margin-right: 6px; }
+        .card-body .desc { color: #334155; line-height: 1.6; font-size: 0.95rem; word-break: break-word; }
+        .card-body .desc a { color: #004aad; text-decoration: none; font-weight: 600; }
+        .card-body .desc a:hover { text-decoration: underline; }
+        .empty-state { text-align: center; padding: 70px 20px; grid-column: 1 / -1; }
+        .empty-state i { font-size: 4rem; color: #b22234; margin-bottom: 16px; display: block; }
+        .empty-state p { font-size: 1.2rem; color: #64748b; }
+        .back-link { display: inline-block; margin-top: 30px; color: #003366; font-weight: 600; text-decoration: none; transition: 0.3s; }
+        .back-link i { margin-right: 8px; }
+        .back-link:hover { color: #004aad; transform: translateX(-4px); }
         .info-section {
             background: linear-gradient(135deg, #e9eef5, #d4e1ed);
             padding: 50px 20px;
             margin-top: 40px;
         }
-        .info-section h2 {
-            text-align: center;
-            color: #003366;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-        .info-section h2 i {
-            color: #b22234;
-        }
+        .info-section h2 { text-align: center; color: #003366; font-size: 2rem; margin-bottom: 30px; }
+        .info-section h2 i { color: #b22234; }
         .info-grid {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto;
+            display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;
+            max-width: 1000px; margin: 0 auto;
         }
         .info-card {
-            background: #fff;
-            width: 220px;
-            padding: 24px 20px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-            border-top: 4px solid #004aad;
-            transition: 0.3s;
+            background: #fff; width: 220px; padding: 24px 20px; border-radius: 16px;
+            text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border-top: 4px solid #004aad; transition: 0.3s;
         }
-        .info-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 32px rgba(0,74,173,0.12);
-            border-top-color: #ffd700;
-        }
+        .info-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,74,173,0.12); border-top-color: #ffd700; }
         .info-card .icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #003366, #004aad);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px;
-            color: #ffd700;
-            font-size: 24px;
+            width: 60px; height: 60px; background: linear-gradient(135deg, #003366, #004aad);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px; color: #ffd700; font-size: 24px;
         }
-        .info-card h3 {
-            color: #003366;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
-        .info-card p {
-            color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        .info-card a {
-            display: inline-block;
-            margin-top: 12px;
-            color: #004aad;
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
-        .info-card a:hover {
-            color: #ffd700;
-            transform: scale(1.15);
-        }
-
-        /* ===== FOOTER ===== */
+        .info-card h3 { color: #003366; font-size: 1.1rem; margin-bottom: 6px; }
+        .info-card p { color: #475569; font-size: 0.95rem; line-height: 1.5; }
+        .info-card a { display: inline-block; margin-top: 12px; color: #004aad; font-size: 1.2rem; transition: 0.3s; }
+        .info-card a:hover { color: #ffd700; transform: scale(1.15); }
         footer {
             background: linear-gradient(135deg, #003366, #002244);
             color: #fff;
@@ -297,38 +130,16 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-        .footer-content .copy {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            line-height: 1.6;
-        }
-        .footer-content .copy i {
-            color: #ffd700;
-        }
-        .social-links {
-            display: flex;
-            gap: 12px;
-        }
+        .footer-content .copy { font-size: 0.9rem; opacity: 0.85; line-height: 1.6; }
+        .footer-content .copy i { color: #ffd700; }
+        .social-links { display: flex; gap: 12px; }
         .social-links a {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
+            width: 42px; height: 42px; border-radius: 50%;
             background: rgba(255,255,255,0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            text-decoration: none;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.2rem; transition: 0.3s; text-decoration: none;
         }
-        .social-links a:hover {
-            background: #ffd700;
-            color: #003366;
-            transform: translateY(-4px);
-        }
-
-        /* ===== RESPONSIVO ===== */
+        .social-links a:hover { background: #ffd700; color: #003366; transform: translateY(-4px); }
         @media (max-width: 768px) {
             header { padding: 14px 20px; }
             .hero h1 { font-size: 2rem; }
@@ -344,8 +155,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== HEADER ===== -->
     <header>
         <a href="index.html" class="logo-area">
             <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
@@ -358,21 +167,16 @@
         </nav>
     </header>
 
-    <!-- ===== HERO ===== -->
     <section class="hero">
         <h1><i class="fas fa-futbol"></i> Nossas Esportivas</h1>
         <p>Atividades e campeonatos organizados pela ASSGA</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main class="container">
-        <div id="esportivasList" class="esportivas-grid">
-            <!-- Renderizado via JavaScript -->
-        </div>
+        <div id="esportivasList" class="esportivas-grid"></div>
         <a href="admin.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
     </main>
 
-    <!-- ===== FALE CONOSCO ===== -->
     <section class="info-section">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-grid">
@@ -403,7 +207,6 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-content">
             <div class="copy">
@@ -419,9 +222,7 @@
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script>
-        // ===== ESCAPE HTML =====
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -434,7 +235,17 @@
             });
         }
 
-        // ===== CARREGAR LOGO =====
+        function isLink(text) {
+            return /^https?:\/\/\S+/i.test(text.trim());
+        }
+
+        function formatLink(text) {
+            if (isLink(text)) {
+                return `<a href="${escapeHtml(text.trim())}" target="_blank" rel="noopener">${escapeHtml(text.trim())}</a>`;
+            }
+            return escapeHtml(text);
+        }
+
         function carregarLogo() {
             try {
                 const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
@@ -446,14 +257,12 @@
                 if (logoTxt && config.logoTxt) {
                     logoTxt.textContent = config.logoTxt;
                 }
-            } catch (e) { /* ignora */ }
+            } catch (e) {}
         }
 
-        // ===== CARREGAR LISTA DE ESPORTIVAS =====
         function carregarEsportivas() {
             const container = document.getElementById('esportivasList');
             let lista = [];
-
             try {
                 const stored = localStorage.getItem('assga_esportivas');
                 lista = stored ? JSON.parse(stored) : [];
@@ -461,7 +270,6 @@
                 lista = [];
             }
 
-            // Se estiver vazio, exibe mensagem
             if (!lista || lista.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -472,7 +280,7 @@
                 return;
             }
 
-            // Ordena por data (se for uma data válida) ou mantém ordem
+            // Ordena por data (se possível)
             lista.sort((a, b) => {
                 const da = new Date(a.data);
                 const db = new Date(b.data);
@@ -480,16 +288,8 @@
                 return 0;
             });
 
-            // Renderiza os cards
             container.innerHTML = lista.map(item => {
-                // Se a descrição for um link (http/https), transforma em <a>
-                let desc = escapeHtml(item.texto || '');
-                const linkMatch = desc.match(/^(https?:\/\/[^\s]+)/);
-                if (linkMatch) {
-                    const url = linkMatch[0];
-                    desc = `<a href="${url}" target="_blank" rel="noopener">${url}</a>` + desc.slice(url.length);
-                }
-
+                let desc = formatLink(item.texto || '');
                 return `
                     <div class="card">
                         <img class="card-img" src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="${escapeHtml(item.titulo)}" loading="lazy" />
@@ -503,7 +303,6 @@
             }).join('');
         }
 
-        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
             carregarLogo();
             carregarEsportivas();

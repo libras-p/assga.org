@@ -83,6 +83,8 @@
         .image-preview { max-width: 200px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd; }
         .hidden { display: none !important; }
         .empty-msg { color: #999; font-style: italic; text-align: center; padding: 20px; }
+        .link-text { word-break: break-all; color: #004aad; text-decoration: none; }
+        .link-text:hover { text-decoration: underline; }
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
             .form-grid { grid-template-columns: 1fr; }
@@ -315,10 +317,10 @@
             </div>
         </div>
 
-        <!-- ESPORTIVAS (LISTA DE ITENS) -->
+        <!-- ESPORTIVAS (LISTA DE ITENS) - COM LIMITE DE 5 -->
         <div id="tab-esportivas" class="tab-content">
             <div class="content-card">
-                <h2><i class="fas fa-list"></i> Gerenciar Esportivas</h2>
+                <h2><i class="fas fa-list"></i> Gerenciar Esportivas <span style="font-size:0.8rem; font-weight:400; color:#667085;">(máx. 5)</span></h2>
                 <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
                     <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
                         <i class="fas fa-plus"></i> Adicionar Esportiva
@@ -337,7 +339,7 @@
                         <div class="form-grid">
                             <input class="field" type="text" id="espItemTitulo" placeholder="Título" required />
                             <input class="field" type="text" id="espItemData" placeholder="Data (ex: 12/08)" />
-                            <textarea class="field full" id="espItemTexto" placeholder="Descrição ou texto" rows="4"></textarea>
+                            <textarea class="field full" id="espItemTexto" placeholder="Link ou descrição (ex: https://...)" rows="2"></textarea>
                             <div class="foto-upload" onclick="document.getElementById('espItemFotoInput').click()" style="grid-column:1/-1;">
                                 <img id="espItemFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da esportiva" />
                                 <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
@@ -506,6 +508,7 @@
         index: 'assga_conteudos',
         esportivas: 'assga_esportivas'
     };
+    const MAX_ESPORTIVAS = 5;
 
     // ==========================================================
     // UTILITÁRIOS
@@ -536,6 +539,15 @@
     function showMessage(id, text, type = 'success') {
         const el = document.getElementById(id);
         if (el) { el.textContent = text; el.style.color = type === 'success' ? '#28a745' : '#b22234'; }
+    }
+    function isLink(text) {
+        return /^https?:\/\/\S+/i.test(text.trim());
+    }
+    function formatLink(text) {
+        if (isLink(text)) {
+            return `<a href="${escapeHtml(text.trim())}" target="_blank" rel="noopener" class="link-text">${escapeHtml(text.trim())}</a>`;
+        }
+        return escapeHtml(text);
     }
 
     // ==========================================================
@@ -1205,7 +1217,7 @@
     });
 
     // ==========================================================
-    // ESPORTIVAS (LISTA DE ITENS) - REDIRECIONAMENTO
+    // ESPORTIVAS (LISTA DE ITENS) - COM LIMITE DE 5
     // ==========================================================
     const STORAGE_ESPORTIVAS = 'assga_esportivas';
 
@@ -1245,7 +1257,7 @@
                     <img src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da esportiva" />
                     <div>
                         <strong>${escapeHtml(item.titulo)}</strong>
-                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(item.texto || '')}</span>
+                        <br><span style="font-size:0.9em;color:#555;">${formatLink(item.texto || '')}</span>
                         ${item.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(item.data)}</span>` : ''}
                     </div>
                 </div>
@@ -1258,6 +1270,12 @@
     }
 
     function mostrarFormularioEsportiva(editIndex = -1) {
+        const lista = getEsportivas();
+        // Verifica limite apenas se for novo cadastro
+        if (editIndex === -1 && lista.length >= MAX_ESPORTIVAS) {
+            alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido. Exclua uma para adicionar outra.`);
+            return;
+        }
         const card = document.getElementById('formEsportivaItem');
         card.classList.add('visible');
         document.getElementById('editEsportivaIndex').value = editIndex;
@@ -1266,7 +1284,6 @@
             document.getElementById('esportivaItemForm').reset();
             setEspItemFotoPreview('');
         } else {
-            const lista = getEsportivas();
             const item = lista[editIndex];
             if (item) {
                 document.getElementById('espItemTitulo').value = item.titulo || '';
@@ -1282,12 +1299,21 @@
         document.getElementById('formEsportivaItem').classList.remove('visible');
     }
 
-    // ===== SALVAR COM REDIRECIONAMENTO =====
+    // ===== SALVAR COM REDIRECIONAMENTO E VERIFICAÇÃO DE LIMITE =====
     document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const index = parseInt(document.getElementById('editEsportivaIndex').value);
         const titulo = document.getElementById('espItemTitulo').value.trim();
         if (!titulo) { alert('Título é obrigatório.'); return; }
+
+        // Se for novo, verifica limite novamente (segurança)
+        if (index === -1) {
+            const lista = getEsportivas();
+            if (lista.length >= MAX_ESPORTIVAS) {
+                alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido. Não é possível adicionar mais.`);
+                return;
+            }
+        }
 
         const obj = {
             titulo,
@@ -1301,7 +1327,7 @@
         else lista[index] = obj;
         setEsportivas(lista);
 
-        // 🔁 REDIRECIONA PARA A PÁGINA PÚBLICA
+        // Redireciona para a página pública
         window.location.href = 'esportiva.html';
     });
 
