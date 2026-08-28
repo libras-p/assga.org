@@ -1,317 +1,344 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ASSGA - Nossas Esportivas.">
-    <meta name="theme-color" content="#003366">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nossas Esportivas - ASSGA</title>
-    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        /* ===== RESET E BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         html { scroll-behavior: smooth; }
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
+            background: linear-gradient(145deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            color: #1e293b;
         }
-        h1 { text-align: center; margin: 45px 0 15px; color: #003366; font-size: 2.8em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
-        h1 i { color: #004aad; margin-right: 10px; }
-        .subtitle { text-align: center; color: #667085; margin-bottom: 35px; font-size: 1.1rem; }
 
-        /* HEADER */
+        /* ===== HEADER ===== */
         header {
-            background: linear-gradient(135deg, #003366 0%, #004aad 100%);
+            background: linear-gradient(135deg, #003366, #004aad);
             color: #fff;
+            padding: 18px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0, 51, 102, 0.25);
             position: sticky;
             top: 0;
-            z-index: 9999;
-            box-shadow: 0 8px 32px rgba(0,51,102,.3);
+            z-index: 100;
         }
-        .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform .3s ease; }
-        .logo-area:hover { transform: scale(1.05); }
-        .logo-area a { display: flex; text-decoration: none; }
-        .logo-area img { width: 56px; height: 68px; object-fit: cover; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
-        .logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #ffd700, #ffed4e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-        .menu {
-            list-style: none;
-            display: inline-grid;
-            grid-auto-flow: column;
-            gap: 10px;
-            margin-left: auto;
+        .logo-area {
+            display: flex;
             align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
         }
-        .menu li { position: relative; }
-        .menu a {
-            display: block;
+        .logo-area img {
+            width: 48px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,.2);
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        nav a {
             color: #fff;
             text-decoration: none;
-            font-size: 15px;
-            font-weight: 700;
-            padding: 12px 17px;
-            border-radius: 25px;
-            transition: all .4s ease;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: 0.3s;
         }
-        .menu a i { margin-right: 7px; transition: .3s; }
-        .menu a:hover {
-            color: #003366;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            box-shadow: 0 8px 24px rgba(255,215,0,.4);
-            transform: translateY(-3px);
+        nav a:hover {
+            background: rgba(255,215,0,0.2);
+            color: #ffd700;
         }
-        .menu a:hover i { color: #003366; }
-        .menu-toggle {
-            display: none;
-            width: 45px;
-            height: 45px;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-            cursor: pointer;
-            margin-left: auto;
-            border: 0;
-            border-radius: 10px;
-            color: #fff;
-            background: transparent;
-            transition: .3s;
-        }
-        .menu-toggle:hover { background: rgba(255,255,255,.12); }
-        .menu-toggle i { pointer-events: none; }
 
-        /* HERO */
+        /* ===== HERO ===== */
         .hero {
             background: linear-gradient(135deg, #003366, #1a5276);
-            padding: 60px 20px;
+            padding: 50px 20px 40px;
             text-align: center;
             color: #fff;
             border-bottom: 4px solid #ffd700;
         }
-        .hero h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 10px; color: #fff; text-shadow: none; }
-        .hero h1 i { color: #ffd700; margin-right: 15px; }
-        .hero p { font-size: 1.2rem; opacity: .9; max-width: 600px; margin: 0 auto; }
-
-        /* CONTEÚDO */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            flex: 1;
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .hero h1 i {
+            color: #ffd700;
+            margin-right: 12px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 8px auto 0;
         }
 
+        /* ===== CONTEÚDO ===== */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* ===== LISTA DE CARDS ===== */
         .esportivas-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
-        .esportiva-item-card {
+
+        .card {
             background: #fff;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 6px 24px rgba(0,0,0,.08);
-            transition: all .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border: 1px solid #e9edf2;
             transform: translateY(0);
         }
-        .esportiva-item-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(0,51,102,.18);
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 50px rgba(0, 51, 102, 0.15);
             border-color: #ffd700;
         }
-        .esportiva-item-card .card-img {
+
+        .card-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            background: #f0f4fa;
-            transition: transform .5s ease;
+            background: #e6edf5;
+            transition: transform 0.5s ease;
         }
-        .esportiva-item-card:hover .card-img {
+        .card:hover .card-img {
             transform: scale(1.03);
         }
-        .esportiva-item-card .card-body {
-            padding: 20px;
+
+        .card-body {
+            padding: 20px 22px 24px;
         }
-        .esportiva-item-card .card-body h3 {
+        .card-body h3 {
             color: #003366;
-            font-size: 1.3rem;
-            margin-bottom: 6px;
+            font-size: 1.4rem;
+            margin-bottom: 4px;
             font-weight: 700;
         }
-        .esportiva-item-card .card-body .data {
-            font-size: 0.85rem;
-            color: #667085;
-            margin-bottom: 10px;
+        .card-body .data {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 12px;
         }
-        .esportiva-item-card .card-body .data i {
-            margin-right: 6px;
+        .card-body .data i {
             color: #004aad;
+            margin-right: 6px;
         }
-        .esportiva-item-card .card-body .desc {
-            color: #555;
-            line-height: 1.7;
+        .card-body .desc {
+            color: #334155;
+            line-height: 1.6;
             font-size: 0.95rem;
+            word-break: break-word;
+        }
+        /* Se a descrição for um link, destacamos */
+        .card-body .desc a {
+            color: #004aad;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .card-body .desc a:hover {
+            text-decoration: underline;
         }
 
-        .empty-msg {
+        /* ===== ESTADO VAZIO ===== */
+        .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: #999;
-            font-style: italic;
-            font-size: 1.2rem;
+            padding: 70px 20px;
             grid-column: 1 / -1;
         }
+        .empty-state i {
+            font-size: 4rem;
+            color: #b22234;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .empty-state p {
+            font-size: 1.2rem;
+            color: #64748b;
+        }
 
-        /* FALE CONOSCO */
-        .info {
-            background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
+        /* ===== BOTÃO VOLTAR ===== */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #003366;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .back-link i {
+            margin-right: 8px;
+        }
+        .back-link:hover {
+            color: #004aad;
+            transform: translateX(-4px);
+        }
+
+        /* ===== FALE CONOSCO ===== */
+        .info-section {
+            background: linear-gradient(135deg, #e9eef5, #d4e1ed);
             padding: 50px 20px;
             margin-top: 40px;
         }
-        .info h2 {
+        .info-section h2 {
             text-align: center;
-            margin-bottom: 35px;
             color: #003366;
             font-size: 2rem;
+            margin-bottom: 30px;
         }
-        .info h2 i { color: #b22234; }
-        .info-container {
+        .info-section h2 i {
+            color: #b22234;
+        }
+        .info-grid {
             display: flex;
             justify-content: center;
             gap: 25px;
             flex-wrap: wrap;
-            max-width: 1200px;
-            margin: auto;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         .info-card {
-            width: 250px;
-            background: linear-gradient(135deg, #fff, #f8f9fa);
-            padding: 28px 22px;
+            background: #fff;
+            width: 220px;
+            padding: 24px 20px;
             border-radius: 16px;
             text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,.08);
-            transition: all .4s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
             border-top: 4px solid #004aad;
+            transition: 0.3s;
         }
         .info-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(0,74,173,.18);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,74,173,0.12);
             border-top-color: #ffd700;
         }
         .info-card .icon {
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #003366, #004aad);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 12px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #003366, #004aad);
             color: #ffd700;
-            font-size: 28px;
-            box-shadow: 0 8px 20px rgba(0,51,102,.25);
-            transition: .4s;
+            font-size: 24px;
         }
-        .info-card:hover .icon { transform: scale(1.15) rotate(8deg); }
-        .info-card h3 { color: #003366; margin: 12px 0; font-size: 1.3rem; }
-        .info-card h3 i { color: #004aad; margin-right: 6px; }
-        .info-card p { color: #666; line-height: 1.5; }
+        .info-card h3 {
+            color: #003366;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+        .info-card p {
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
         .info-card a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            color: #fff;
-            background: #004aad;
-            margin-top: 15px;
-            border-radius: 50%;
-            font-size: 18px;
-            text-decoration: none;
-            transition: all .3s ease;
+            display: inline-block;
+            margin-top: 12px;
+            color: #004aad;
+            font-size: 1.2rem;
+            transition: 0.3s;
         }
-        .info-card a:hover { color: #003366; background: #ffd700; transform: scale(1.15); }
+        .info-card a:hover {
+            color: #ffd700;
+            transform: scale(1.15);
+        }
 
-        /* FOOTER */
+        /* ===== FOOTER ===== */
         footer {
-            background: linear-gradient(135deg, #003366 0%, #002244 100%);
+            background: linear-gradient(135deg, #003366, #002244);
             color: #fff;
-            padding: 35px 20px;
+            padding: 30px 20px;
             margin-top: 50px;
         }
-        .footer-container {
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            max-width: 1200px;
-            margin: auto;
         }
-        .footer-copy { font-size: 13px; line-height: 1.8; opacity: .9; }
-        .footer-copy i { color: #ffd700; margin-right: 5px; }
-        .footer-redes {
+        .footer-content .copy {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+        .footer-content .copy i {
+            color: #ffd700;
+        }
+        .social-links {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        .footer-redes a {
-            width: 45px;
-            height: 45px;
+        .social-links a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 21px;
-            border-radius: 50%;
-            background: rgba(255,255,255,.10);
+            font-size: 1.2rem;
+            transition: 0.3s;
             text-decoration: none;
-            transition: all .3s ease;
         }
-        .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
+        .social-links a:hover {
+            background: #ffd700;
+            color: #003366;
+            transform: translateY(-4px);
+        }
 
-        @media (max-width: 767px) {
-            header { padding: 12px 15px; }
-            .logo-area img { width: 48px; height: 60px; }
-            .logo { font-size: 18px; }
-            .menu-toggle { display: flex; }
-            .menu {
-                display: none;
-                position: absolute;
-                top: 76px;
-                left: 15px;
-                right: 15px;
-                width: calc(100% - 30px);
-                grid-auto-flow: row;
-                gap: 4px;
-                margin: 0;
-                padding: 15px;
-                background: linear-gradient(135deg, rgba(0,51,102,.98), rgba(0,74,173,.98));
-                border-radius: 15px;
-                box-shadow: 0 15px 35px rgba(0,0,0,.30);
-            }
-            .menu.active { display: grid; }
-            .menu li { width: 100%; padding: 2px 0; }
-            .menu a { width: 100%; text-align: left; padding: 13px 15px; }
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            header { padding: 14px 20px; }
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 1rem; }
+            .esportivas-grid { grid-template-columns: 1fr 1fr; }
+            .info-grid { flex-direction: column; align-items: center; }
+            .info-card { width: 100%; max-width: 300px; }
+        }
+        @media (max-width: 480px) {
             .esportivas-grid { grid-template-columns: 1fr; }
-            .info-card { width: 100%; }
-            .footer-container { flex-direction: column; text-align: center; }
-        }
-        @media (min-width: 768px) and (max-width: 1023px) {
-            .menu a { font-size: 13px; padding: 10px 14px; }
-            .info-card { width: 45%; }
-        }
-        a:focus, button:focus { outline: 3px solid #ffd700; outline-offset: 3px; }
-        @media (prefers-reduced-motion: reduce) {
-            * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+            .logo-text { font-size: 18px; }
         }
     </style>
 </head>
@@ -319,144 +346,80 @@
 
     <!-- ===== HEADER ===== -->
     <header>
-        <div class="logo-area">
-            <a href="index.html" aria-label="Página inicial ASSGA">
-                <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA">
-            </a>
-            <div class="logo">ASSGA</div>
-        </div>
-        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false" type="button">
-            <i id="menuIcon" class="fas fa-bars"></i>
-        </button>
-        <nav aria-label="Menu principal">
-            <ul class="menu" id="menu">
-                <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
-                <li><a href="historia.html"><i class="fas fa-book-open"></i> História</a></li>
-                <li><a href="esportiva.html"><i class="fas fa-futbol"></i> Esportiva</a></li>
-                <li><a href="evento.html"><i class="fas fa-calendar-days"></i> Eventos</a></li>
-                <li><a href="estatuto.html"><i class="fas fa-file-contract"></i> Estatuto</a></li>
-                <li><a href="diretoria.html"><i class="fas fa-users"></i> Diretoria</a></li>
-                <li><a href="login.html"><i class="fas fa-id-card"></i> Área do Sócio</a></li>
-            </ul>
+        <a href="index.html" class="logo-area">
+            <img src="src/imagens/Assga_foto.jpg" alt="ASSGA">
+            <span class="logo-text">ASSGA</span>
+        </a>
+        <nav>
+            <a href="index.html"><i class="fas fa-house"></i> Home</a>
+            <a href="esportiva.html" style="background:rgba(255,215,0,0.2);"><i class="fas fa-futbol"></i> Esportivas</a>
+            <a href="login.html"><i class="fas fa-id-card"></i> Área do Sócio</a>
         </nav>
     </header>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
         <h1><i class="fas fa-futbol"></i> Nossas Esportivas</h1>
-        <p>Confira as atividades e campeonatos organizados pela ASSGA.</p>
+        <p>Atividades e campeonatos organizados pela ASSGA</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL (ÚNICO) ===== -->
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main class="container">
-        <div id="esportivasList" class="esportivas-grid"></div>
+        <div id="esportivasList" class="esportivas-grid">
+            <!-- Renderizado via JavaScript -->
+        </div>
+        <a href="admin.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
     </main>
 
     <!-- ===== FALE CONOSCO ===== -->
-    <section class="info">
+    <section class="info-section">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
-        <div class="info-container">
+        <div class="info-grid">
             <div class="info-card">
                 <div class="icon"><i class="fas fa-location-dot"></i></div>
-                <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                <h3>Endereço</h3>
                 <p>São Gonçalo do Amarante - RN</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=S%C3%A3o%20Gon%C3%A7alo%20do%20Amarante%20RN" target="_blank" rel="noopener noreferrer" aria-label="Abrir endereço no Google Maps" title="Abrir no Google Maps">
-                    <i class="fas fa-map-location-dot"></i>
-                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=S%C3%A3o%20Gon%C3%A7alo%20do%20Amarante%20RN" target="_blank"><i class="fas fa-map-location-dot"></i></a>
             </div>
             <div class="info-card">
                 <div class="icon"><i class="fas fa-envelope"></i></div>
-                <h3><i class="fas fa-at"></i> Email</h3>
+                <h3>Email</h3>
                 <p>assgar2019@gmail.com</p>
-                <a href="mailto:assgar2019@gmail.com" aria-label="Enviar email para ASSGA" title="Enviar email">
-                    <i class="fas fa-paper-plane"></i>
-                </a>
+                <a href="mailto:assgar2019@gmail.com"><i class="fas fa-paper-plane"></i></a>
             </div>
             <div class="info-card">
                 <div class="icon"><i class="fas fa-phone"></i></div>
-                <h3><i class="fas fa-phone"></i> Telefone</h3>
+                <h3>Telefone</h3>
                 <p>(84) 99698-1248</p>
-                <a href="tel:+5584996981248" aria-label="Ligar para ASSGA" title="Ligar">
-                    <i class="fas fa-phone-volume"></i>
-                </a>
+                <a href="tel:+5584996981248"><i class="fas fa-phone-volume"></i></a>
             </div>
             <div class="info-card">
                 <div class="icon"><i class="fas fa-building"></i></div>
-                <h3><i class="fas fa-id-card"></i> CNPJ</h3>
+                <h3>CNPJ</h3>
                 <p>57.242.499/0001-60</p>
-                <a href="#" aria-label="CNPJ da ASSGA" title="CNPJ" onclick="return false;">
-                    <i class="fas fa-id-card"></i>
-                </a>
+                <a href="#"><i class="fas fa-id-card"></i></a>
             </div>
         </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
     <footer>
-        <div class="footer-container">
-            <div class="footer-copy">
-                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados<br>
-                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60<br>
-                <i class="fas fa-futbol"></i> Associação Desportiva
+        <div class="footer-content">
+            <div class="copy">
+                <i class="fas fa-copyright"></i> 2026 ASSGA - Todos os direitos reservados<br />
+                <i class="fas fa-building"></i> CNPJ: 57.242.499/0001-60
             </div>
-            <div class="footer-redes" aria-label="Redes sociais da ASSGA">
-                <a href="https://www.instagram.com/assga_2019/" target="_blank" rel="noopener noreferrer" aria-label="Instagram ASSGA" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.youtube.com/@ASSGAESPORTES" target="_blank" rel="noopener noreferrer" aria-label="YouTube ASSGA" title="YouTube">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="https://wa.me/5584996981248?text=Ol%C3%A1%2C%20eu%20estou%20aqui" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ASSGA" title="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="mailto:assgar2019@gmail.com" aria-label="Email ASSGA" title="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
+            <div class="social-links">
+                <a href="https://www.instagram.com/assga_2019/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ASSGAESPORTES" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/5584996981248" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:assgar2019@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </footer>
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // ===== MENU MOBILE =====
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            const toggle = document.getElementById('menuToggle');
-            const icon = document.getElementById('menuIcon');
-            menu.classList.toggle('active');
-            const aberto = menu.classList.contains('active');
-            toggle.setAttribute('aria-expanded', aberto);
-            toggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
-            icon.className = aberto ? 'fas fa-xmark' : 'fas fa-bars';
-        }
-        function fecharMenu() {
-            const menu = document.getElementById('menu');
-            const toggle = document.getElementById('menuToggle');
-            const icon = document.getElementById('menuIcon');
-            menu.classList.remove('active');
-            toggle.setAttribute('aria-expanded', 'false');
-            toggle.setAttribute('aria-label', 'Abrir menu');
-            icon.className = 'fas fa-bars';
-        }
-        document.querySelectorAll('.menu a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 767) fecharMenu();
-            });
-        });
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') fecharMenu();
-        });
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById('menu');
-            const toggle = document.getElementById('menuToggle');
-            if (window.innerWidth <= 767 && menu.classList.contains('active') && !menu.contains(event.target) && !toggle.contains(event.target)) {
-                fecharMenu();
-            }
-        });
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 767) fecharMenu();
-        });
-
         // ===== ESCAPE HTML =====
         function escapeHtml(text) {
             if (!text) return '';
@@ -472,53 +435,71 @@
 
         // ===== CARREGAR LOGO =====
         function carregarLogo() {
-            const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
-            const logoImg = document.querySelector('.logo-area img');
-            const logoTxt = document.querySelector('.logo');
-            if (logoImg && config.logoImg && config.logoImg.startsWith('data:image')) {
-                logoImg.src = config.logoImg;
-            }
-            if (logoTxt && config.logoTxt) {
-                logoTxt.textContent = config.logoTxt;
-            }
+            try {
+                const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
+                const logoImg = document.querySelector('.logo-area img');
+                if (logoImg && config.logoImg && config.logoImg.startsWith('data:image')) {
+                    logoImg.src = config.logoImg;
+                }
+                const logoTxt = document.querySelector('.logo-text');
+                if (logoTxt && config.logoTxt) {
+                    logoTxt.textContent = config.logoTxt;
+                }
+            } catch (e) { /* ignora */ }
         }
 
-        // ===== CARREGAR LISTA DE ESPORTIVAS COM DADOS DE EXEMPLO =====
+        // ===== CARREGAR LISTA DE ESPORTIVAS =====
         function carregarEsportivas() {
-            // Lista com 5 itens de exemplo (caso não haja dados salvos)
-            const exemplo = [
-                { titulo: "COPA futsal 1", data: "12/08", texto: "fgsdgth", imagem: "" },
-                { titulo: "COPA futsal 2", data: "12/08", texto: "fgsdgth", imagem: "" },
-                { titulo: "COPA futsal 3", data: "12/08", texto: "fgsdgth", imagem: "" },
-                { titulo: "COPA futsal 4", data: "12/08", texto: "fgsdgth", imagem: "" },
-                { titulo: "COPA futsal 5", data: "12/08", texto: "fgsdgth", imagem: "" }
-            ];
+            const container = document.getElementById('esportivasList');
+            let lista = [];
 
-            // Tentar carregar do localStorage, se não houver nada, usar o exemplo
-            let lista = JSON.parse(localStorage.getItem('assga_esportivas') || '[]');
-            if (!lista || lista.length === 0) {
-                lista = exemplo;
-                // (opcional) salvar o exemplo no localStorage para não perder
-                localStorage.setItem('assga_esportivas', JSON.stringify(lista));
+            try {
+                const stored = localStorage.getItem('assga_esportivas');
+                lista = stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                lista = [];
             }
 
-            const container = document.getElementById('esportivasList');
-
-            if (lista.length === 0) {
-                container.innerHTML = `<div class="empty-msg"><i class="fas fa-futbol" style="font-size:2rem;display:block;margin-bottom:15px;color:#b22234;"></i>Nenhuma esportiva cadastrada no momento.</div>`;
+            // Se estiver vazio, exibe mensagem
+            if (!lista || lista.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-futbol"></i>
+                        <p>Nenhuma esportiva cadastrada no momento.</p>
+                    </div>
+                `;
                 return;
             }
 
-            container.innerHTML = lista.map(item => `
-                <div class="esportiva-item-card">
-                    <img class="card-img" src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="${escapeHtml(item.titulo)}" loading="lazy" />
-                    <div class="card-body">
-                        <h3>${escapeHtml(item.titulo)}</h3>
-                        ${item.data ? `<div class="data"><i class="fas fa-calendar-alt"></i> ${escapeHtml(item.data)}</div>` : ''}
-                        <div class="desc">${escapeHtml(item.texto || '')}</div>
+            // Ordena por data (se for uma data válida) ou mantém ordem
+            lista.sort((a, b) => {
+                const da = new Date(a.data);
+                const db = new Date(b.data);
+                if (!isNaN(da) && !isNaN(db)) return da - db;
+                return 0;
+            });
+
+            // Renderiza os cards
+            container.innerHTML = lista.map(item => {
+                // Se a descrição for um link (http/https), transforma em <a>
+                let desc = escapeHtml(item.texto || '');
+                const linkMatch = desc.match(/^(https?:\/\/[^\s]+)/);
+                if (linkMatch) {
+                    const url = linkMatch[0];
+                    desc = `<a href="${url}" target="_blank" rel="noopener">${url}</a>` + desc.slice(url.length);
+                }
+
+                return `
+                    <div class="card">
+                        <img class="card-img" src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="${escapeHtml(item.titulo)}" loading="lazy" />
+                        <div class="card-body">
+                            <h3>${escapeHtml(item.titulo)}</h3>
+                            ${item.data ? `<div class="data"><i class="fas fa-calendar-alt"></i> ${escapeHtml(item.data)}</div>` : ''}
+                            <div class="desc">${desc}</div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // ===== INICIALIZAÇÃO =====
