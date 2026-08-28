@@ -100,8 +100,13 @@
         .page-banner h1 i { color: #ffd700; margin-right: 15px; }
         .page-banner p { font-size: 1.2em; opacity: .9; max-width: 700px; margin: 0 auto; }
 
-        /* CONTEÚDO PRINCIPAL */
-        .esportiva-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; flex: 1; }
+        /* CONTEÚDO PRINCIPAL - Classe ajustada para combinar com o novo HTML */
+        .Esportiva-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
         .esportiva-card {
             background: #fff;
             border-radius: 20px;
@@ -377,15 +382,15 @@
         </nav>
     </header>
 
-    <!-- ===== BANNER (dinâmico) ===== -->
+    <!-- ===== BANNER (atualizado com seus IDs) ===== -->
     <section class="page-banner" id="bannerEsportiva">
-        <h1 id="espTituloBanner"><i class="fas fa-futbol"></i> Nossa Esportiva</h1>
-        <p id="espSubtituloBanner">Conheça as modalidades e campeonatos da ASSGA.</p>
+        <h1 id="estTituloBanner"><i class="fas fa-file-contract"></i>Esportiva</h1>
+        <p id="estSubtituloBanner">Documentos oficiais e normas da ASSGA.</p>
     </section>
 
-    <!-- ===== CONTEÚDO PRINCIPAL (dinâmico) ===== -->
-    <main class="esportiva-container" id="esportivaContainer">
-        <!-- O conteúdo será renderizado via JavaScript -->
+    <!-- ===== CONTEÚDO PRINCIPAL (atualizado com seu ID e classe) ===== -->
+    <main class="Esportiva-container" id="EsportivaContainer">
+        <!-- Renderizado via JavaScript -->
     </main>
 
     <!-- ===== FALE CONOSCO ===== -->
@@ -553,17 +558,17 @@
         };
 
         // =============================================================
-        // CARREGAR CONTEÚDO DA ESPORTIVA
+        // CARREGAR CONTEÚDO DA ESPORTIVA (com os novos IDs)
         // =============================================================
         function carregarEsportiva() {
             const stored = JSON.parse(localStorage.getItem("assga_conteudos") || "{}");
             const data = stored.esportiva || defaultEsportiva;
 
-            // Banner
-            document.getElementById("espTituloBanner").innerHTML = `<i class="fas fa-futbol"></i> ${escapeHtml(data.titulo)}`;
-            document.getElementById("espSubtituloBanner").textContent = data.subtitulo;
+            // Banner - usando os IDs que você pediu
+            document.getElementById("estTituloBanner").innerHTML = `<i class="fas fa-file-contract"></i> ${escapeHtml(data.titulo)}`;
+            document.getElementById("estSubtituloBanner").textContent = data.subtitulo;
 
-            const container = document.getElementById("esportivaContainer");
+            const container = document.getElementById("EsportivaContainer");
             let html = '';
 
             // ===== IMAGEM DE CAPA =====
