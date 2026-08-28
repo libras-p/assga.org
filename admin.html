@@ -141,6 +141,7 @@
                 <button class="tab-btn" data-tab="noticias"><i class="fas fa-newspaper"></i> Notícias</button>
                 <button class="tab-btn" data-tab="historia"><i class="fas fa-book-open"></i> História</button>
                 <button class="tab-btn" data-tab="esportiva"><i class="fas fa-futbol"></i> Esportiva</button>
+                <button class="tab-btn" data-tab="esportivas"><i class="fas fa-list"></i> Esportivas</button>
                 <button class="tab-btn" data-tab="eventos"><i class="fas fa-calendar-days"></i> Eventos</button>
                 <button class="tab-btn" data-tab="estatuto"><i class="fas fa-file-contract"></i> Estatuto</button>
                 <button class="tab-btn" data-tab="slider"><i class="fas fa-images"></i> Slider</button>
@@ -284,24 +285,19 @@
                 </div>
             </div>
 
-            <!-- ========== ABA ESPORTIVA (COM LISTAS INTERATIVAS) ========== -->
+            <!-- ========== ABA ESPORTIVA (CONTEÚDO DA PÁGINA /esportiva.html) ========== -->
             <div id="tab-esportiva" class="tab-content">
                 <div class="content-card">
                     <h2><i class="fas fa-futbol"></i> Gerenciar Conteúdo da Esportiva</h2>
                     <form id="formEsportiva">
-                        <!-- Título -->
                         <div class="form-group">
                             <label for="espTitulo"><i class="fas fa-heading"></i> Título do Banner</label>
                             <input type="text" id="espTitulo" class="field" placeholder="Ex: Nossa Esportiva" style="width:100%;" />
                         </div>
-
-                        <!-- Subtítulo -->
                         <div class="form-group">
                             <label for="espSubtitulo"><i class="fas fa-align-left"></i> Subtítulo</label>
                             <input type="text" id="espSubtitulo" class="field" placeholder="Ex: Conheça as modalidades e campeonatos" style="width:100%;" />
                         </div>
-
-                        <!-- Imagem (upload) -->
                         <div class="form-group">
                             <label for="espImagemUpload"><i class="fas fa-image"></i> Imagem de Capa</label>
                             <input type="file" id="espImagemUpload" accept="image/*" />
@@ -313,37 +309,22 @@
                             </div>
                             <input type="hidden" id="espImagemBase64" />
                         </div>
-
-                        <!-- Data -->
                         <div class="form-group">
                             <label for="espData"><i class="fas fa-calendar-alt"></i> Data de Destaque</label>
                             <input type="text" id="espData" class="field" placeholder="Ex: 23 de julho de 2024" style="width:100%;" />
                         </div>
-
-                        <!-- Texto Extra (HTML) -->
                         <div class="form-group">
                             <label for="espTextoExtra"><i class="fas fa-paragraph"></i> Texto Extra (pode usar HTML)</label>
                             <textarea id="espTextoExtra" class="field" rows="3" placeholder="Ex: &lt;p&gt;A ASSGA oferece diversas modalidades...&lt;/p&gt;" style="width:100%;"></textarea>
                         </div>
-
                         <hr style="margin: 30px 0; border: 1px dashed #ccc;" />
-
-                        <!-- ===== MODALIDADES ===== -->
                         <h3 style="color: #003366; margin-top: 20px;"><i class="fas fa-list"></i> Modalidades</h3>
                         <div id="espModalidadesList"></div>
-                        <button type="button" class="btn btn-success" id="espAddModalidadeBtn">
-                            <i class="fas fa-plus-circle"></i> Adicionar Modalidade
-                        </button>
-
+                        <button type="button" class="btn btn-success" id="espAddModalidadeBtn"><i class="fas fa-plus-circle"></i> Adicionar Modalidade</button>
                         <hr style="margin: 30px 0; border: 1px dashed #ccc;" />
-
-                        <!-- ===== CAMPEONATOS ===== -->
                         <h3 style="color: #003366; margin-top: 20px;"><i class="fas fa-trophy"></i> Campeonatos</h3>
                         <div id="espCampeonatosList"></div>
-                        <button type="button" class="btn btn-success" id="espAddCampeonatoBtn">
-                            <i class="fas fa-plus-circle"></i> Adicionar Campeonato
-                        </button>
-
+                        <button type="button" class="btn btn-success" id="espAddCampeonatoBtn"><i class="fas fa-plus-circle"></i> Adicionar Campeonato</button>
                         <div class="btn-group" style="margin-top: 40px;">
                             <button type="submit" class="btn btn-primary-action"><i class="fas fa-save"></i> Salvar Alterações</button>
                             <button type="button" class="btn btn-warning" id="espCarregarDadosBtn"><i class="fas fa-undo-alt"></i> Recarregar Dados</button>
@@ -351,6 +332,43 @@
                         </div>
                     </form>
                     <p id="msgEsp" style="margin-top:10px; color:#28a745; font-weight:600;"></p>
+                </div>
+            </div>
+
+            <!-- ========== ABA ESPORTIVAS (LISTA DE ITENS INDIVIDUAIS) ========== -->
+            <div id="tab-esportivas" class="tab-content">
+                <div class="content-card">
+                    <h2><i class="fas fa-list"></i> Gerenciar Esportivas</h2>
+                    <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
+                        <i class="fas fa-plus"></i> Adicionar Esportiva
+                    </button>
+                    <div id="listaEsportivas" class="item-list"></div>
+                    <div class="form-card" id="formEsportivaItem">
+                        <h3 style="color:#003366; margin-bottom:16px;">
+                            <i class="fas fa-plus-circle"></i> <span id="esportivaFormTitle">Nova Esportiva</span>
+                        </h3>
+                        <form id="esportivaItemForm">
+                            <input type="hidden" id="editEsportivaIndex" value="-1" />
+                            <div class="form-grid">
+                                <input class="field" type="text" id="espItemTitulo" placeholder="Título" required />
+                                <input class="field" type="text" id="espItemData" placeholder="Data (ex: 12/20)" />
+                                <textarea class="field full" id="espItemTexto" placeholder="Descrição ou texto" rows="4"></textarea>
+                                <div class="foto-upload" onclick="document.getElementById('espItemFotoInput').click()" style="grid-column:1/-1;">
+                                    <img id="espItemFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da esportiva" />
+                                    <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem</span>
+                                    <input type="file" id="espItemFotoInput" accept="image/*" />
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-outline" onclick="fecharFormularioEsportiva()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary-action">
+                                        <i class="fas fa-save"></i> Salvar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -496,7 +514,8 @@
             estatuto: 'assga_conteudos',
             slider: 'assga_slider',
             config: 'assga_config',
-            index: 'assga_conteudos'
+            index: 'assga_conteudos',
+            esportivas: 'assga_esportivas'
         };
 
         // ==========================================================
@@ -572,6 +591,7 @@
                 else if (tab === 'logo') carregarLogo();
                 else if (tab === 'historia') carregarHistoria();
                 else if (tab === 'esportiva') carregarEsportiva();
+                else if (tab === 'esportivas') carregarEsportivas();
                 else if (tab === 'estatuto') carregarEstatuto();
                 else if (tab === 'index') carregarIndex();
             });
@@ -586,6 +606,7 @@
             carregarLogo();
             carregarHistoria();
             carregarEsportiva();
+            carregarEsportivas();
             carregarEstatuto();
             carregarIndex();
         }
@@ -976,7 +997,7 @@
         });
 
         // ==========================================================
-        // ESPORTIVA - GERENCIAMENTO COMPLETO (COM LISTAS)
+        // ESPORTIVA - GERENCIAMENTO DA PÁGINA /esportiva.html
         // ==========================================================
         let espData = {
             titulo: '',
@@ -1025,7 +1046,6 @@
             }
         }
 
-        // Upload de imagem
         document.getElementById('espImagemUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -1047,7 +1067,6 @@
             espData.imagem = '';
         });
 
-        // Modalidades (CRUD)
         function renderizarModalidadesEsp() {
             const list = document.getElementById('espModalidadesList');
             if (!espData.modalidades || espData.modalidades.length === 0) {
@@ -1110,7 +1129,6 @@
 
         document.getElementById('espAddModalidadeBtn').addEventListener('click', adicionarModalidadeEsp);
 
-        // Campeonatos (CRUD)
         function renderizarCampeonatosEsp() {
             const list = document.getElementById('espCampeonatosList');
             if (!espData.campeonatos || espData.campeonatos.length === 0) {
@@ -1178,32 +1196,143 @@
 
         document.getElementById('espAddCampeonatoBtn').addEventListener('click', adicionarCampeonatoEsp);
 
-        // Salvar dados
         document.getElementById('formEsportiva').addEventListener('submit', function(e) {
             e.preventDefault();
-
             espData.titulo = document.getElementById('espTitulo').value.trim();
             espData.subtitulo = document.getElementById('espSubtitulo').value.trim();
             espData.data = document.getElementById('espData').value.trim();
             espData.textoExtra = document.getElementById('espTextoExtra').value.trim();
-
             const hiddenImg = document.getElementById('espImagemBase64').value;
             if (hiddenImg) espData.imagem = hiddenImg;
-
             const stored = getObject(STORAGE_KEYS.esportiva);
             stored.esportiva = espData;
             setObject(STORAGE_KEYS.esportiva, stored);
-
             document.getElementById('msgEsp').textContent = '✅ Esportiva salva com sucesso!';
             document.getElementById('msgEsp').style.color = '#28a745';
         });
 
-        // Recarregar
         document.getElementById('espCarregarDadosBtn').addEventListener('click', function() {
             carregarEsportiva();
             document.getElementById('msgEsp').textContent = 'Dados recarregados.';
             document.getElementById('msgEsp').style.color = '#28a745';
         });
+
+        // ==========================================================
+        // ESPORTIVAS (LISTA DE ITENS INDIVIDUAIS) - CRUD
+        // ==========================================================
+        const STORAGE_ESPORTIVAS = 'assga_esportivas';
+
+        function getEsportivas() {
+            return getData(STORAGE_ESPORTIVAS);
+        }
+        function setEsportivas(lista) {
+            setData(STORAGE_ESPORTIVAS, lista);
+        }
+
+        document.getElementById('espItemFotoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('espItemFotoPreview').src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getEspItemFotoBase64() {
+            const img = document.getElementById('espItemFotoPreview');
+            if (img.src && img.src.startsWith('data:image')) return img.src;
+            return '';
+        }
+        function setEspItemFotoPreview(url) {
+            const img = document.getElementById('espItemFotoPreview');
+            img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
+        }
+
+        function renderEsportivas() {
+            const container = document.getElementById('listaEsportivas');
+            const lista = getEsportivas();
+            if (lista.length === 0) {
+                container.innerHTML = '<div class="empty"><i class="fas fa-futbol"></i><p>Nenhuma esportiva cadastrada.</p></div>';
+                return;
+            }
+            container.innerHTML = lista.map((item, i) => `
+                <div class="item-row">
+                    <div class="info">
+                        <img src="${item.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da esportiva" />
+                        <div>
+                            <strong>${escapeHtml(item.titulo)}</strong>
+                            <br><span style="font-size:0.9em;color:#555;">${escapeHtml(item.texto || '')}</span>
+                            ${item.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(item.data)}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning btn-sm" onclick="editarEsportiva(${i})"><i class="fas fa-edit"></i> Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="excluirEsportiva(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function mostrarFormularioEsportiva(editIndex = -1) {
+            const card = document.getElementById('formEsportivaItem');
+            card.classList.add('visible');
+            document.getElementById('editEsportivaIndex').value = editIndex;
+            document.getElementById('esportivaFormTitle').textContent = editIndex === -1 ? 'Nova Esportiva' : 'Editar Esportiva';
+            if (editIndex === -1) {
+                document.getElementById('esportivaItemForm').reset();
+                setEspItemFotoPreview('');
+            } else {
+                const lista = getEsportivas();
+                const item = lista[editIndex];
+                if (item) {
+                    document.getElementById('espItemTitulo').value = item.titulo || '';
+                    document.getElementById('espItemData').value = item.data || '';
+                    document.getElementById('espItemTexto').value = item.texto || '';
+                    setEspItemFotoPreview(item.imagem || '');
+                }
+            }
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function fecharFormularioEsportiva() {
+            document.getElementById('formEsportivaItem').classList.remove('visible');
+        }
+
+        document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('editEsportivaIndex').value);
+            const titulo = document.getElementById('espItemTitulo').value.trim();
+            if (!titulo) { alert('Título é obrigatório.'); return; }
+            const obj = {
+                titulo,
+                data: document.getElementById('espItemData').value.trim(),
+                texto: document.getElementById('espItemTexto').value.trim(),
+                imagem: getEspItemFotoBase64()
+            };
+            let lista = getEsportivas();
+            if (index === -1) lista.push(obj);
+            else lista[index] = obj;
+            setEsportivas(lista);
+            renderEsportivas();
+            fecharFormularioEsportiva();
+        });
+
+        function editarEsportiva(index) {
+            mostrarFormularioEsportiva(index);
+        }
+
+        function excluirEsportiva(index) {
+            if (!confirm('Excluir este item?')) return;
+            let lista = getEsportivas();
+            lista.splice(index, 1);
+            setEsportivas(lista);
+            renderEsportivas();
+        }
+
+        function carregarEsportivas() {
+            renderEsportivas();
+        }
 
         // ==========================================================
         // EVENTOS (CRUD com upload de imagem)
