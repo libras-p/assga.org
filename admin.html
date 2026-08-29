@@ -7,7 +7,7 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== ESTILOS GERAIS ===== */
+        /* ===== ESTILOS GERAIS (mantidos) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%); min-height: 100vh; display: flex; justify-content: center; padding: 30px 20px; }
         .container { max-width: 1200px; width: 100%; background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 20px 60px rgba(0,51,102,.25); }
@@ -86,6 +86,49 @@
         .empty-msg { color: #999; font-style: italic; text-align: center; padding: 20px; }
         .link-text { word-break: break-all; color: #004aad; text-decoration: none; }
         .link-text:hover { text-decoration: underline; }
+
+        /* ===== BOTÃO AMARELO ESTILIZADO (adicionei) ===== */
+        .btn-amarelo {
+            background-color: #f1c40f;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 0 #b7950b;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-amarelo:hover:not(:disabled) {
+            background-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #b7950b;
+        }
+        .btn-amarelo:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #b7950b;
+        }
+        .btn-amarelo:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 2px 0 #7f8c8d;
+            background-color: #bdc3c7;
+        }
+        .contador-esportivas {
+            font-weight: 700;
+            color: #003366;
+            font-size: 1.1rem;
+            background: #e6f0fa;
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 2px solid #003366;
+        }
+
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
             .form-grid { grid-template-columns: 1fr; }
@@ -332,15 +375,19 @@
         </div>
 
         <!-- ========================================================== -->
-        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5) -->
+        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5)  -  MODIFICADA -->
         <!-- ========================================================== -->
         <div id="tab-esportivas" class="tab-content">
             <div class="content-card">
                 <h2><i class="fas fa-list"></i> Gerenciar Esportivas <span style="font-size:0.8rem; font-weight:400; color:#667085;">(máx. 5)</span></h2>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
-                    <button class="btn btn-success" onclick="mostrarFormularioEsportiva()">
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:15px;">
+                    <!-- BOTÃO AMARELO ESTILIZADO -->
+                    <button class="btn-amarelo" id="btnAdicionarEsportiva" onclick="mostrarFormularioEsportiva()">
                         <i class="fas fa-plus"></i> Adicionar Esportiva
                     </button>
+                    <!-- CONTADOR -->
+                    <span class="contador-esportivas" id="contadorEsportivas">0 / 5</span>
+                    <!-- VISUALIZAR PÁGINA -->
                     <a href="esportiva.html" target="_blank" class="btn btn-secondary">
                         <i class="fas fa-eye"></i> Visualizar Página
                     </a>
@@ -616,7 +663,7 @@
             else if (tab === 'logo') carregarLogo();
             else if (tab === 'historia') carregarHistoria();
             else if (tab === 'esportiva') carregarEsportiva();
-            else if (tab === 'esportivas') carregarEsportivas();
+            else if (tab === 'esportivas') { carregarEsportivas(); atualizarContadorEsportivas(); }
             else if (tab === 'estatuto') carregarEstatuto();
             else if (tab === 'index') carregarIndex();
         });
@@ -632,6 +679,7 @@
         carregarHistoria();
         carregarEsportiva();
         carregarEsportivas();
+        atualizarContadorEsportivas(); // atualiza o contador ao carregar
         carregarEstatuto();
         carregarIndex();
     }
@@ -1243,12 +1291,30 @@
     });
 
     // ==========================================================
-    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5)
+    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5)  -  MODIFICADO
     // ==========================================================
     const STORAGE_ESPORTIVAS = 'assga_esportivas';
 
     function getEsportivas() { return getData(STORAGE_ESPORTIVAS); }
     function setEsportivas(lista) { setData(STORAGE_ESPORTIVAS, lista); }
+
+    // Função para atualizar o contador e o estado do botão
+    function atualizarContadorEsportivas() {
+        const lista = getEsportivas();
+        const count = lista.length;
+        const btn = document.getElementById('btnAdicionarEsportiva');
+        const span = document.getElementById('contadorEsportivas');
+        if (span) span.textContent = `${count} / ${MAX_ESPORTIVAS}`;
+        if (btn) {
+            if (count >= MAX_ESPORTIVAS) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-ban"></i> Limite atingido';
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-plus"></i> Adicionar Esportiva';
+            }
+        }
+    }
 
     document.getElementById('espItemFotoInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -1293,6 +1359,7 @@
                 </div>
             </div>
         `).join('');
+        atualizarContadorEsportivas(); // atualiza contador após renderizar
     }
 
     function mostrarFormularioEsportiva(editIndex = -1) {
@@ -1351,7 +1418,7 @@
         setEsportivas(lista);
 
         fecharFormularioEsportiva();
-        renderEsportivas();
+        renderEsportivas(); // isso já chama atualizarContadorEsportivas internamente
         document.getElementById('esportivaItemForm').reset();
         setEspItemFotoPreview('');
         alert('✅ Esportiva salva com sucesso!');
@@ -1363,10 +1430,13 @@
         let lista = getEsportivas();
         lista.splice(index, 1);
         setEsportivas(lista);
-        renderEsportivas();
+        renderEsportivas(); // atualiza a lista e o contador
     }
 
-    function carregarEsportivas() { renderEsportivas(); }
+    function carregarEsportivas() {
+        renderEsportivas();
+        atualizarContadorEsportivas();
+    }
 
     // ==========================================================
     // EVENTOS
