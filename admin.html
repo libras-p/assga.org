@@ -7,7 +7,7 @@
     <link rel="icon" href="src/imagens/Assga_foto.jpg" type="image/jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== ESTILOS GERAIS (mantidos) ===== */
+        /* ===== ESTILOS GERAIS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: radial-gradient(circle at top right, #dbe9f8, #eef3f8 48%); min-height: 100vh; display: flex; justify-content: center; padding: 30px 20px; }
         .container { max-width: 1200px; width: 100%; background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 20px 60px rgba(0,51,102,.25); }
@@ -87,7 +87,7 @@
         .link-text { word-break: break-all; color: #004aad; text-decoration: none; }
         .link-text:hover { text-decoration: underline; }
 
-        /* ===== BOTÃO AMARELO ESTILIZADO ===== */
+        /* ===== BOTÃO AMARELO ===== */
         .btn-amarelo {
             background-color: #f1c40f;
             color: #1a1a2e;
@@ -375,7 +375,7 @@
         </div>
 
         <!-- ========================================================== -->
-        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - CORRIGIDA -->
+        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - COM GESTÃO DE IMAGENS -->
         <!-- ========================================================== -->
         <div id="tab-esportivas" class="tab-content">
             <div class="content-card">
@@ -390,6 +390,7 @@
                     </a>
                 </div>
                 <div id="listaEsportivas" class="item-list"></div>
+
                 <div class="form-card" id="formEsportivaItem">
                     <h3 style="color:#003366; margin-bottom:16px;">
                         <i class="fas fa-plus-circle"></i> <span id="esportivaFormTitle">Nova Esportiva</span>
@@ -1288,7 +1289,7 @@
     });
 
     // ==========================================================
-    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - CORRIGIDO
+    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - COM GESTÃO DE IMAGENS
     // ==========================================================
     const STORAGE_ESPORTIVAS = 'assga_esportivas';
 
@@ -1372,6 +1373,7 @@
             }
         }
 
+        // Obtém a imagem do preview (se houver)
         const imgPreview = document.getElementById('espItemFotoPreview');
         let imagem = '';
         if (imgPreview.src && imgPreview.src.startsWith('data:image')) {
@@ -1403,7 +1405,7 @@
         return true;
     }
 
-    // Evento submit do formulário
+    // Evento submit do formulário (fallback)
     document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
         e.preventDefault();
         salvarEsportiva();
@@ -1440,6 +1442,8 @@
 
     function fecharFormularioEsportiva() {
         document.getElementById('formEsportivaItem').classList.remove('visible');
+        // Limpa a pré-visualização da imagem ao fechar
+        document.getElementById('espItemFotoPreview').src = 'src/imagens/avatar-padrao.jpg';
     }
 
     function editarEsportiva(index) {
