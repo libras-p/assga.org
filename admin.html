@@ -629,7 +629,6 @@
         }
         return escapeHtml(text);
     }
-    // Função para verificar se a imagem é real (data:image)
     function isRealImage(url) {
         return url && url.startsWith('data:image');
     }
@@ -698,6 +697,26 @@
     // ==========================================================
     // SÓCIOS
     // ==========================================================
+    document.getElementById('fotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('fotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getFotoBase64() {
+        const img = document.getElementById('fotoPreview');
+        if (isRealImage(img.src)) return img.src;
+        return '';
+    }
+    function setFotoPreview(url) {
+        const img = document.getElementById('fotoPreview');
+        img.src = (isRealImage(url) ? url : 'src/imagens/avatar-padrao.jpg');
+    }
+
     function renderSocios() {
         const container = document.getElementById('tabelaSocios');
         const socios = getData(STORAGE_KEYS.socios);
@@ -727,54 +746,509 @@
         container.innerHTML = html;
     }
 
-    document.getElementById('fotoInput').addEventListener('change', function(e) {
+    function mostrarFormularioSocio(editIndex = -1) {
+        const card = document.getElementById('formSocio');
+        card.classList.add('visible');
+        document.getElementById('editSocioIndex').value = editIndex;
+        document.getElementById('socioFormTitle').textContent = editIndex === -1 ? 'Novo Sócio' : 'Editar Sócio';
+        if (editIndex === -1) {
+            document.getElementById('socioForm').reset();
+            document.querySelectorAll('.mes-check').forEach(cb => cb.checked = false);
+            setFotoPreview('');
+        } else {
+            const s = getData(STORAGE_KEYS.socios)[editIndex];
+            if (s) {
+                document.getElementById('socioNome').value = s.nome || '';
+                document.getElementById('socioCpf').value = s.cpf || '';
+                document.getElementById('socioNasc').value = s.nascimento || '';
+                document.getElementById('socioSenha').value = s.senha || '';
+                document.getElementById('socioMatricula').value = s.matricula || '';
+                document.getElementById('socioSecretaria').value = s.secretaria || '';
+                setFotoPreview(s.foto || '');
+                const pagos = s.mesesPagos || [];
+                document.querySelectorAll('.mes-check').forEach(cb => {
+                    cb.checked = pagos.includes(parseInt(cb.value));
+                });
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioSocio() {
+        document.getElementById('formSocio').classList.remove('visible');
+    }
+    document.getElementById('socioForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editSocioIndex').value);
+        const nome = document.getElementById('socioNome').value.trim();
+        const cpf = document.getElementById('socioCpf').value.trim().replace(/\D/g, '');
+        const nascimento = document.getElementById('socioNasc').value.trim();
+        const senha = document.getElementById('socioSenha').value.trim();
+        const matricula = document.getElementById('socioMatricula').value.trim();
+        const secretaria = document.getElementById('socioSecretaria').value.trim();
+        const foto = getFotoBase64();
+        const mesesPagos = [];
+        document.querySelectorAll('.mes-check:checked').forEach(cb => mesesPagos.push(parseInt(cb.value)));
+        if (!nome || !cpf || !senha) { alert('Nome, CPF e senha são obrigatórios.'); return; }
+        const socio = { nome, cpf, nascimento, senha, matricula, secretaria, foto, mesesPagos };
+        let socios = getData(STORAGE_KEYS.socios);
+        if (index === -1) socios.push(socio);
+        else socios[index] = socio;
+        setData(STORAGE_KEYS.socios, socios);
+        renderSocios();
+        fecharFormularioSocio();
+    });
+    function editarSocio(index) { mostrarFormularioSocio(index); }
+    function excluirSocio(index) {
+        if (!confirm('Excluir este sócio?')) return;
+        let socios = getData(STORAGE_KEYS.socios);
+        socios.splice(index, 1);
+        setData(STORAGE_KEYS.socios, socios);
+        renderSocios();
+    }
+
+    // ==========================================================
+    // DIRETORIA
+    // ==========================================================
+    document.getElementById('dirFotoInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(ev) {
-            document.getElementById('fotoPreview').src = ev.target.result;
+            document.getElementById('dirFotoPreview').src = ev.target.result;
         };
         reader.readAsDataURL(file);
     });
-
-    function getFotoBase64() {
-        const img = document.getElementById('fotoPreview');
+    function getDirFotoBase64() {
+        const img = document.getElementById('dirFotoPreview');
         if (isRealImage(img.src)) return img.src;
         return '';
     }
-    function setFotoPreview(url) {
-        const img = document.getElementById('fotoPreview');
+    function setDirFotoPreview(url) {
+        const img = document.getElementById('dirFotoPreview');
         img.src = (isRealImage(url) ? url : 'src/imagens/avatar-padrao.jpg');
     }
+    function renderDiretoria() {
+        const container = document.getElementById('listaDiretoria');
+        const lista = getData(STORAGE_KEYS.diretoria);
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-users"></i><p>Nenhum membro cadastrado.</p></div>';
+            return;
+        }
+        container.innerHTML = lista.map((d, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${d.foto || 'src/imagens/avatar-padrao.jpg'}" alt="Foto de ${escapeHtml(d.nome)}" />
+                    <div>
+                        <strong>${escapeHtml(d.nome)}</strong> - ${escapeHtml(d.cargo)}
+                        <br><span style="font-size:0.85em;color:#555;">${escapeHtml(d.descricao || '')}</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarDiretor(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirDiretor(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function mostrarFormularioDiretor(editIndex = -1) {
+        const card = document.getElementById('formDiretor');
+        card.classList.add('visible');
+        document.getElementById('editDiretorIndex').value = editIndex;
+        document.getElementById('diretorFormTitle').textContent = editIndex === -1 ? 'Novo Membro' : 'Editar Membro';
+        if (editIndex === -1) {
+            document.getElementById('diretorForm').reset();
+            setDirFotoPreview('');
+        } else {
+            const d = getData(STORAGE_KEYS.diretoria)[editIndex];
+            if (d) {
+                document.getElementById('dirNome').value = d.nome || '';
+                document.getElementById('dirCargo').value = d.cargo || '';
+                document.getElementById('dirDescricao').value = d.descricao || '';
+                document.getElementById('dirEmail').value = d.email || '';
+                document.getElementById('dirTelefone').value = d.telefone || '';
+                setDirFotoPreview(d.foto || '');
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioDiretor() {
+        document.getElementById('formDiretor').classList.remove('visible');
+    }
+    document.getElementById('diretorForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editDiretorIndex').value);
+        const nome = document.getElementById('dirNome').value.trim();
+        const cargo = document.getElementById('dirCargo').value.trim();
+        if (!nome || !cargo) { alert('Nome e Cargo são obrigatórios.'); return; }
+        const obj = {
+            nome, cargo,
+            descricao: document.getElementById('dirDescricao').value.trim(),
+            email: document.getElementById('dirEmail').value.trim(),
+            telefone: document.getElementById('dirTelefone').value.trim(),
+            foto: getDirFotoBase64()
+        };
+        let lista = getData(STORAGE_KEYS.diretoria);
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setData(STORAGE_KEYS.diretoria, lista);
+        renderDiretoria();
+        fecharFormularioDiretor();
+    });
+    function editarDiretor(index) { mostrarFormularioDiretor(index); }
+    function excluirDiretor(index) {
+        if (!confirm('Remover este membro?')) return;
+        let lista = getData(STORAGE_KEYS.diretoria);
+        lista.splice(index, 1);
+        setData(STORAGE_KEYS.diretoria, lista);
+        renderDiretoria();
+    }
 
-    // ... restante das funções idênticas ao seu código, mas vou encurtar para não repetir tudo, pois o foco é a parte de esportivas.
-    // Por brevidade, manterei o restante igual ao seu código, mas com as modificações na seção ESPORTIVAS.
+    // ==========================================================
+    // NOTÍCIAS
+    // ==========================================================
+    document.getElementById('notFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('notFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+    function getNotFotoBase64() {
+        const img = document.getElementById('notFotoPreview');
+        if (isRealImage(img.src)) return img.src;
+        return '';
+    }
+    function setNotFotoPreview(url) {
+        const img = document.getElementById('notFotoPreview');
+        img.src = (isRealImage(url) ? url : 'src/imagens/avatar-padrao.jpg');
+    }
+    function renderNoticias() {
+        const container = document.getElementById('listaNoticias');
+        const lista = getData(STORAGE_KEYS.noticias);
+        if (lista.length === 0) {
+            container.innerHTML = '<div class="empty"><i class="fas fa-newspaper"></i><p>Nenhuma notícia cadastrada.</p></div>';
+            return;
+        }
+        container.innerHTML = lista.map((n, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${n.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem da notícia" />
+                    <div>
+                        <strong>${escapeHtml(n.titulo)}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(n.resumo || '')}</span>
+                        ${n.data ? `<br><span style="font-size:0.8em;color:#667085;"><i class="fas fa-calendar"></i> ${escapeHtml(n.data)}</span>` : ''}
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarNoticia(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirNoticia(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function mostrarFormularioNoticia(editIndex = -1) {
+        const card = document.getElementById('formNoticia');
+        card.classList.add('visible');
+        document.getElementById('editNoticiaIndex').value = editIndex;
+        document.getElementById('noticiaFormTitle').textContent = editIndex === -1 ? 'Nova Notícia' : 'Editar Notícia';
+        if (editIndex === -1) {
+            document.getElementById('noticiaForm').reset();
+            setNotFotoPreview('');
+        } else {
+            const n = getData(STORAGE_KEYS.noticias)[editIndex];
+            if (n) {
+                document.getElementById('notTitulo').value = n.titulo || '';
+                document.getElementById('notData').value = n.data || '';
+                document.getElementById('notResumo').value = n.resumo || '';
+                document.getElementById('notTexto').value = n.texto || '';
+                setNotFotoPreview(n.imagem || '');
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioNoticia() {
+        document.getElementById('formNoticia').classList.remove('visible');
+    }
+    document.getElementById('noticiaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editNoticiaIndex').value);
+        const titulo = document.getElementById('notTitulo').value.trim();
+        if (!titulo) { alert('Título é obrigatório.'); return; }
+        const obj = {
+            titulo,
+            data: document.getElementById('notData').value.trim(),
+            resumo: document.getElementById('notResumo').value.trim(),
+            texto: document.getElementById('notTexto').value.trim(),
+            imagem: getNotFotoBase64()
+        };
+        let lista = getData(STORAGE_KEYS.noticias);
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setData(STORAGE_KEYS.noticias, lista);
+        renderNoticias();
+        fecharFormularioNoticia();
+    });
+    function editarNoticia(index) { mostrarFormularioNoticia(index); }
+    function excluirNoticia(index) {
+        if (!confirm('Excluir esta notícia?')) return;
+        let lista = getData(STORAGE_KEYS.noticias);
+        lista.splice(index, 1);
+        setData(STORAGE_KEYS.noticias, lista);
+        renderNoticias();
+    }
+
+    // ==========================================================
+    // HISTÓRIA
+    // ==========================================================
+    document.getElementById('histFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('histFotoPreview').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+    function getHistFotoBase64() {
+        const img = document.getElementById('histFotoPreview');
+        if (isRealImage(img.src)) return img.src;
+        return '';
+    }
+    function setHistFotoPreview(url) {
+        const img = document.getElementById('histFotoPreview');
+        img.src = (isRealImage(url) ? url : 'src/imagens/avatar-padrao.jpg');
+    }
+    function carregarHistoria() {
+        const data = getObject(STORAGE_KEYS.historia).historia || {};
+        document.getElementById('histTitulo').value = data.titulo || '';
+        document.getElementById('histSubtitulo').value = data.subtitulo || '';
+        document.getElementById('histTextoExtra').value = data.textoExtra || '';
+        document.getElementById('histFundacao').value = data.fundacao || '';
+        document.getElementById('histMissao').value = data.missao || '';
+        document.getElementById('histValores').value = (data.valores || []).join(', ');
+        document.getElementById('histTimeline').value = (data.timeline || []).map(item => `${item.ano}|${item.descricao}`).join('\n');
+        document.getElementById('histNumeros').value = (data.numeros || []).map(item => `${item.numero}|${item.label}`).join('\n');
+        setHistFotoPreview(data.imagem || '');
+    }
+    document.getElementById('historiaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const timeline = document.getElementById('histTimeline').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { ano: parts[0] || '', descricao: parts[1] || '' };
+            });
+        const numeros = document.getElementById('histNumeros').value.split('\n')
+            .filter(line => line.trim() !== '')
+            .map(line => {
+                const parts = line.split('|').map(s => s.trim());
+                return { numero: parts[0] || '', label: parts[1] || '' };
+            });
+        const valores = document.getElementById('histValores').value.split(',').map(s => s.trim()).filter(s => s);
+        const conteudos = getObject(STORAGE_KEYS.historia);
+        conteudos.historia = {
+            titulo: document.getElementById('histTitulo').value.trim(),
+            subtitulo: document.getElementById('histSubtitulo').value.trim(),
+            textoExtra: document.getElementById('histTextoExtra').value.trim(),
+            fundacao: document.getElementById('histFundacao').value.trim(),
+            missao: document.getElementById('histMissao').value.trim(),
+            valores,
+            timeline,
+            numeros,
+            imagem: getHistFotoBase64()
+        };
+        setObject(STORAGE_KEYS.historia, conteudos);
+        showMessage('msgHist', '✅ História salva com sucesso!');
+    });
+
+    // ==========================================================
+    // ESPORTIVA (CONTEÚDO DA PÁGINA)
+    // ==========================================================
+    let espData = { titulo: '', subtitulo: '', imagem: '', data: '', textoExtra: '', modalidades: [], campeonatos: [] };
+    function carregarEsportiva() {
+        const stored = getObject(STORAGE_KEYS.esportiva);
+        const data = stored.esportiva || { titulo: '', subtitulo: '', imagem: '', data: '', textoExtra: '', modalidades: [], campeonatos: [] };
+        espData = data;
+        document.getElementById('espTitulo').value = espData.titulo || '';
+        document.getElementById('espSubtitulo').value = espData.subtitulo || '';
+        document.getElementById('espData').value = espData.data || '';
+        document.getElementById('espTextoExtra').value = espData.textoExtra || '';
+        const preview = document.getElementById('espImagemPreview');
+        const container = document.getElementById('espPreviewContainer');
+        const hidden = document.getElementById('espImagemBase64');
+        if (espData.imagem && isRealImage(espData.imagem)) {
+            preview.src = espData.imagem;
+            container.classList.remove('hidden');
+            hidden.value = espData.imagem;
+        } else {
+            preview.src = '';
+            container.classList.add('hidden');
+            hidden.value = '';
+        }
+        renderizarModalidadesEsp();
+        renderizarCampeonatosEsp();
+    }
+    document.getElementById('espImagemUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const base64 = ev.target.result;
+            document.getElementById('espImagemBase64').value = base64;
+            document.getElementById('espImagemPreview').src = base64;
+            document.getElementById('espPreviewContainer').classList.remove('hidden');
+            espData.imagem = base64;
+        };
+        reader.readAsDataURL(file);
+    });
+    document.getElementById('espRemoverImagem').addEventListener('click', function() {
+        document.getElementById('espImagemPreview').src = '';
+        document.getElementById('espPreviewContainer').classList.add('hidden');
+        document.getElementById('espImagemBase64').value = '';
+        espData.imagem = '';
+    });
+    function renderizarModalidadesEsp() {
+        const list = document.getElementById('espModalidadesList');
+        if (!espData.modalidades || espData.modalidades.length === 0) {
+            list.innerHTML = '<div class="empty-msg">Nenhuma modalidade cadastrada.</div>';
+            return;
+        }
+        list.innerHTML = espData.modalidades.map((m, idx) => `
+            <div class="item-row">
+                <div class="info">
+                    <strong><i class="fas ${m.icone || 'fa-futbol'}"></i> ${escapeHtml(m.nome)}</strong>
+                    <span style="display:block; color:#555; font-size:0.9rem;">${escapeHtml(m.descricao)}</span>
+                    ${m.tag ? `<span class="badge">${escapeHtml(m.tag)}</span>` : ''}
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarModalidadeEsp(${idx})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirModalidadeEsp(${idx})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function adicionarModalidadeEsp() {
+        const nome = prompt('Nome da modalidade:');
+        if (!nome) return;
+        const desc = prompt('Descrição:');
+        if (desc === null) return;
+        const tag = prompt('Tag (opcional):') || '';
+        const icone = prompt('Ícone (classe FontAwesome, ex: fa-futbol):', 'fa-futbol') || 'fa-futbol';
+        espData.modalidades.push({ icone: icone.trim(), nome: nome.trim(), descricao: desc.trim(), tag: tag.trim() });
+        renderizarModalidadesEsp();
+    }
+    function editarModalidadeEsp(index) {
+        const m = espData.modalidades[index];
+        if (!m) return;
+        const novoNome = prompt('Nome da modalidade:', m.nome);
+        if (novoNome === null) return;
+        const novaDesc = prompt('Descrição:', m.descricao);
+        if (novaDesc === null) return;
+        const novaTag = prompt('Tag (opcional):', m.tag || '');
+        const iconeAtual = m.icone || 'fa-futbol';
+        const escolha = prompt('Ícone (classe FontAwesome):', iconeAtual);
+        m.nome = novoNome.trim() || m.nome;
+        m.descricao = novaDesc.trim() || m.descricao;
+        m.tag = novaTag ? novaTag.trim() : '';
+        if (escolha && escolha.trim()) m.icone = escolha.trim();
+        renderizarModalidadesEsp();
+    }
+    function excluirModalidadeEsp(index) {
+        if (!confirm('Remover esta modalidade?')) return;
+        espData.modalidades.splice(index, 1);
+        renderizarModalidadesEsp();
+    }
+    document.getElementById('espAddModalidadeBtn').addEventListener('click', adicionarModalidadeEsp);
+    function renderizarCampeonatosEsp() {
+        const list = document.getElementById('espCampeonatosList');
+        if (!espData.campeonatos || espData.campeonatos.length === 0) {
+            list.innerHTML = '<div class="empty-msg">Nenhum campeonato cadastrado.</div>';
+            return;
+        }
+        list.innerHTML = espData.campeonatos.map((c, idx) => `
+            <div class="item-row">
+                <div class="info">
+                    <strong>${escapeHtml(c.titulo)}</strong>
+                    <span style="display:block; color:#555; font-size:0.9rem;">
+                        ${c.data ? `<i class="fas fa-calendar"></i> ${escapeHtml(c.data)}` : ''}
+                        ${c.participantes ? ` | <i class="fas fa-users"></i> ${escapeHtml(c.participantes)}` : ''}
+                        ${c.local ? ` | <i class="fas fa-map-pin"></i> ${escapeHtml(c.local)}` : ''}
+                        ${c.status ? ` | <span class="badge" style="background:#004aad;color:#fff;">${escapeHtml(c.status)}</span>` : ''}
+                    </span>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarCampeonatoEsp(${idx})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirCampeonatoEsp(${idx})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function adicionarCampeonatoEsp() {
+        const titulo = prompt('Título do campeonato:');
+        if (!titulo) return;
+        const data = prompt('Data (ex: 15/03 a 15/12/2026):') || '';
+        const participantes = prompt('Participantes (ex: 8 equipes):') || '';
+        const local = prompt('Local:') || '';
+        const status = prompt('Status (andamento, aberto, realizado):', 'aberto') || 'aberto';
+        espData.campeonatos.push({ titulo: titulo.trim(), data: data.trim(), participantes: participantes.trim(), local: local.trim(), status: status.trim() });
+        renderizarCampeonatosEsp();
+    }
+    function editarCampeonatoEsp(index) {
+        const c = espData.campeonatos[index];
+        if (!c) return;
+        const novoTitulo = prompt('Título:', c.titulo);
+        if (novoTitulo === null) return;
+        const novaData = prompt('Data:', c.data || '');
+        const novoParticipantes = prompt('Participantes:', c.participantes || '');
+        const novoLocal = prompt('Local:', c.local || '');
+        const novoStatus = prompt('Status (andamento, aberto, realizado):', c.status || '');
+        c.titulo = novoTitulo.trim() || c.titulo;
+        c.data = novaData ? novaData.trim() : '';
+        c.participantes = novoParticipantes ? novoParticipantes.trim() : '';
+        c.local = novoLocal ? novoLocal.trim() : '';
+        c.status = novoStatus ? novoStatus.trim() : '';
+        renderizarCampeonatosEsp();
+    }
+    function excluirCampeonatoEsp(index) {
+        if (!confirm('Remover este campeonato?')) return;
+        espData.campeonatos.splice(index, 1);
+        renderizarCampeonatosEsp();
+    }
+    document.getElementById('espAddCampeonatoBtn').addEventListener('click', adicionarCampeonatoEsp);
+    document.getElementById('formEsportiva').addEventListener('submit', function(e) {
+        e.preventDefault();
+        espData.titulo = document.getElementById('espTitulo').value.trim();
+        espData.subtitulo = document.getElementById('espSubtitulo').value.trim();
+        espData.data = document.getElementById('espData').value.trim();
+        espData.textoExtra = document.getElementById('espTextoExtra').value.trim();
+        const hiddenImg = document.getElementById('espImagemBase64').value;
+        if (hiddenImg) espData.imagem = hiddenImg;
+        const stored = getObject(STORAGE_KEYS.esportiva);
+        stored.esportiva = espData;
+        setObject(STORAGE_KEYS.esportiva, stored);
+        document.getElementById('msgEsp').textContent = '✅ Conteúdo da Esportiva salvo com sucesso!';
+        document.getElementById('msgEsp').style.color = '#28a745';
+    });
+    document.getElementById('espCarregarDadosBtn').addEventListener('click', function() {
+        carregarEsportiva();
+        document.getElementById('msgEsp').textContent = 'Dados recarregados.';
+        document.getElementById('msgEsp').style.color = '#28a745';
+    });
 
     // ==========================================================
     // ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - IMAGEM OBRIGATÓRIA
     // ==========================================================
     const STORAGE_ESPORTIVAS = 'assga_esportivas';
-
     function getEsportivas() {
-        try {
-            const data = localStorage.getItem(STORAGE_ESPORTIVAS);
-            return data ? JSON.parse(data) : [];
-        } catch (e) {
-            console.error('Erro ao ler esportivas:', e);
-            return [];
-        }
+        try { const data = localStorage.getItem(STORAGE_ESPORTIVAS); return data ? JSON.parse(data) : []; }
+        catch (e) { console.error('Erro ao ler esportivas:', e); return []; }
     }
-
     function setEsportivas(lista) {
-        try {
-            localStorage.setItem(STORAGE_ESPORTIVAS, JSON.stringify(lista));
-            console.log('✅ Esportivas salvas:', lista);
-        } catch (e) {
-            console.error('Erro ao salvar esportivas:', e);
-            alert('Erro ao salvar. Veja o console para detalhes.');
-        }
+        try { localStorage.setItem(STORAGE_ESPORTIVAS, JSON.stringify(lista)); console.log('✅ Esportivas salvas:', lista); }
+        catch (e) { console.error('Erro ao salvar esportivas:', e); alert('Erro ao salvar. Veja o console para detalhes.'); }
     }
-
     function atualizarContadorEsportivas() {
         const lista = getEsportivas();
         const count = lista.length;
@@ -782,16 +1256,10 @@
         const span = document.getElementById('contadorEsportivas');
         if (span) span.textContent = `${count} / ${MAX_ESPORTIVAS}`;
         if (btn) {
-            if (count >= MAX_ESPORTIVAS) {
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-ban"></i> Limite atingido';
-            } else {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-plus"></i> Adicionar Esportiva';
-            }
+            if (count >= MAX_ESPORTIVAS) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-ban"></i> Limite atingido'; }
+            else { btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus"></i> Adicionar Esportiva'; }
         }
     }
-
     function renderEsportivas() {
         const container = document.getElementById('listaEsportivas');
         const lista = getEsportivas();
@@ -819,50 +1287,29 @@
         `).join('');
         atualizarContadorEsportivas();
     }
-
     function salvarEsportiva() {
         const index = parseInt(document.getElementById('editEsportivaIndex').value);
         const titulo = document.getElementById('espItemTitulo').value.trim();
-        if (!titulo) {
-            alert('Título é obrigatório.');
-            return false;
-        }
-
+        if (!titulo) { alert('Título é obrigatório.'); return false; }
         if (index === -1) {
             const lista = getEsportivas();
-            if (lista.length >= MAX_ESPORTIVAS) {
-                alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido.`);
-                return false;
-            }
+            if (lista.length >= MAX_ESPORTIVAS) { alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido.`); return false; }
         }
-
-        // VALIDAÇÃO OBRIGATÓRIA: verifica se a imagem foi selecionada
         const imgPreview = document.getElementById('espItemFotoPreview');
         const hasRealImage = isRealImage(imgPreview.src);
         if (!hasRealImage) {
             alert('⚠️ A imagem é obrigatória. Por favor, selecione uma imagem antes de salvar.');
             return false;
         }
-
-        // Obtém a imagem do preview (base64)
-        let imagem = imgPreview.src;
-
         const obj = {
             titulo: titulo,
             data: document.getElementById('espItemData').value.trim(),
             texto: document.getElementById('espItemTexto').value.trim(),
-            imagem: imagem
+            imagem: imgPreview.src
         };
-
         let lista = getEsportivas();
-        if (index === -1) {
-            lista.push(obj);
-            console.log('➕ Adicionando nova esportiva:', obj);
-        } else {
-            lista[index] = obj;
-            console.log('✏️ Editando esportiva índice', index, ':', obj);
-        }
-
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
         setEsportivas(lista);
         fecharFormularioEsportiva();
         renderEsportivas();
@@ -871,14 +1318,10 @@
         alert('✅ Esportiva salva com sucesso!');
         return true;
     }
-
-    // Evento submit do formulário (fallback)
     document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
         e.preventDefault();
         salvarEsportiva();
     });
-
-    // --- LISTENER para upload de imagem ---
     document.getElementById('espItemFotoInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -888,7 +1331,6 @@
         };
         reader.readAsDataURL(file);
     });
-
     function mostrarFormularioEsportiva(editIndex = -1) {
         const lista = getEsportivas();
         if (editIndex === -1 && lista.length >= MAX_ESPORTIVAS) {
@@ -908,25 +1350,16 @@
                 document.getElementById('espItemTitulo').value = item.titulo || '';
                 document.getElementById('espItemData').value = item.data || '';
                 document.getElementById('espItemTexto').value = item.texto || '';
-                if (isRealImage(item.imagem)) {
-                    document.getElementById('espItemFotoPreview').src = item.imagem;
-                } else {
-                    document.getElementById('espItemFotoPreview').src = 'src/imagens/avatar-padrao.jpg';
-                }
+                document.getElementById('espItemFotoPreview').src = isRealImage(item.imagem) ? item.imagem : 'src/imagens/avatar-padrao.jpg';
             }
         }
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-
     function fecharFormularioEsportiva() {
         document.getElementById('formEsportivaItem').classList.remove('visible');
         document.getElementById('espItemFotoPreview').src = 'src/imagens/avatar-padrao.jpg';
     }
-
-    function editarEsportiva(index) {
-        mostrarFormularioEsportiva(index);
-    }
-
+    function editarEsportiva(index) { mostrarFormularioEsportiva(index); }
     function excluirEsportiva(index) {
         if (!confirm('Excluir este item?')) return;
         let lista = getEsportivas();
@@ -934,17 +1367,284 @@
         setEsportivas(lista);
         renderEsportivas();
     }
+    function carregarEsportivas() { renderEsportivas(); atualizarContadorEsportivas(); }
 
-    function carregarEsportivas() {
-        renderEsportivas();
-        atualizarContadorEsportivas();
+    // ==========================================================
+    // EVENTOS
+    // ==========================================================
+    document.getElementById('evFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) { document.getElementById('evFotoPreview').src = ev.target.result; };
+        reader.readAsDataURL(file);
+    });
+    function getEvFotoBase64() {
+        const img = document.getElementById('evFotoPreview');
+        return isRealImage(img.src) ? img.src : '';
+    }
+    function setEvFotoPreview(url) {
+        const img = document.getElementById('evFotoPreview');
+        img.src = isRealImage(url) ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+    function renderEventos() {
+        const container = document.getElementById('listaEventos');
+        const lista = getData(STORAGE_KEYS.eventos);
+        if (lista.length === 0) { container.innerHTML = '<div class="empty"><i class="fas fa-calendar-days"></i><p>Nenhum evento cadastrado.</p></div>'; return; }
+        const statusMap = { aberto: '🟢 Inscrições Abertas', andamento: '🟡 Em andamento', fechado: '🔴 Encerrado' };
+        container.innerHTML = lista.map((e, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${e.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Imagem do evento" />
+                    <div>
+                        <strong>${escapeHtml(e.titulo)}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(e.descricao || '')}</span>
+                        <br><span style="font-size:0.8em;color:#667085;">
+                            <i class="fas fa-calendar"></i> ${escapeHtml(e.data || '')} &nbsp;|&nbsp;
+                            <i class="fas fa-map-pin"></i> ${escapeHtml(e.local || '')} &nbsp;|&nbsp;
+                            R$ ${escapeHtml(e.preco || '0,00')}
+                            &nbsp; <span style="font-weight:600;">${statusMap[e.status] || 'Aberto'}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarEvento(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirEvento(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function mostrarFormularioEvento(editIndex = -1) {
+        const card = document.getElementById('formEvento');
+        card.classList.add('visible');
+        document.getElementById('editEventoIndex').value = editIndex;
+        document.getElementById('eventoFormTitle').textContent = editIndex === -1 ? 'Novo Evento' : 'Editar Evento';
+        if (editIndex === -1) { document.getElementById('eventoForm').reset(); setEvFotoPreview(''); }
+        else {
+            const e = getData(STORAGE_KEYS.eventos)[editIndex];
+            if (e) {
+                document.getElementById('evTitulo').value = e.titulo || '';
+                document.getElementById('evData').value = e.data || '';
+                document.getElementById('evLocal').value = e.local || '';
+                document.getElementById('evPreco').value = e.preco || '';
+                document.getElementById('evStatus').value = e.status || 'aberto';
+                document.getElementById('evDescricao').value = e.descricao || '';
+                setEvFotoPreview(e.imagem || '');
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioEvento() { document.getElementById('formEvento').classList.remove('visible'); }
+    document.getElementById('eventoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editEventoIndex').value);
+        const titulo = document.getElementById('evTitulo').value.trim();
+        if (!titulo) { alert('Título é obrigatório.'); return; }
+        const obj = {
+            titulo,
+            descricao: document.getElementById('evDescricao').value.trim(),
+            data: document.getElementById('evData').value.trim(),
+            local: document.getElementById('evLocal').value.trim(),
+            preco: document.getElementById('evPreco').value.trim() || '0,00',
+            status: document.getElementById('evStatus').value,
+            imagem: getEvFotoBase64()
+        };
+        let lista = getData(STORAGE_KEYS.eventos);
+        if (index === -1) lista.push(obj);
+        else lista[index] = obj;
+        setData(STORAGE_KEYS.eventos, lista);
+        renderEventos();
+        fecharFormularioEvento();
+    });
+    function editarEvento(index) { mostrarFormularioEvento(index); }
+    function excluirEvento(index) {
+        if (!confirm('Excluir este evento?')) return;
+        let lista = getData(STORAGE_KEYS.eventos);
+        lista.splice(index, 1);
+        setData(STORAGE_KEYS.eventos, lista);
+        renderEventos();
     }
 
     // ==========================================================
-    // (Aqui viriam as demais funções: socios, diretoria, noticias, etc.)
-    // Mas como você já tem o código completo, mantive apenas a parte de esportivas modificada.
-    // O restante do código é igual ao que você já tem.
+    // SLIDER
     // ==========================================================
+    document.getElementById('slideFotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) { document.getElementById('slideFotoPreview').src = ev.target.result; };
+        reader.readAsDataURL(file);
+    });
+    function getSlideFotoBase64() {
+        const img = document.getElementById('slideFotoPreview');
+        return isRealImage(img.src) ? img.src : '';
+    }
+    function setSlideFotoPreview(url) {
+        const img = document.getElementById('slideFotoPreview');
+        img.src = isRealImage(url) ? url : 'src/imagens/avatar-padrao.jpg';
+    }
+    function renderSlider() {
+        const container = document.getElementById('listaSlider');
+        const slides = getData(STORAGE_KEYS.slider);
+        if (slides.length === 0) { container.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>Nenhum slide cadastrado.</p></div>'; return; }
+        container.innerHTML = slides.map((slide, i) => `
+            <div class="item-row">
+                <div class="info">
+                    <img src="${slide.imagem || 'src/imagens/avatar-padrao.jpg'}" alt="Slide ${i+1}" />
+                    <div>
+                        <strong>Slide ${i+1}</strong>
+                        <br><span style="font-size:0.9em;color:#555;">${escapeHtml(slide.texto || '')}</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-warning btn-sm" onclick="editarSlide(${i})"><i class="fas fa-edit"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirSlide(${i})"><i class="fas fa-trash"></i> Excluir</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function mostrarFormularioSlide(editIndex = -1) {
+        const card = document.getElementById('formSlide');
+        card.classList.add('visible');
+        document.getElementById('editSlideIndex').value = editIndex;
+        document.getElementById('slideFormTitle').textContent = editIndex === -1 ? 'Novo Slide' : 'Editar Slide';
+        if (editIndex === -1) { document.getElementById('slideForm').reset(); setSlideFotoPreview(''); }
+        else {
+            const slide = getData(STORAGE_KEYS.slider)[editIndex];
+            if (slide) {
+                document.getElementById('slideTexto').value = slide.texto || '';
+                setSlideFotoPreview(slide.imagem || '');
+            }
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function fecharFormularioSlide() { document.getElementById('formSlide').classList.remove('visible'); }
+    document.getElementById('slideForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editSlideIndex').value);
+        const texto = document.getElementById('slideTexto').value.trim();
+        if (!texto) { alert('O texto do slide é obrigatório.'); return; }
+        const imagem = getSlideFotoBase64();
+        if (!imagem) { alert('Por favor, selecione uma imagem para o slide.'); return; }
+        const obj = { texto, imagem };
+        let slides = getData(STORAGE_KEYS.slider);
+        if (index === -1) slides.push(obj);
+        else slides[index] = obj;
+        setData(STORAGE_KEYS.slider, slides);
+        renderSlider();
+        fecharFormularioSlide();
+    });
+    function editarSlide(index) { mostrarFormularioSlide(index); }
+    function excluirSlide(index) {
+        if (!confirm('Excluir este slide?')) return;
+        let slides = getData(STORAGE_KEYS.slider);
+        slides.splice(index, 1);
+        setData(STORAGE_KEYS.slider, slides);
+        renderSlider();
+    }
+
+    // ==========================================================
+    // LOGO
+    // ==========================================================
+    const CONFIG_KEY = 'assga_config';
+    function getConfig() { try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}'); } catch { return {}; } }
+    function setConfig(config) { localStorage.setItem(CONFIG_KEY, JSON.stringify(config)); }
+    function carregarLogo() {
+        const config = getConfig();
+        const img = document.getElementById('logoPreview');
+        const txt = document.getElementById('logoTxt');
+        if (config.logoImg && isRealImage(config.logoImg)) img.src = config.logoImg;
+        else img.src = 'src/imagens/Assga_foto.jpg';
+        txt.value = config.logoTxt || 'ASSGA';
+    }
+    document.getElementById('logoImgInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) { document.getElementById('logoPreview').src = ev.target.result; };
+        reader.readAsDataURL(file);
+    });
+    document.getElementById('removerLogoBtn').addEventListener('click', function() {
+        if (!confirm('Deseja remover a logo personalizada e voltar ao padrão?')) return;
+        const config = getConfig();
+        config.logoImg = '';
+        setConfig(config);
+        document.getElementById('logoPreview').src = 'src/imagens/Assga_foto.jpg';
+        showMessage('msgLogo', 'Logo removida. Usando a imagem padrão.', 'success');
+    });
+    document.getElementById('logoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const img = document.getElementById('logoPreview');
+        const txt = document.getElementById('logoTxt').value.trim();
+        const config = {
+            logoImg: (isRealImage(img.src) ? img.src : ''),
+            logoTxt: txt || 'ASSGA'
+        };
+        setConfig(config);
+        showMessage('msgLogo', '✅ Logo salva com sucesso!');
+    });
+
+    // ==========================================================
+    // ESTATUTO
+    // ==========================================================
+    function carregarEstatuto() {
+        const data = getObject(STORAGE_KEYS.estatuto).estatuto || {};
+        document.getElementById('estTitulo').value = data.titulo || '';
+        document.getElementById('estSubtitulo').value = data.subtitulo || '';
+        const dados = data.dados || {};
+        document.getElementById('estDados').value = Object.entries(dados).map(([k, v]) => `${k}|${v}`).join('\n');
+        document.getElementById('estObjetivos').value = (data.objetivos || []).join('\n');
+        document.getElementById('estDiretoria').value = (data.diretoria || []).join('\n');
+        document.getElementById('estDisposicoes').value = data.disposicoes || '';
+        document.getElementById('estPdf').value = data.pdf || '';
+    }
+    document.getElementById('estatutoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const dadosLinhas = document.getElementById('estDados').value.split('\n').filter(line => line.trim() !== '')
+            .map(line => { const parts = line.split('|').map(s => s.trim()); return { chave: parts[0] || '', valor: parts[1] || '' }; });
+        const dados = {};
+        dadosLinhas.forEach(item => { if (item.chave) dados[item.chave] = item.valor; });
+        const objetivos = document.getElementById('estObjetivos').value.split('\n').filter(line => line.trim() !== '');
+        const diretoria = document.getElementById('estDiretoria').value.split('\n').filter(line => line.trim() !== '');
+        const conteudos = getObject(STORAGE_KEYS.estatuto);
+        conteudos.estatuto = {
+            titulo: document.getElementById('estTitulo').value.trim(),
+            subtitulo: document.getElementById('estSubtitulo').value.trim(),
+            dados, objetivos, diretoria,
+            disposicoes: document.getElementById('estDisposicoes').value.trim(),
+            pdf: document.getElementById('estPdf').value.trim()
+        };
+        setObject(STORAGE_KEYS.estatuto, conteudos);
+        showMessage('msgEst', '✅ Estatuto salvo com sucesso!');
+    });
+
+    // ==========================================================
+    // PÁGINA INICIAL
+    // ==========================================================
+    function carregarIndex() {
+        const data = getObject(STORAGE_KEYS.index).index || {};
+        document.getElementById('idxTitulo').value = data.titulo || '';
+        document.getElementById('idxTexto').value = data.texto || '';
+    }
+    document.getElementById('indexForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const conteudos = getObject(STORAGE_KEYS.index);
+        conteudos.index = {
+            titulo: document.getElementById('idxTitulo').value.trim(),
+            texto: document.getElementById('idxTexto').value.trim()
+        };
+        setObject(STORAGE_KEYS.index, conteudos);
+        showMessage('msgIndex', '✅ Página inicial salva com sucesso!');
+    });
+
+    // ==========================================================
+    // INICIALIZAÇÃO
+    // ==========================================================
+    if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+        document.getElementById('loginView').style.display = 'none';
+        document.getElementById('panelView').style.display = 'block';
+        carregarTodasAbas();
+    }
 </script>
 </body>
 </html>
