@@ -129,6 +129,13 @@
             border: 2px solid #003366;
         }
 
+        /* Campo obrigatório */
+        .required-asterisk {
+            color: #b22234;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
             .form-grid { grid-template-columns: 1fr; }
@@ -375,7 +382,7 @@
         </div>
 
         <!-- ========================================================== -->
-        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - IMAGEM OPCIONAL -->
+        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - IMAGEM OBRIGATÓRIA -->
         <!-- ========================================================== -->
         <div id="tab-esportivas" class="tab-content">
             <div class="content-card">
@@ -403,7 +410,9 @@
                             <textarea class="field full" id="espItemTexto" placeholder="Link ou descrição (ex: https://...)" rows="2"></textarea>
                             <div class="foto-upload" onclick="document.getElementById('espItemFotoInput').click()" style="grid-column:1/-1;">
                                 <img id="espItemFotoPreview" src="src/imagens/avatar-padrao.jpg" alt="Imagem da esportiva" />
-                                <span class="label"><i class="fas fa-image"></i> Clique para enviar imagem (opcional)</span>
+                                <span class="label">
+                                    <i class="fas fa-image"></i> Clique para enviar imagem <span class="required-asterisk">*</span>
+                                </span>
                                 <input type="file" id="espItemFotoInput" accept="image/*" />
                             </div>
                             <div class="form-actions">
@@ -1289,7 +1298,7 @@
     });
 
     // ==========================================================
-    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - IMAGEM OPCIONAL
+    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - IMAGEM OBRIGATÓRIA
     // ==========================================================
     const STORAGE_ESPORTIVAS = 'assga_esportivas';
 
@@ -1373,18 +1382,22 @@
             }
         }
 
-        // Obtém a imagem do preview (se houver)
+        // VALIDAÇÃO OBRIGATÓRIA: verifica se a imagem foi selecionada
         const imgPreview = document.getElementById('espItemFotoPreview');
-        let imagem = '';
-        if (imgPreview.src && imgPreview.src.startsWith('data:image')) {
-            imagem = imgPreview.src;
+        const hasImage = imgPreview.src && imgPreview.src.startsWith('data:image');
+        if (!hasImage) {
+            alert('⚠️ A imagem é obrigatória. Por favor, selecione uma imagem antes de salvar.');
+            return false;
         }
+
+        // Obtém a imagem do preview (base64)
+        let imagem = imgPreview.src;
 
         const obj = {
             titulo: titulo,
             data: document.getElementById('espItemData').value.trim(),
             texto: document.getElementById('espItemTexto').value.trim(),
-            imagem: imagem  // pode ser vazio, será usado fallback na exibição
+            imagem: imagem
         };
 
         let lista = getEsportivas();
