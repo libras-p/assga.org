@@ -23,7 +23,7 @@
         h2 { text-align: center; margin: 45px 0 35px; color: #003366; font-size: 2.5em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,.1); }
         h2 i { color: #004aad; margin-right: 10px; }
 
-        /* HEADER e MENU = mesmo do index (omitido) */
+        /* HEADER e MENU */
         header {
             background: linear-gradient(135deg, #003366 0%, #004aad 100%);
             color: #fff;
@@ -129,6 +129,12 @@
             color: #ffd700;
             font-size: 3em;
             box-shadow: 0 8px 20px rgba(0,51,102,.2);
+            overflow: hidden;
+        }
+        .membro-card .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .membro-card h3 { color: #003366; font-size: 1.4em; margin-bottom: 5px; }
         .membro-card .cargo { color: #004aad; font-weight: 700; font-size: 1em; display: block; margin-bottom: 8px; }
@@ -150,7 +156,7 @@
         }
         .membro-card .contato a:hover { background: #ffd700; color: #003366; transform: scale(1.15); }
 
-        /* FALE CONOSCO e FOOTER = mesmo do index (omitido) */
+        /* FALE CONOSCO e FOOTER */
         .info {
             background: linear-gradient(135deg, #e9eef5 0%, #d4e1ed 100%);
             padding: 50px 20px;
@@ -308,9 +314,9 @@
     <header>
         <div class="logo-area">
             <a href="index.html" aria-label="Página inicial ASSGA">
-                <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA">
+                <img src="src/imagens/Assga_foto.jpg" alt="Logo da ASSGA" id="logoImgHeader">
             </a>
-            <div class="logo">ASSGA</div>
+            <div class="logo" id="logoTxtHeader">ASSGA</div>
         </div>
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false" type="button">
             <i id="menuIcon" class="fas fa-bars"></i>
@@ -340,7 +346,7 @@
         <div class="diretoria-grid" id="listaDiretoriaPagina"></div>
     </main>
 
-    <!-- ===== FALE CONOSCO e FOOTER ===== -->
+    <!-- ===== FALE CONOSCO ===== -->
     <section class="info">
         <h2><i class="fas fa-comments"></i> Fale Conosco</h2>
         <div class="info-container">
@@ -379,6 +385,7 @@
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-container">
             <div class="footer-copy">
@@ -404,7 +411,9 @@
     </footer>
 
     <script>
-        // Menu mobile (mesmo do index)
+        // =============================================================
+        // MENU MOBILE
+        // =============================================================
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const toggle = document.getElementById("menuToggle");
@@ -450,7 +459,9 @@
             if (window.innerWidth > 767) fecharMenu();
         });
 
+        // =============================================================
         // ESCAPE HTML
+        // =============================================================
         function escapeHtml(text) {
             if (!text) return '';
             return String(text).replace(/[&<>"']/g, function(m) {
@@ -463,43 +474,66 @@
             });
         }
 
-        // CARREGAR DIRETORIA
-        function carregarDiretoria() {
-            const container = document.getElementById('listaDiretoriaPagina');
-            const directors = JSON.parse(localStorage.getItem('assga_diretoria') || '[]');
-            if (directors.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#888;">Nenhum membro cadastrado.</p>';
-                return;
-            }
-            container.innerHTML = directors.map(d => `
-                <div class="membro-card">
-                    <div class="avatar"><i class="fas fa-user"></i></div>
-                    <h3>${escapeHtml(d.nome)}</h3>
-                    <span class="cargo"><i class="fas fa-star"></i> ${escapeHtml(d.cargo)}</span>
-                    <p>${escapeHtml(d.descricao || '')}</p>
-                    <div class="contato">
-                        ${d.email ? `<a href="mailto:${escapeHtml(d.email)}" aria-label="Enviar email"><i class="fas fa-envelope"></i></a>` : ''}
-                        ${d.telefone ? `<a href="tel:${escapeHtml(d.telefone)}" aria-label="Ligar"><i class="fas fa-phone"></i></a>` : ''}
-                    </div>
-                </div>
-            `).join('');
+        // Verifica se a imagem é real (data:image)
+        function isRealImage(url) {
+            return url && url.startsWith('data:image');
         }
 
-        document.addEventListener('DOMContentLoaded', carregarDiretoria);
-
+        // =============================================================
+        // CARREGAR DIRETORIA
+        // =============================================================
+        function carregarDiretoria() {
+            const container = document.getElementById('listaDiretoriaPagina');
+            let directors = [];
+            try {
+                directors = JSON.parse(localStorage.getItem('assga_diretoria') || '[]');
+            } catch (e) {
+                console.error('Erro ao carregar diretoria:', e);
+            }
+            if (directors.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px; color:#888;">
+                        <i class="fas fa-users" style="font-size:3em; display:block; margin-bottom:15px;"></i>
+                        Nenhum membro cadastrado.
+                    </div>
+                `;
+                return;
+            }
+            container.innerHTML = directors.map(d => {
+                const avatarSrc = (isRealImage(d.foto) ? d.foto : 'src/imagens/avatar-padrao.jpg');
+                return `
+                    <div class="membro-card">
+                        <div class="avatar">
+                            <img src="${avatarSrc}" alt="Foto de ${escapeHtml(d.nome)}">
+                        </div>
+                        <h3>${escapeHtml(d.nome)}</h3>
+                        <span class="cargo"><i class="fas fa-star"></i> ${escapeHtml(d.cargo)}</span>
+                        <p>${escapeHtml(d.descricao || '')}</p>
+                        <div class="contato">
+                            ${d.email ? `<a href="mailto:${escapeHtml(d.email)}" aria-label="Enviar email"><i class="fas fa-envelope"></i></a>` : ''}
+                            ${d.telefone ? `<a href="tel:${escapeHtml(d.telefone)}" aria-label="Ligar"><i class="fas fa-phone"></i></a>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         // =============================================================
         // CARREGAR LOGO DO localStorage
         // =============================================================
         function carregarLogo() {
-            const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
-            const logoImg = document.querySelector('.logo-area img');
-            const logoTxt = document.querySelector('.logo');
-            if (logoImg && config.logoImg && config.logoImg.startsWith('data:image')) {
-                logoImg.src = config.logoImg;
-            }
-            if (logoTxt && config.logoTxt) {
-                logoTxt.textContent = config.logoTxt;
+            try {
+                const config = JSON.parse(localStorage.getItem('assga_config') || '{}');
+                const img = document.getElementById('logoImgHeader');
+                const txt = document.getElementById('logoTxtHeader');
+                if (img && config.logoImg && isRealImage(config.logoImg)) {
+                    img.src = config.logoImg;
+                }
+                if (txt && config.logoTxt) {
+                    txt.textContent = config.logoTxt;
+                }
+            } catch (e) {
+                console.error('Erro ao carregar logo:', e);
             }
         }
 
@@ -508,7 +542,7 @@
         // =============================================================
         document.addEventListener('DOMContentLoaded', function() {
             carregarLogo();
-            carregarNoticias();
+            carregarDiretoria();
         });
     </script>
 </body>
