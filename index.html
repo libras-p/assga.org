@@ -272,6 +272,15 @@
         }
         .footer-redes a:hover { color: #003366; background: #ffd700; transform: translateY(-5px) scale(1.1); }
 
+        /* ============================================================= */
+        /* ESCONDE QUALQUER BADGE DA NETLIFY (adicionado) */
+        /* ============================================================= */
+        [alt*="Netlify"],
+        img[src*="netlify.com/img/global/badges"],
+        a[href*="netlify.com"] img {
+            display: none !important;
+        }
+
         /* RESPONSIVIDADE */
         @media (max-width: 767px) {
             header { padding: 12px 15px; }
