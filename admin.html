@@ -87,7 +87,7 @@
         .link-text { word-break: break-all; color: #004aad; text-decoration: none; }
         .link-text:hover { text-decoration: underline; }
 
-        /* ===== BOTÃO AMARELO ESTILIZADO (adicionei) ===== */
+        /* ===== BOTÃO AMARELO ESTILIZADO ===== */
         .btn-amarelo {
             background-color: #f1c40f;
             color: #1a1a2e;
@@ -375,19 +375,16 @@
         </div>
 
         <!-- ========================================================== -->
-        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5)  -  MODIFICADA -->
+        <!-- ABA ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - CORRIGIDA -->
         <!-- ========================================================== -->
         <div id="tab-esportivas" class="tab-content">
             <div class="content-card">
                 <h2><i class="fas fa-list"></i> Gerenciar Esportivas <span style="font-size:0.8rem; font-weight:400; color:#667085;">(máx. 5)</span></h2>
                 <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:15px;">
-                    <!-- BOTÃO AMARELO ESTILIZADO -->
                     <button class="btn-amarelo" id="btnAdicionarEsportiva" onclick="mostrarFormularioEsportiva()">
                         <i class="fas fa-plus"></i> Adicionar Esportiva
                     </button>
-                    <!-- CONTADOR -->
                     <span class="contador-esportivas" id="contadorEsportivas">0 / 5</span>
-                    <!-- VISUALIZAR PÁGINA -->
                     <a href="esportiva.html" target="_blank" class="btn btn-secondary">
                         <i class="fas fa-eye"></i> Visualizar Página
                     </a>
@@ -412,7 +409,7 @@
                                 <button type="button" class="btn btn-outline" onclick="fecharFormularioEsportiva()">
                                     <i class="fas fa-times"></i> Cancelar
                                 </button>
-                                <button type="submit" class="btn btn-primary-action">
+                                <button type="button" class="btn btn-primary-action" onclick="salvarEsportiva()">
                                     <i class="fas fa-save"></i> Salvar
                                 </button>
                             </div>
@@ -679,7 +676,7 @@
         carregarHistoria();
         carregarEsportiva();
         carregarEsportivas();
-        atualizarContadorEsportivas(); // atualiza o contador ao carregar
+        atualizarContadorEsportivas();
         carregarEstatuto();
         carregarIndex();
     }
@@ -1291,14 +1288,30 @@
     });
 
     // ==========================================================
-    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5)  -  MODIFICADO
+    // ESPORTIVAS (LISTA DE ITENS - LIMITE 5) - CORRIGIDO
     // ==========================================================
     const STORAGE_ESPORTIVAS = 'assga_esportivas';
 
-    function getEsportivas() { return getData(STORAGE_ESPORTIVAS); }
-    function setEsportivas(lista) { setData(STORAGE_ESPORTIVAS, lista); }
+    function getEsportivas() {
+        try {
+            const data = localStorage.getItem(STORAGE_ESPORTIVAS);
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            console.error('Erro ao ler esportivas:', e);
+            return [];
+        }
+    }
 
-    // Função para atualizar o contador e o estado do botão
+    function setEsportivas(lista) {
+        try {
+            localStorage.setItem(STORAGE_ESPORTIVAS, JSON.stringify(lista));
+            console.log('✅ Esportivas salvas:', lista);
+        } catch (e) {
+            console.error('Erro ao salvar esportivas:', e);
+            alert('Erro ao salvar. Veja o console para detalhes.');
+        }
+    }
+
     function atualizarContadorEsportivas() {
         const lista = getEsportivas();
         const count = lista.length;
@@ -1316,31 +1329,12 @@
         }
     }
 
-    document.getElementById('espItemFotoInput').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-            document.getElementById('espItemFotoPreview').src = ev.target.result;
-        };
-        reader.readAsDataURL(file);
-    });
-
-    function getEspItemFotoBase64() {
-        const img = document.getElementById('espItemFotoPreview');
-        if (img.src && img.src.startsWith('data:image')) return img.src;
-        return '';
-    }
-    function setEspItemFotoPreview(url) {
-        const img = document.getElementById('espItemFotoPreview');
-        img.src = url && url.startsWith('data:image') ? url : 'src/imagens/avatar-padrao.jpg';
-    }
-
     function renderEsportivas() {
         const container = document.getElementById('listaEsportivas');
         const lista = getEsportivas();
         if (lista.length === 0) {
             container.innerHTML = '<div class="empty"><i class="fas fa-futbol"></i><p>Nenhuma esportiva cadastrada.</p></div>';
+            atualizarContadorEsportivas();
             return;
         }
         container.innerHTML = lista.map((item, i) => `
@@ -1359,8 +1353,61 @@
                 </div>
             </div>
         `).join('');
-        atualizarContadorEsportivas(); // atualiza contador após renderizar
+        atualizarContadorEsportivas();
     }
+
+    function salvarEsportiva() {
+        const index = parseInt(document.getElementById('editEsportivaIndex').value);
+        const titulo = document.getElementById('espItemTitulo').value.trim();
+        if (!titulo) {
+            alert('Título é obrigatório.');
+            return false;
+        }
+
+        if (index === -1) {
+            const lista = getEsportivas();
+            if (lista.length >= MAX_ESPORTIVAS) {
+                alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido.`);
+                return false;
+            }
+        }
+
+        const imgPreview = document.getElementById('espItemFotoPreview');
+        let imagem = '';
+        if (imgPreview.src && imgPreview.src.startsWith('data:image')) {
+            imagem = imgPreview.src;
+        }
+
+        const obj = {
+            titulo: titulo,
+            data: document.getElementById('espItemData').value.trim(),
+            texto: document.getElementById('espItemTexto').value.trim(),
+            imagem: imagem
+        };
+
+        let lista = getEsportivas();
+        if (index === -1) {
+            lista.push(obj);
+            console.log('➕ Adicionando nova esportiva:', obj);
+        } else {
+            lista[index] = obj;
+            console.log('✏️ Editando esportiva índice', index, ':', obj);
+        }
+
+        setEsportivas(lista);
+        fecharFormularioEsportiva();
+        renderEsportivas();
+        document.getElementById('esportivaItemForm').reset();
+        document.getElementById('espItemFotoPreview').src = 'src/imagens/avatar-padrao.jpg';
+        alert('✅ Esportiva salva com sucesso!');
+        return true;
+    }
+
+    // Evento submit do formulário
+    document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        salvarEsportiva();
+    });
 
     function mostrarFormularioEsportiva(editIndex = -1) {
         const lista = getEsportivas();
@@ -1374,14 +1421,18 @@
         document.getElementById('esportivaFormTitle').textContent = editIndex === -1 ? 'Nova Esportiva' : 'Editar Esportiva';
         if (editIndex === -1) {
             document.getElementById('esportivaItemForm').reset();
-            setEspItemFotoPreview('');
+            document.getElementById('espItemFotoPreview').src = 'src/imagens/avatar-padrao.jpg';
         } else {
             const item = lista[editIndex];
             if (item) {
                 document.getElementById('espItemTitulo').value = item.titulo || '';
                 document.getElementById('espItemData').value = item.data || '';
                 document.getElementById('espItemTexto').value = item.texto || '';
-                setEspItemFotoPreview(item.imagem || '');
+                if (item.imagem && item.imagem.startsWith('data:image')) {
+                    document.getElementById('espItemFotoPreview').src = item.imagem;
+                } else {
+                    document.getElementById('espItemFotoPreview').src = 'src/imagens/avatar-padrao.jpg';
+                }
             }
         }
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1391,46 +1442,16 @@
         document.getElementById('formEsportivaItem').classList.remove('visible');
     }
 
-    document.getElementById('esportivaItemForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const index = parseInt(document.getElementById('editEsportivaIndex').value);
-        const titulo = document.getElementById('espItemTitulo').value.trim();
-        if (!titulo) { alert('Título é obrigatório.'); return; }
+    function editarEsportiva(index) {
+        mostrarFormularioEsportiva(index);
+    }
 
-        if (index === -1) {
-            const lista = getEsportivas();
-            if (lista.length >= MAX_ESPORTIVAS) {
-                alert(`Limite de ${MAX_ESPORTIVAS} esportivas atingido.`);
-                return;
-            }
-        }
-
-        const obj = {
-            titulo,
-            data: document.getElementById('espItemData').value.trim(),
-            texto: document.getElementById('espItemTexto').value.trim(),
-            imagem: getEspItemFotoBase64()
-        };
-
-        let lista = getEsportivas();
-        if (index === -1) lista.push(obj);
-        else lista[index] = obj;
-        setEsportivas(lista);
-
-        fecharFormularioEsportiva();
-        renderEsportivas(); // isso já chama atualizarContadorEsportivas internamente
-        document.getElementById('esportivaItemForm').reset();
-        setEspItemFotoPreview('');
-        alert('✅ Esportiva salva com sucesso!');
-    });
-
-    function editarEsportiva(index) { mostrarFormularioEsportiva(index); }
     function excluirEsportiva(index) {
         if (!confirm('Excluir este item?')) return;
         let lista = getEsportivas();
         lista.splice(index, 1);
         setEsportivas(lista);
-        renderEsportivas(); // atualiza a lista e o contador
+        renderEsportivas();
     }
 
     function carregarEsportivas() {

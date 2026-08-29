@@ -29,7 +29,6 @@
             box-shadow: 0 20px 60px rgba(0, 51, 102, 0.25);
         }
 
-        /* Cabeçalho */
         .header {
             display: flex;
             justify-content: space-between;
@@ -69,7 +68,6 @@
             transform: translateY(-2px);
         }
 
-        /* Grid de cards */
         .esportivas-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -155,7 +153,6 @@
             font-size: 1.2rem;
         }
 
-        /* Responsivo */
         @media (max-width: 600px) {
             .header {
                 flex-direction: column;
@@ -169,20 +166,14 @@
 </head>
 <body>
     <div class="container">
-        <!-- Cabeçalho -->
         <div class="header">
             <h1><i class="fas fa-futbol"></i> Nossas Esportivas</h1>
             <a href="admin.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Painel Admin</a>
         </div>
-
-        <!-- Grid de esportivas -->
         <div id="esportivasContainer" class="esportivas-grid"></div>
     </div>
 
     <script>
-        // ==========================================================
-        // LER DADOS DO LOCALSTORAGE E EXIBIR
-        // ==========================================================
         const STORAGE_ESPORTIVAS = 'assga_esportivas';
 
         function getEsportivas() {
@@ -232,9 +223,7 @@
                 return;
             }
 
-            // Limite de 5 (garantido pelo admin, mas por segurança)
             const itens = lista.slice(0, 5);
-
             container.innerHTML = itens.map(item => `
                 <div class="card-esportiva">
                     <img class="card-img" 
@@ -249,10 +238,8 @@
             `).join('');
         }
 
-        // Executa ao carregar a página
         renderizarEsportivas();
 
-        // (Opcional) Atualiza a lista automaticamente se o localStorage mudar em outra aba
         window.addEventListener('storage', function(e) {
             if (e.key === STORAGE_ESPORTIVAS) {
                 renderizarEsportivas();
