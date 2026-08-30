@@ -297,7 +297,7 @@
         </div>
 
         <!-- ========================================================== -->
-        <!-- ABA HISTÓRIA - CORRIGIDA E FUNCIONAL -->
+        <!-- ABA HISTÓRIA -->
         <!-- ========================================================== -->
         <div id="tab-historia" class="tab-content">
             <div class="content-card">
@@ -522,7 +522,7 @@
         </div>
 
         <!-- ========================================================== -->
-        <!-- ABA LOGO -->
+        <!-- ABA LOGO - COMPLETA E FUNCIONAL -->
         <!-- ========================================================== -->
         <div id="tab-logo" class="tab-content">
             <div class="content-card">
@@ -1597,26 +1597,34 @@
     }
 
     // ==========================================================
-    // LOGO
+    // LOGO - COMPLETA E FUNCIONAL
     // ==========================================================
     const CONFIG_KEY = 'assga_config';
     function getConfig() { try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}'); } catch { return {}; } }
     function setConfig(config) { localStorage.setItem(CONFIG_KEY, JSON.stringify(config)); }
+
     function carregarLogo() {
         const config = getConfig();
         const img = document.getElementById('logoPreview');
         const txt = document.getElementById('logoTxt');
-        if (config.logoImg && isRealImage(config.logoImg)) img.src = config.logoImg;
-        else img.src = 'src/imagens/Assga_foto.jpg';
+        if (config.logoImg && isRealImage(config.logoImg)) {
+            img.src = config.logoImg;
+        } else {
+            img.src = 'src/imagens/Assga_foto.jpg';
+        }
         txt.value = config.logoTxt || 'ASSGA';
     }
+
     document.getElementById('logoImgInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = function(ev) { document.getElementById('logoPreview').src = ev.target.result; };
+        reader.onload = function(ev) {
+            document.getElementById('logoPreview').src = ev.target.result;
+        };
         reader.readAsDataURL(file);
     });
+
     document.getElementById('removerLogoBtn').addEventListener('click', function() {
         if (!confirm('Deseja remover a logo personalizada e voltar ao padrão?')) return;
         const config = getConfig();
@@ -1625,6 +1633,7 @@
         document.getElementById('logoPreview').src = 'src/imagens/Assga_foto.jpg';
         showMessage('msgLogo', 'Logo removida. Usando a imagem padrão.', 'success');
     });
+
     document.getElementById('logoForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const img = document.getElementById('logoPreview');
