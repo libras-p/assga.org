@@ -1,3 +1,7 @@
+DB_HOST
+DB_NAME
+DB_USER
+DB_PASS
 -- ============================================================
 -- BANCO DE DADOS PARA ASSGA - ASSOCIAÇÃO DESPORTIVA
 -- Compatível com MySQL / MariaDB
